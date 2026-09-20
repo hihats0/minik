@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+# Model agirliklari ve buyuk veri repoya girmez.
+/weights/
+/data/
+/runs/
+# Minik'in kendi hafizasi: kisisel konusma icerir, repoya girmez.
+/defter/
+*.jsonl
+*.sqlite
+*.db
+# Anahtarlar
+.env
