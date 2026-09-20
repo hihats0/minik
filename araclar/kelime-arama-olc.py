@@ -18,7 +18,7 @@ DURAK_KELIMELER = {"bir", "bu", "ve", "ile", "de", "da", "cok", "gibi", "icin", 
 
 def kelimelere_ayir(metin):
     """Metni kucuk harfe cevirir, noktalamayi atar, durak kelimeleri cikarir."""
-    kelimeler = re.findall(r"[a-zçğıöşü]+", metin.lower())
+    kelimeler = re.findall(r"[a-z]+", metin.lower())
     return {k for k in kelimeler if k not in DURAK_KELIMELER}
 
 
