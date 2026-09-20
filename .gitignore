@@ -13,3 +13,5 @@ __pycache__/
 *.db
 # Anahtarlar
 .env
+# Loglar repoya girmez.
+/loglar/
