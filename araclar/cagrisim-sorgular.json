@@ -1,0 +1,17 @@
+[
+  {"id": 1, "sorgu": "Aksam corba yaptim, mercimek corbasi.", "tur": "dogrudan", "dogru_id": 7},
+  {"id": 2, "sorgu": "Bugun hava cok sicakti, cok terledim.", "tur": "dogrudan", "dogru_id": 9},
+  {"id": 3, "sorgu": "Dun aksam bilim kurgu film izledim, cok begendim.", "tur": "dogrudan", "dogru_id": 13},
+  {"id": 4, "sorgu": "Kedim masaya cikti ve kalemi dusurdu.", "tur": "dogrudan", "dogru_id": 17},
+  {"id": 5, "sorgu": "Programda bir aksaklik cikti, kullandigim ismi yanlis girmisim.", "tur": "es_anlamli", "dogru_id": 3},
+  {"id": 6, "sorgu": "Sabahki kahve cihazi arizalandi, filtre kahveyle idare ettim.", "tur": "es_anlamli", "dogru_id": 1},
+  {"id": 7, "sorgu": "Disarida uzunca tempolu bir yuruyuse ciktim, hava harikaydi.", "tur": "es_anlamli", "dogru_id": 5},
+  {"id": 8, "sorgu": "Validemle uzun uzun konustuk telefonda, ozlemisim onu.", "tur": "es_anlamli", "dogru_id": 11},
+  {"id": 9, "sorgu": "Sirkette taze bir girisim start aldi, tum takim heyecanli.", "tur": "es_anlamli", "dogru_id": 15},
+  {"id": 10, "sorgu": "Kiyiya gittik hafta sonu, icim rahatladi guzelce.", "tur": "es_anlamli", "dogru_id": 19},
+  {"id": 11, "sorgu": "Sunucumuz coktu, depolama alani tukenmis meger.", "tur": "es_anlamli", "dogru_id": 43},
+  {"id": 12, "sorgu": "Bisikletin zinciri yerinden oynadi, ama duzelttim yolda.", "tur": "es_anlamli", "dogru_id": 45},
+  {"id": 13, "sorgu": "Dis hekimine randevu aldim, dolgu yaptirmam gerekiyormus.", "tur": "alakasiz", "dogru_id": null},
+  {"id": 14, "sorgu": "Elektrik faturasi bu ay asiri yuksek geldi.", "tur": "alakasiz", "dogru_id": null},
+  {"id": 15, "sorgu": "Ispanyolca ogrenmeye yeni basladim, telaffuzu zor.", "tur": "alakasiz", "dogru_id": null}
+]
