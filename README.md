@@ -24,4 +24,17 @@ uygulaması varken yazılır. Her yuva log tutar, çünkü çalıştığı ölç
 
 ## Durum
 
-Kurulum aşaması. Henüz kod yok.
+Kod öncesi dökümantasyon aşaması. Henüz kod yok, henüz model indirilmedi.
+
+Çıkan belgeler:
+
+- `reports/2026-09-20-kafa-modeli-adaylari.md`: 12 yerel Türkçe LLM adayı, her biri için
+  Q4_K_M boyutu, 8 GB VRAM'de güvenli bağlam hesabı (FP16 ve 8 bit KV ayrı), lisans metninden
+  okunmuş ticari kullanım ve türev ağırlık izni. Elenenler gerekçesiyle.
+- `reports/2026-09-20-arac-yigini.md`: llama.cpp / Ollama / LM Studio kıyası, Windows 11 +
+  RTX 4070 Laptop 8 GB için. Seçim: llama.cpp, Python'dan standart kütüphaneyle.
+- `notes/malzeme-listesi.md`: indirilecekler tablosu, 13,7 GB zorunlu.
+- `notes/mimari-taslak.md`: yedi yuvanın klasör ağacı, giriş noktası sözleşmeleri, ortak log
+  biçimi, Defter kayıt biçimi ve altı karar önerisi (Yiğit onayı bekliyor).
+
+Sıradaki adım: üç aday modelin indirilmesi ve f0 ölçümü (token/sn, tepe VRAM, sıcaklık).
