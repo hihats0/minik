@@ -1,5 +1,6 @@
-"""Kafa, Defter ve akisin kullandigi adli sabitler: sunucu adresi, model yolu, zaman asimi,
-ornekleme, baglam, dosya yollari. Cagiran: yuvalar/kafa.py, yuvalar/defter.py, minik.py."""
+"""Kafa, Defter, Bekci ve akisin kullandigi adli sabitler: sunucu adresi, model yolu, zaman
+asimi, ornekleme, baglam, dosya yollari, sozluk. Cagiran: yuvalar/kafa.py, yuvalar/defter.py,
+yuvalar/bekci.py, minik.py."""
 
 from pathlib import Path
 
@@ -29,3 +30,14 @@ DEFTER_SON_N = 10
 # gun dosyasi acilacagini sinirlar (180 gun sonra her cagriyi 180 dosya acar hale getirmemek
 # icin). Tahmin: bir hafta, "dunku konu" olcutunu rahatca kapsar, gunde birkac kayit varsayimiyla.
 DEFTER_GERI_GUN_SINIRI = 7
+
+# Bekci cikis kapisinin sozluk kufur bayragi: araclar/odul_kural.py'deki KUFUR_KALIPLARI'ndan
+# aynen tasindi (yeniden yazilmadi). Olculmus: 0,03 ms/cumle, bagimsiz 200 tweette dogruluk
+# %80,5 (duyarlilik %63). Token'in TAMAMI bir kaliple eslesir (boks, gotur, sikinti gibi
+# yanlis eslesmeler olmasin diye).
+BEKCI_KUFUR_KALIPLARI = [
+    r"amk\w*", r"aq", r"amq", r"mk", r"sg", r"oc", r"pic", r"piclik", r"orospu\w*", r"amina\w*",
+    r"amcik\w*", r"siktir\w*", r"sktir\w*", r"siktig\w*", r"sikeyim\w*", r"sikerim\w*", r"sikecem\w*",
+    r"sikik\w*", r"siktim", r"sikim", r"yarak\w*", r"got", r"gotu", r"gotun\w*", r"bok", r"boku\w*",
+    r"boklu\w*", r"boktan", r"gavat\w*", r"pezevenk\w*", r"kahpe\w*", r"kaltak\w*", r"yavsak\w*",
+]

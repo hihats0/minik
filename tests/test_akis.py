@@ -116,6 +116,33 @@ class TestAkis(unittest.TestCase):
         self.assertEqual(satir["sonuc"], "hata")
         self.assertIn("defter", satir["detay"]["hata"])
 
+    def test_bekci_engelleyince_sabit_metin_soylenir_deftere_yazilmaz(self):
+        """Bekci 'hayir' derse (K6: karari Bekci verir) Kafa'nin ham cevabi hic agiza gitmez,
+        sabit bir engel metni soylenir ve Defter'e yazilmaz (spec 3.4: gercek olmayan konusma
+        ham kayda girmemeli)."""
+        agiz = SahteAgiz(["kufurlu soru"])
+
+        with mock.patch.object(minik.bekci, "cikabilir_mi", return_value=(False, "test gerekcesi")):
+            minik.calistir(dinle=agiz.dinle, soyle=agiz.soyle, dusun=lambda soru, baglam: "kufurlu cevap")
+
+        self.assertEqual(agiz.soylenenler[0], (minik.ENGELLENDI_METNI, minik.DIS_ID))
+        satir = _son_log_satiri()
+        self.assertEqual(satir["yuva"], "akis")
+        self.assertEqual(satir["sonuc"], "ok")
+        self.assertEqual(satir["detay"]["bekci"], "engellendi")
+        self.assertEqual(satir["detay"]["gerekce"], "test gerekcesi")
+        self.assertEqual(minik.defter.oku(), [])
+
+    def test_bekci_gecerse_akis_degismez(self):
+        """Bekci 'evet' derse akis eskisi gibi calisir: cevap oldugu gibi agiza gider."""
+        agiz = SahteAgiz(["temiz soru"])
+
+        with mock.patch.object(minik.bekci, "cikabilir_mi", return_value=(True, "temiz")):
+            minik.calistir(dinle=agiz.dinle, soyle=agiz.soyle, dusun=lambda soru, baglam: "temiz cevap")
+
+        self.assertEqual(agiz.soylenenler[0], ("temiz cevap", minik.DIS_ID))
+        self.assertEqual(len(minik.defter.oku()), 1)
+
     def test_gecmis_kayitlar_baglama_yuklenir(self):
         """Onceki oturumdan Defter'e yazilmis kayitlar yeni calistir() cagrisinin baglamina
         girer: 'kapat-ac hatirlama' bunun uzerine kurulu (f2 bitirme sarti 2)."""
