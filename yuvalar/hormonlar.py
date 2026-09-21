@@ -1,5 +1,6 @@
 """Yedi hormonu tutar ve olaylara gore gunceller. Bu sayilar Minik'in her karar noktasini surer.
-Cagiran: minik.py akisi (henuz yok) ve araclar/hormon-gunu.py. Hicbir yuva bunu dogrudan cagirmaz (K1)."""
+Cagiran: minik.py akisi (henuz yok), araclar/hormon-gunu.py, araclar/hormon-yoksunluk-gunu.py.
+Hicbir yuva bunu dogrudan cagirmaz (K1)."""
 
 import time
 from dataclasses import dataclass
@@ -28,14 +29,30 @@ class Tanim:
 # Kaynak: reports/2026-09-20-hormon-mimarisi.md bolum 7 (tablo vault'ta yoktu, turetildi).
 # Davranisa bagli ucunde (kortizol, melatonin, merak) sonum bilerek cok kucuk, dusme cok buyuk:
 # beklemek hormonu indirmesin, indiren sey davranis olsun (Yigit'in karari).
+#
+# K19 (2026-09-21, notes/kararlar-anlatimli.md Soru 4): "hicbir sey yapmamanin bedeli" var olan
+# hormonlara baglandi, sekizinci satir acilmadi. Uc yoksunluktan biri (hicbir sey ogrenilmeyen
+# gun) zaten var olan davranisin sonucu: "ogrendi" gelmezse merak zaten inmez, birikir, yeni kod
+# gerekmedi. Diger ikisi asagida dusuren olarak eklendi. serotonin dusme=15 (yukselmeyle simetrik,
+# TAHMIN) 30 gunluk kosuda ic tarafta bir dengeye oturuyor (~27,8), tavana/tabana degmiyor.
+# oksitosin ILK denemede dusme=12 (simetrik) ile 5. gunde 0,0'a (taban) yapisti, gun 10 ile gun 30
+# ayirt edilemez oldu (olculdu: araclar/hormon-yoksunluk-gunu.py). Melatoninin 45. adimda 100'e
+# yapismasiyla ayni sinif kusur: TAHMIN yanlisti, dusuruldu. dusme=4.0 ile ic dengeye oturuyor
+# (~18,4), taban 0'a degmiyor (bkz. reports/2026-09-21-f3a-hormon-revizyonu.md).
+#
+# K10 (2026-09-21, Yigit'in karari): melatonin artik soyut "calisma" sayaci degil, olculen CPU
+# saniyesi (ortak/kaynak_olc.py). "calisma" olay adi ve yukselme (1,5) DEGISMEDI: tek bicimlilik
+# korunuyor (hormonlar.py hala sadece olay+siddet aliyor), degisen siddetin NEREDEN geldigi -
+# cagiran taraf artik siddeti gercek CPU suresinden hesaplayip veriyor, elle 1,0 vermiyor.
+# araclar/hormon-gunu.py ile olculdu: gercekci karisik is yukunde (hafif/orta/agir) gun sonu
+# tepe 48,5, ne tavana (100) ne tabana yapisiyor; 1,5 katsayisi bu rejimde de gecerli kaldi,
+# degistirilmedi (bkz. reports/2026-09-21-f3a-hormon-revizyonu.md).
 HORMONLAR = {
     "dopamin": Tanim(20.0, "odul", 30.0, None, 0.0, 0.25),
     "noradrenalin": Tanim(20.0, "belirsizlik", 25.0, "tanidik", 20.0, 0.10),
-    "serotonin": Tanim(50.0, "yolunda", 15.0, None, 0.0, 0.05),
+    "serotonin": Tanim(50.0, "yolunda", 15.0, "hicbir_sey_uretilmedi", 15.0, 0.05),
     "kortizol": Tanim(10.0, "ceza", 35.0, "iyi_sey", 25.0, 0.01),
-    "oksitosin": Tanim(30.0, "iyi_davranis", 12.0, None, 0.0, 0.02),
-    # yukselme 1,5: 100 adimlik bir gunun sonunda ~90'a cikiyor ama tavana yapismiyor.
-    # 3,0 denendi, 45. adimda 100'e vurup orada kaldi ve "ne kadar yorgun" bilgisi kayboldu.
+    "oksitosin": Tanim(30.0, "iyi_davranis", 12.0, "kimseyle_konusulmadi", 4.0, 0.02),
     "melatonin": Tanim(10.0, "calisma", 1.5, "uyku", 80.0, 0.01),
     "merak": Tanim(40.0, "ogrenilebilir_sasirma", 20.0, "ogrendi", 30.0, 0.01),
 }

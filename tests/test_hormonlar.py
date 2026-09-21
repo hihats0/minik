@@ -47,6 +47,30 @@ class TestHormonlar(unittest.TestCase):
         sonra = self.h.guncelle("ogrendi")["merak"]
         self.assertLess(sonra, merakli - 20.0)
 
+    def test_yalnizlik_oksitosini_dusurur(self):
+        """K19: kimseyle konusulmayan gun oksitosini indirir (yoksunlugun bedeli)."""
+        once = self.h.oku()["oksitosin"]
+        sonra = self.h.guncelle("kimseyle_konusulmadi")["oksitosin"]
+        self.assertLess(sonra, once)
+
+    def test_uretim_yoklugu_serotonini_dusurur(self):
+        """K19: hicbir sey uretilmeyen gun serotonini indirir (Yigit: 'serotonin dusmesi olur
+        bunlar olmazsa')."""
+        once = self.h.oku()["serotonin"]
+        sonra = self.h.guncelle("hicbir_sey_uretilmedi")["serotonin"]
+        self.assertLess(sonra, once)
+
+    def test_yoksunluk_olaylari_da_tek_hormona_dokunur(self):
+        """K19'un yeni iki olayi da bagimsizlik kuralini bozmamali: sadece kendi hormonuna dokunur."""
+        for olay, hedef in (("kimseyle_konusulmadi", "oksitosin"), ("hicbir_sey_uretilmedi", "serotonin")):
+            h = Hormonlar()
+            h.guncelle(olay)
+            for ad, deger in h.oku().items():
+                if ad == hedef:
+                    continue
+                self.assertAlmostEqual(deger, HORMONLAR[ad].dinlenme, delta=0.001,
+                                       msg=f"{olay} {ad} hormonunu da oynatti")
+
     def test_melatonin_ancak_uyuyunca_iner(self):
         """Uyku sabit saatte degil, yorulunca. Yorgunlugu indiren tek sey uyku."""
         for _ in range(30):

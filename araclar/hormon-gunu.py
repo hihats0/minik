@@ -1,17 +1,29 @@
-"""100 adimlik sahte bir gunu simule eder ve yedi hormonu metin tablo olarak basar.
+"""100 adimlik sahte bir gunu simule eder ve yedi hormonu metin tablo olarak basar. K10: bos
+adimlarda artik gercekten CPU harcanir, melatonin bu olcume gore beslenir (elle 1,0 verilmez).
 Cagiran: elle, `python araclar/hormon-gunu.py`. "Hormon durumu gorunur olacak" isteginin ilk hali."""
 
+import hashlib
 import sys
+import time
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
+from ortak import kaynak_olc
+from ortak.ayar import MELATONIN_CPU_TAVAN_SN
 from yuvalar.hormonlar import EN_COK, HORMONLAR, Hormonlar
 
 ADIM_SAYISI = 100
 BASMA_ARALIGI = 5  # kac adimda bir satir basilacak
 CUBUK_GENISLIGI = 20  # 0-100 araligi kac karakterle cizilecek
 CUBUK_ISARETI = "#"
+
+# Bos adimlarda Minik'in gercekte ne kadar CPU harcadigini taklit eder: kucuk model cagrisi
+# hafif, Kafa cagrisi agir. Oran MELATONIN_CPU_TAVAN_SN'e gore, "agir" tavani asip 1,0'da kirpilir
+# (gercek bir Kafa cagrisi da tek adimda tavani doldurabilir). TAHMIN: gercek dagilim olculmedi,
+# f3-b'de gercek cagri sureleriyle degisecek.
+IS_AGIRLIGI = {"hafif": 0.2, "orta": 0.5, "agir": 1.2}
+IS_DONGUSU = ["hafif", "hafif", "orta", "hafif", "agir"]
 
 # Sahte gun: (adim, olay, siddet). Arada bos adimlar var, orada sadece sonumleme calisir.
 GUN_PLANI = [
@@ -42,13 +54,35 @@ def gunu_kos():
     plan = dict((adim, (olay, siddet)) for adim, olay, siddet in GUN_PLANI)
     _basligi_bas()
     for adim in range(1, ADIM_SAYISI + 1):
-        # Planda olay yoksa Minik calismaya devam ediyor: bos adim yorgunluk biriktirir.
-        # Adim basina TEK guncelle cagrilir, yoksa sonumleme iki kez isler ve gun kisalir.
-        olay, siddet = plan.get(adim, ("calisma", 1.0))
+        # Planda olay yoksa Minik calismaya devam ediyor: bos adim yorgunluk biriktirir, ama
+        # artik elle degil, GERCEKTEN harcanan CPU saniyesiyle (K10). Adim basina TEK guncelle
+        # cagrilir, yoksa sonumleme iki kez isler ve gun kisalir.
+        if adim in plan:
+            olay, siddet = plan[adim]
+        else:
+            olay, siddet = "calisma", _bos_adimin_siddeti(adim)
         degerler = hormonlar.guncelle(olay, siddet)
         if adim % BASMA_ARALIGI == 0 or adim in plan:
             _satiri_bas(adim, olay, degerler)
     _cubuklari_bas(hormonlar.oku())
+
+
+def _bos_adimin_siddeti(adim):
+    """Bos adimda gercekten kisa bir CPU isi yapar (kucuk/Kafa cagrisini taklit eder), harcanan
+    sureyi olcup siddete cevirir. kaynak_olc disinda hicbir yerde process_time cagrilmaz."""
+    agirlik = IS_DONGUSU[adim % len(IS_DONGUSU)]
+    hedef_sn = IS_AGIRLIGI[agirlik] * MELATONIN_CPU_TAVAN_SN
+    baslangic = kaynak_olc.basla()
+    _cpu_isi_yap(hedef_sn)
+    return kaynak_olc.siddet(baslangic, MELATONIN_CPU_TAVAN_SN)
+
+
+def _cpu_isi_yap(hedef_sn):
+    """Gercekten CPU harcar (sleep degil): hedef_sn'e ulasana dek hash hesaplar."""
+    baslangic = time.process_time()
+    veri = b"minik"
+    while time.process_time() - baslangic < hedef_sn:
+        veri = hashlib.sha256(veri).digest()
 
 
 def _basligi_bas():

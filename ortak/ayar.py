@@ -1,6 +1,6 @@
-"""Kafa, Defter, Bekci ve akisin kullandigi adli sabitler: sunucu adresi, model yolu, zaman
-asimi, ornekleme, baglam, dosya yollari, sozluk. Cagiran: yuvalar/kafa.py, yuvalar/defter.py,
-yuvalar/bekci.py, minik.py."""
+"""Kafa, Defter, Bekci, Hormonlar ve akisin kullandigi adli sabitler: sunucu adresi, model yolu,
+zaman asimi, ornekleme, baglam, dosya yollari, sozluk. Cagiran: yuvalar/kafa.py, yuvalar/defter.py,
+yuvalar/bekci.py, ortak/kaynak_olc.py, minik.py."""
 
 from pathlib import Path
 
@@ -41,3 +41,14 @@ BEKCI_KUFUR_KALIPLARI = [
     r"sikik\w*", r"siktim", r"sikim", r"yarak\w*", r"got", r"gotu", r"gotun\w*", r"bok", r"boku\w*",
     r"boklu\w*", r"boktan", r"gavat\w*", r"pezevenk\w*", r"kahpe\w*", r"kaltak\w*", r"yavsak\w*",
 ]
+
+# K10: melatonin artik gercek CPU saniyesiyle besleniyor (ortak/kaynak_olc.py). Bu, "bir is
+# adiminin siddeti 1,0 (tavan) sayilacagi CPU saniyesi". OLCULDU: time.process_time()'in Windows'ta
+# raporladigi cozunurluk (1e-07 sn) yalandir, GERCEK adim buyuklugu ~15,6 ms (GetProcessTimes'in
+# isletim sistemi zamanlayici tikine bagli kabaligi, bu oturumda 5x tekrarla olculdu). Tavan bu
+# kabaligin ~6 kati tutuldu, yoksa hafif/orta is ayni kareye yuvarlanip ayirt edilemiyordu (olculdu,
+# 0,02 sn'de hafif=orta cikti). TAHMIN: araclar/hormon-gunu.py'deki demo olceginde kalibre edildi
+# (bkz. reports/2026-09-21-f3a-hormon-revizyonu.md); gercek Kafa cagrisi cok daha uzun surer (f0
+# olcumu: en yavas cevap 10,1 sn, yukaridaki KAFA_ZAMAN_ASIMI_SN), akisa baglanirken (f3-b) bu
+# tavan o gercek sureye gore yeniden olculmeli.
+MELATONIN_CPU_TAVAN_SN = 0.10
