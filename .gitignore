@@ -15,3 +15,5 @@ __pycache__/
 .env
 # Loglar repoya girmez.
 /loglar/
+# Sunucu loglari repoya girmez.
+/araclar/sunucu-loglari/

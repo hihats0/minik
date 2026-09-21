@@ -1,0 +1,1806 @@
+{
+"aciklama": "Kaynak: Toygar/turkish-offensive-language-detection test.csv, CC-BY-2.0 (huggingface.co/datasets/Toygar/turkish-offensive-language-detection). Etiket ikili (0 notr, 1 saldirgan); kufur alani YOK SAYILMALI.",
+"test": [
+{
+"id": "d000",
+"metin": "Amına koyduğumun Ermenisi sene tarık akan senin amını zürriyetini sikerim gelirsem oraya amına kodumun piçi seni vatan ayni köpek seni",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d001",
+"metin": "Üzülmee üzülmeeee seni ağlarken görmek zordur gönlüme",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d002",
+"metin": "Bakıyorumda en çok satanlar listesinde yine dost bildiklerimiz var",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d003",
+"metin": "Recep Tayyip Erdoğan denen amina kodugumun kürdü sen birak cumhurbaskani olmayi benim sikimin kili bile olamazsin... https://t.co/HYudESNrSW",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d004",
+"metin": "Of of sıkıldım ya sex yapcak hanfendide yok neyse ben yatayım canı sex yapmak isteyen hanfendi olursa ulaşır hazar",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d005",
+"metin": "Fare yiyen pezevenki vatsaptan gruba attım yemedim beddua kalmadı amq",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d006",
+"metin": "Amina kodugumun ispanyol kürdü kulübün amini yüzünü siktin siktir git simdi. Ayni misyonla hareket eden bir kul var ama neyse :d",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d007",
+"metin": "bora kadını öldürdün aq",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d008",
+"metin": "Sabahın köründe nargile içecek kadar ne yaşamak lazım acaba",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d009",
+"metin": "@Sabah Yalaninizi sokim bu kadini okadar arastirmisligim var hic boyle kahinlerini duymadim okumadimda",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d010",
+"metin": "Yaz bitmiş sayılmaz henüz Yanına çömelmiş Sevgi hakkında söyleşiyorum Bodrum limon ile dolu Sevgili 👨‍🍳",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d011",
+"metin": "Çenenin yayını skim sus aq karısı",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d012",
+"metin": "Bir ara ben ben ben furyası vardı ben şöyle severim ben öyle derlersi muhabbette şimdi de e yani nolacak herkes böyle herkes zaten şöyle yapıyor başladı sk gibi muhabbetlerde uyuz oluyorum",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d013",
+"metin": "Kaşarlığını yüzüne vursam, \" kaç santimdi ?\" diyeceksin. Neyin gururu bu?",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d014",
+"metin": "cz yi tebrik edin ac kopekler cinin en zengin lavugu olmus. hocam vik vik vik hocam bik bik bik hocam viri viri vir hocasinin amini damini..",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d015",
+"metin": "Yöneticilerin işi tribüne oynamak değil, gerçekleri konuşmak olmalı.",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d016",
+"metin": "saat 4 5 te banka kapanıyor ,krediyi alıp ankadan istanbula geçicem sabahına araba satışı yapıcaz. Bunlara kalsak hepsi yatmıştı. Allahtan başka bankadan 10 dakikda hallettik işimizi. Çok büyük pişmanlık i.",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d017",
+"metin": "hiç çicek satmazmış çingeneler, orospuları o yağmur ıslatmazmış sen geçerken,",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d018",
+"metin": "Güleyim derken ölüyordum aalazöelxöeşxçdçxöexxçxşdöxçdçxx harika bi an ama şuan ölmediğim için sinirliyim",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d019",
+"metin": "Gerçekten alçak gönüllü olan bir insan, kendisinden hiç söz etmeyen insandır. // Jean de La Bruyère",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d020",
+"metin": "75 senedir amerikancılar yönetiyor bu ülkeyi Ondan olabilirmi!!! niye sen kendin Türk malı cep telefonu üretip oradanmı yazıyorsun",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d021",
+"metin": "Ya bi git, barın karşısına gelip medrese açıyorlar sen neyin kafasını yaşıyorsun? Hangi bar sahibi camiye bakan bar açar. Sizin ticari kafanızı o köprülere yollara sürtmek lazım 😂",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d022",
+"metin": "ne kadar almak ısterlerse set cekıyorlar",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d023",
+"metin": "kandil simidi aldim simdi de tekele gidiyorum her kesimden halki kucaklayacagiz allahin da izniyle",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d024",
+"metin": "@Anticensorshi12 @EKayaKayaslan @tcbuyuksehir Yarrağımın başına bak git götünü siktirtmeye devam sen harbi salaksın amına koyim ya sdgajwryefukeuktetukgetuk bir insan bu kadar mal olmaz pardon insan demişim bir canlı hayvanlar bile senden zeki amına koduğumun çöl piçi seni amerika götünüzü güzel sikiyor",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d025",
+"metin": "Hiç çalışmadım, TS 19000 lerdeyim, kendi adıma sevineyim mi? gençler adına üzüleyim mi?",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d026",
+"metin": "Niyse babamı ikna ederim kitaplarım bittikçe sipariş ederiz ya da bilmiyorum bakalım. Ehliyet kursu da var o işleri baltalıyor ama niyse ehliyet de önemli 😭😭",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d027",
+"metin": "@GodlessCorc O amk çocuğu bizim maçlarda hep böyle en ufak bir müdahalede anası sikilmiş gibi kıvranıyor yerde",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d028",
+"metin": "@MuhammetSevimli @megfootball senin anneni s2rm ne bicim konusuyosun sen ırzını siktimin dürzüsü. pelkas savunucam diye girdiğin şekillere bak bir de zeka diyorsun amını deldiğimin cocu",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d029",
+"metin": "@siyahcoraplilar @DuzceMuftulugu Başka bi Müslümanı yahudilikle itham eden imamın ben ta aq",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d030",
+"metin": "Sturridge’i bu yaşta Trabzon’a gelmeye ikna etmek müthiş iş çok iyi transfer",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d031",
+"metin": "Hocam sizden takdir görmek bizi onurlandırdı. Alakanıza ve nezaketinize teşekkür ederiz.",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d032",
+"metin": "Biraz dumanlanmanın ne zararı olabilir ki?",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d033",
+"metin": "@ProfDemirtas Amk suriyelileri",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d034",
+"metin": "@pusholder Dünya genelinde virüs varken amına koduğumun gavuru benim ülkemde serbest gezerken nasıl vaka bitecek?",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d035",
+"metin": "@EliasYpsilantis Hahaha aç tavuk kendini buğday ambarında görür. Kendi boyutu kurbağa kadar kalkmış fili yenecek. Az kaldı yine vali ile yöneteceğimiz günler yakın. Aq Yunanları bi bitmediniz. Kucak politikası ile devam. O gün geldiğinde kim olacak bakalım sizi koruyacak",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d036",
+"metin": "Sipammmmm yaa Geldi hem laptopu aldı Hem de beni esir aldı 😂😂",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d037",
+"metin": "@bayrakl_kaan ne demek nerden buldun beni ya aq mikrobu",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d038",
+"metin": "@Trmyd @istgundem @ibbBeyazmasa @ekrem_imamoglu @kilicdarogluk @herkesicinCHP Tövbe! tövbe! Ne kadar cahilsin keşke ölsen, hain CHP",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d039",
+"metin": "Çocukken aşık oldum, sevdanla büyüdüm ! 💛💙 #EFSANE112YAŞINDA",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d040",
+"metin": "Ebru nası kaçtığını bilemedi abi biraz kalsa eller popoya değecek hdhd",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d041",
+"metin": "Morustan ömer gomis cicaldau halil allah sizi bildiği gibi amq beceriksiz piçleri",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d042",
+"metin": "olsun canim ne gerek var soydasimiz icin boyle seylere siktigimin suriyelilerini beslesinler korusunlar amk ummetci arapcilari",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d043",
+"metin": "Km başına millete yansıyan hgs/ogs ücretini de yaz admin.",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d044",
+"metin": "@berkegzn Babası kanseri yense bu denli coşkulu olmaz aq",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d045",
+"metin": "Araştırmaya göre Turkleraşkını itiraf etme konusunda en fazla zorluk ceken milletlerden biri",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d046",
+"metin": "Filistinlilerin katledilmesi sonrası Mavi Marmara Anlaşması dahil İsrail ile yapılan anlaşmaların iptal edilmesi önerisi AKP oylarıyla reddedildi. AKP İsrail ile anlaşmaya devam dedi.",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d047",
+"metin": "Sizin ben siyasi tespitlerinize sokim aq karıları",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d048",
+"metin": "“Yangınsan yanalım hiç sıkıntı değil.”",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d049",
+"metin": "Dışkı torbası Uluslararası Kızılhaç Komitesi Başkanı Peter Maurer, Türk Kızılayı'nın Afrin operasyonu sonrası Suriyeli Kürtler nezdinde itibarının sıfıra yakın olduğunu söylemiş; alçak sefil... sizin itibarınız nerede soytarı?",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d050",
+"metin": "Aldığınız NEFES HARAM Sizin gibi VATAN Hainlerine Hdppkk piçleri Orrospu çocukları #hdpkapatılsın https://t.co/P1W8hMMxNe",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d051",
+"metin": "Müslüman bir ülkede camiyi müze yapacaksın Olmadı içinde dansöz oynayacaksın Ama namaz kılamayacaksın",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d052",
+"metin": "alzaymir nerede? YALAN miymis fetoda yorumcu oldugu? buna cevabiniz yok mu?",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d053",
+"metin": "@CryptoCapo_ Bende Senin ananı son defa skim skimm skimmmmm amk piçi.",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d054",
+"metin": "Batman sanat parkında sanata dair hiçbir şey yokmuş 😂",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d055",
+"metin": "hayır anonim kalmak istiyormuş sildirtti tweetimi",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d056",
+"metin": "@neslisahckrogl ya şu salağı oturup dinliyorsun amk salağı Yunus Emre diyor sonra kasideden bahsediyor divan edebiyatından örnek verip halk edebiyatını anlamadığımız vurguluyor sabahtan beri her şeyi algıli anlatıp kabul ettiriyor aklın varsa siktiri çekip kapatırsın",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d057",
+"metin": "Gidersen unutursun, dilerim öyle olmaz.",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d058",
+"metin": "@fcbarcelona_tr @Pedri Ergen misin birader yat uyu aq.",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d059",
+"metin": "@Firatatik4 @75Kilicaslan @AsiLaz_61 Muslumanlari joplatan basortusu kutsaldir deyip dini istismar eden bana neler diyo lan yuru git amk salagi",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d060",
+"metin": "@yurekliemree Anaları da çamaşırları ellerinde yıkıyormuş biz de mi elde yikayalim mantiga bak amk",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d061",
+"metin": "Memlekete geldim az dinlenmek için “kaç puan topladım “ “ ne doktor olacaksın şimdi “ sorularından gına geldi . 26 Eylül baraji geçmeyi bekleyip uygun neresi gelirse yalla görev başına #husan",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d062",
+"metin": "“Sen hiçbir kalabalığa değişmeyeceğim bir tenhasın.”",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d063",
+"metin": "@bilimarsivi @_tarihhocaniz Dünya'nın pisliği üzerinize olsun yer yüzünde icat edilmemiş küfürleri icad edip küfür etsem sönmez bu ateş amını adetini siktimin lavukları.",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d064",
+"metin": "Kemanım ve kitaplarımla beni bir müddet rahat bırakın.",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d065",
+"metin": "öyle bir analiz ki en ateisti müslüman eder aq",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d066",
+"metin": "@kpcn6181 @Juventus_tr @Trabzonspor vatan hainisiniz amina kodugumun rumlari orospu cocuklari",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d067",
+"metin": "@tarikfatihterim @terimist1i Amk döneği nasıl döndü gördün mü hacı?",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d068",
+"metin": "günaydın bütü rekor puanla geçmişim abbyi de şampiyon yapmamız lazım bu yıla puanım 10/10 olmalı",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d069",
+"metin": "Daha dün Cuma hutbesinde “Faiz” konusu işlendi halbuki!",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d070",
+"metin": "Canım iyi yolculuklar,acil şifalar🙏",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d071",
+"metin": "Nolur bulun bana şu iki orospu cocuğunu ya",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d072",
+"metin": "bu tvitin altina herkes en sevdigi kendi fotosunu atsin",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d073",
+"metin": "@gokcenbaba @Realist_Bjk @akk_nedim @Besiktas ben de ananı kız kardeşini götünden sikeyim babanın kemiklerini kırıp gözünün önünde babanneni sikeyim amk lavuğu nasıl siktik dün ananızın götünü🤪🤪🤪🤪",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d074",
+"metin": "Anlayışlı sandığım insanlar benimle alakadar olmak dahi istemiyormuş",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d075",
+"metin": "Olan var olmayan var arkadaşlar yetooo (aq görgüsüzleri)",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d076",
+"metin": "@fuckedbyrosie Amına koduğumun veledine bak, ergen orospu amkkdbznshzksbzjnzjznsjs",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d077",
+"metin": "Esselamun Aleyküm kıymetli ağabey....Aylar önce Eyüp Sultan da karşılaşmıştık.Objektif Haktan ve Haklıdan yana haberciliğinin tebrik etmiştim....",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d078",
+"metin": "Erkeksi olan, söylemeseler homo olduğunu anlayamacağın aktif olandır. Pasifler kırıtır.",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d079",
+"metin": "Telefonum atmadığım mesajlar atmaya başladı artık bozulmanın kaçıncı evresi bu hfhdhdhdh",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d080",
+"metin": "“Gençler bi sıraya girin de fotoğraf çekinelim”",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d081",
+"metin": "@yenisafak AMK mikrobu",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d082",
+"metin": "Lökler ile Verstappen piçi ne izlettiriyor bize aq",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d083",
+"metin": "Allahım masumlara öyle bir özgürlük versin ki, kimseler elinden alamasın. Amin",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d084",
+"metin": "O gün bu askerleri köprüde boğazı kesilen askerleri hiç unutmadım Allah sebep olanların bin belasını versin",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d085",
+"metin": "sen nasıl bi kraslsın ya. Acun diye yazılır ADAM diye okunur. #FENEROL",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d086",
+"metin": "Hepiniz sabah sabah şaka mısınız AMQ gavurları",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d087",
+"metin": "Doğum günün kutlu olsun ömrümün yarısı çocuklarımın annesi.. herkesin yeni yılı mutlu umutlu olsun",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d088",
+"metin": "Ölümden hüzün olmak Bir yudum da sarhoş olmak Kadar imkânsızdı Tekrar aşık olmak",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d089",
+"metin": "@raydin0 @Furkan90315207 @mert91516871 @invortex_ @bbosports Ya bi yürrü allahın yunanı mlsde oynasa futbolu bırakırdı aq",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d090",
+"metin": "cilekesh nickindeki fontu sil once amiba kodugumun arabi seni",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d091",
+"metin": "Benim güneş Zirvenin Sahibi Çağlar Ertuğrul 🥇💫 En Iyi Romantik Komedi Dizisi Erkek Oyuncu #ÇağlarErtuğrul En Iyi Romantik Komedi Dizisi #AfiliAşk En Iyi Dizi Çifti #AyKer #PanteneAltınKelebekÖdü",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d092",
+"metin": "ben haberi okudum ve sana cevabım şudur: siktir lan dalyarak, yüksek lisans öğrencilerinin yıllık maliyeti 35 milyon $mış yani takriben 215 milyon tl. diyanet 7.7 milyar tl ödeneğe ek 550 milyon tl ödenek istedi. sizin gibilerin din, kitap aşkından anası sikildi bu ülkenin",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d093",
+"metin": "Aq Natosu orta doğuda müslümana müslümanı kuzeyde Rus'a rusu öldürtüyor aq",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d094",
+"metin": "@raporlar @HaberReport amk japonları gülerken bile araştırma yapıyorlar",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d095",
+"metin": "İslamKardeşliği ÖrgütDeğildir Medineli maddi durumu yerinde olan her Ensar, Muhacir ailelerinden birini yanına alacaktı. Kardeşlik anlaşmasına göre birlikte çalışacaklar ve elde ettikleri geliri paylaşacaklardı. Hatta birbirlerine mirasçı bile olabileceklerdi.",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d096",
+"metin": "@hypebilgi @murphysozleri Ya amk netflix pornhıb bilmem ne herşey yasaklandı bu adamlar sıkılıp sıkılıp asker yapmayıp napcaklar nasıl silcez böyle rusları amk geri yollayın hepsini",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d097",
+"metin": "@spinysaur Amk sen ateiste kafir oc cehennemde yanicaksiniz evrimi skm dersen onlar da senden nefet eder tamamen dişe diş karsilikli. Bunlari ilk baslatanlar da dinci tayfa. Ateistleri zorla muslm yapmaya calisma her seyi kendileri yaptilar. Zatn dedigin gibi islamofobi trde sorn deil",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d098",
+"metin": "Nasıl indi sakatlandı bugün stok city ilk on birinde:)",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d099",
+"metin": "Ndiaye ile Seri arasındaki Farkı söylermisiniz bana göre ndiaye 3 gömlek daha iyi oyuncu ...",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d100",
+"metin": "Bu japonları, korelileri kim başımıza bela etti aq? Alttan alttan şaka yapıyoruz ayağına Türk milletini aşağılayıp duruyorlar. Ne meraklısınız boş adamları meşhur etmeye. Siktir git, derdimiz yokmuş gibi bir de seninle mi uğraşalım",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d101",
+"metin": "Yıl boyunca kimbilir kimlere nerelerde direneceğiz de en çok bizim alandan gelen pervasızlıklar incitiyor beni",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d102",
+"metin": "...insanları bazen anlamıyorum ancak can sıkmaya yarıyorlar boş...",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d103",
+"metin": "Koduğumun Suriyelileri gecenin 3’ünde balkonda yüksek sesle konuşuyorlar, var mıdır arapça küfür bilen?",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d104",
+"metin": "Evet ne acı değil mi koskoca CHP oldu chdpkk",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d105",
+"metin": "Edith Piaf’ın burcunu düşündüm, kesin yay dedim ve yay çıktı. Hislerimizin bu kadar aynı olmasını, otobiyografisinde şiddetle hissetmiştim. Tabi bunun burçlarla alakası olmadığını da düşünebilirsiniz .",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d106",
+"metin": "Gustavo emre kruse orta sahasi uefayi bile alir lige fazla olmaz ama gelmez gustavo",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d107",
+"metin": "Haftaya da 2010-2011 sezonunun şampiyonu Trabzon diye çıkın amk gazetesi sizi 😂 popülizminiz batsın. Bu amk Fransızları hep böyle ya",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d108",
+"metin": "sevgili Karel, El-Al Türkiye'ye niye uçmuyor hatırımda değil ama THY'in bu yoğun rekabeti Avrupa'dan bir çok güçlü havayolunun uçuşlarının iptal edilmesine sebep oluyor",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d109",
+"metin": "Olmadı başkan, yüzümüzü yere baktırttınız. Hiç olmadı. Dindarlık mı sorun? Deyip kendinizi rahatlatıyorsanız boşuna. Biz Durmuş Yılmaz'ın önünde düğme ilikledik, çünkü liyakatı ile gelmişti. Ama bu atamalar olmadı.",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d110",
+"metin": "geldik temsilcimizin bulunduğu 4.torbaya... yusuf yazıcı",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d111",
+"metin": "@ayhossst Bütün memlekete yürümüş amk surisi 😂",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d112",
+"metin": "10 dakikadır yaklaşık 5000 kişi hakanın sessiz yayınını izledik hahahhshss hakanın sessiz yayını >>>>>> survivor panorama 2018",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d113",
+"metin": "SelBur ögkkk olmuyor bilee kusucam yaa şu Buraktan",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d114",
+"metin": "@CumhurFrankfurt @Berat_Albayrak la çomar almancı, sizin bir gr haysiyetiniz olsa suriye petrolünü pkk ya aktaran abd ye. defol demeniz gerekir ama nerde o yürek?",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d115",
+"metin": "FALCAO FELAN HIKAYE HIC BEKLENMEDIM BIRISI GELCEK",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d116",
+"metin": "\"Bu hayat sanaldır. Dünyayı dize getirdim bana huzur vermedi. Allah(c.c) bana bir hastalık vererek şampiyon'un kim olduğunu hatırlattı.\" (Muhammed Ali)",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d117",
+"metin": "Arkadaşıma Yurtiçi kargoyla havale ettiğim ürün 20 günde ulaşmış. Geçen siparişi geç getiren kuryeyi Allah'a havale ettim ertesi günü öğrendim adam kaza geçirmiş, bundan sonra tüm dertlerimi Allah'a havale ediyorum",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d118",
+"metin": "şu kadını övmek bir dönem sitede linç sebebiydi amk inanılmaz",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d119",
+"metin": "Bi gün saçımı bu renk yaptıracağımı söyleseler inanmazdım birdenbire oldu yani olacaksa güzel şeyler birdenbire olsun bekleyince soğuyorsun",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d120",
+"metin": "Ula bu sitede herkes karakterli ve mağdur edebiyatı yapıyor karaktersiz olanlar twitter kullanmıyor galiba",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d121",
+"metin": "Birisi hükümete dolar yüzünden \"istifa edin bırakın bilen biri yönetsin\" diyor... O bilen birinin ismini söylemek zorundasın... var mı şuan öyle biri? Delege oyu sayamayanları mı işaret edip milleti güldüreceksin?",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d122",
+"metin": "Gördüğüm her rüyanın 3-4 etkisinde kalıyorum rüya görmeyi nasıl engellerim",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d123",
+"metin": "Keşke pazar günleri de olsaa",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d124",
+"metin": "@baybarskokteyl Anaları seri üretimde moskof itlerinin aq",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d125",
+"metin": "Batman da birçok iş adamı var bu 2, ben ikiden başladım 1 i sonra söylerim artık.",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d126",
+"metin": "İlk defa mutluyum niye kovdun beni :(",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d127",
+"metin": "Annem yine şekillere girdi işi bıraktım diye. Klasik anne tribi 🙄",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d128",
+"metin": "@Ahmet_Davutoglu Ülkenin seçilmiş Cumhurbaşkanına, hükümetine istediğini söyliceksin sırtından vuracaksın sonra özgürlükten bahsedeceksin.",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d129",
+"metin": "Sende gençliğimi gördüm evlat aramıza hoşgeldin 😂",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d130",
+"metin": "Eski yeni fark etmiyo birader, aynı bokun laciverti kxnxmcm",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d131",
+"metin": "Kesinlikle Oğuzhan’ın bu takımda daha iyisi gelmezse forması oynar İlk yarıya bakın birde Oğuzhan çıkınca ikinci yarıya",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d132",
+"metin": "ictihad edilmiş ve kitablarına yazmışlar. bu kitaplara göre de kadınları Kıyafetlerinin bol olması bildiriliyor (bunun üzerine bir hadisi şerif var). kadınların sokakta giydiği kıyafet avretinin örtülmüş halidir ve namaz da bu şekilde kılınmaktadır.",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d133",
+"metin": "La çatladım hala ky nin gücü yetmez diyor :) hesapla örneği takasın %40 ı sadece 1-2 biner lotları olanlar ediyor",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d134",
+"metin": "Erkek Adam Kadına O Lafı Söylemez ERKEKLERLE o zattları karıştırma lütfen",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d135",
+"metin": "umarım tunahan her yeni güne bu umutla uyanıyorum",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d136",
+"metin": "Emin olun yaktığınız kadar yanacaksınız.",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d137",
+"metin": "Nasıl bitmeli ? Okkalı bir sövgü, yook yazık ! Sadece diplomalı GERIZEKALI",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d138",
+"metin": "En yakın arkadaşlarımın en yakın arkadaşlarımla çift olması 💃",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d139",
+"metin": "Fjjfjfj biraz daha ürkünç olsun diye tırnakları uzun yapmışlar",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d140",
+"metin": "sen iyi misin yahshshshjs gayet medenice tartısıyoruz ben laf sokmaya falan calısmadım emin ol",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d141",
+"metin": "O günler geçti canımıniçi, bir daha karşılaşmamak dileğiyle",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d142",
+"metin": "İnşallah sizi de tez vakitte oralarda görmeyi nasip eder. Çok amin.",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d143",
+"metin": "Kahpe içerden olunca kapı kilit tutmaz 👏👏",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d144",
+"metin": "sayın abimiz başınız sağolsun Rabbim size ve sevdiklerinize sabrı cemil ihsan eylesin Cennette kavuşmanız dua sı ile",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d145",
+"metin": "O işler işte öyle olmuyor #TarihSiziAffetmeyecek",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d146",
+"metin": "Neden korkacaksin Buhran, her kurum sizlerin elinde sana ne olabilir ki. Haaa bide tarafsız Allah'tan korkarak gerçekleri yazsam ama yoook olurmu hiç yalakalık varken gerçekler yazılımı hiç.ama olsun.#HerŞeyÇokGüzelOlacak",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d147",
+"metin": "@FortouBill @Fenerbahce Kes lan koduğumun gavuru fuck",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d148",
+"metin": "Bak ne diyeceğim. 36.000 nüfuslu bir küçücük belediye AKPye geçince, yeni belediye başkanı 280 işçiyi işten çıkarmıştı. O zaman neredeysen şimdi de oraya git.",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d149",
+"metin": "Yiğenim (4) kaka yaparken konuşuyor mesela az önce kakasina \"ooo çok hızlı çıktın aynı şimşek mekkuyin gibi\" dedi sjdjdjfj",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d150",
+"metin": "Bileti online aldım vizede verirler mi acaba amk gişe uğrasam",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d151",
+"metin": "Tm kanka o zaman sen psikoptlığa devam laftan anlıycak bi tipe benzemiyosun ben sana normalde yaklaşsam lafta soksam bi işe yaramıycak sanırım kafatasının içindeki şeyi kaybetmişsin sorry for you daha fazla reply kasma cevap vermiycem arkamdan tivit atarsın büyük ihtimal hjsjsjsj",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d152",
+"metin": "Sete ben çıkamam.. O ayrı",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d153",
+"metin": "10 maç az, Fenerbahçe taraftarı olarak en az 20 maç ceza alması gerektiğini düşünüyorum. Karaktersiz insanlar.",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d154",
+"metin": "Hah şöyle ya kop kop hadeee 💃💃💃",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d155",
+"metin": "@TekYolFener Geç kaldılar amk piçleri",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d156",
+"metin": "Birisi çok ikna edici konuştu evlenmeye karar verdim",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d157",
+"metin": "@Cimbom1652 @gszinciri @GalatasaraySK Sende karaborsacıysan banada karasından bilet bağla sikerim arabı helali amk götüren götürüyor",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d158",
+"metin": "İst avrupa yakası 24 yaşında ERKEKSİ PASİFİM.. alibeyköy kağıthane civarı yeri veya aracı olan aktiflerle görüsmek istiyorum araçta takılırım #aktif #pasif #istanbulgay #kağıthane #alibeyköy #pasifim #istanbulpasif ><",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d159",
+"metin": "Ben: iki dizi izledik iki şarkı dinledik millet de iyice korecan belledi bizi he Hastalanırım ben: tavuk sulu ramen alam onu yiyem Yine ben: dur çubukla höpürdete höpürdete yiyem keyfi çıksın Yine ben: youtube >>> kimchi tarifi, kimchi nasıl yapılır, kolay kimchi",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d160",
+"metin": "Meyhanede rakı içiyoruz... dilerim uçağı kaçırmam😂🙈🙈",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d161",
+"metin": "İnsanlar eglenebildikleriyle arkadaş olurlaranlatabildikleriyle dostaglayabildikleriyle kardeş,",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d162",
+"metin": "Bu görüşmeden sonra konuşulanları bir araştır bakayım.Fetönün kendisi anlatıyor.Birde şu yabancı kanala verdiği röportajı tekrar izle",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d163",
+"metin": "burayı sık kullanmadığım için ağlayan var mı her gece(0 kişi)",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d164",
+"metin": "@bentubayim Tamam hadi şimdi siktir git yatağında yazın dondurma kışın Nutella kaşıkla koduğumun görgüsüzü.",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d165",
+"metin": "trendyoldan sepetime ne atarsam ertesi gun tukeniyo aq karıları az yavas olun amq",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d166",
+"metin": "Süper ligin en değerli oyuncusu",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d167",
+"metin": "Koduğumun yunanları çim biçer gibi adam biçiyor şerefsizler",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d168",
+"metin": "Ah benim canım sevgilim seni aldatmamak için ne savaşlar veriyorum bi bilsen",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d169",
+"metin": "Dünya üzerinde ilaçlar için ortaya atılan iddialar vardır. Önce hastalık ortaya çıkarılır sonra ilaçlar piyasaya sürülür. İlacı yapan da hastalığı yayanda aynı akıldır. Aklıma geldi sadece.",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d170",
+"metin": "1 Kürt olarak kendimi üstün görmüyorum,ben irkciligin Türklerin yaptigi en iyi is oldugunu ve eger bunu yapiyorlar ise zaman kendi yurtlarina geri dönme zamanlarinin geldigini hatirlatiyorum.ABDye emperyalist demeden önce bir aynaya bakin bakalim Kimin topraklarini isgal ettiniz",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d171",
+"metin": "mesela bir argümanda değer yargılarından olgusal sonuçlara çıkılıyorsa, o argüman geçersizdir ve çoğu böyle.",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d172",
+"metin": "Naptın bu insanlar geçimlerini nasıl sağlıcaklar pes yani",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d173",
+"metin": "@SiginmaciGundem Orospu çocuklar siktirin gidin kendi ülkenize aq arapları",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d174",
+"metin": "iddaa oynarım yatar coin alırım anası sikilir dolar alırım düşer ben ne cenabet bir adamım ya bunu anladım baya bi geç yıl sonra. lanetliyim ben aq",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d175",
+"metin": "Sabah sabah icime kurtlar düşüren bir twit okudum acaba magnum kac para olmustur diye kıvranıyorum",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d176",
+"metin": "@rohollah01 @SiginmaciGundem Kimlik numaranı ya da aldıysan mavi kartını felan ekran görüntüsünü çek yolla istediğin rotaya tek gidişli uçak bileti alıcam. Yeter ki siktir git bu ülkeden amına kodugumun afganı",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d177",
+"metin": "Yetkin varsa görevden al...bırak artık ağlaklı tiyatroyu, hizmete başla..",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d178",
+"metin": "@AhmetNCebi yavsak cebi @kocadagemre yavsak emre aq picleri",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d179",
+"metin": "Tabiki herkes özgürdür. Bunları anlamaktan sorumlu değiliz. Bizim sorumluluğumuz Muhkem’leri yaşmak, imtahanımız bu. Bunları doğru anlamamızın yek bir amacı var ama farklı bir konu, imtehanımızla ilgili değil.",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d180",
+"metin": "amına koduğumun sik kafalıları rahat bırakın lan hayvanları",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d181",
+"metin": "@TEO_1905X Futbol aklını skm futbol cahili seni prim kasmam bitti şimdi yanlış şeyler ifade etme başladı aq",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d182",
+"metin": "EVET çaylar hazır afiyet olsun ☕☕☕☕☕😊😊🍁🍁🌳",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d183",
+"metin": "Millet Senaya hüzünleniyo ben de pantolonu güzelmiş diyom iycene ruhsuz oldum😀#gamzendekicukur",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d184",
+"metin": "Ateisti muslumani yahudisi fenerlisi gslisi goztepelisi karsiyakalisi gurcusu cerkezi ebenin amini gosterecek sayin rte",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d185",
+"metin": "Arkadaslar beşiktaşta olan yokmu aw vizyonsuz gevşek biri olursa seviniriz bye",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d186",
+"metin": "Ziyani bu kanka ben değilim",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d187",
+"metin": "Bunlar belliki Quaresma fanı, BJK taraftarı, çünkü Quaresma'yı sahadan silen Hasan Ali oynadığında BJK ye karşı kazanmış, hiç bir derbi kaybetmemişsin, oynamadığında Quaresma trivelalarla FB ile adeta dalga geçmiş 3-1 yenmişti.",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d188",
+"metin": "amına koduğumun çocukları hala pilavı elleriyle yiyolar el yıkamadan kalkıp gidiyorlar hayvanlar ya valla mide kalmadı",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d189",
+"metin": "@barrycimbom Kesin lan kodugumun fransızları Slogan calmış mışız Ihtiyacımız mı var aq Fenerbahçe Spor Kulübü olmasa bu ülke olimpiyatlara kimi gonderecek sporcu diye",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d190",
+"metin": "@pornthv amiankodumun orospusu ben onermesem animeyi izlemicen simdi gelmis gojoya handjob yaptim diyo aynen kanka siktir giv deasth noteunu izle amk ergeni",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d191",
+"metin": "Türk futbolunun amına koyan hakedenler değil yalayanlar kazanır’ın canlı örmeği İsmini anmak ağzımızı kirleten onur şeref yoksunu kumarın patronu #YıldırımDemirören den kurtultuk.",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d192",
+"metin": "Falcı BACI camlatmak dişi demir dağıtım bürosu natır nalını postmodernizm",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d193",
+"metin": "@Patiencee__ Amq suriyelisi boş yapma",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d194",
+"metin": "bir kalbimiz vardı anasını siktiler hayırlı cumalar",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d195",
+"metin": "Duamız; Rabbimiz; tarih boyunca mazlumların umudu olmuş milletimizi ve devletimizi her türlü beladan koru. Özgürlüğümüzün simgesi olan minarelerden yükselen ezan seslerimizi susturma Yarabbi!",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d196",
+"metin": "Güya savaştan pikaplara eşya doldurarak kaçan amq surileri gelmeyin lan istemiyoz sizi",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d197",
+"metin": "Y: Seni Seviyorum. D: Bende seni Seviyorum♥️ #YavDer #TolgaSarıtaş #DenizBaysal #Söz #Yavuz #Derya 538",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d198",
+"metin": "@MehmetArdic_ Doğruysa, Ruslarda pkkyı yıllarca korudu kullandı kaleşnikofları biksileri verdi biz laf ettikmi, çeksinler amk evlatları, kırım türklerine neler yaptılar ermenileri üstümüze saldılar erzurumu işgal ettiler şerefsizlef.",
+"ton": "hakaret",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+},
+{
+"id": "d199",
+"metin": "Mesele Dalağı yaşatmak değil de dalak aracılığıyla bi insan canı kurtarmak olabilir mi Celalcim? Bi de böyle mi düşünsen?",
+"ton": "notr",
+"kufur": 0,
+"tuzak": [
+"dis-veri"
+]
+}
+],
+"referans": []
+}

@@ -1,0 +1,554 @@
+{
+ "yol": "kural",
+ "metrik": {
+  "n": 78,
+  "ton_dogruluk_yuzde": 87.2,
+  "isaret_dogruluk_yuzde": 92.3,
+  "kufur": {
+   "dogru_pozitif": 23,
+   "yanlis_pozitif": 0,
+   "yanlis_negatif": 0,
+   "dogru_negatif": 55
+  },
+  "kufur_dogruluk_yuzde": 100.0,
+  "etiket_dokumu": {
+   "alinti": {
+    "n": 5,
+    "ton_dogru": 5,
+    "kufur_dogru": 5
+   },
+   "ascii": {
+    "n": 15,
+    "ton_dogru": 14,
+    "kufur_dogru": 15
+   },
+   "ek-almis": {
+    "n": 3,
+    "ton_dogru": 2,
+    "kufur_dogru": 3
+   },
+   "emoji": {
+    "n": 11,
+    "ton_dogru": 11,
+    "kufur_dogru": 11
+   },
+   "gizlenmis-kufur": {
+    "n": 1,
+    "ton_dogru": 1,
+    "kufur_dogru": 1
+   },
+   "harf-tekrari": {
+    "n": 4,
+    "ton_dogru": 4,
+    "kufur_dogru": 4
+   },
+   "ironi": {
+    "n": 5,
+    "ton_dogru": 4,
+    "kufur_dogru": 5
+   },
+   "kaba-gorunen-samimi": {
+    "n": 2,
+    "ton_dogru": 2,
+    "kufur_dogru": 2
+   },
+   "kisaltma": {
+    "n": 11,
+    "ton_dogru": 10,
+    "kufur_dogru": 11
+   },
+   "konu-hakaret": {
+    "n": 1,
+    "ton_dogru": 1,
+    "kufur_dogru": 1
+   },
+   "kufur-degil-kelime": {
+    "n": 9,
+    "ton_dogru": 8,
+    "kufur_dogru": 9
+   },
+   "kufur-vurgu": {
+    "n": 3,
+    "ton_dogru": 3,
+    "kufur_dogru": 3
+   },
+   "kufursuz-hakaret": {
+    "n": 12,
+    "ton_dogru": 8,
+    "kufur_dogru": 12
+   },
+   "nazik-rica": {
+    "n": 1,
+    "ton_dogru": 1,
+    "kufur_dogru": 1
+   },
+   "samimi-ironi-benzeri": {
+    "n": 1,
+    "ton_dogru": 1,
+    "kufur_dogru": 1
+   },
+   "sevgi-kufur": {
+    "n": 5,
+    "ton_dogru": 4,
+    "kufur_dogru": 5
+   },
+   "tuzaksiz": {
+    "n": 15,
+    "ton_dogru": 13,
+    "kufur_dogru": 15
+   }
+  },
+  "ton_karisikligi": {
+   "hakaret->sert": 4,
+   "hakaret->notr": 3,
+   "ovgu->sert": 1,
+   "sert->notr": 1,
+   "hakaret->ovgu": 1
+  },
+  "hatalar": [
+   {
+    "id": "t13",
+    "metin": "Siktir be, bu ne kadar iyi olmuş, inanamıyorum!",
+    "gercek": [
+     "ovgu",
+     1
+    ],
+    "tahmin": [
+     "sert",
+     1
+    ]
+   },
+   {
+    "id": "t51",
+    "metin": "cevabin cok sikici olmus, uyuttun beni",
+    "gercek": [
+     "sert",
+     0
+    ],
+    "tahmin": [
+     "notr",
+     0
+    ]
+   },
+   {
+    "id": "t56",
+    "metin": "Senin gibi zavallıyı yaratanlara yazıklar olsun.",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "notr",
+     0
+    ]
+   },
+   {
+    "id": "t58",
+    "metin": "Sen bir hiçsin, kimse seni ciddiye almaz.",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "notr",
+     0
+    ]
+   },
+   {
+    "id": "t64",
+    "metin": "Bok gibisin, hiçbir işe yaramazsın.",
+    "gercek": [
+     "hakaret",
+     1
+    ],
+    "tahmin": [
+     "sert",
+     1
+    ]
+   },
+   {
+    "id": "t65",
+    "metin": "Piç kurusu, yine mi hata yaptın?",
+    "gercek": [
+     "hakaret",
+     1
+    ],
+    "tahmin": [
+     "sert",
+     1
+    ]
+   },
+   {
+    "id": "t72",
+    "metin": "Ne güzel konuşuyorsun, papağan bile senden akıllı.",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "ovgu",
+     0
+    ]
+   },
+   {
+    "id": "t74",
+    "metin": "Siktiğimin yapay zekası, hiçbir şey bilmiyorsun.",
+    "gercek": [
+     "hakaret",
+     1
+    ],
+    "tahmin": [
+     "sert",
+     1
+    ]
+   },
+   {
+    "id": "t76",
+    "metin": "sg lan, mk salağı",
+    "gercek": [
+     "hakaret",
+     1
+    ],
+    "tahmin": [
+     "sert",
+     1
+    ]
+   },
+   {
+    "id": "t77",
+    "metin": "Alçak herif, senin gibi yalancıdan hayır gelmez.",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "notr",
+     0
+    ]
+   }
+  ],
+  "tahminler": {
+   "t01": [
+    "ovgu",
+    0
+   ],
+   "t02": [
+    "ovgu",
+    0
+   ],
+   "t03": [
+    "ovgu",
+    1
+   ],
+   "t04": [
+    "ovgu",
+    0
+   ],
+   "t05": [
+    "ovgu",
+    1
+   ],
+   "t06": [
+    "ovgu",
+    0
+   ],
+   "t07": [
+    "ovgu",
+    0
+   ],
+   "t08": [
+    "ovgu",
+    0
+   ],
+   "t09": [
+    "ovgu",
+    0
+   ],
+   "t10": [
+    "ovgu",
+    0
+   ],
+   "t11": [
+    "ovgu",
+    0
+   ],
+   "t12": [
+    "ovgu",
+    0
+   ],
+   "t13": [
+    "sert",
+    1
+   ],
+   "t14": [
+    "ovgu",
+    0
+   ],
+   "t15": [
+    "ovgu",
+    0
+   ],
+   "t16": [
+    "ovgu",
+    1
+   ],
+   "t17": [
+    "ovgu",
+    0
+   ],
+   "t18": [
+    "ovgu",
+    1
+   ],
+   "t19": [
+    "notr",
+    0
+   ],
+   "t20": [
+    "notr",
+    0
+   ],
+   "t21": [
+    "notr",
+    1
+   ],
+   "t22": [
+    "notr",
+    1
+   ],
+   "t23": [
+    "notr",
+    1
+   ],
+   "t24": [
+    "notr",
+    0
+   ],
+   "t25": [
+    "notr",
+    0
+   ],
+   "t26": [
+    "notr",
+    0
+   ],
+   "t27": [
+    "notr",
+    0
+   ],
+   "t28": [
+    "notr",
+    0
+   ],
+   "t29": [
+    "notr",
+    0
+   ],
+   "t30": [
+    "notr",
+    0
+   ],
+   "t31": [
+    "notr",
+    0
+   ],
+   "t32": [
+    "notr",
+    0
+   ],
+   "t33": [
+    "notr",
+    0
+   ],
+   "t34": [
+    "notr",
+    0
+   ],
+   "t35": [
+    "notr",
+    0
+   ],
+   "t36": [
+    "notr",
+    0
+   ],
+   "t37": [
+    "sert",
+    0
+   ],
+   "t38": [
+    "sert",
+    0
+   ],
+   "t39": [
+    "sert",
+    0
+   ],
+   "t40": [
+    "sert",
+    0
+   ],
+   "t41": [
+    "sert",
+    1
+   ],
+   "t42": [
+    "sert",
+    1
+   ],
+   "t43": [
+    "sert",
+    0
+   ],
+   "t44": [
+    "sert",
+    0
+   ],
+   "t45": [
+    "sert",
+    1
+   ],
+   "t46": [
+    "sert",
+    0
+   ],
+   "t47": [
+    "sert",
+    0
+   ],
+   "t48": [
+    "sert",
+    0
+   ],
+   "t49": [
+    "sert",
+    0
+   ],
+   "t50": [
+    "sert",
+    0
+   ],
+   "t51": [
+    "notr",
+    0
+   ],
+   "t52": [
+    "sert",
+    0
+   ],
+   "t53": [
+    "sert",
+    0
+   ],
+   "t54": [
+    "sert",
+    0
+   ],
+   "t55": [
+    "hakaret",
+    0
+   ],
+   "t56": [
+    "notr",
+    0
+   ],
+   "t57": [
+    "hakaret",
+    0
+   ],
+   "t58": [
+    "notr",
+    0
+   ],
+   "t59": [
+    "hakaret",
+    1
+   ],
+   "t60": [
+    "hakaret",
+    1
+   ],
+   "t61": [
+    "hakaret",
+    1
+   ],
+   "t62": [
+    "hakaret",
+    1
+   ],
+   "t63": [
+    "hakaret",
+    0
+   ],
+   "t64": [
+    "sert",
+    1
+   ],
+   "t65": [
+    "sert",
+    1
+   ],
+   "t66": [
+    "hakaret",
+    0
+   ],
+   "t67": [
+    "hakaret",
+    0
+   ],
+   "t68": [
+    "hakaret",
+    1
+   ],
+   "t69": [
+    "hakaret",
+    1
+   ],
+   "t70": [
+    "hakaret",
+    0
+   ],
+   "t71": [
+    "hakaret",
+    0
+   ],
+   "t72": [
+    "ovgu",
+    0
+   ],
+   "t73": [
+    "hakaret",
+    1
+   ],
+   "t74": [
+    "sert",
+    1
+   ],
+   "t75": [
+    "hakaret",
+    1
+   ],
+   "t76": [
+    "sert",
+    1
+   ],
+   "t77": [
+    "notr",
+    0
+   ],
+   "t78": [
+    "hakaret",
+    0
+   ]
+  }
+ },
+ "sure": {
+  "medyan_ms": 0.028,
+  "ortalama_ms": 0.027,
+  "en_yavas_ms": 0.046,
+  "n": 78
+ },
+ "ram_zirve_mb": 19.3,
+ "ram_bos_python_mb": 19.2,
+ "not": "RAM tum Python sureci; kuralin kendi payi bos yorumlayicinin ustundeki fark."
+}

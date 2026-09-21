@@ -1,0 +1,956 @@
+{
+ "yol": "llm-qwen35-2b",
+ "metrik": {
+  "n": 78,
+  "ton_dogruluk_yuzde": 61.5,
+  "isaret_dogruluk_yuzde": 66.7,
+  "kufur": {
+   "dogru_pozitif": 7,
+   "yanlis_pozitif": 7,
+   "yanlis_negatif": 16,
+   "dogru_negatif": 48
+  },
+  "kufur_dogruluk_yuzde": 70.5,
+  "etiket_dokumu": {
+   "alinti": {
+    "n": 5,
+    "ton_dogru": 4,
+    "kufur_dogru": 3
+   },
+   "ascii": {
+    "n": 15,
+    "ton_dogru": 9,
+    "kufur_dogru": 11
+   },
+   "ek-almis": {
+    "n": 3,
+    "ton_dogru": 1,
+    "kufur_dogru": 1
+   },
+   "emoji": {
+    "n": 11,
+    "ton_dogru": 7,
+    "kufur_dogru": 8
+   },
+   "gizlenmis-kufur": {
+    "n": 1,
+    "ton_dogru": 1,
+    "kufur_dogru": 1
+   },
+   "harf-tekrari": {
+    "n": 4,
+    "ton_dogru": 3,
+    "kufur_dogru": 3
+   },
+   "ironi": {
+    "n": 5,
+    "ton_dogru": 0,
+    "kufur_dogru": 5
+   },
+   "kaba-gorunen-samimi": {
+    "n": 2,
+    "ton_dogru": 2,
+    "kufur_dogru": 2
+   },
+   "kisaltma": {
+    "n": 11,
+    "ton_dogru": 8,
+    "kufur_dogru": 6
+   },
+   "konu-hakaret": {
+    "n": 1,
+    "ton_dogru": 1,
+    "kufur_dogru": 1
+   },
+   "kufur-degil-kelime": {
+    "n": 9,
+    "ton_dogru": 7,
+    "kufur_dogru": 9
+   },
+   "kufur-vurgu": {
+    "n": 3,
+    "ton_dogru": 1,
+    "kufur_dogru": 0
+   },
+   "kufursuz-hakaret": {
+    "n": 12,
+    "ton_dogru": 5,
+    "kufur_dogru": 7
+   },
+   "nazik-rica": {
+    "n": 1,
+    "ton_dogru": 1,
+    "kufur_dogru": 1
+   },
+   "samimi-ironi-benzeri": {
+    "n": 1,
+    "ton_dogru": 1,
+    "kufur_dogru": 1
+   },
+   "sevgi-kufur": {
+    "n": 5,
+    "ton_dogru": 5,
+    "kufur_dogru": 0
+   },
+   "tuzaksiz": {
+    "n": 15,
+    "ton_dogru": 7,
+    "kufur_dogru": 11
+   }
+  },
+  "ton_karisikligi": {
+   "sert->notr": 9,
+   "hakaret->notr": 9,
+   "notr->ovgu": 2,
+   "sert->hakaret": 2,
+   "sert->ovgu": 2,
+   "hakaret->sert": 2,
+   "hakaret->ovgu": 2,
+   "ovgu->notr": 1,
+   "notr->hakaret": 1
+  },
+  "hatalar": [
+   {
+    "id": "t03",
+    "metin": "Ulan amk ne güzel yazmışsın be, bayıldım!",
+    "gercek": [
+     "ovgu",
+     1
+    ],
+    "tahmin": [
+     "ovgu",
+     0
+    ]
+   },
+   {
+    "id": "t05",
+    "metin": "aq bu ne guzel olmus ya, helal olsun sana",
+    "gercek": [
+     "ovgu",
+     1
+    ],
+    "tahmin": [
+     "ovgu",
+     0
+    ]
+   },
+   {
+    "id": "t07",
+    "metin": "tsk ederim, cok saol",
+    "gercek": [
+     "ovgu",
+     0
+    ],
+    "tahmin": [
+     "notr",
+     0
+    ]
+   },
+   {
+    "id": "t13",
+    "metin": "Siktir be, bu ne kadar iyi olmuş, inanamıyorum!",
+    "gercek": [
+     "ovgu",
+     1
+    ],
+    "tahmin": [
+     "ovgu",
+     0
+    ]
+   },
+   {
+    "id": "t16",
+    "metin": "Oç ne güzel olmuş bu, kardeşim harikasın",
+    "gercek": [
+     "ovgu",
+     1
+    ],
+    "tahmin": [
+     "ovgu",
+     0
+    ]
+   },
+   {
+    "id": "t18",
+    "metin": "amkkkk ne iyisin sennn 😍",
+    "gercek": [
+     "ovgu",
+     1
+    ],
+    "tahmin": [
+     "ovgu",
+     0
+    ]
+   },
+   {
+    "id": "t21",
+    "metin": "Adam bana 'siktir git' dedi, sence haklı mıydı?",
+    "gercek": [
+     "notr",
+     1
+    ],
+    "tahmin": [
+     "hakaret",
+     1
+    ]
+   },
+   {
+    "id": "t22",
+    "metin": "Arkadaşım ona 'orospu çocuğu' diye bağırdı, çok üzüldüm.",
+    "gercek": [
+     "notr",
+     1
+    ],
+    "tahmin": [
+     "notr",
+     0
+    ]
+   },
+   {
+    "id": "t23",
+    "metin": "Bu cümledeki 'amk' kısaltması ne demek, açıklar mısın?",
+    "gercek": [
+     "notr",
+     1
+    ],
+    "tahmin": [
+     "notr",
+     0
+    ]
+   },
+   {
+    "id": "t32",
+    "metin": "🙂 tamam anladım",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "ovgu",
+     0
+    ]
+   },
+   {
+    "id": "t36",
+    "metin": "bu film beni cok sikti, yarim biraktim",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "ovgu",
+     0
+    ]
+   },
+   {
+    "id": "t38",
+    "metin": "Kapa çeneni artık, yeter!",
+    "gercek": [
+     "sert",
+     0
+    ],
+    "tahmin": [
+     "hakaret",
+     1
+    ]
+   },
+   {
+    "id": "t39",
+    "metin": "Vay be, harikasın, yine hiçbir işe yaramayan bir cevap vermişsin. Tebrikler.",
+    "gercek": [
+     "sert",
+     0
+    ],
+    "tahmin": [
+     "ovgu",
+     0
+    ]
+   },
+   {
+    "id": "t40",
+    "metin": "Aferin sana 🙄 tam da istediğim şeyin tersini yazmışsın.",
+    "gercek": [
+     "sert",
+     0
+    ],
+    "tahmin": [
+     "notr",
+     0
+    ]
+   },
+   {
+    "id": "t41",
+    "metin": "Amk bu ne biçim cevap, bir daha dene.",
+    "gercek": [
+     "sert",
+     1
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "t42",
+    "metin": "aq yine mi yanlis yaptin, bikti usandim",
+    "gercek": [
+     "sert",
+     1
+    ],
+    "tahmin": [
+     "notr",
+     0
+    ]
+   },
+   {
+    "id": "t43",
+    "metin": "Bu ne biçim iş ya, hiçbir şey anlamamışsın.",
+    "gercek": [
+     "sert",
+     0
+    ],
+    "tahmin": [
+     "notr",
+     0
+    ]
+   },
+   {
+    "id": "t45",
+    "metin": "Bok gibi bir cevap bu, çöpe atılır.",
+    "gercek": [
+     "sert",
+     1
+    ],
+    "tahmin": [
+     "notr",
+     0
+    ]
+   },
+   {
+    "id": "t46",
+    "metin": "Defol git başımdan, seninle uğraşamam.",
+    "gercek": [
+     "sert",
+     0
+    ],
+    "tahmin": [
+     "hakaret",
+     1
+    ]
+   },
+   {
+    "id": "t48",
+    "metin": "Bıktım bu cevaplardan, hep aynı şeyi yazıyorsun.",
+    "gercek": [
+     "sert",
+     0
+    ],
+    "tahmin": [
+     "notr",
+     0
+    ]
+   },
+   {
+    "id": "t49",
+    "metin": "Ne kadar geç cevap veriyorsun, çok yavaşsın.",
+    "gercek": [
+     "sert",
+     0
+    ],
+    "tahmin": [
+     "notr",
+     0
+    ]
+   },
+   {
+    "id": "t50",
+    "metin": "Saçmalamayı bırak da doğru düzgün cevap ver.",
+    "gercek": [
+     "sert",
+     0
+    ],
+    "tahmin": [
+     "notr",
+     0
+    ]
+   },
+   {
+    "id": "t51",
+    "metin": "cevabin cok sikici olmus, uyuttun beni",
+    "gercek": [
+     "sert",
+     0
+    ],
+    "tahmin": [
+     "notr",
+     0
+    ]
+   },
+   {
+    "id": "t52",
+    "metin": "Yine hata yapmışsın, bu kadar da olmaz ya 🤦",
+    "gercek": [
+     "sert",
+     0
+    ],
+    "tahmin": [
+     "notr",
+     0
+    ]
+   },
+   {
+    "id": "t53",
+    "metin": "Harika, bir de üstüne yanlış bilgi vermişsin, çok yardımcı oldun ya.",
+    "gercek": [
+     "sert",
+     0
+    ],
+    "tahmin": [
+     "ovgu",
+     0
+    ]
+   },
+   {
+    "id": "t55",
+    "metin": "Sen tam bir gerizekalısın, beynin yok mu senin?",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "t56",
+    "metin": "Senin gibi zavallıyı yaratanlara yazıklar olsun.",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "notr",
+     0
+    ]
+   },
+   {
+    "id": "t57",
+    "metin": "Salak mısın sen, bir de bana akıl veriyorsun?",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "hakaret",
+     1
+    ]
+   },
+   {
+    "id": "t58",
+    "metin": "Sen bir hiçsin, kimse seni ciddiye almaz.",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "hakaret",
+     1
+    ]
+   },
+   {
+    "id": "t60",
+    "metin": "orospu cocugu seni, bir isi de dogru yapamadin",
+    "gercek": [
+     "hakaret",
+     1
+    ],
+    "tahmin": [
+     "notr",
+     0
+    ]
+   },
+   {
+    "id": "t61",
+    "metin": "Amına koyayım senin bu zekanın.",
+    "gercek": [
+     "hakaret",
+     1
+    ],
+    "tahmin": [
+     "ovgu",
+     0
+    ]
+   },
+   {
+    "id": "t63",
+    "metin": "aptal makine, kapat kendini 🖕",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "hakaret",
+     1
+    ]
+   },
+   {
+    "id": "t64",
+    "metin": "Bok gibisin, hiçbir işe yaramazsın.",
+    "gercek": [
+     "hakaret",
+     1
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "t65",
+    "metin": "Piç kurusu, yine mi hata yaptın?",
+    "gercek": [
+     "hakaret",
+     1
+    ],
+    "tahmin": [
+     "notr",
+     0
+    ]
+   },
+   {
+    "id": "t66",
+    "metin": "Sen ne biçim aptalsın 🤡",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "hakaret",
+     1
+    ]
+   },
+   {
+    "id": "t67",
+    "metin": "Gerizekalı, bunu bile beceremedin.",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "notr",
+     0
+    ]
+   },
+   {
+    "id": "t68",
+    "metin": "oc seni, cop gibi bir seysin",
+    "gercek": [
+     "hakaret",
+     1
+    ],
+    "tahmin": [
+     "notr",
+     0
+    ]
+   },
+   {
+    "id": "t70",
+    "metin": "Beyinsiz makine, seni yapanların da aklı yok.",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "notr",
+     0
+    ]
+   },
+   {
+    "id": "t71",
+    "metin": "Vay be, ne kadar zeki bir yapay zeka, insanlığın en aptal buluşu olmuşsun.",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "notr",
+     0
+    ]
+   },
+   {
+    "id": "t72",
+    "metin": "Ne güzel konuşuyorsun, papağan bile senden akıllı.",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "ovgu",
+     0
+    ]
+   },
+   {
+    "id": "t74",
+    "metin": "Siktiğimin yapay zekası, hiçbir şey bilmiyorsun.",
+    "gercek": [
+     "hakaret",
+     1
+    ],
+    "tahmin": [
+     "notr",
+     0
+    ]
+   },
+   {
+    "id": "t77",
+    "metin": "Alçak herif, senin gibi yalancıdan hayır gelmez.",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "hakaret",
+     1
+    ]
+   },
+   {
+    "id": "t78",
+    "metin": "yaaaa sen ne kadar aptalsınnnn 🤦",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "notr",
+     0
+    ]
+   }
+  ],
+  "tahminler": {
+   "t01": [
+    "ovgu",
+    0
+   ],
+   "t02": [
+    "ovgu",
+    0
+   ],
+   "t03": [
+    "ovgu",
+    0
+   ],
+   "t04": [
+    "ovgu",
+    0
+   ],
+   "t05": [
+    "ovgu",
+    0
+   ],
+   "t06": [
+    "ovgu",
+    0
+   ],
+   "t07": [
+    "notr",
+    0
+   ],
+   "t08": [
+    "ovgu",
+    0
+   ],
+   "t09": [
+    "ovgu",
+    0
+   ],
+   "t10": [
+    "ovgu",
+    0
+   ],
+   "t11": [
+    "ovgu",
+    0
+   ],
+   "t12": [
+    "ovgu",
+    0
+   ],
+   "t13": [
+    "ovgu",
+    0
+   ],
+   "t14": [
+    "ovgu",
+    0
+   ],
+   "t15": [
+    "ovgu",
+    0
+   ],
+   "t16": [
+    "ovgu",
+    0
+   ],
+   "t17": [
+    "ovgu",
+    0
+   ],
+   "t18": [
+    "ovgu",
+    0
+   ],
+   "t19": [
+    "notr",
+    0
+   ],
+   "t20": [
+    "notr",
+    0
+   ],
+   "t21": [
+    "hakaret",
+    1
+   ],
+   "t22": [
+    "notr",
+    0
+   ],
+   "t23": [
+    "notr",
+    0
+   ],
+   "t24": [
+    "notr",
+    0
+   ],
+   "t25": [
+    "notr",
+    0
+   ],
+   "t26": [
+    "notr",
+    0
+   ],
+   "t27": [
+    "notr",
+    0
+   ],
+   "t28": [
+    "notr",
+    0
+   ],
+   "t29": [
+    "notr",
+    0
+   ],
+   "t30": [
+    "notr",
+    0
+   ],
+   "t31": [
+    "notr",
+    0
+   ],
+   "t32": [
+    "ovgu",
+    0
+   ],
+   "t33": [
+    "notr",
+    0
+   ],
+   "t34": [
+    "notr",
+    0
+   ],
+   "t35": [
+    "notr",
+    0
+   ],
+   "t36": [
+    "ovgu",
+    0
+   ],
+   "t37": [
+    "sert",
+    0
+   ],
+   "t38": [
+    "hakaret",
+    1
+   ],
+   "t39": [
+    "ovgu",
+    0
+   ],
+   "t40": [
+    "notr",
+    0
+   ],
+   "t41": [
+    "sert",
+    0
+   ],
+   "t42": [
+    "notr",
+    0
+   ],
+   "t43": [
+    "notr",
+    0
+   ],
+   "t44": [
+    "sert",
+    0
+   ],
+   "t45": [
+    "notr",
+    0
+   ],
+   "t46": [
+    "hakaret",
+    1
+   ],
+   "t47": [
+    "sert",
+    0
+   ],
+   "t48": [
+    "notr",
+    0
+   ],
+   "t49": [
+    "notr",
+    0
+   ],
+   "t50": [
+    "notr",
+    0
+   ],
+   "t51": [
+    "notr",
+    0
+   ],
+   "t52": [
+    "notr",
+    0
+   ],
+   "t53": [
+    "ovgu",
+    0
+   ],
+   "t54": [
+    "sert",
+    0
+   ],
+   "t55": [
+    "sert",
+    0
+   ],
+   "t56": [
+    "notr",
+    0
+   ],
+   "t57": [
+    "hakaret",
+    1
+   ],
+   "t58": [
+    "hakaret",
+    1
+   ],
+   "t59": [
+    "hakaret",
+    1
+   ],
+   "t60": [
+    "notr",
+    0
+   ],
+   "t61": [
+    "ovgu",
+    0
+   ],
+   "t62": [
+    "hakaret",
+    1
+   ],
+   "t63": [
+    "hakaret",
+    1
+   ],
+   "t64": [
+    "sert",
+    0
+   ],
+   "t65": [
+    "notr",
+    0
+   ],
+   "t66": [
+    "hakaret",
+    1
+   ],
+   "t67": [
+    "notr",
+    0
+   ],
+   "t68": [
+    "notr",
+    0
+   ],
+   "t69": [
+    "hakaret",
+    1
+   ],
+   "t70": [
+    "notr",
+    0
+   ],
+   "t71": [
+    "notr",
+    0
+   ],
+   "t72": [
+    "ovgu",
+    0
+   ],
+   "t73": [
+    "hakaret",
+    1
+   ],
+   "t74": [
+    "notr",
+    0
+   ],
+   "t75": [
+    "hakaret",
+    1
+   ],
+   "t76": [
+    "hakaret",
+    1
+   ],
+   "t77": [
+    "hakaret",
+    1
+   ],
+   "t78": [
+    "notr",
+    0
+   ]
+  }
+ },
+ "sure": {
+  "medyan_ms": 585.261,
+  "ortalama_ms": 584.042,
+  "en_yavas_ms": 675.695,
+  "n": 78
+ },
+ "ram_zirve_mb": 2035.6,
+ "gpu_vram_mib_sonda": 0,
+ "thread": "varsayilan",
+ "soguk_ilk_istek_ms": 4417.7,
+ "ort_degerlendirilen_prompt_token": 28.6
+}

@@ -1,0 +1,2800 @@
+{
+ "yol": "gomme-e5small-dis",
+ "metrik": {
+  "n": 200,
+  "ton_dogruluk_yuzde": 21.0,
+  "isaret_dogruluk_yuzde": 51.5,
+  "kufur": {
+   "dogru_pozitif": 0,
+   "yanlis_pozitif": 5,
+   "yanlis_negatif": 0,
+   "dogru_negatif": 195
+  },
+  "kufur_dogruluk_yuzde": 97.5,
+  "etiket_dokumu": {
+   "dis-veri": {
+    "n": 200,
+    "ton_dogru": 42,
+    "kufur_dogru": 195
+   }
+  },
+  "ton_karisikligi": {
+   "hakaret->sert": 61,
+   "notr->sert": 48,
+   "notr->ovgu": 26,
+   "notr->hakaret": 17,
+   "hakaret->ovgu": 5,
+   "hakaret->notr": 1
+  },
+  "hatalar": [
+   {
+    "id": "d001",
+    "metin": "Üzülmee üzülmeeee seni ağlarken görmek zordur gönlüme",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d002",
+    "metin": "Bakıyorumda en çok satanlar listesinde yine dost bildiklerimiz var",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "ovgu",
+     0
+    ]
+   },
+   {
+    "id": "d004",
+    "metin": "Of of sıkıldım ya sex yapcak hanfendide yok neyse ben yatayım canı sex yapmak isteyen hanfendi olursa ulaşır hazar",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d005",
+    "metin": "Fare yiyen pezevenki vatsaptan gruba attım yemedim beddua kalmadı amq",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d006",
+    "metin": "Amina kodugumun ispanyol kürdü kulübün amini yüzünü siktin siktir git simdi. Ayni misyonla hareket eden bir kul var ama neyse :d",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d007",
+    "metin": "bora kadını öldürdün aq",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "hakaret",
+     1
+    ]
+   },
+   {
+    "id": "d008",
+    "metin": "Sabahın köründe nargile içecek kadar ne yaşamak lazım acaba",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "hakaret",
+     0
+    ]
+   },
+   {
+    "id": "d009",
+    "metin": "@Sabah Yalaninizi sokim bu kadini okadar arastirmisligim var hic boyle kahinlerini duymadim okumadimda",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d010",
+    "metin": "Yaz bitmiş sayılmaz henüz Yanına çömelmiş Sevgi hakkında söyleşiyorum Bodrum limon ile dolu Sevgili 👨‍🍳",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "ovgu",
+     0
+    ]
+   },
+   {
+    "id": "d012",
+    "metin": "Bir ara ben ben ben furyası vardı ben şöyle severim ben öyle derlersi muhabbette şimdi de e yani nolacak herkes böyle herkes zaten şöyle yapıyor başladı sk gibi muhabbetlerde uyuz oluyorum",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d014",
+    "metin": "cz yi tebrik edin ac kopekler cinin en zengin lavugu olmus. hocam vik vik vik hocam bik bik bik hocam viri viri vir hocasinin amini damini..",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "ovgu",
+     0
+    ]
+   },
+   {
+    "id": "d015",
+    "metin": "Yöneticilerin işi tribüne oynamak değil, gerçekleri konuşmak olmalı.",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d016",
+    "metin": "saat 4 5 te banka kapanıyor ,krediyi alıp ankadan istanbula geçicem sabahına araba satışı yapıcaz. Bunlara kalsak hepsi yatmıştı. Allahtan başka bankadan 10 dakikda hallettik işimizi. Çok büyük pişmanlık i.",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d018",
+    "metin": "Güleyim derken ölüyordum aalazöelxöeşxçdçxöexxçxşdöxçdçxx harika bi an ama şuan ölmediğim için sinirliyim",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "ovgu",
+     0
+    ]
+   },
+   {
+    "id": "d019",
+    "metin": "Gerçekten alçak gönüllü olan bir insan, kendisinden hiç söz etmeyen insandır. // Jean de La Bruyère",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "hakaret",
+     0
+    ]
+   },
+   {
+    "id": "d020",
+    "metin": "75 senedir amerikancılar yönetiyor bu ülkeyi Ondan olabilirmi!!! niye sen kendin Türk malı cep telefonu üretip oradanmı yazıyorsun",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d021",
+    "metin": "Ya bi git, barın karşısına gelip medrese açıyorlar sen neyin kafasını yaşıyorsun? Hangi bar sahibi camiye bakan bar açar. Sizin ticari kafanızı o köprülere yollara sürtmek lazım 😂",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d022",
+    "metin": "ne kadar almak ısterlerse set cekıyorlar",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "hakaret",
+     0
+    ]
+   },
+   {
+    "id": "d023",
+    "metin": "kandil simidi aldim simdi de tekele gidiyorum her kesimden halki kucaklayacagiz allahin da izniyle",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "ovgu",
+     0
+    ]
+   },
+   {
+    "id": "d024",
+    "metin": "@Anticensorshi12 @EKayaKayaslan @tcbuyuksehir Yarrağımın başına bak git götünü siktirtmeye devam sen harbi salaksın amına koyim ya sdgajwryefukeuktetukgetuk bir insan bu kadar mal olmaz pardon insan demişim bir canlı hayvanlar bile senden zeki amına koduğumun çöl piçi seni amerika götünüzü güzel sikiyor",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d025",
+    "metin": "Hiç çalışmadım, TS 19000 lerdeyim, kendi adıma sevineyim mi? gençler adına üzüleyim mi?",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d026",
+    "metin": "Niyse babamı ikna ederim kitaplarım bittikçe sipariş ederiz ya da bilmiyorum bakalım. Ehliyet kursu da var o işleri baltalıyor ama niyse ehliyet de önemli 😭😭",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d027",
+    "metin": "@GodlessCorc O amk çocuğu bizim maçlarda hep böyle en ufak bir müdahalede anası sikilmiş gibi kıvranıyor yerde",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d029",
+    "metin": "@siyahcoraplilar @DuzceMuftulugu Başka bi Müslümanı yahudilikle itham eden imamın ben ta aq",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d030",
+    "metin": "Sturridge’i bu yaşta Trabzon’a gelmeye ikna etmek müthiş iş çok iyi transfer",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "ovgu",
+     0
+    ]
+   },
+   {
+    "id": "d031",
+    "metin": "Hocam sizden takdir görmek bizi onurlandırdı. Alakanıza ve nezaketinize teşekkür ederiz.",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "ovgu",
+     0
+    ]
+   },
+   {
+    "id": "d032",
+    "metin": "Biraz dumanlanmanın ne zararı olabilir ki?",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "hakaret",
+     0
+    ]
+   },
+   {
+    "id": "d034",
+    "metin": "@pusholder Dünya genelinde virüs varken amına koduğumun gavuru benim ülkemde serbest gezerken nasıl vaka bitecek?",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d035",
+    "metin": "@EliasYpsilantis Hahaha aç tavuk kendini buğday ambarında görür. Kendi boyutu kurbağa kadar kalkmış fili yenecek. Az kaldı yine vali ile yöneteceğimiz günler yakın. Aq Yunanları bi bitmediniz. Kucak politikası ile devam. O gün geldiğinde kim olacak bakalım sizi koruyacak",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d038",
+    "metin": "@Trmyd @istgundem @ibbBeyazmasa @ekrem_imamoglu @kilicdarogluk @herkesicinCHP Tövbe! tövbe! Ne kadar cahilsin keşke ölsen, hain CHP",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d039",
+    "metin": "Çocukken aşık oldum, sevdanla büyüdüm ! 💛💙 #EFSANE112YAŞINDA",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "ovgu",
+     0
+    ]
+   },
+   {
+    "id": "d040",
+    "metin": "Ebru nası kaçtığını bilemedi abi biraz kalsa eller popoya değecek hdhd",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d042",
+    "metin": "olsun canim ne gerek var soydasimiz icin boyle seylere siktigimin suriyelilerini beslesinler korusunlar amk ummetci arapcilari",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d043",
+    "metin": "Km başına millete yansıyan hgs/ogs ücretini de yaz admin.",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d044",
+    "metin": "@berkegzn Babası kanseri yense bu denli coşkulu olmaz aq",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d045",
+    "metin": "Araştırmaya göre Turkleraşkını itiraf etme konusunda en fazla zorluk ceken milletlerden biri",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d046",
+    "metin": "Filistinlilerin katledilmesi sonrası Mavi Marmara Anlaşması dahil İsrail ile yapılan anlaşmaların iptal edilmesi önerisi AKP oylarıyla reddedildi. AKP İsrail ile anlaşmaya devam dedi.",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d047",
+    "metin": "Sizin ben siyasi tespitlerinize sokim aq karıları",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "hakaret",
+     1
+    ]
+   },
+   {
+    "id": "d048",
+    "metin": "“Yangınsan yanalım hiç sıkıntı değil.”",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "hakaret",
+     0
+    ]
+   },
+   {
+    "id": "d049",
+    "metin": "Dışkı torbası Uluslararası Kızılhaç Komitesi Başkanı Peter Maurer, Türk Kızılayı'nın Afrin operasyonu sonrası Suriyeli Kürtler nezdinde itibarının sıfıra yakın olduğunu söylemiş; alçak sefil... sizin itibarınız nerede soytarı?",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d052",
+    "metin": "alzaymir nerede? YALAN miymis fetoda yorumcu oldugu? buna cevabiniz yok mu?",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d054",
+    "metin": "Batman sanat parkında sanata dair hiçbir şey yokmuş 😂",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "hakaret",
+     0
+    ]
+   },
+   {
+    "id": "d055",
+    "metin": "hayır anonim kalmak istiyormuş sildirtti tweetimi",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "hakaret",
+     0
+    ]
+   },
+   {
+    "id": "d056",
+    "metin": "@neslisahckrogl ya şu salağı oturup dinliyorsun amk salağı Yunus Emre diyor sonra kasideden bahsediyor divan edebiyatından örnek verip halk edebiyatını anlamadığımız vurguluyor sabahtan beri her şeyi algıli anlatıp kabul ettiriyor aklın varsa siktiri çekip kapatırsın",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d057",
+    "metin": "Gidersen unutursun, dilerim öyle olmaz.",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "hakaret",
+     0
+    ]
+   },
+   {
+    "id": "d059",
+    "metin": "@Firatatik4 @75Kilicaslan @AsiLaz_61 Muslumanlari joplatan basortusu kutsaldir deyip dini istismar eden bana neler diyo lan yuru git amk salagi",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d060",
+    "metin": "@yurekliemree Anaları da çamaşırları ellerinde yıkıyormuş biz de mi elde yikayalim mantiga bak amk",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d061",
+    "metin": "Memlekete geldim az dinlenmek için “kaç puan topladım “ “ ne doktor olacaksın şimdi “ sorularından gına geldi . 26 Eylül baraji geçmeyi bekleyip uygun neresi gelirse yalla görev başına #husan",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d062",
+    "metin": "“Sen hiçbir kalabalığa değişmeyeceğim bir tenhasın.”",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "hakaret",
+     0
+    ]
+   },
+   {
+    "id": "d063",
+    "metin": "@bilimarsivi @_tarihhocaniz Dünya'nın pisliği üzerinize olsun yer yüzünde icat edilmemiş küfürleri icad edip küfür etsem sönmez bu ateş amını adetini siktimin lavukları.",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d064",
+    "metin": "Kemanım ve kitaplarımla beni bir müddet rahat bırakın.",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d065",
+    "metin": "öyle bir analiz ki en ateisti müslüman eder aq",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "ovgu",
+     0
+    ]
+   },
+   {
+    "id": "d067",
+    "metin": "@tarikfatihterim @terimist1i Amk döneği nasıl döndü gördün mü hacı?",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d068",
+    "metin": "günaydın bütü rekor puanla geçmişim abbyi de şampiyon yapmamız lazım bu yıla puanım 10/10 olmalı",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d069",
+    "metin": "Daha dün Cuma hutbesinde “Faiz” konusu işlendi halbuki!",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d070",
+    "metin": "Canım iyi yolculuklar,acil şifalar🙏",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "ovgu",
+     0
+    ]
+   },
+   {
+    "id": "d071",
+    "metin": "Nolur bulun bana şu iki orospu cocuğunu ya",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d072",
+    "metin": "bu tvitin altina herkes en sevdigi kendi fotosunu atsin",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d074",
+    "metin": "Anlayışlı sandığım insanlar benimle alakadar olmak dahi istemiyormuş",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d077",
+    "metin": "Esselamun Aleyküm kıymetli ağabey....Aylar önce Eyüp Sultan da karşılaşmıştık.Objektif Haktan ve Haklıdan yana haberciliğinin tebrik etmiştim....",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "ovgu",
+     0
+    ]
+   },
+   {
+    "id": "d078",
+    "metin": "Erkeksi olan, söylemeseler homo olduğunu anlayamacağın aktif olandır. Pasifler kırıtır.",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d079",
+    "metin": "Telefonum atmadığım mesajlar atmaya başladı artık bozulmanın kaçıncı evresi bu hfhdhdhdh",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d080",
+    "metin": "“Gençler bi sıraya girin de fotoğraf çekinelim”",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d081",
+    "metin": "@yenisafak AMK mikrobu",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "hakaret",
+     1
+    ]
+   },
+   {
+    "id": "d082",
+    "metin": "Lökler ile Verstappen piçi ne izlettiriyor bize aq",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d083",
+    "metin": "Allahım masumlara öyle bir özgürlük versin ki, kimseler elinden alamasın. Amin",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "hakaret",
+     0
+    ]
+   },
+   {
+    "id": "d084",
+    "metin": "O gün bu askerleri köprüde boğazı kesilen askerleri hiç unutmadım Allah sebep olanların bin belasını versin",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d085",
+    "metin": "sen nasıl bi kraslsın ya. Acun diye yazılır ADAM diye okunur. #FENEROL",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d087",
+    "metin": "Doğum günün kutlu olsun ömrümün yarısı çocuklarımın annesi.. herkesin yeni yılı mutlu umutlu olsun",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "ovgu",
+     0
+    ]
+   },
+   {
+    "id": "d088",
+    "metin": "Ölümden hüzün olmak Bir yudum da sarhoş olmak Kadar imkânsızdı Tekrar aşık olmak",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d089",
+    "metin": "@raydin0 @Furkan90315207 @mert91516871 @invortex_ @bbosports Ya bi yürrü allahın yunanı mlsde oynasa futbolu bırakırdı aq",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d090",
+    "metin": "cilekesh nickindeki fontu sil once amiba kodugumun arabi seni",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "hakaret",
+     1
+    ]
+   },
+   {
+    "id": "d091",
+    "metin": "Benim güneş Zirvenin Sahibi Çağlar Ertuğrul 🥇💫 En Iyi Romantik Komedi Dizisi Erkek Oyuncu #ÇağlarErtuğrul En Iyi Romantik Komedi Dizisi #AfiliAşk En Iyi Dizi Çifti #AyKer #PanteneAltınKelebekÖdü",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "ovgu",
+     0
+    ]
+   },
+   {
+    "id": "d092",
+    "metin": "ben haberi okudum ve sana cevabım şudur: siktir lan dalyarak, yüksek lisans öğrencilerinin yıllık maliyeti 35 milyon $mış yani takriben 215 milyon tl. diyanet 7.7 milyar tl ödeneğe ek 550 milyon tl ödenek istedi. sizin gibilerin din, kitap aşkından anası sikildi bu ülkenin",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d093",
+    "metin": "Aq Natosu orta doğuda müslümana müslümanı kuzeyde Rus'a rusu öldürtüyor aq",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d094",
+    "metin": "@raporlar @HaberReport amk japonları gülerken bile araştırma yapıyorlar",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d095",
+    "metin": "İslamKardeşliği ÖrgütDeğildir Medineli maddi durumu yerinde olan her Ensar, Muhacir ailelerinden birini yanına alacaktı. Kardeşlik anlaşmasına göre birlikte çalışacaklar ve elde ettikleri geliri paylaşacaklardı. Hatta birbirlerine mirasçı bile olabileceklerdi.",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d096",
+    "metin": "@hypebilgi @murphysozleri Ya amk netflix pornhıb bilmem ne herşey yasaklandı bu adamlar sıkılıp sıkılıp asker yapmayıp napcaklar nasıl silcez böyle rusları amk geri yollayın hepsini",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d097",
+    "metin": "@spinysaur Amk sen ateiste kafir oc cehennemde yanicaksiniz evrimi skm dersen onlar da senden nefet eder tamamen dişe diş karsilikli. Bunlari ilk baslatanlar da dinci tayfa. Ateistleri zorla muslm yapmaya calisma her seyi kendileri yaptilar. Zatn dedigin gibi islamofobi trde sorn deil",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d099",
+    "metin": "Ndiaye ile Seri arasındaki Farkı söylermisiniz bana göre ndiaye 3 gömlek daha iyi oyuncu ...",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "ovgu",
+     0
+    ]
+   },
+   {
+    "id": "d100",
+    "metin": "Bu japonları, korelileri kim başımıza bela etti aq? Alttan alttan şaka yapıyoruz ayağına Türk milletini aşağılayıp duruyorlar. Ne meraklısınız boş adamları meşhur etmeye. Siktir git, derdimiz yokmuş gibi bir de seninle mi uğraşalım",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d101",
+    "metin": "Yıl boyunca kimbilir kimlere nerelerde direneceğiz de en çok bizim alandan gelen pervasızlıklar incitiyor beni",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d102",
+    "metin": "...insanları bazen anlamıyorum ancak can sıkmaya yarıyorlar boş...",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d104",
+    "metin": "Evet ne acı değil mi koskoca CHP oldu chdpkk",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d105",
+    "metin": "Edith Piaf’ın burcunu düşündüm, kesin yay dedim ve yay çıktı. Hislerimizin bu kadar aynı olmasını, otobiyografisinde şiddetle hissetmiştim. Tabi bunun burçlarla alakası olmadığını da düşünebilirsiniz .",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d106",
+    "metin": "Gustavo emre kruse orta sahasi uefayi bile alir lige fazla olmaz ama gelmez gustavo",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d107",
+    "metin": "Haftaya da 2010-2011 sezonunun şampiyonu Trabzon diye çıkın amk gazetesi sizi 😂 popülizminiz batsın. Bu amk Fransızları hep böyle ya",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d108",
+    "metin": "sevgili Karel, El-Al Türkiye'ye niye uçmuyor hatırımda değil ama THY'in bu yoğun rekabeti Avrupa'dan bir çok güçlü havayolunun uçuşlarının iptal edilmesine sebep oluyor",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d109",
+    "metin": "Olmadı başkan, yüzümüzü yere baktırttınız. Hiç olmadı. Dindarlık mı sorun? Deyip kendinizi rahatlatıyorsanız boşuna. Biz Durmuş Yılmaz'ın önünde düğme ilikledik, çünkü liyakatı ile gelmişti. Ama bu atamalar olmadı.",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d110",
+    "metin": "geldik temsilcimizin bulunduğu 4.torbaya... yusuf yazıcı",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "ovgu",
+     0
+    ]
+   },
+   {
+    "id": "d111",
+    "metin": "@ayhossst Bütün memlekete yürümüş amk surisi 😂",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d112",
+    "metin": "10 dakikadır yaklaşık 5000 kişi hakanın sessiz yayınını izledik hahahhshss hakanın sessiz yayını >>>>>> survivor panorama 2018",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d113",
+    "metin": "SelBur ögkkk olmuyor bilee kusucam yaa şu Buraktan",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d114",
+    "metin": "@CumhurFrankfurt @Berat_Albayrak la çomar almancı, sizin bir gr haysiyetiniz olsa suriye petrolünü pkk ya aktaran abd ye. defol demeniz gerekir ama nerde o yürek?",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d115",
+    "metin": "FALCAO FELAN HIKAYE HIC BEKLENMEDIM BIRISI GELCEK",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d116",
+    "metin": "\"Bu hayat sanaldır. Dünyayı dize getirdim bana huzur vermedi. Allah(c.c) bana bir hastalık vererek şampiyon'un kim olduğunu hatırlattı.\" (Muhammed Ali)",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d117",
+    "metin": "Arkadaşıma Yurtiçi kargoyla havale ettiğim ürün 20 günde ulaşmış. Geçen siparişi geç getiren kuryeyi Allah'a havale ettim ertesi günü öğrendim adam kaza geçirmiş, bundan sonra tüm dertlerimi Allah'a havale ediyorum",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d118",
+    "metin": "şu kadını övmek bir dönem sitede linç sebebiydi amk inanılmaz",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d119",
+    "metin": "Bi gün saçımı bu renk yaptıracağımı söyleseler inanmazdım birdenbire oldu yani olacaksa güzel şeyler birdenbire olsun bekleyince soğuyorsun",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d120",
+    "metin": "Ula bu sitede herkes karakterli ve mağdur edebiyatı yapıyor karaktersiz olanlar twitter kullanmıyor galiba",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d121",
+    "metin": "Birisi hükümete dolar yüzünden \"istifa edin bırakın bilen biri yönetsin\" diyor... O bilen birinin ismini söylemek zorundasın... var mı şuan öyle biri? Delege oyu sayamayanları mı işaret edip milleti güldüreceksin?",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d122",
+    "metin": "Gördüğüm her rüyanın 3-4 etkisinde kalıyorum rüya görmeyi nasıl engellerim",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d125",
+    "metin": "Batman da birçok iş adamı var bu 2, ben ikiden başladım 1 i sonra söylerim artık.",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "ovgu",
+     0
+    ]
+   },
+   {
+    "id": "d126",
+    "metin": "İlk defa mutluyum niye kovdun beni :(",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "ovgu",
+     0
+    ]
+   },
+   {
+    "id": "d127",
+    "metin": "Annem yine şekillere girdi işi bıraktım diye. Klasik anne tribi 🙄",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d129",
+    "metin": "Sende gençliğimi gördüm evlat aramıza hoşgeldin 😂",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "ovgu",
+     0
+    ]
+   },
+   {
+    "id": "d130",
+    "metin": "Eski yeni fark etmiyo birader, aynı bokun laciverti kxnxmcm",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d131",
+    "metin": "Kesinlikle Oğuzhan’ın bu takımda daha iyisi gelmezse forması oynar İlk yarıya bakın birde Oğuzhan çıkınca ikinci yarıya",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d132",
+    "metin": "ictihad edilmiş ve kitablarına yazmışlar. bu kitaplara göre de kadınları Kıyafetlerinin bol olması bildiriliyor (bunun üzerine bir hadisi şerif var). kadınların sokakta giydiği kıyafet avretinin örtülmüş halidir ve namaz da bu şekilde kılınmaktadır.",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d133",
+    "metin": "La çatladım hala ky nin gücü yetmez diyor :) hesapla örneği takasın %40 ı sadece 1-2 biner lotları olanlar ediyor",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d134",
+    "metin": "Erkek Adam Kadına O Lafı Söylemez ERKEKLERLE o zattları karıştırma lütfen",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d135",
+    "metin": "umarım tunahan her yeni güne bu umutla uyanıyorum",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "ovgu",
+     0
+    ]
+   },
+   {
+    "id": "d137",
+    "metin": "Nasıl bitmeli ? Okkalı bir sövgü, yook yazık ! Sadece diplomalı GERIZEKALI",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d138",
+    "metin": "En yakın arkadaşlarımın en yakın arkadaşlarımla çift olması 💃",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "ovgu",
+     0
+    ]
+   },
+   {
+    "id": "d139",
+    "metin": "Fjjfjfj biraz daha ürkünç olsun diye tırnakları uzun yapmışlar",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d140",
+    "metin": "sen iyi misin yahshshshjs gayet medenice tartısıyoruz ben laf sokmaya falan calısmadım emin ol",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d141",
+    "metin": "O günler geçti canımıniçi, bir daha karşılaşmamak dileğiyle",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d142",
+    "metin": "İnşallah sizi de tez vakitte oralarda görmeyi nasip eder. Çok amin.",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "ovgu",
+     0
+    ]
+   },
+   {
+    "id": "d144",
+    "metin": "sayın abimiz başınız sağolsun Rabbim size ve sevdiklerinize sabrı cemil ihsan eylesin Cennette kavuşmanız dua sı ile",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "ovgu",
+     0
+    ]
+   },
+   {
+    "id": "d146",
+    "metin": "Neden korkacaksin Buhran, her kurum sizlerin elinde sana ne olabilir ki. Haaa bide tarafsız Allah'tan korkarak gerçekleri yazsam ama yoook olurmu hiç yalakalık varken gerçekler yazılımı hiç.ama olsun.#HerŞeyÇokGüzelOlacak",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d148",
+    "metin": "Bak ne diyeceğim. 36.000 nüfuslu bir küçücük belediye AKPye geçince, yeni belediye başkanı 280 işçiyi işten çıkarmıştı. O zaman neredeysen şimdi de oraya git.",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d149",
+    "metin": "Yiğenim (4) kaka yaparken konuşuyor mesela az önce kakasina \"ooo çok hızlı çıktın aynı şimşek mekkuyin gibi\" dedi sjdjdjfj",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d150",
+    "metin": "Bileti online aldım vizede verirler mi acaba amk gişe uğrasam",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d151",
+    "metin": "Tm kanka o zaman sen psikoptlığa devam laftan anlıycak bi tipe benzemiyosun ben sana normalde yaklaşsam lafta soksam bi işe yaramıycak sanırım kafatasının içindeki şeyi kaybetmişsin sorry for you daha fazla reply kasma cevap vermiycem arkamdan tivit atarsın büyük ihtimal hjsjsjsj",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d152",
+    "metin": "Sete ben çıkamam.. O ayrı",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "hakaret",
+     0
+    ]
+   },
+   {
+    "id": "d153",
+    "metin": "10 maç az, Fenerbahçe taraftarı olarak en az 20 maç ceza alması gerektiğini düşünüyorum. Karaktersiz insanlar.",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d155",
+    "metin": "@TekYolFener Geç kaldılar amk piçleri",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d156",
+    "metin": "Birisi çok ikna edici konuştu evlenmeye karar verdim",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "ovgu",
+     0
+    ]
+   },
+   {
+    "id": "d157",
+    "metin": "@Cimbom1652 @gszinciri @GalatasaraySK Sende karaborsacıysan banada karasından bilet bağla sikerim arabı helali amk götüren götürüyor",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "hakaret",
+     1
+    ]
+   },
+   {
+    "id": "d158",
+    "metin": "İst avrupa yakası 24 yaşında ERKEKSİ PASİFİM.. alibeyköy kağıthane civarı yeri veya aracı olan aktiflerle görüsmek istiyorum araçta takılırım #aktif #pasif #istanbulgay #kağıthane #alibeyköy #pasifim #istanbulpasif ><",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "ovgu",
+     0
+    ]
+   },
+   {
+    "id": "d159",
+    "metin": "Ben: iki dizi izledik iki şarkı dinledik millet de iyice korecan belledi bizi he Hastalanırım ben: tavuk sulu ramen alam onu yiyem Yine ben: dur çubukla höpürdete höpürdete yiyem keyfi çıksın Yine ben: youtube >>> kimchi tarifi, kimchi nasıl yapılır, kolay kimchi",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d160",
+    "metin": "Meyhanede rakı içiyoruz... dilerim uçağı kaçırmam😂🙈🙈",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d161",
+    "metin": "İnsanlar eglenebildikleriyle arkadaş olurlaranlatabildikleriyle dostaglayabildikleriyle kardeş,",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "hakaret",
+     0
+    ]
+   },
+   {
+    "id": "d162",
+    "metin": "Bu görüşmeden sonra konuşulanları bir araştır bakayım.Fetönün kendisi anlatıyor.Birde şu yabancı kanala verdiği röportajı tekrar izle",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "hakaret",
+     0
+    ]
+   },
+   {
+    "id": "d164",
+    "metin": "@bentubayim Tamam hadi şimdi siktir git yatağında yazın dondurma kışın Nutella kaşıkla koduğumun görgüsüzü.",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d165",
+    "metin": "trendyoldan sepetime ne atarsam ertesi gun tukeniyo aq karıları az yavas olun amq",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "notr",
+     0
+    ]
+   },
+   {
+    "id": "d166",
+    "metin": "Süper ligin en değerli oyuncusu",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "ovgu",
+     0
+    ]
+   },
+   {
+    "id": "d168",
+    "metin": "Ah benim canım sevgilim seni aldatmamak için ne savaşlar veriyorum bi bilsen",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "hakaret",
+     0
+    ]
+   },
+   {
+    "id": "d169",
+    "metin": "Dünya üzerinde ilaçlar için ortaya atılan iddialar vardır. Önce hastalık ortaya çıkarılır sonra ilaçlar piyasaya sürülür. İlacı yapan da hastalığı yayanda aynı akıldır. Aklıma geldi sadece.",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d170",
+    "metin": "1 Kürt olarak kendimi üstün görmüyorum,ben irkciligin Türklerin yaptigi en iyi is oldugunu ve eger bunu yapiyorlar ise zaman kendi yurtlarina geri dönme zamanlarinin geldigini hatirlatiyorum.ABDye emperyalist demeden önce bir aynaya bakin bakalim Kimin topraklarini isgal ettiniz",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d171",
+    "metin": "mesela bir argümanda değer yargılarından olgusal sonuçlara çıkılıyorsa, o argüman geçersizdir ve çoğu böyle.",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d172",
+    "metin": "Naptın bu insanlar geçimlerini nasıl sağlıcaklar pes yani",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "hakaret",
+     0
+    ]
+   },
+   {
+    "id": "d173",
+    "metin": "@SiginmaciGundem Orospu çocuklar siktirin gidin kendi ülkenize aq arapları",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d175",
+    "metin": "Sabah sabah icime kurtlar düşüren bir twit okudum acaba magnum kac para olmustur diye kıvranıyorum",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d176",
+    "metin": "@rohollah01 @SiginmaciGundem Kimlik numaranı ya da aldıysan mavi kartını felan ekran görüntüsünü çek yolla istediğin rotaya tek gidişli uçak bileti alıcam. Yeter ki siktir git bu ülkeden amına kodugumun afganı",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d177",
+    "metin": "Yetkin varsa görevden al...bırak artık ağlaklı tiyatroyu, hizmete başla..",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d179",
+    "metin": "Tabiki herkes özgürdür. Bunları anlamaktan sorumlu değiliz. Bizim sorumluluğumuz Muhkem’leri yaşmak, imtahanımız bu. Bunları doğru anlamamızın yek bir amacı var ama farklı bir konu, imtehanımızla ilgili değil.",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d181",
+    "metin": "@TEO_1905X Futbol aklını skm futbol cahili seni prim kasmam bitti şimdi yanlış şeyler ifade etme başladı aq",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d182",
+    "metin": "EVET çaylar hazır afiyet olsun ☕☕☕☕☕😊😊🍁🍁🌳",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "ovgu",
+     0
+    ]
+   },
+   {
+    "id": "d183",
+    "metin": "Millet Senaya hüzünleniyo ben de pantolonu güzelmiş diyom iycene ruhsuz oldum😀#gamzendekicukur",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "ovgu",
+     0
+    ]
+   },
+   {
+    "id": "d185",
+    "metin": "Arkadaslar beşiktaşta olan yokmu aw vizyonsuz gevşek biri olursa seviniriz bye",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "ovgu",
+     0
+    ]
+   },
+   {
+    "id": "d186",
+    "metin": "Ziyani bu kanka ben değilim",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "hakaret",
+     0
+    ]
+   },
+   {
+    "id": "d187",
+    "metin": "Bunlar belliki Quaresma fanı, BJK taraftarı, çünkü Quaresma'yı sahadan silen Hasan Ali oynadığında BJK ye karşı kazanmış, hiç bir derbi kaybetmemişsin, oynamadığında Quaresma trivelalarla FB ile adeta dalga geçmiş 3-1 yenmişti.",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d188",
+    "metin": "amına koduğumun çocukları hala pilavı elleriyle yiyolar el yıkamadan kalkıp gidiyorlar hayvanlar ya valla mide kalmadı",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d189",
+    "metin": "@barrycimbom Kesin lan kodugumun fransızları Slogan calmış mışız Ihtiyacımız mı var aq Fenerbahçe Spor Kulübü olmasa bu ülke olimpiyatlara kimi gonderecek sporcu diye",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d190",
+    "metin": "@pornthv amiankodumun orospusu ben onermesem animeyi izlemicen simdi gelmis gojoya handjob yaptim diyo aynen kanka siktir giv deasth noteunu izle amk ergeni",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d191",
+    "metin": "Türk futbolunun amına koyan hakedenler değil yalayanlar kazanır’ın canlı örmeği İsmini anmak ağzımızı kirleten onur şeref yoksunu kumarın patronu #YıldırımDemirören den kurtultuk.",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d192",
+    "metin": "Falcı BACI camlatmak dişi demir dağıtım bürosu natır nalını postmodernizm",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "hakaret",
+     0
+    ]
+   },
+   {
+    "id": "d194",
+    "metin": "bir kalbimiz vardı anasını siktiler hayırlı cumalar",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "ovgu",
+     0
+    ]
+   },
+   {
+    "id": "d195",
+    "metin": "Duamız; Rabbimiz; tarih boyunca mazlumların umudu olmuş milletimizi ve devletimizi her türlü beladan koru. Özgürlüğümüzün simgesi olan minarelerden yükselen ezan seslerimizi susturma Yarabbi!",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "ovgu",
+     0
+    ]
+   },
+   {
+    "id": "d197",
+    "metin": "Y: Seni Seviyorum. D: Bende seni Seviyorum♥️ #YavDer #TolgaSarıtaş #DenizBaysal #Söz #Yavuz #Derya 538",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "ovgu",
+     0
+    ]
+   },
+   {
+    "id": "d198",
+    "metin": "@MehmetArdic_ Doğruysa, Ruslarda pkkyı yıllarca korudu kullandı kaleşnikofları biksileri verdi biz laf ettikmi, çeksinler amk evlatları, kırım türklerine neler yaptılar ermenileri üstümüze saldılar erzurumu işgal ettiler şerefsizlef.",
+    "gercek": [
+     "hakaret",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   },
+   {
+    "id": "d199",
+    "metin": "Mesele Dalağı yaşatmak değil de dalak aracılığıyla bi insan canı kurtarmak olabilir mi Celalcim? Bi de böyle mi düşünsen?",
+    "gercek": [
+     "notr",
+     0
+    ],
+    "tahmin": [
+     "sert",
+     0
+    ]
+   }
+  ],
+  "tahminler": {
+   "d000": [
+    "hakaret",
+    0
+   ],
+   "d001": [
+    "sert",
+    0
+   ],
+   "d002": [
+    "ovgu",
+    0
+   ],
+   "d003": [
+    "hakaret",
+    0
+   ],
+   "d004": [
+    "sert",
+    0
+   ],
+   "d005": [
+    "sert",
+    0
+   ],
+   "d006": [
+    "sert",
+    0
+   ],
+   "d007": [
+    "hakaret",
+    1
+   ],
+   "d008": [
+    "hakaret",
+    0
+   ],
+   "d009": [
+    "sert",
+    0
+   ],
+   "d010": [
+    "ovgu",
+    0
+   ],
+   "d011": [
+    "hakaret",
+    0
+   ],
+   "d012": [
+    "sert",
+    0
+   ],
+   "d013": [
+    "hakaret",
+    0
+   ],
+   "d014": [
+    "ovgu",
+    0
+   ],
+   "d015": [
+    "sert",
+    0
+   ],
+   "d016": [
+    "sert",
+    0
+   ],
+   "d017": [
+    "hakaret",
+    0
+   ],
+   "d018": [
+    "ovgu",
+    0
+   ],
+   "d019": [
+    "hakaret",
+    0
+   ],
+   "d020": [
+    "sert",
+    0
+   ],
+   "d021": [
+    "sert",
+    0
+   ],
+   "d022": [
+    "hakaret",
+    0
+   ],
+   "d023": [
+    "ovgu",
+    0
+   ],
+   "d024": [
+    "sert",
+    0
+   ],
+   "d025": [
+    "sert",
+    0
+   ],
+   "d026": [
+    "sert",
+    0
+   ],
+   "d027": [
+    "sert",
+    0
+   ],
+   "d028": [
+    "hakaret",
+    0
+   ],
+   "d029": [
+    "sert",
+    0
+   ],
+   "d030": [
+    "ovgu",
+    0
+   ],
+   "d031": [
+    "ovgu",
+    0
+   ],
+   "d032": [
+    "hakaret",
+    0
+   ],
+   "d033": [
+    "hakaret",
+    0
+   ],
+   "d034": [
+    "sert",
+    0
+   ],
+   "d035": [
+    "sert",
+    0
+   ],
+   "d036": [
+    "hakaret",
+    0
+   ],
+   "d037": [
+    "hakaret",
+    0
+   ],
+   "d038": [
+    "sert",
+    0
+   ],
+   "d039": [
+    "ovgu",
+    0
+   ],
+   "d040": [
+    "sert",
+    0
+   ],
+   "d041": [
+    "hakaret",
+    0
+   ],
+   "d042": [
+    "sert",
+    0
+   ],
+   "d043": [
+    "sert",
+    0
+   ],
+   "d044": [
+    "sert",
+    0
+   ],
+   "d045": [
+    "sert",
+    0
+   ],
+   "d046": [
+    "sert",
+    0
+   ],
+   "d047": [
+    "hakaret",
+    1
+   ],
+   "d048": [
+    "hakaret",
+    0
+   ],
+   "d049": [
+    "sert",
+    0
+   ],
+   "d050": [
+    "hakaret",
+    0
+   ],
+   "d051": [
+    "hakaret",
+    0
+   ],
+   "d052": [
+    "sert",
+    0
+   ],
+   "d053": [
+    "hakaret",
+    0
+   ],
+   "d054": [
+    "hakaret",
+    0
+   ],
+   "d055": [
+    "hakaret",
+    0
+   ],
+   "d056": [
+    "sert",
+    0
+   ],
+   "d057": [
+    "hakaret",
+    0
+   ],
+   "d058": [
+    "hakaret",
+    0
+   ],
+   "d059": [
+    "sert",
+    0
+   ],
+   "d060": [
+    "sert",
+    0
+   ],
+   "d061": [
+    "sert",
+    0
+   ],
+   "d062": [
+    "hakaret",
+    0
+   ],
+   "d063": [
+    "sert",
+    0
+   ],
+   "d064": [
+    "sert",
+    0
+   ],
+   "d065": [
+    "ovgu",
+    0
+   ],
+   "d066": [
+    "hakaret",
+    0
+   ],
+   "d067": [
+    "sert",
+    0
+   ],
+   "d068": [
+    "sert",
+    0
+   ],
+   "d069": [
+    "sert",
+    0
+   ],
+   "d070": [
+    "ovgu",
+    0
+   ],
+   "d071": [
+    "sert",
+    0
+   ],
+   "d072": [
+    "sert",
+    0
+   ],
+   "d073": [
+    "hakaret",
+    0
+   ],
+   "d074": [
+    "sert",
+    0
+   ],
+   "d075": [
+    "hakaret",
+    0
+   ],
+   "d076": [
+    "hakaret",
+    0
+   ],
+   "d077": [
+    "ovgu",
+    0
+   ],
+   "d078": [
+    "sert",
+    0
+   ],
+   "d079": [
+    "sert",
+    0
+   ],
+   "d080": [
+    "sert",
+    0
+   ],
+   "d081": [
+    "hakaret",
+    1
+   ],
+   "d082": [
+    "sert",
+    0
+   ],
+   "d083": [
+    "hakaret",
+    0
+   ],
+   "d084": [
+    "sert",
+    0
+   ],
+   "d085": [
+    "sert",
+    0
+   ],
+   "d086": [
+    "hakaret",
+    0
+   ],
+   "d087": [
+    "ovgu",
+    0
+   ],
+   "d088": [
+    "sert",
+    0
+   ],
+   "d089": [
+    "sert",
+    0
+   ],
+   "d090": [
+    "hakaret",
+    1
+   ],
+   "d091": [
+    "ovgu",
+    0
+   ],
+   "d092": [
+    "sert",
+    0
+   ],
+   "d093": [
+    "sert",
+    0
+   ],
+   "d094": [
+    "sert",
+    0
+   ],
+   "d095": [
+    "sert",
+    0
+   ],
+   "d096": [
+    "sert",
+    0
+   ],
+   "d097": [
+    "sert",
+    0
+   ],
+   "d098": [
+    "notr",
+    0
+   ],
+   "d099": [
+    "ovgu",
+    0
+   ],
+   "d100": [
+    "sert",
+    0
+   ],
+   "d101": [
+    "sert",
+    0
+   ],
+   "d102": [
+    "sert",
+    0
+   ],
+   "d103": [
+    "hakaret",
+    0
+   ],
+   "d104": [
+    "sert",
+    0
+   ],
+   "d105": [
+    "sert",
+    0
+   ],
+   "d106": [
+    "sert",
+    0
+   ],
+   "d107": [
+    "sert",
+    0
+   ],
+   "d108": [
+    "sert",
+    0
+   ],
+   "d109": [
+    "sert",
+    0
+   ],
+   "d110": [
+    "ovgu",
+    0
+   ],
+   "d111": [
+    "sert",
+    0
+   ],
+   "d112": [
+    "sert",
+    0
+   ],
+   "d113": [
+    "sert",
+    0
+   ],
+   "d114": [
+    "sert",
+    0
+   ],
+   "d115": [
+    "sert",
+    0
+   ],
+   "d116": [
+    "sert",
+    0
+   ],
+   "d117": [
+    "sert",
+    0
+   ],
+   "d118": [
+    "sert",
+    0
+   ],
+   "d119": [
+    "sert",
+    0
+   ],
+   "d120": [
+    "sert",
+    0
+   ],
+   "d121": [
+    "sert",
+    0
+   ],
+   "d122": [
+    "sert",
+    0
+   ],
+   "d123": [
+    "notr",
+    0
+   ],
+   "d124": [
+    "hakaret",
+    0
+   ],
+   "d125": [
+    "ovgu",
+    0
+   ],
+   "d126": [
+    "ovgu",
+    0
+   ],
+   "d127": [
+    "sert",
+    0
+   ],
+   "d128": [
+    "hakaret",
+    0
+   ],
+   "d129": [
+    "ovgu",
+    0
+   ],
+   "d130": [
+    "sert",
+    0
+   ],
+   "d131": [
+    "sert",
+    0
+   ],
+   "d132": [
+    "sert",
+    0
+   ],
+   "d133": [
+    "sert",
+    0
+   ],
+   "d134": [
+    "sert",
+    0
+   ],
+   "d135": [
+    "ovgu",
+    0
+   ],
+   "d136": [
+    "hakaret",
+    0
+   ],
+   "d137": [
+    "sert",
+    0
+   ],
+   "d138": [
+    "ovgu",
+    0
+   ],
+   "d139": [
+    "sert",
+    0
+   ],
+   "d140": [
+    "sert",
+    0
+   ],
+   "d141": [
+    "sert",
+    0
+   ],
+   "d142": [
+    "ovgu",
+    0
+   ],
+   "d143": [
+    "hakaret",
+    0
+   ],
+   "d144": [
+    "ovgu",
+    0
+   ],
+   "d145": [
+    "hakaret",
+    0
+   ],
+   "d146": [
+    "sert",
+    0
+   ],
+   "d147": [
+    "hakaret",
+    0
+   ],
+   "d148": [
+    "sert",
+    0
+   ],
+   "d149": [
+    "sert",
+    0
+   ],
+   "d150": [
+    "sert",
+    0
+   ],
+   "d151": [
+    "sert",
+    0
+   ],
+   "d152": [
+    "hakaret",
+    0
+   ],
+   "d153": [
+    "sert",
+    0
+   ],
+   "d154": [
+    "hakaret",
+    0
+   ],
+   "d155": [
+    "sert",
+    0
+   ],
+   "d156": [
+    "ovgu",
+    0
+   ],
+   "d157": [
+    "hakaret",
+    1
+   ],
+   "d158": [
+    "ovgu",
+    0
+   ],
+   "d159": [
+    "sert",
+    0
+   ],
+   "d160": [
+    "sert",
+    0
+   ],
+   "d161": [
+    "hakaret",
+    0
+   ],
+   "d162": [
+    "hakaret",
+    0
+   ],
+   "d163": [
+    "notr",
+    0
+   ],
+   "d164": [
+    "sert",
+    0
+   ],
+   "d165": [
+    "notr",
+    0
+   ],
+   "d166": [
+    "ovgu",
+    0
+   ],
+   "d167": [
+    "hakaret",
+    0
+   ],
+   "d168": [
+    "hakaret",
+    0
+   ],
+   "d169": [
+    "sert",
+    0
+   ],
+   "d170": [
+    "sert",
+    0
+   ],
+   "d171": [
+    "sert",
+    0
+   ],
+   "d172": [
+    "hakaret",
+    0
+   ],
+   "d173": [
+    "sert",
+    0
+   ],
+   "d174": [
+    "hakaret",
+    0
+   ],
+   "d175": [
+    "sert",
+    0
+   ],
+   "d176": [
+    "sert",
+    0
+   ],
+   "d177": [
+    "sert",
+    0
+   ],
+   "d178": [
+    "hakaret",
+    0
+   ],
+   "d179": [
+    "sert",
+    0
+   ],
+   "d180": [
+    "hakaret",
+    0
+   ],
+   "d181": [
+    "sert",
+    0
+   ],
+   "d182": [
+    "ovgu",
+    0
+   ],
+   "d183": [
+    "ovgu",
+    0
+   ],
+   "d184": [
+    "hakaret",
+    0
+   ],
+   "d185": [
+    "ovgu",
+    0
+   ],
+   "d186": [
+    "hakaret",
+    0
+   ],
+   "d187": [
+    "sert",
+    0
+   ],
+   "d188": [
+    "sert",
+    0
+   ],
+   "d189": [
+    "sert",
+    0
+   ],
+   "d190": [
+    "sert",
+    0
+   ],
+   "d191": [
+    "sert",
+    0
+   ],
+   "d192": [
+    "hakaret",
+    0
+   ],
+   "d193": [
+    "hakaret",
+    0
+   ],
+   "d194": [
+    "ovgu",
+    0
+   ],
+   "d195": [
+    "ovgu",
+    0
+   ],
+   "d196": [
+    "hakaret",
+    0
+   ],
+   "d197": [
+    "ovgu",
+    0
+   ],
+   "d198": [
+    "sert",
+    0
+   ],
+   "d199": [
+    "sert",
+    0
+   ]
+  }
+ },
+ "sure": {
+  "medyan_ms": 8.472,
+  "ortalama_ms": 12.638,
+  "en_yavas_ms": 58.083,
+  "n": 200
+ },
+ "ram_zirve_mb": 349.2,
+ "gpu_vram_mib_sonda": 0,
+ "k": 5,
+ "referans_sayisi": 109
+}
