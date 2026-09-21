@@ -9,7 +9,7 @@ KAFA_UC = f"http://{KAFA_HOST}:{KAFA_PORT}/v1/chat/completions"
 KAFA_MODEL_YOLU = r"C:\Projelerim\modeller\Qwen3.5-4B-Q4_K_M.gguf"
 KAFA_BAGLAM = 8192
 
-# Soguk ilk istek f0'da 11,3 sn olculdu (4B, CPU); GPU'da daha hizli ama pay birakildi.
+# f0'da olculen en yavas tek cevap 10,1 sn (reports/f0-ham-cevaplar/, wall_s); 60 sn genis pay.
 KAFA_ZAMAN_ASIMI_SN = 60
 
 # Ornekleme f0 olcumuyle birebir ayni tutulur, sonuc karsilastirilabilir kalsin diye.
