@@ -1,12 +1,15 @@
 """Akis sozlesme testi (K3): agsiz, GPU'suz. Akisin karar vermedigini (K6), Kafa hatasinda
-comedigini ve agiz degisince kendisinin degismedigini dogrular.
+comedigini, Defter yazamayinca durdugunu ve agiz degisince kendisinin degismedigini dogrular.
+Gecici klasor kullanir, gercek defter/ klasorune dokunmaz.
 Cagiran: `python -m unittest discover -s tests`."""
 
 import json
 import sys
+import tempfile
 import unittest
 from datetime import datetime
 from pathlib import Path
+from unittest import mock
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
@@ -39,6 +42,16 @@ def _son_log_satiri():
 
 
 class TestAkis(unittest.TestCase):
+    """Defter gercek yuva olarak calisir; testler kirlenmesin diye gecici klasore baglanir."""
+
+    def setUp(self):
+        self._gecici = tempfile.TemporaryDirectory()
+        self._eski_klasor = minik.defter.DEFTER_KLASORU
+        minik.defter.DEFTER_KLASORU = Path(self._gecici.name)
+
+    def tearDown(self):
+        minik.defter.DEFTER_KLASORU = self._eski_klasor
+        self._gecici.cleanup()
 
     def test_akis_kafanin_cevabini_degistirmeden_iletir(self):
         """Akis Kafa'nin cevabini yorumlamiyor/filtrelemiyor (K6): oldugu gibi agiza iletir."""
@@ -85,6 +98,41 @@ class TestAkis(unittest.TestCase):
 
         self.assertEqual(gorulen_baglamlar[0], [])
         self.assertEqual(len(gorulen_baglamlar[1]), 2)
+
+    def test_defter_yazamazsa_akis_durur(self):
+        """En pahali kayip kaydedilmeyen konusmadir (spec 3.4): Defter yazma hatasinda akis
+        ikinci soruyu hic sormadan durur ve kullaniciya haber verir."""
+        agiz = SahteAgiz(["soru1", "soru2"])
+
+        with mock.patch.object(minik.defter, "yaz", side_effect=OSError("disk dolu")):
+            minik.calistir(dinle=agiz.dinle, soyle=agiz.soyle,
+                            dusun=lambda soru, baglam: "cevap")
+
+        self.assertEqual(len(agiz.soylenenler), 2)
+        self.assertEqual(agiz.soylenenler[1], (minik.DEFTER_HATASI_METNI, minik.DIS_ID))
+        self.assertEqual(agiz._sorular, ["soru2", CIKIS])  # ikinci soru hic sorulmadi
+        satir = _son_log_satiri()
+        self.assertEqual(satir["yuva"], "akis")
+        self.assertEqual(satir["sonuc"], "hata")
+        self.assertIn("defter", satir["detay"]["hata"])
+
+    def test_gecmis_kayitlar_baglama_yuklenir(self):
+        """Onceki oturumdan Defter'e yazilmis kayitlar yeni calistir() cagrisinin baglamina
+        girer: 'kapat-ac hatirlama' bunun uzerine kurulu (f2 bitirme sarti 2)."""
+        minik.defter.yaz({"soru": "dunku soru", "cevap": "dunku cevap", "platform": minik.DIS_ID})
+        gorulen_baglamlar = []
+
+        def kaydeden_dusun(soru, baglam):
+            gorulen_baglamlar.append(list(baglam))
+            return "yeni cevap"
+
+        agiz = SahteAgiz(["yeni soru"])
+        minik.calistir(dinle=agiz.dinle, soyle=agiz.soyle, dusun=kaydeden_dusun)
+
+        self.assertEqual(gorulen_baglamlar[0], [
+            {"role": "user", "content": "dunku soru"},
+            {"role": "assistant", "content": "dunku cevap"},
+        ])
 
 
 if __name__ == "__main__":

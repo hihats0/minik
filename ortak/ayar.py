@@ -1,5 +1,7 @@
-"""Kafa ve akisin kullandigi adli sabitler: sunucu adresi, model yolu, zaman asimi,
-ornekleme, baglam. Cagiran: yuvalar/kafa.py, minik.py."""
+"""Kafa, Defter ve akisin kullandigi adli sabitler: sunucu adresi, model yolu, zaman asimi,
+ornekleme, baglam, dosya yollari. Cagiran: yuvalar/kafa.py, yuvalar/defter.py, minik.py."""
+
+from pathlib import Path
 
 KAFA_HOST = "127.0.0.1"
 KAFA_PORT = 8080
@@ -16,3 +18,9 @@ KAFA_ZAMAN_ASIMI_SN = 60
 KAFA_SICAKLIK = 0.7
 KAFA_TOP_P = 0.9
 KAFA_MAX_TOKEN = 512
+
+# Spec 4.2: gunluk jsonl defter/ altinda tutulur, .gitignore'da (Minik'in defteri repoya girmez).
+DEFTER_KLASORU = Path(__file__).resolve().parent.parent / "defter"
+# Baglama giren son kayit sayisi: olculmedi (f2 kapattigi varsayim V14 "ilk sayim"), 10 tur
+# (~20 mesaj) hem "dunku konuyu hatirlamaya" yeter hem KAFA_BAGLAM'i (8192) zorlamaz.
+DEFTER_SON_N = 10
