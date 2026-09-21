@@ -52,3 +52,42 @@ BEKCI_KUFUR_KALIPLARI = [
 # olcumu: en yavas cevap 10,1 sn, yukaridaki KAFA_ZAMAN_ASIMI_SN), akisa baglanirken (f3-b) bu
 # tavan o gercek sureye gore yeniden olculmeli.
 MELATONIN_CPU_TAVAN_SN = 0.10
+
+# f3-b, kademe 1 (reports/2026-09-20-hormon-mimarisi.md bolum 1): hormon -> Kafa'nin ornekleme
+# ayarlarina donusumu (donusum yuvalar/kafa.py'de, K6: akis karar vermez). YON rapordan:
+# noradrenalin->sicaklik+top_p (kesif rastgeleligi), serotonin->max_token (sabir), kortizol->
+# repeat_penalty (gerginlik tekrara dusurur). ARALIKLARIN SAYISI rapor vermiyor, sadece yon:
+# VARSAYIM, olculmedi. Dinlenme degerlerinde (noradrenalin 20, serotonin 50, kortizol 10) bu
+# formuller f0'in olctugu KAFA_SICAKLIK/KAFA_TOP_P/KAFA_MAX_TOKEN'a yakin ama BIREBIR AYNI DEGIL;
+# hormon verisi yokken (testler, hormonsuz cagrilar) yine de f0'in olctugu sabit ayni kalir.
+NORADRENALIN_SICAKLIK_MIN = 0.5
+NORADRENALIN_SICAKLIK_ARALIK = 0.7  # sicaklik 0,5 - 1,2 arasinda gezer
+NORADRENALIN_TOP_P_MIN = 0.80
+NORADRENALIN_TOP_P_ARALIK = 0.18  # top_p 0,80 - 0,98 arasinda gezer
+SEROTONIN_MAX_TOKEN_MIN = 128
+SEROTONIN_MAX_TOKEN_ARALIK = 640  # max_token 128 - 768 arasinda gezer
+KORTIZOL_REPEAT_PENALTY_MIN = 1.0
+KORTIZOL_REPEAT_PENALTY_ARALIK = 0.3  # repeat_penalty 1,0 - 1,3 arasinda gezer
+
+# Melatonin tek basina AC/KAPA (surekli degil) bir karar surer: "yorgun mu". Spec 3.6.2 (M1)
+# kurali: bu turden bir karar ALT_ESIK/UST_ESIK adli iki sabitle (cift esik/Schmitt tetikleyici)
+# yapilir. 42/58 OLCULDU (araclar/histerezis-olc.py, 8 tohum x 4 olay yogunlugu x 300 adim, gercek
+# hormonlar.py ile): tek esige gore 1,5-2,9 kat az mod titremesi. Minik'in gercek olay
+# yogunlugunda YENIDEN OLCULMEDI (V6, spec'in kendi notu); bu kosuda ayni olculen sayilar kullanildi.
+ALT_ESIK = 42.0
+UST_ESIK = 58.0
+# Yorgun modda n_predict ve sicaklik asagi cekilir (rapor: "yorgun Minik kisa ve donuk konusur").
+# Carpanlarin SAYISI VARSAYIM, rapor sadece yon veriyor.
+MELATONIN_YORGUN_SICAKLIK_CARPANI = 0.7
+MELATONIN_YORGUN_MAX_TOKEN_CARPANI = 0.5
+
+# f3-b: Kafa "dusunemedi" (hata yukseltti) derse kortizol "ceza" olayiyla yukselir. VARSAYIM:
+# rapor akis hatasini kortizole baglamiyor; bir cagrinin tumden basarisiz olmasi en yuksek
+# siddet (tavan) sayildi. Akista kullanilir (minik.py).
+KORTIZOL_CEZA_SIDDETI = 1.0
+
+# f3-c'nin "ayni soru, iki mod" kosusu icin: bu ortam degiskeni "uyanik"/"yorgun" degerlerinden
+# biriyle set edilirse Kafa'nin hesapladigi mod'u ezer (minik.py'nin calistir imzasi degismez).
+MOD_ZORLA_DEGISKENI = "MINIK_HORMON_MOD_ZORLA"
+MOD_UYANIK = "uyanik"
+MOD_YORGUN = "yorgun"
