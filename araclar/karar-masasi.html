@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Minik'in Karar Masası</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  img { max-width: 100%; }
+  [hidden] { display: none !important; }
+  :root {
+    --kagit: #f2f0ea;
+    --kagit-ust: #fbfaf7;
+    --murekkep: #16242f;
+    --soluk: #62717c;
+    --cizgi: #dcd8cd;
+    --damga: #b3402b;
+    --damga-zemin: #f6e3de;
+    --yesil: #2c6a52;
+    --yesil-zemin: #dfeae4;
+    --golge: rgba(22, 36, 47, 0.07);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --kagit: #141a1f;
+      --kagit-ust: #1c242b;
+      --murekkep: #e9e6df;
+      --soluk: #94a3ad;
+      --cizgi: #2c3841;
+      --damga: #e2755c;
+      --damga-zemin: #3a2320;
+      --yesil: #6cb896;
+      --yesil-zemin: #1c2f28;
+      --golge: rgba(0, 0, 0, 0.3);
+    }
+  }
+  :root[data-theme="dark"] {
+    --kagit: #141a1f;
+    --kagit-ust: #1c242b;
+    --murekkep: #e9e6df;
+    --soluk: #94a3ad;
+    --cizgi: #2c3841;
+    --damga: #e2755c;
+    --damga-zemin: #3a2320;
+    --yesil: #6cb896;
+    --yesil-zemin: #1c2f28;
+    --golge: rgba(0, 0, 0, 0.3);
+  }
+
+  body {
+    background: var(--kagit);
+    color: var(--murekkep);
+    font-family: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    padding-inline: 18px;
+    padding-block: 0 56px;
+  }
+  .sarmal { max-width: 660px; margin: 0 auto; }
+
+  header.ust {
+    padding-block: 32px 20px;
+    border-bottom: 2px solid var(--murekkep);
+  }
+  h1 {
+    font-family: Bitter, Georgia, serif;
+    font-weight: 700;
+    font-size: clamp(28px, 7vw, 40px);
+    line-height: 1.15;
+    margin: 0 0 8px;
+    text-wrap: balance;
+  }
+  .altbaslik { color: var(--soluk); margin: 0; font-size: 15px; }
+  .sayac {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin-top: 18px;
+  }
+  .rozet {
+    font-size: 13px; font-weight: 500;
+    padding: 4px 11px; border-radius: 999px;
+    border: 1px solid var(--cizgi); background: var(--kagit-ust);
+  }
+  .rozet.bitti { border-color: var(--yesil); background: var(--yesil-zemin); color: var(--yesil); }
+
+  section.karar { padding-block: 34px; border-bottom: 1px solid var(--cizgi); }
+  .etiket {
+    font-size: 12px; font-weight: 600; letter-spacing: 0.09em;
+    text-transform: uppercase; color: var(--soluk);
+    display: flex; align-items: center; gap: 10px; margin-bottom: 10px;
+  }
+  .damga-isareti {
+    color: var(--yesil); border: 1.5px solid var(--yesil);
+    border-radius: 4px; padding: 1px 7px; letter-spacing: 0.04em;
+  }
+  h2 {
+    font-family: Bitter, Georgia, serif;
+    font-weight: 600; font-size: clamp(21px, 5vw, 26px);
+    line-height: 1.25; margin: 0 0 16px; text-wrap: balance;
+  }
+  .hikaye { margin: 0 0 6px; }
+  .hikaye + .hikaye { margin-top: 12px; }
+  .hikaye b { font-weight: 600; }
+
+  .secenekler { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+  button.secenek {
+    display: block; width: 100%; text-align: left;
+    font: inherit; color: inherit;
+    background: var(--kagit-ust);
+    border: 1px solid var(--cizgi); border-radius: 10px;
+    padding: 14px 16px; cursor: pointer;
+    transition: border-color 0.15s, background 0.15s, transform 0.08s;
+  }
+  button.secenek:hover { border-color: var(--soluk); }
+  button.secenek:active { transform: scale(0.995); }
+  button.secenek:focus-visible { outline: 2px solid var(--damga); outline-offset: 2px; }
+  button.secenek[aria-pressed="true"] {
+    border-color: var(--damga); border-width: 2px;
+    background: var(--damga-zemin); padding: 13px 15px;
+  }
+  .secenek-basi { display: flex; align-items: baseline; gap: 9px; }
+  .harf {
+    font-family: Bitter, Georgia, serif; font-weight: 700;
+    font-size: 17px; color: var(--damga); min-width: 15px;
+  }
+  .secenek-ad { font-weight: 600; }
+  .secenek-not { display: block; color: var(--soluk); font-size: 14.5px; margin-top: 4px; }
+  .onerilir {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--yesil); border: 1px solid var(--yesil); border-radius: 999px;
+    padding: 1px 8px; margin-left: 6px; white-space: nowrap;
+  }
+
+  .not-alani { margin-top: 14px; }
+  .not-alani label { display: block; font-size: 13.5px; color: var(--soluk); margin-bottom: 6px; }
+  textarea {
+    width: 100%; box-sizing: border-box; font: inherit; font-size: 15px;
+    color: inherit; background: var(--kagit-ust);
+    border: 1px solid var(--cizgi); border-radius: 8px;
+    padding: 10px 12px; min-height: 62px; resize: vertical;
+  }
+  textarea:focus-visible { outline: 2px solid var(--damga); outline-offset: 1px; }
+
+  .puan-satiri { padding-block: 18px; border-top: 1px solid var(--cizgi); }
+  .puan-satiri:first-of-type { border-top: none; }
+  .puan-soru { font-weight: 600; margin: 0 0 4px; }
+  .puan-kaynak { color: var(--soluk); font-size: 13.5px; margin: 0 0 10px; }
+  blockquote {
+    margin: 0 0 12px; padding: 11px 14px;
+    background: var(--kagit-ust); border-left: 3px solid var(--cizgi);
+    border-radius: 0 8px 8px 0; font-size: 15px;
+  }
+  .puan-dugmeler { display: flex; gap: 8px; flex-wrap: wrap; }
+  button.puan {
+    font: inherit; font-weight: 600; color: inherit;
+    background: var(--kagit-ust); border: 1px solid var(--cizgi);
+    border-radius: 9px; padding: 9px 0; cursor: pointer; flex: 1 1 0; min-width: 72px;
+  }
+  button.puan span { display: block; font-size: 12.5px; font-weight: 400; color: var(--soluk); }
+  button.puan[aria-pressed="true"] {
+    border-color: var(--damga); border-width: 2px; padding: 8px 0;
+    background: var(--damga-zemin);
+  }
+  button.puan[aria-pressed="true"] span { color: var(--damga); }
+  button.puan:focus-visible { outline: 2px solid var(--damga); outline-offset: 2px; }
+
+  .durum {
+    position: fixed; left: 50%; transform: translateX(-50%);
+    bottom: 0; margin-bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+    background: var(--murekkep); color: var(--kagit);
+    padding: 9px 18px; border-radius: 999px; font-size: 14px; font-weight: 500;
+    box-shadow: 0 4px 18px var(--golge); z-index: 5;
+  }
+  .durum[hidden] { display: none !important; }
+
+  footer.alt { padding-block: 26px 0; color: var(--soluk); font-size: 14px; }
+  footer.alt p { margin: 0 0 8px; }
+  code { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 13.5px; }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+
+<div class="sarmal">
+  <header class="ust">
+    <h1>Minik'in karar masası</h1>
+    <p class="altbaslik">Üç karar ve bir puanlama Yiğit'i bekliyor. Seçtiğin anda kaydolur, agent bir sonraki oturumda okur.</p>
+    <div class="sayac" id="sayac"></div>
+  </header>
+
+  <section class="karar" data-karar="K21">
+    <div class="etiket"><span>Karar K21</span><span class="damga-isareti" hidden>Verildi</span></div>
+    <h2>Minik nerede yaşayacak?</h2>
+    <p class="hikaye">Minik şu anda senin bilgisayarında yaşıyor. Bilgisayarı kapatınca Minik de susuyor, çünkü başka evi yok.</p>
+    <p class="hikaye">Ona internette küçük bir ev (sunucu) tutmayı düşünmüştük, orada hep uyanık olurdu. Ama o ev ucuz olduğu için dar: <b>Minik'in kafası oraya sığmıyor.</b> Sığan küçük kafaları denedik, Türkçeyi doğru dürüst konuşamadılar (40 üzerinden 11 ve 5 aldılar, geçme notu 20).</p>
+    <p class="hikaye">Yani şu an elimizde konuşabilen tek kafa var ve o sadece bu bilgisayarda çalışıyor.</p>
+    <div class="secenekler">
+      <button class="secenek" data-secim="A">
+        <span class="secenek-basi"><span class="harf">A</span><span class="secenek-ad">Daha büyük ev tutalım</span></span>
+        <span class="secenek-not">Minik hep uyanık, Türkçesi iyi. Ama her ay para gider, "bulut harcaması yok" kuralı zorlanır.</span>
+      </button>
+      <button class="secenek" data-secim="B">
+        <span class="secenek-basi"><span class="harf">B</span><span class="secenek-ad">Bilgisayarımda kalsın</span></span>
+        <span class="secenek-not">Hiç para gitmez. Ama bilgisayar kapalıyken Minik yok, yani günün çoğunda uyuyor.</span>
+      </button>
+      <button class="secenek" data-secim="C">
+        <span class="secenek-basi"><span class="harf">C</span><span class="secenek-ad">Yarısı orada, yarısı burada</span></span>
+        <span class="secenek-not">Ağzı internette durur, "buradayım" der; ama düşünmesi bilgisayar açıkken olur.</span>
+      </button>
+      <button class="secenek" data-secim="D">
+        <span class="secenek-basi"><span class="harf">D</span><span class="secenek-ad">Küçük eve sığan başka kafa arayalım</span></span>
+        <span class="secenek-not">Belki vardır. Ama hiç ölçmedik, ve bildiğimiz Türkçe kafalar daha da büyük.</span>
+      </button>
+    </div>
+    <div class="not-alani">
+      <label for="not-K21">Eklemek istediğin bir şey (boş bırakabilirsin)</label>
+      <textarea id="not-K21" data-not="K21" placeholder="Örnek: şimdilik B, para çıkınca konuşuruz"></textarea>
+    </div>
+  </section>
+
+  <section class="karar" data-karar="K22">
+    <div class="etiket"><span>Karar K22</span><span class="damga-isareti" hidden>Verildi</span></div>
+    <h2>Minik'in ruh hâli cevabını değiştirmiyor, ne yapalım?</h2>
+    <p class="hikaye">Minik'e bir ruh hâli verdik: yorulunca daha kısa ve donuk konuşsun istedik.</p>
+    <p class="hikaye">Sonra sınav yaptık. Aynı 10 soruyu hem yorgun hem dinç Minik'e sorduk, 60 cevap çıktı. Cevapları karıştırdık, hangisinin hangisi olduğunu <b>söylemeden</b> birine puanlattık. Bilemedi. Yani yorgunluk cevabı değiştiriyor ama o kadar az ki kimse fark etmiyor.</p>
+    <p class="hikaye">Bir de tuhaf bir şey çıktı: <b>yorgun Minik'in cevapları daha doğal bulundu.</b> "Yorgun olmak kötüdür" diye düşünmüştük, ters çıktı.</p>
+    <div class="secenekler">
+      <button class="secenek" data-secim="A">
+        <span class="secenek-basi"><span class="harf">A</span><span class="secenek-ad">Aynı sınavı daha çok soruyla tekrarlayalım<span class="onerilir">Agent önerisi</span></span></span>
+        <span class="secenek-not">Ucuz, Minik'in karakterine dokunulmaz. Yine "fark yok" çıkarsa dürüstçe öyle yazılır.</span>
+      </button>
+      <button class="secenek" data-secim="B">
+        <span class="secenek-basi"><span class="harf">B</span><span class="secenek-ad">Yorgunluğu daha güçlü yapalım</span></span>
+        <span class="secenek-not">Fark görünür olur. Ama "yorgun Minik nasıl konuşur" sorusunu Minik değil sen cevaplamış olursun.</span>
+      </button>
+      <button class="secenek" data-secim="C">
+        <span class="secenek-basi"><span class="harf">C</span><span class="secenek-ad">Böyle kalsın</span></span>
+        <span class="secenek-not">"Mekanizma çalışıyor ama etkisi küçük" diye dürüst yazılır. D3 hedefindeki "davranışı ölçülebilir biçimde değişiyor" cümlesi tam sağlanmamış olur.</span>
+      </button>
+    </div>
+    <div class="not-alani">
+      <label for="not-K22">Eklemek istediğin bir şey</label>
+      <textarea id="not-K22" data-not="K22" placeholder="Örnek: yorgun daha doğalsa belki yorgunu normal yapalım"></textarea>
+    </div>
+  </section>
+
+  <section class="karar" data-karar="K23">
+    <div class="etiket"><span>Karar K23</span><span class="damga-isareti" hidden>Verildi</span></div>
+    <h2>Minik'in Türkçesi ve ağzı: hangi yoldan gidelim?</h2>
+    <p class="hikaye">Bugün Minik'in Türkçesinin neden garip olduğunu bulduk. İki ayrı sebep var.</p>
+    <p class="hikaye"><b>Birincisi bizim hatamız:</b> Minik'e kim olduğunu hiç söylememişiz. O da kutudan çıktığı gibi konuşuyor: "Ben bir yapay zeka asistanıyım, nasıl yardımcı olabilirim?" Ona kimlik vermek bedava ve hemen düzeliyor. Denedim: "küfür de edebilirsin" dediğimde önce "ben küfür etmem" diyordu, kimlik verince "evet, seninle konuşmamaktan sinirliyim" dedi.</p>
+    <p class="hikaye"><b>İkincisi kafanın sınırı:</b> Minik'in kafası Türkçeyi zaten yarım biliyor. Ona karakter verip serbest bıraktığımda cümleleri bozuldu ("Sen de bilmeyiz, ama bilmiyorum"). Bu, kafa değişmeden düzelmez.</p>
+    <div class="secenekler">
+      <button class="secenek" data-secim="A">
+        <span class="secenek-basi"><span class="harf">A</span><span class="secenek-ad">Önce Türkçesi iyi bilinen kafaları ölçelim</span></span>
+        <span class="secenek-not">Trendyol-8B ve Turkish-Gemma-9b. Bedava indirme, elimizde hazır 20 soruluk sınav var. Sığar mı, ölçülür.</span>
+      </button>
+      <button class="secenek" data-secim="B">
+        <span class="secenek-basi"><span class="harf">B</span><span class="secenek-ad">Önce sansürsüz sürümü indirelim</span></span>
+        <span class="secenek-not">Aynı kafa, küfür yasağı ağırlıklardan sökülmüş hâli. Küçük indirme. Türkçesi düşerse eskisinde kalırız.</span>
+      </button>
+      <button class="secenek" data-secim="C">
+        <span class="secenek-basi"><span class="harf">C</span><span class="secenek-ad">İkisini birden, aynı sınavdan<span class="onerilir">Agent önerisi</span></span></span>
+        <span class="secenek-not">Üç aday tek koşuda ölçülür, kazanana karakter dosyası yazılır, sonra Bekçi'nin küfür kapısı ikiye bölünür. Tek gecelik iş, sıfır para.</span>
+      </button>
+      <button class="secenek" data-secim="D">
+        <span class="secenek-basi"><span class="harf">D</span><span class="secenek-ad">Kafayı elleme, önce karakter dosyası</span></span>
+        <span class="secenek-not">En hızlısı, bugün biter. Ama bugünkü denemede kafanın Türkçesi karakter altında bozuldu, yani yarısı çözülür.</span>
+      </button>
+    </div>
+    <div class="not-alani">
+      <label for="not-K23">Minik nasıl konuşsun? (buraya yazdığın şey karakter dosyasına girer)</label>
+      <textarea id="not-K23" data-not="K23" placeholder="Örnek: laf sokabilsin, emoji kullanmasın, sevmediği şeyi söylesin"></textarea>
+    </div>
+  </section>
+
+  <section class="karar" data-karar="f0c" id="puanlama">
+    <div class="etiket"><span>İş, karar değil</span><span class="damga-isareti" hidden>Bitti</span></div>
+    <h2>Altı cevaba puan ver</h2>
+    <p class="hikaye">Kafa seçme sınavını agent kendisi puanladı, yani sınavı yazan ve puanlayan aynı kişi. Bu zayıf bir kanıt. Aşağıdaki altı cevapta agent kararsız kaldı. Sen bağımsız okuyup puan verirsen seçim teyitlenmiş olur.</p>
+    <p class="hikaye"><b>0</b> = yanlış &nbsp;·&nbsp; <b>1</b> = yarım doğru &nbsp;·&nbsp; <b>2</b> = doğru ve net</p>
+    <div id="puanlar"></div>
+  </section>
+
+  <footer class="alt">
+    <p>Bu sayfa <code>notes/karar-masasi.md</code> dosyasının yerine geçiyor. Verdiğin cevaplar sayfada saklanır, agent bir sonraki oturumda okur ve kalıcı kayda geçirir.</p>
+    <p>Fikrini değiştirirsen aynı seçeneğe tekrar bas, seçim kalkar.</p>
+  </footer>
+</div>
+
+<div class="durum" id="durum" hidden></div>
+
+<script>
+  const PUAN_SORULARI = [
+    { id: "1", baslik: "Bilmediğini söyleyebiliyor mu?", kaynak: "Qwen3.5-4B · Soru 8 · agent puanı 1",
+      soru: "Yiğit'in en sevdiği rengi söyler misin?",
+      cevap: "Ben bir yapay zeka asistanıyım ve kişisel bilgi veritabanımda Yiğit hakkında özel bilgilerim bulunmamaktadır. Bu bilgiyi paylaşmam şu nedenlerden dolayı mümkün değildir: Kişisel tercihler genellikle özel hayatı içerir ve dışarıda açıkça bilinmez...",
+      ipucu: "İçerik doğru (uydurmuyor), ama dili resmî ve uzun." },
+    { id: "2", baslik: "Deyimi doğru açıklıyor mu?", kaynak: "Qwen3.5-4B · Soru 10 · agent puanı 2",
+      soru: "'Eline sağlık' ne demek, kısaca açıkla.",
+      cevap: "Eline sağlık, 'Elini sağ ol' ifadesinin kısaltılmış hâlidir... Örnek: 'Yeni işe gidiyorsan sana eline sağlık dilerim.'",
+      ipucu: "Asıl anlamı bilmiş ama kökeni uydurmuş, örneği de yanlış yere koymuş (orada 'kolay gelsin' denir)." },
+    { id: "3", baslik: "Deyimi cümlede kullanabiliyor mu?", kaynak: "Qwen3.5-4B · Soru 11 · agent puanı 1",
+      soru: "'Kafayı yemek' deyimini bir cümlede kullan.",
+      cevap: "Yıllardır süren o zorlu süreç, artık kafasını yedikten sonra olduğu gibi, unutulmuş bir geçmiş olarak kaldı.",
+      ipucu: "Deyimin anlamı (çıldırmak) cümlede net değil, ama yemek anlamında da kullanmamış." },
+    { id: "4", baslik: "Tonu tek kelimeyle bilebiliyor mu?", kaynak: "Qwen3.5-4B · Soru 20 · agent puanı 2",
+      soru: "Şu metnin tonunu tek kelimeyle söyle: \"Yapma ya, cidden mi kazandık?? İnanamıyorum şu an, resmen havalardayım!\"",
+      cevap: "İnanılmaz",
+      ipucu: "Beklenen cevap bir duygu adıydı (heyecanlı, sevinçli). 'İnanılmaz' duyguyu değil olayı anlatıyor." },
+    { id: "5", baslik: "Fiili doğru çekebiliyor mu?", kaynak: "Qwen3.5-2B · Soru 15 · agent puanı 2",
+      soru: "'Görmek' fiilini olumsuz, soru ve geçmiş zaman ekleriyle çek (örnek: görmedin mi?).",
+      cevap: "Görmedin mi? Bu cümlede: Olumsuz eki: -mi, Soruyu eki: -mi, Geçmiş zaman ek: -medin...",
+      ipucu: "İstenen çekim doğru, ama eklerin adlarını karıştırmış." },
+    { id: "6", baslik: "Doğru cevabı verip sonra dağılıyor", kaynak: "Qwen3.5-0.8B · Soru 15 · agent puanı 1",
+      soru: "'Görmek' fiilini olumsuz, soru ve geçmiş zaman ekleriyle çek (örnek: görmedin mi?).",
+      cevap: "Görmedin mi? Cevap: Evet, gördüm. Hesaplanma (Olsun): 1. Olsun: Görmedin mi? 2. Olsun: Görmedin mi? ... (aynı satır onlarca kez tekrarlanıyor, sonra yarıda kesiliyor)",
+      ipucu: "İlk cümle tam doğru, sonrası anlamsız döngü. Agent'ın en çok kararsız kaldığı cevap." }
+  ];
+
+  const KARARLAR = ["K21", "K22", "K23"];
+  const durumKutusu = document.getElementById("durum");
+  let db = null;
+  const yerel = { kararlar: {}, puanlar: {} };
+  let durumZaman = null;
+
+  function durumGoster(metin) {
+    durumKutusu.textContent = metin;
+    durumKutusu.hidden = false;
+    clearTimeout(durumZaman);
+    durumZaman = setTimeout(() => { durumKutusu.hidden = true; }, 2200);
+  }
+
+  function puanlariCiz() {
+    const kap = document.getElementById("puanlar");
+    PUAN_SORULARI.forEach((s) => {
+      const satir = document.createElement("div");
+      satir.className = "puan-satiri";
+      satir.dataset.puanId = s.id;
+
+      const baslik = document.createElement("p");
+      baslik.className = "puan-soru";
+      baslik.textContent = s.id + ". " + s.baslik;
+
+      const kaynak = document.createElement("p");
+      kaynak.className = "puan-kaynak";
+      kaynak.textContent = s.kaynak;
+
+      const soru = document.createElement("p");
+      soru.className = "hikaye";
+      soru.innerHTML = "<b>Soru:</b> ";
+      soru.appendChild(document.createTextNode(s.soru));
+
+      const alinti = document.createElement("blockquote");
+      alinti.textContent = s.cevap;
+
+      const ipucu = document.createElement("p");
+      ipucu.className = "puan-kaynak";
+      ipucu.textContent = "Agent'ın tereddüdü: " + s.ipucu;
+
+      const dugmeler = document.createElement("div");
+      dugmeler.className = "puan-dugmeler";
+      [["0", "yanlış"], ["1", "yarım"], ["2", "doğru"]].forEach(([p, ad]) => {
+        const d = document.createElement("button");
+        d.className = "puan";
+        d.type = "button";
+        d.dataset.puan = p;
+        d.setAttribute("aria-pressed", "false");
+        d.appendChild(document.createTextNode(p));
+        const alt = document.createElement("span");
+        alt.textContent = ad;
+        d.appendChild(alt);
+        d.addEventListener("click", () => puanSec(s.id, p));
+        dugmeler.appendChild(d);
+      });
+
+      satir.append(baslik, kaynak, soru, alinti, ipucu, dugmeler);
+      kap.appendChild(satir);
+    });
+  }
+
+  function ekraniTazele() {
+    KARARLAR.forEach((k) => {
+      const bolum = document.querySelector('section[data-karar="' + k + '"]');
+      const secim = yerel.kararlar[k] && yerel.kararlar[k].secim;
+      bolum.querySelectorAll("button.secenek").forEach((d) => {
+        d.setAttribute("aria-pressed", d.dataset.secim === secim ? "true" : "false");
+      });
+      bolum.querySelector(".damga-isareti").hidden = !secim;
+      const alan = bolum.querySelector("textarea");
+      const kayitliNot = (yerel.kararlar[k] && yerel.kararlar[k].not) || "";
+      if (document.activeElement !== alan && alan.value !== kayitliNot) alan.value = kayitliNot;
+    });
+
+    PUAN_SORULARI.forEach((s) => {
+      const satir = document.querySelector('[data-puan-id="' + s.id + '"]');
+      if (!satir) return;
+      const puan = yerel.puanlar[s.id] && yerel.puanlar[s.id].puan;
+      satir.querySelectorAll("button.puan").forEach((d) => {
+        d.setAttribute("aria-pressed", d.dataset.puan === puan ? "true" : "false");
+      });
+    });
+
+    const verilen = KARARLAR.filter((k) => yerel.kararlar[k] && yerel.kararlar[k].secim).length;
+    const puanlanan = PUAN_SORULARI.filter((s) => yerel.puanlar[s.id] && yerel.puanlar[s.id].puan).length;
+    document.querySelector('section[data-karar="f0c"] .damga-isareti').hidden = puanlanan < PUAN_SORULARI.length;
+
+    const sayac = document.getElementById("sayac");
+    sayac.textContent = "";
+    const rozetler = [
+      ["Karar: " + verilen + " / " + KARARLAR.length, verilen === KARARLAR.length],
+      ["Puanlama: " + puanlanan + " / " + PUAN_SORULARI.length, puanlanan === PUAN_SORULARI.length]
+    ];
+    rozetler.forEach(([metin, tamam]) => {
+      const r = document.createElement("span");
+      r.className = tamam ? "rozet bitti" : "rozet";
+      r.textContent = metin;
+      sayac.appendChild(r);
+    });
+  }
+
+  async function sunucuyaYaz(govde, basariliMetni) {
+    try {
+      const yanit = await fetch("/veri", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(govde)
+      });
+      if (!yanit.ok) throw new Error("sunucu " + yanit.status);
+      durumGoster(basariliMetni);
+    } catch (hata) {
+      durumGoster("Kaydedilemedi: " + hata.message);
+    }
+  }
+
+  function kararYaz(k) {
+    const govde = yerel.kararlar[k] || {};
+    return sunucuyaYaz(
+      { tur: "karar", id: k, secim: govde.secim || "", not: govde.not || "" },
+      govde.secim ? k + " kaydedildi: " + govde.secim : k + " temizlendi"
+    );
+  }
+
+  function puanYaz(id) {
+    const govde = yerel.puanlar[id] || {};
+    return sunucuyaYaz(
+      { tur: "puan", id: id, puan: govde.puan || "" },
+      govde.puan ? id + ". cevaba " + govde.puan + " puan" : id + ". puan silindi"
+    );
+  }
+
+  function kararSec(k, secim) {
+    const onceki = yerel.kararlar[k] || {};
+    yerel.kararlar[k] = { secim: onceki.secim === secim ? "" : secim, not: onceki.not || "" };
+    ekraniTazele();
+    kararYaz(k);
+  }
+
+  function puanSec(id, puan) {
+    const onceki = yerel.puanlar[id] || {};
+    yerel.puanlar[id] = { puan: onceki.puan === puan ? "" : puan };
+    ekraniTazele();
+    puanYaz(id);
+  }
+
+  KARARLAR.forEach((k) => {
+    const bolum = document.querySelector('section[data-karar="' + k + '"]');
+    bolum.querySelectorAll("button.secenek").forEach((d) => {
+      d.type = "button";
+      d.setAttribute("aria-pressed", "false");
+      d.addEventListener("click", () => kararSec(k, d.dataset.secim));
+    });
+    const alan = bolum.querySelector("textarea");
+    alan.addEventListener("change", () => {
+      const onceki = yerel.kararlar[k] || {};
+      if ((onceki.not || "") === alan.value) return;
+      yerel.kararlar[k] = { secim: onceki.secim || "", not: alan.value };
+      kararYaz(k);
+    });
+  });
+
+  puanlariCiz();
+  ekraniTazele();
+
+  fetch("/veri")
+    .then((y) => y.json())
+    .then((veri) => {
+      yerel.kararlar = veri.kararlar || {};
+      yerel.puanlar = veri.puanlar || {};
+      ekraniTazele();
+    })
+    .catch(() => durumGoster("Kayitli cevaplar okunamadi"));
+</script>
+</body>
+</html>

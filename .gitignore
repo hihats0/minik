@@ -17,3 +17,5 @@ __pycache__/
 /loglar/
 # Sunucu loglari repoya girmez.
 /araclar/sunucu-loglari/
+
+/notes/karar-cevaplari.json
