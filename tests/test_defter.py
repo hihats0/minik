@@ -3,9 +3,11 @@ basina dusmesi ve yazim hatasinin yukselmesini dogrular. Gecici klasor kullanir,
 defter/ klasorune dokunmaz.
 Cagiran: `python -m unittest discover -s tests`."""
 
+import json
 import sys
 import tempfile
 import unittest
+from datetime import datetime, timedelta
 from pathlib import Path
 from unittest import mock
 
@@ -94,10 +96,47 @@ class TestDefter(unittest.TestCase):
         with self.assertRaises(OSError):
             defter.yaz({"soru": "x", "cevap": "y"})
 
-    def test_isle_ucuncu_ad_olarak_var_ve_patlamiyor(self):
-        """R2 (K16): sozlesmedeki uc ad (yaz/oku/isle) acik. sqlite f4'te doguyor, bugun
-        isle'nin gorevi sadece cagrilinca patlamamak (bkz. defter.py dosya ici gerekce)."""
-        defter.isle()  # no-op, hata firlatmaz
+    def _gun_dosyasi_yaz(self, gun, satirlar):
+        """Test yardimcisi: verilen tarih icin gun dosyasini elle yazar (defter.yaz'i
+        bugunun disina zorlayamayiz, o yuzden dosyayi dogrudan olustururuz)."""
+        dosya = defter.DEFTER_KLASORU / f"gunluk-{gun:%Y-%m-%d}.jsonl"
+        dosya.parent.mkdir(parents=True, exist_ok=True)
+        with dosya.open("w", encoding="utf-8") as f:
+            for satir in satirlar:
+                f.write(satir if isinstance(satir, str) else json.dumps(satir, ensure_ascii=False))
+                f.write("\n")
+        return dosya
+
+    def test_oku_gun_dosyasini_asar_dunku_konu_geri_gelir(self):
+        """Fazin gercek olcutu (spec 8.1): yeniden baslatmadan sonra dunku konu geri gelmeli.
+        Dunku ve bugunku gun dosyalari birlikte, eskiden yeniye sirali dondurulmeli."""
+        dun = datetime.now().astimezone() - timedelta(days=1)
+        self._gun_dosyasi_yaz(dun, [
+            {"soru": "dun1", "cevap": "cevapdun1"},
+            {"soru": "dun2", "cevap": "cevapdun2"},
+        ])
+        defter.yaz({"soru": "bugun1", "cevap": "cevapbugun1"})
+
+        kayitlar = defter.oku(kac_tane=3)
+
+        self.assertEqual([k["soru"] for k in kayitlar], ["dun1", "dun2", "bugun1"])
+
+    def test_oku_bugun_yetince_dunku_dosya_hic_acilmaz(self):
+        """Istenen sayi bugunku dosyadan karsilaniyorsa dunku dosyaya hic dokunulmamali.
+        Dunku dosyaya bozuk bir satir koyup okunmadigini (satir_atla loglanmadigini) dogrular."""
+        dun = datetime.now().astimezone() - timedelta(days=1)
+        self._gun_dosyasi_yaz(dun, ["BU_SATIR_OKUNMAMALI gecersiz json"])
+        defter.yaz({"soru": "bugun1", "cevap": "cevap1"})
+        defter.yaz({"soru": "bugun2", "cevap": "cevap2"})
+
+        with mock.patch("yuvalar.defter.log.yaz") as sahte_log:
+            kayitlar = defter.oku(kac_tane=2)
+
+        self.assertEqual([k["soru"] for k in kayitlar], ["bugun1", "bugun2"])
+        atlama_cagrilari = [c for c in sahte_log.call_args_list if c.args[1] == "satir_atla"]
+        self.assertEqual(atlama_cagrilari, [])
+        oku_cagrisi = [c for c in sahte_log.call_args_list if c.args[1] == "oku"][0]
+        self.assertEqual(oku_cagrisi.args[4]["dosya_sayisi"], 1)
 
 
 if __name__ == "__main__":

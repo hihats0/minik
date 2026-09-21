@@ -1,12 +1,15 @@
 """Ham konusmayi gunluk jsonl'e yazar, geri okur (spec 3.4, R2: uc ad `yaz`/`oku`/`isle`).
-Cagiran: minik.py akisi (yaz, oku); yuvalar/uyku.py (isle, henuz yok, f4)."""
+Ucuncu ad `isle` sqlite'taki turetilmis tabloyu tazeleyecek; sqlite Uyku ile birlikte f4'te
+doguyor, o yuzden simdi burada yazilmiyor (notes/kod-yazma-kurallari.md: ileride lazim
+olabilecek soyutlama yazilmaz). Sonraki kosu bunu "ad eksik" sanip geri eklemesin.
+Cagiran: minik.py akisi (yaz, oku)."""
 
 import json
 import time
 from datetime import datetime
 
 from ortak import log
-from ortak.ayar import DEFTER_KLASORU, DEFTER_SON_N
+from ortak.ayar import DEFTER_GERI_GUN_SINIRI, DEFTER_KLASORU, DEFTER_SON_N
 
 YUVA_ADI = "defter"
 
@@ -33,28 +36,39 @@ def yaz(kayit):
 
 
 def oku(kac_tane=DEFTER_SON_N):
-    """Bugunku dosyadan son `kac_tane` kaydi (eskiden yeniye) dondurur. Dosya yoksa bos
-    liste doner. Bozuk bir satir varsa onu atlar, dosyanin tamamini dusurmez."""
+    """Son `kac_tane` kaydi (eskiden yeniye) dondurur. Bugunku dosya yetmezse gun dosyalarinda
+    geriye gider (en yeniden en eskiye), en cok DEFTER_GERI_GUN_SINIRI dosya acar; boylece
+    yeniden baslatmadan sonra dunku (ya da daha eski) konu da geri gelir (spec 8.1 f2 olcutu).
+    Istenen sayi daha yeni dosyalarla karsilaniyorsa daha eski dosya hic acilmaz. Bozuk bir
+    satir varsa onu atlar, dosyanin tamamini dusurmez. Hic dosya yoksa bos liste doner."""
     basladi = time.perf_counter()
-    dosya = _bugunku_dosya()
-    kayitlar = _satirlari_ayristir(dosya, basladi) if dosya.exists() else []
+    kayitlar = []
+    dosya_sayisi = 0
+    for dosya in _gun_dosyalari_yeniden_eskiye(DEFTER_GERI_GUN_SINIRI):
+        gunun_kayitlari = _satirlari_ayristir(dosya, basladi)
+        kayitlar = gunun_kayitlari + kayitlar
+        dosya_sayisi += 1
+        if len(kayitlar) >= kac_tane:
+            break
     sonuc = kayitlar[-kac_tane:]
-    log.yaz(YUVA_ADI, "oku", _gecen_ms(basladi), "ok", {"istenen": kac_tane, "bulunan": len(sonuc)})
+    log.yaz(YUVA_ADI, "oku", _gecen_ms(basladi), "ok",
+            {"istenen": kac_tane, "bulunan": len(sonuc), "dosya_sayisi": dosya_sayisi})
     return sonuc
-
-
-def isle(*_args, **_kwargs):
-    """R2 (K16): Defter'in ucuncu adi. Spec 3.4 tanimi: sqlite'taki turetilmis tabloyu
-    tazeler (etiket, SM-2 alani, gomme BLOB'u, budama); yalniz Uyku cagirir, gunduz hattinda
-    cagrilmaz. sqlite Uyku ile birlikte f4'te doguyor (K4) ve ikisi de bu fazin (f2-a) disinda
-    (CLAUDE.md: bir oturumda bir yuva). Bu yuzden bugun no-op: uc-ad sozlesmesini acik tutar,
-    sqlite'a dokunmaz. Karsiligi olmayan bir is icat edilmedi."""
-    log.yaz(YUVA_ADI, "isle", 0, "ok", {"not": "sqlite f4'te doguyor, bugun no-op"})
 
 
 def _bugunku_dosya():
     """Bugunun tarihiyle adlanan jsonl dosyasinin yolunu dondurur (spec 4.2)."""
     return DEFTER_KLASORU / f"gunluk-{datetime.now().astimezone():%Y-%m-%d}.jsonl"
+
+
+def _gun_dosyalari_yeniden_eskiye(en_cok):
+    """Gun dosyalarini (gunluk-YYYY-MM-DD.jsonl) dosya adindan en yeniden en eskiye siralar,
+    en cok `en_cok` tanesini uretir. Klasor yoksa hic uretmez."""
+    if not DEFTER_KLASORU.exists():
+        return
+    dosyalar = sorted(DEFTER_KLASORU.glob("gunluk-*.jsonl"), key=lambda d: d.name, reverse=True)
+    for dosya in dosyalar[:en_cok]:
+        yield dosya
 
 
 def _satir_sayisi(dosya):
