@@ -1,0 +1,507 @@
+{
+ "ad": "dilbilgisi_ciftleri",
+ "sart": "D4 sart 1'in otomatik, puanlayicisiz olcusu (BLiMP / BabyLM tarzi minimal ciftler)",
+ "yonerge": "Her cift icin modelin cumlenin tamamina verdigi toplam log-olasilik hesaplanir (BLiMP standardi, uzunlukla bolmeden). log P(dogru) > log P(bozuk) ise 1 puan. Toplam puan / 100 = dogruluk; sans duzeyi %50. Kategori bazinda da raporlanir. Bozuk cumle dogru cumleden tek bir yerde (bir ek) ayrilir.",
+ "ciftler": [
+  {
+   "kategori": "unlu_uyumu",
+   "dogru": "Kediler bahçede oynuyor.",
+   "bozuk": "Kedilar bahçede oynuyor."
+  },
+  {
+   "kategori": "unlu_uyumu",
+   "dogru": "Çocuklar okula gitti.",
+   "bozuk": "Çocukler okula gitti."
+  },
+  {
+   "kategori": "unlu_uyumu",
+   "dogru": "Kitabı masaya koydum.",
+   "bozuk": "Kitabı masaye koydum."
+  },
+  {
+   "kategori": "unlu_uyumu",
+   "dogru": "Evde kimse yok.",
+   "bozuk": "Evda kimse yok."
+  },
+  {
+   "kategori": "unlu_uyumu",
+   "dogru": "Annem mutfakta yemek yapıyor.",
+   "bozuk": "Annem mutfakte yemek yapıyor."
+  },
+  {
+   "kategori": "unlu_uyumu",
+   "dogru": "Kuşlar ağaçta ötüyor.",
+   "bozuk": "Kuşler ağaçta ötüyor."
+  },
+  {
+   "kategori": "unlu_uyumu",
+   "dogru": "Okuldan eve döndüm.",
+   "bozuk": "Okuldan eve döndum."
+  },
+  {
+   "kategori": "unlu_uyumu",
+   "dogru": "Denizde balıklar yüzüyor.",
+   "bozuk": "Denizda balıklar yüzüyor."
+  },
+  {
+   "kategori": "unlu_uyumu",
+   "dogru": "Babam işten geldi.",
+   "bozuk": "Babam işten geldı."
+  },
+  {
+   "kategori": "unlu_uyumu",
+   "dogru": "Güneş doğudan doğar.",
+   "bozuk": "Güneş doğuden doğar."
+  },
+  {
+   "kategori": "unlu_uyumu",
+   "dogru": "Kapıyı kapattım.",
+   "bozuk": "Kapıyı kapattim."
+  },
+  {
+   "kategori": "unlu_uyumu",
+   "dogru": "Elmaları yıkadık.",
+   "bozuk": "Elmaleri yıkadık."
+  },
+  {
+   "kategori": "unlu_uyumu",
+   "dogru": "Köpek bahçeye koştu.",
+   "bozuk": "Köpek bahçaya koştu."
+  },
+  {
+   "kategori": "unlu_uyumu",
+   "dogru": "Öğretmen sınıfa girdi.",
+   "bozuk": "Öğretmen sınıfe girdi."
+  },
+  {
+   "kategori": "unlu_uyumu",
+   "dogru": "Arabalar yolda duruyor.",
+   "bozuk": "Arabaler yolda duruyor."
+  },
+  {
+   "kategori": "unlu_uyumu",
+   "dogru": "Gözlerim yoruldu.",
+   "bozuk": "Gözlarım yoruldu."
+  },
+  {
+   "kategori": "unlu_uyumu",
+   "dogru": "Parkta top oynadık.",
+   "bozuk": "Parkte top oynadık."
+  },
+  {
+   "kategori": "unlu_uyumu",
+   "dogru": "Bu kalemi sevdim.",
+   "bozuk": "Bu kalemı sevdim."
+  },
+  {
+   "kategori": "unlu_uyumu",
+   "dogru": "Yağmur yağınca ıslandık.",
+   "bozuk": "Yağmur yağınca ıslandik."
+  },
+  {
+   "kategori": "unlu_uyumu",
+   "dogru": "Evlerin önünde ağaç var.",
+   "bozuk": "Evların önünde ağaç var."
+  },
+  {
+   "kategori": "unlu_uyumu",
+   "dogru": "Kardeşim süt içti.",
+   "bozuk": "Kardeşim süt içtı."
+  },
+  {
+   "kategori": "unlu_uyumu",
+   "dogru": "Bulutlar gökyüzünü kapladı.",
+   "bozuk": "Bulutler gökyüzünü kapladı."
+  },
+  {
+   "kategori": "unlu_uyumu",
+   "dogru": "Kız kardeşim resim çizdi.",
+   "bozuk": "Kız kardeşim resim çizdı."
+  },
+  {
+   "kategori": "unlu_uyumu",
+   "dogru": "Sabahleyin erken kalktım.",
+   "bozuk": "Sabahleyin erken kalktim."
+  },
+  {
+   "kategori": "unlu_uyumu",
+   "dogru": "Dağlarda kar var.",
+   "bozuk": "Dağlerde kar var."
+  },
+  {
+   "kategori": "ozne_yuklem_uyumu",
+   "dogru": "Ben okula gidiyorum.",
+   "bozuk": "Ben okula gidiyorsun."
+  },
+  {
+   "kategori": "ozne_yuklem_uyumu",
+   "dogru": "Sen çok güzel şarkı söylüyorsun.",
+   "bozuk": "Sen çok güzel şarkı söylüyorum."
+  },
+  {
+   "kategori": "ozne_yuklem_uyumu",
+   "dogru": "Biz yarın geleceğiz.",
+   "bozuk": "Biz yarın geleceksin."
+  },
+  {
+   "kategori": "ozne_yuklem_uyumu",
+   "dogru": "Siz nereye gidiyorsunuz?",
+   "bozuk": "Siz nereye gidiyorum?"
+  },
+  {
+   "kategori": "ozne_yuklem_uyumu",
+   "dogru": "Ben dün sinemaya gittim.",
+   "bozuk": "Ben dün sinemaya gittin."
+  },
+  {
+   "kategori": "ozne_yuklem_uyumu",
+   "dogru": "O her sabah koşar.",
+   "bozuk": "O her sabah koşarım."
+  },
+  {
+   "kategori": "ozne_yuklem_uyumu",
+   "dogru": "Biz akşam yemeği yedik.",
+   "bozuk": "Biz akşam yemeği yedim."
+  },
+  {
+   "kategori": "ozne_yuklem_uyumu",
+   "dogru": "Sen bu kitabı okudun mu?",
+   "bozuk": "Sen bu kitabı okudum mu?"
+  },
+  {
+   "kategori": "ozne_yuklem_uyumu",
+   "dogru": "Ben çay içmeyi severim.",
+   "bozuk": "Ben çay içmeyi seversin."
+  },
+  {
+   "kategori": "ozne_yuklem_uyumu",
+   "dogru": "Onlar parkta oynuyorlar.",
+   "bozuk": "Onlar parkta oynuyorum."
+  },
+  {
+   "kategori": "ozne_yuklem_uyumu",
+   "dogru": "Ben seni özledim.",
+   "bozuk": "Ben seni özledin."
+  },
+  {
+   "kategori": "ozne_yuklem_uyumu",
+   "dogru": "Biz bu evde oturuyoruz.",
+   "bozuk": "Biz bu evde oturuyorsun."
+  },
+  {
+   "kategori": "ozne_yuklem_uyumu",
+   "dogru": "Sen çok çalışkansın.",
+   "bozuk": "Sen çok çalışkanım."
+  },
+  {
+   "kategori": "ozne_yuklem_uyumu",
+   "dogru": "Ben şimdi yorgunum.",
+   "bozuk": "Ben şimdi yorgunsun."
+  },
+  {
+   "kategori": "ozne_yuklem_uyumu",
+   "dogru": "Siz bizi unuttunuz.",
+   "bozuk": "Siz bizi unuttum."
+  },
+  {
+   "kategori": "ozne_yuklem_uyumu",
+   "dogru": "Ben her gün kitap okurum.",
+   "bozuk": "Ben her gün kitap okursun."
+  },
+  {
+   "kategori": "ozne_yuklem_uyumu",
+   "dogru": "Biz denize girdik.",
+   "bozuk": "Biz denize girdin."
+  },
+  {
+   "kategori": "ozne_yuklem_uyumu",
+   "dogru": "Sen yarın okula gideceksin.",
+   "bozuk": "Sen yarın okula gideceğim."
+  },
+  {
+   "kategori": "ozne_yuklem_uyumu",
+   "dogru": "Ben kahvaltı yaptım.",
+   "bozuk": "Ben kahvaltı yaptık."
+  },
+  {
+   "kategori": "ozne_yuklem_uyumu",
+   "dogru": "Biz çok mutluyuz.",
+   "bozuk": "Biz çok mutluyum."
+  },
+  {
+   "kategori": "ozne_yuklem_uyumu",
+   "dogru": "Ben bu soruyu bilmiyorum.",
+   "bozuk": "Ben bu soruyu bilmiyorsun."
+  },
+  {
+   "kategori": "ozne_yuklem_uyumu",
+   "dogru": "Siz Türkçe konuşuyorsunuz.",
+   "bozuk": "Siz Türkçe konuşuyorum."
+  },
+  {
+   "kategori": "ozne_yuklem_uyumu",
+   "dogru": "Sen beni dinlemiyorsun.",
+   "bozuk": "Sen beni dinlemiyorum."
+  },
+  {
+   "kategori": "ozne_yuklem_uyumu",
+   "dogru": "Ben kediyi besledim.",
+   "bozuk": "Ben kediyi besledin."
+  },
+  {
+   "kategori": "ozne_yuklem_uyumu",
+   "dogru": "Biz otobüsle geldik.",
+   "bozuk": "Biz otobüsle geldin."
+  },
+  {
+   "kategori": "hal_eki",
+   "dogru": "Kardeşim okula gidiyor.",
+   "bozuk": "Kardeşim okulu gidiyor."
+  },
+  {
+   "kategori": "hal_eki",
+   "dogru": "Kitabı okudum.",
+   "bozuk": "Kitaba okudum."
+  },
+  {
+   "kategori": "hal_eki",
+   "dogru": "Arkadaşıma mektup yazdım.",
+   "bozuk": "Arkadaşımı mektup yazdım."
+  },
+  {
+   "kategori": "hal_eki",
+   "dogru": "Evden çıktım.",
+   "bozuk": "Evi çıktım."
+  },
+  {
+   "kategori": "hal_eki",
+   "dogru": "Annemi çok seviyorum.",
+   "bozuk": "Anneme çok seviyorum."
+  },
+  {
+   "kategori": "hal_eki",
+   "dogru": "Köpekten korkuyorum.",
+   "bozuk": "Köpeği korkuyorum."
+  },
+  {
+   "kategori": "hal_eki",
+   "dogru": "Otobüse bindik.",
+   "bozuk": "Otobüsü bindik."
+  },
+  {
+   "kategori": "hal_eki",
+   "dogru": "Bu yemeği beğendim.",
+   "bozuk": "Bu yemeğe beğendim."
+  },
+  {
+   "kategori": "hal_eki",
+   "dogru": "Babama yardım ettim.",
+   "bozuk": "Babamı yardım ettim."
+  },
+  {
+   "kategori": "hal_eki",
+   "dogru": "Suya baktım.",
+   "bozuk": "Suyu baktım."
+  },
+  {
+   "kategori": "hal_eki",
+   "dogru": "Kedi ağaca tırmandı.",
+   "bozuk": "Kedi ağacı tırmandı."
+  },
+  {
+   "kategori": "hal_eki",
+   "dogru": "Kapıyı açtım.",
+   "bozuk": "Kapıya açtım."
+  },
+  {
+   "kategori": "hal_eki",
+   "dogru": "Öğretmene teşekkür ettim.",
+   "bozuk": "Öğretmeni teşekkür ettim."
+  },
+  {
+   "kategori": "hal_eki",
+   "dogru": "İstanbul'dan geldim.",
+   "bozuk": "İstanbul'u geldim."
+  },
+  {
+   "kategori": "hal_eki",
+   "dogru": "Suyu içtim.",
+   "bozuk": "Suya içtim."
+  },
+  {
+   "kategori": "hal_eki",
+   "dogru": "Ödevimi bitirdim.",
+   "bozuk": "Ödevime bitirdim."
+  },
+  {
+   "kategori": "hal_eki",
+   "dogru": "Kediye süt verdim.",
+   "bozuk": "Kediyi süt verdim."
+  },
+  {
+   "kategori": "hal_eki",
+   "dogru": "Okuldan döndüm.",
+   "bozuk": "Okulu döndüm."
+  },
+  {
+   "kategori": "hal_eki",
+   "dogru": "Bahçeye çıktık.",
+   "bozuk": "Bahçeyi çıktık."
+  },
+  {
+   "kategori": "hal_eki",
+   "dogru": "Filmi izledik.",
+   "bozuk": "Filme izledik."
+  },
+  {
+   "kategori": "hal_eki",
+   "dogru": "Arabadan indim.",
+   "bozuk": "Arabayı indim."
+  },
+  {
+   "kategori": "hal_eki",
+   "dogru": "Bu şarkıyı dinledim.",
+   "bozuk": "Bu şarkıya dinledim."
+  },
+  {
+   "kategori": "hal_eki",
+   "dogru": "Sınava hazırlanıyorum.",
+   "bozuk": "Sınavı hazırlanıyorum."
+  },
+  {
+   "kategori": "hal_eki",
+   "dogru": "Dedeme telefon ettim.",
+   "bozuk": "Dedemi telefon ettim."
+  },
+  {
+   "kategori": "hal_eki",
+   "dogru": "Karanlıktan korkmam.",
+   "bozuk": "Karanlığı korkmam."
+  },
+  {
+   "kategori": "ek_uyumu",
+   "dogru": "Benim kitabım masada.",
+   "bozuk": "Benim kitabın masada."
+  },
+  {
+   "kategori": "ek_uyumu",
+   "dogru": "Senin evin çok güzel.",
+   "bozuk": "Senin evim çok güzel."
+  },
+  {
+   "kategori": "ek_uyumu",
+   "dogru": "Bizim okulumuz büyük.",
+   "bozuk": "Bizim okulun büyük."
+  },
+  {
+   "kategori": "ek_uyumu",
+   "dogru": "Ali'nin arabası kırmızı.",
+   "bozuk": "Ali'nin araba kırmızı."
+  },
+  {
+   "kategori": "ek_uyumu",
+   "dogru": "Evlerimiz yakın.",
+   "bozuk": "Evimizler yakın."
+  },
+  {
+   "kategori": "ek_uyumu",
+   "dogru": "Kitaplarım çantada.",
+   "bozuk": "Kitabımlar çantada."
+  },
+  {
+   "kategori": "ek_uyumu",
+   "dogru": "Kedinin kuyruğu uzun.",
+   "bozuk": "Kedinin kuyruk uzun."
+  },
+  {
+   "kategori": "ek_uyumu",
+   "dogru": "Okulun bahçesi geniş.",
+   "bozuk": "Okulun bahçe geniş."
+  },
+  {
+   "kategori": "ek_uyumu",
+   "dogru": "Arkadaşlarımla oynadım.",
+   "bozuk": "Arkadaşımlarla oynadım."
+  },
+  {
+   "kategori": "ek_uyumu",
+   "dogru": "Dün okula gelmedim.",
+   "bozuk": "Dün okula geldimme."
+  },
+  {
+   "kategori": "ek_uyumu",
+   "dogru": "Annemin çantası ağır.",
+   "bozuk": "Annemin çanta ağır."
+  },
+  {
+   "kategori": "ek_uyumu",
+   "dogru": "Senin adın ne?",
+   "bozuk": "Senin adım ne?"
+  },
+  {
+   "kategori": "ek_uyumu",
+   "dogru": "Bizim bahçemizde elma var.",
+   "bozuk": "Bizim bahçenizde elma var."
+  },
+  {
+   "kategori": "ek_uyumu",
+   "dogru": "Çocukların oyuncakları dağınık.",
+   "bozuk": "Çocukların oyuncak dağınık."
+  },
+  {
+   "kategori": "ek_uyumu",
+   "dogru": "Yarın gelmeyeceğim.",
+   "bozuk": "Yarın geleceğimme."
+  },
+  {
+   "kategori": "ek_uyumu",
+   "dogru": "Kitaplarımı okudum.",
+   "bozuk": "Kitabımları okudum."
+  },
+  {
+   "kategori": "ek_uyumu",
+   "dogru": "Onun kalemi kırıldı.",
+   "bozuk": "Onun kalemim kırıldı."
+  },
+  {
+   "kategori": "ek_uyumu",
+   "dogru": "Evimizden çıktık.",
+   "bozuk": "Evdenimiz çıktık."
+  },
+  {
+   "kategori": "ek_uyumu",
+   "dogru": "Sizin öğretmeniniz kim?",
+   "bozuk": "Sizin öğretmenimiz kim?"
+  },
+  {
+   "kategori": "ek_uyumu",
+   "dogru": "Babamın işi zor.",
+   "bozuk": "Babamın iş zor."
+  },
+  {
+   "kategori": "ek_uyumu",
+   "dogru": "Okullarda tatil başladı.",
+   "bozuk": "Okuldalar tatil başladı."
+  },
+  {
+   "kategori": "ek_uyumu",
+   "dogru": "Kardeşlerimle parka gittim.",
+   "bozuk": "Kardeşimlerle parka gittim."
+  },
+  {
+   "kategori": "ek_uyumu",
+   "dogru": "Ağacın dalları kırıldı.",
+   "bozuk": "Ağacın dal kırıldı."
+  },
+  {
+   "kategori": "ek_uyumu",
+   "dogru": "Senin annen nerede?",
+   "bozuk": "Senin annem nerede?"
+  },
+  {
+   "kategori": "ek_uyumu",
+   "dogru": "Kuşların sesi güzel.",
+   "bozuk": "Kuşların ses güzel."
+  }
+ ]
+}

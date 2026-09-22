@@ -1,0 +1,630 @@
+{
+ "ad": "eski_sinav",
+ "sart": "D4 sart 3: eski sinav puaninin gece egitimlerinden sonra dusmemesi",
+ "yonerge": {
+  "secmeli": "Ana olcu. Her soru icin ___ yerine dogru cevap ve 3 celdirici konur; model tam cumleye en yuksek toplam log-olasiligi dogru cevaplı cumlede veriyorsa 1 puan. Sans duzeyi %25. Kucuk model uretimle neredeyse hic dogru cevap vermeyecegi icin (tahmin) puanin sifira yapisip 'dusmedi' demesi anlamsiz kalir; secmeli olcu bunu onler.",
+  "uretim": "Yan olcu. ___ oncesi metin verilir, sicaklik 0 ile en fazla 8 token uretilir; 'kabul' listesinden biri (buyuk/kucuk harf ayrimsiz) uretimde geciyorsa 1 puan.",
+  "karsilastirma": "Her gece sonrasi iki puan da gece 0 (ilk egitim) puaniyla karsilastirilir; dusus 2 sorudan fazlaysa sart 3 tutmaz (esik tahmin, onaylanmadi)."
+ },
+ "sorular": [
+  {
+   "no": 1,
+   "soru": "Türkiye'nin başkenti ___ şehridir.",
+   "kabul": [
+    "Ankara"
+   ],
+   "celdiriciler": [
+    "İstanbul",
+    "İzmir",
+    "Bursa"
+   ]
+  },
+  {
+   "no": 2,
+   "soru": "Türkiye Cumhuriyeti ___ yılında kuruldu.",
+   "kabul": [
+    "1923"
+   ],
+   "celdiriciler": [
+    "1920",
+    "1919",
+    "1938"
+   ]
+  },
+  {
+   "no": 3,
+   "soru": "Karadeniz ile Marmara Denizi'ni birleştiren boğaz ___ Boğazı'dır.",
+   "kabul": [
+    "İstanbul"
+   ],
+   "celdiriciler": [
+    "Çanakkale",
+    "Cebelitarık",
+    "Kerç"
+   ]
+  },
+  {
+   "no": 4,
+   "soru": "Marmara Denizi ile Ege Denizi'ni birleştiren boğaz ___ Boğazı'dır.",
+   "kabul": [
+    "Çanakkale"
+   ],
+   "celdiriciler": [
+    "İstanbul",
+    "Hürmüz",
+    "Kerç"
+   ]
+  },
+  {
+   "no": 5,
+   "soru": "Dünyanın en büyük okyanusu ___ Okyanusu'dur.",
+   "kabul": [
+    "Büyük",
+    "Pasifik"
+   ],
+   "celdiriciler": [
+    "Atlas",
+    "Hint",
+    "Arktik"
+   ]
+  },
+  {
+   "no": 6,
+   "soru": "Türkiye'nin en yüksek dağı ___ Dağı'dır.",
+   "kabul": [
+    "Ağrı"
+   ],
+   "celdiriciler": [
+    "Erciyes",
+    "Uludağ",
+    "Nemrut"
+   ]
+  },
+  {
+   "no": 7,
+   "soru": "Suyun kimyasal formülü ___ olarak yazılır.",
+   "kabul": [
+    "H2O"
+   ],
+   "celdiriciler": [
+    "CO2",
+    "NaCl",
+    "O2"
+   ]
+  },
+  {
+   "no": 8,
+   "soru": "Fransa'nın başkenti ___ şehridir.",
+   "kabul": [
+    "Paris"
+   ],
+   "celdiriciler": [
+    "Lyon",
+    "Marsilya",
+    "Nice"
+   ]
+  },
+  {
+   "no": 9,
+   "soru": "Almanya'nın başkenti ___ şehridir.",
+   "kabul": [
+    "Berlin"
+   ],
+   "celdiriciler": [
+    "Münih",
+    "Hamburg",
+    "Frankfurt"
+   ]
+  },
+  {
+   "no": 10,
+   "soru": "Japonya'nın başkenti ___ şehridir.",
+   "kabul": [
+    "Tokyo"
+   ],
+   "celdiriciler": [
+    "Osaka",
+    "Kyoto",
+    "Nagoya"
+   ]
+  },
+  {
+   "no": 11,
+   "soru": "İtalya'nın başkenti ___ şehridir.",
+   "kabul": [
+    "Roma"
+   ],
+   "celdiriciler": [
+    "Milano",
+    "Napoli",
+    "Venedik"
+   ]
+  },
+  {
+   "no": 12,
+   "soru": "Güneş Sistemi'nin en büyük gezegeni ___ gezegenidir.",
+   "kabul": [
+    "Jüpiter"
+   ],
+   "celdiriciler": [
+    "Satürn",
+    "Mars",
+    "Venüs"
+   ]
+  },
+  {
+   "no": 13,
+   "soru": "Dünya'nın tek doğal uydusu ___ olarak adlandırılır.",
+   "kabul": [
+    "Ay"
+   ],
+   "celdiriciler": [
+    "Güneş",
+    "Mars",
+    "Titan"
+   ]
+  },
+  {
+   "no": 14,
+   "soru": "İstanbul 1453 yılında ___ tarafından fethedildi.",
+   "kabul": [
+    "Fatih Sultan Mehmet",
+    "II. Mehmed",
+    "II. Mehmet"
+   ],
+   "celdiriciler": [
+    "Kanuni Sultan Süleyman",
+    "Yavuz Sultan Selim",
+    "Osman Gazi"
+   ]
+  },
+  {
+   "no": 15,
+   "soru": "Türkiye Cumhuriyeti'nin ilk cumhurbaşkanı ___ oldu.",
+   "kabul": [
+    "Mustafa Kemal Atatürk",
+    "Atatürk"
+   ],
+   "celdiriciler": [
+    "İsmet İnönü",
+    "Celal Bayar",
+    "Adnan Menderes"
+   ]
+  },
+  {
+   "no": 16,
+   "soru": "Türkiye sınırları içinde doğup denize dökülen en uzun nehir ___ nehridir.",
+   "kabul": [
+    "Kızılırmak"
+   ],
+   "celdiriciler": [
+    "Sakarya",
+    "Yeşilırmak",
+    "Seyhan"
+   ]
+  },
+  {
+   "no": 17,
+   "soru": "Türkiye'nin en büyük gölü ___ Gölü'dür.",
+   "kabul": [
+    "Van"
+   ],
+   "celdiriciler": [
+    "Tuz",
+    "Eğirdir",
+    "Beyşehir"
+   ]
+  },
+  {
+   "no": 18,
+   "soru": "Bir yılda ___ ay vardır.",
+   "kabul": [
+    "on iki",
+    "12"
+   ],
+   "celdiriciler": [
+    "on",
+    "yedi",
+    "dört"
+   ]
+  },
+  {
+   "no": 19,
+   "soru": "Bir haftada ___ gün vardır.",
+   "kabul": [
+    "yedi",
+    "7"
+   ],
+   "celdiriciler": [
+    "beş",
+    "on",
+    "altı"
+   ]
+  },
+  {
+   "no": 20,
+   "soru": "Mona Lisa tablosu ___ tarafından yapılmıştır.",
+   "kabul": [
+    "Leonardo da Vinci",
+    "Leonardo"
+   ],
+   "celdiriciler": [
+    "Michelangelo",
+    "Picasso",
+    "Van Gogh"
+   ]
+  },
+  {
+   "no": 21,
+   "soru": "Evrensel çekim yasasını ___ ortaya koydu.",
+   "kabul": [
+    "Isaac Newton",
+    "Newton"
+   ],
+   "celdiriciler": [
+    "Albert Einstein",
+    "Galileo Galilei",
+    "Nikola Tesla"
+   ]
+  },
+  {
+   "no": 22,
+   "soru": "Görelilik kuramını ___ geliştirdi.",
+   "kabul": [
+    "Albert Einstein",
+    "Einstein"
+   ],
+   "celdiriciler": [
+    "Isaac Newton",
+    "Marie Curie",
+    "Charles Darwin"
+   ]
+  },
+  {
+   "no": 23,
+   "soru": "İnsan vücudunda kanı pompalayan organ ___ organıdır.",
+   "kabul": [
+    "kalp"
+   ],
+   "celdiriciler": [
+    "karaciğer",
+    "böbrek",
+    "akciğer"
+   ]
+  },
+  {
+   "no": 24,
+   "soru": "Bitkilerin güneş ışığıyla besin üretmesine ___ denir.",
+   "kabul": [
+    "fotosentez"
+   ],
+   "celdiriciler": [
+    "solunum",
+    "sindirim",
+    "buharlaşma"
+   ]
+  },
+  {
+   "no": 25,
+   "soru": "Su deniz seviyesinde ___ santigrat derecede kaynar.",
+   "kabul": [
+    "100",
+    "yüz"
+   ],
+   "celdiriciler": [
+    "50",
+    "0",
+    "200"
+   ]
+  },
+  {
+   "no": 26,
+   "soru": "Türkiye'nin para birimi ___ olarak adlandırılır.",
+   "kabul": [
+    "Türk lirası",
+    "lira"
+   ],
+   "celdiriciler": [
+    "avro",
+    "dolar",
+    "dinar"
+   ]
+  },
+  {
+   "no": 27,
+   "soru": "Dünyanın en uzun nehirlerinden biri Afrika'daki ___ nehridir.",
+   "kabul": [
+    "Nil"
+   ],
+   "celdiriciler": [
+    "Tuna",
+    "Amazon",
+    "Fırat"
+   ]
+  },
+  {
+   "no": 28,
+   "soru": "Mısır'ın başkenti ___ şehridir.",
+   "kabul": [
+    "Kahire"
+   ],
+   "celdiriciler": [
+    "İskenderiye",
+    "Luksor",
+    "Giza"
+   ]
+  },
+  {
+   "no": 29,
+   "soru": "Rusya'nın başkenti ___ şehridir.",
+   "kabul": [
+    "Moskova"
+   ],
+   "celdiriciler": [
+    "Sankt-Peterburg",
+    "Kazan",
+    "Novosibirsk"
+   ]
+  },
+  {
+   "no": 30,
+   "soru": "İstiklal Marşı'nın şairi ___ olarak bilinir.",
+   "kabul": [
+    "Mehmet Akif Ersoy"
+   ],
+   "celdiriciler": [
+    "Namık Kemal",
+    "Tevfik Fikret",
+    "Yahya Kemal"
+   ]
+  },
+  {
+   "no": 31,
+   "soru": "Nutuk adlı eseri ___ yazdı.",
+   "kabul": [
+    "Mustafa Kemal Atatürk",
+    "Atatürk"
+   ],
+   "celdiriciler": [
+    "Ziya Gökalp",
+    "Namık Kemal",
+    "İsmet İnönü"
+   ]
+  },
+  {
+   "no": 32,
+   "soru": "Kapadokya bölgesi büyük ölçüde ___ ili sınırları içindedir.",
+   "kabul": [
+    "Nevşehir"
+   ],
+   "celdiriciler": [
+    "Konya",
+    "Antalya",
+    "Trabzon"
+   ]
+  },
+  {
+   "no": 33,
+   "soru": "Efes antik kenti ___ ili sınırları içindedir.",
+   "kabul": [
+    "İzmir"
+   ],
+   "celdiriciler": [
+    "Aydın",
+    "Muğla",
+    "Manisa"
+   ]
+  },
+  {
+   "no": 34,
+   "soru": "Güneş'e en yakın gezegen ___ gezegenidir.",
+   "kabul": [
+    "Merkür"
+   ],
+   "celdiriciler": [
+    "Venüs",
+    "Mars",
+    "Neptün"
+   ]
+  },
+  {
+   "no": 35,
+   "soru": "Kızıl gezegen olarak bilinen gezegen ___ gezegenidir.",
+   "kabul": [
+    "Mars"
+   ],
+   "celdiriciler": [
+    "Jüpiter",
+    "Venüs",
+    "Uranüs"
+   ]
+  },
+  {
+   "no": 36,
+   "soru": "Birinci Dünya Savaşı ___ yılında başladı.",
+   "kabul": [
+    "1914"
+   ],
+   "celdiriciler": [
+    "1939",
+    "1918",
+    "1905"
+   ]
+  },
+  {
+   "no": 37,
+   "soru": "İkinci Dünya Savaşı ___ yılında sona erdi.",
+   "kabul": [
+    "1945"
+   ],
+   "celdiriciler": [
+    "1918",
+    "1939",
+    "1950"
+   ]
+  },
+  {
+   "no": 38,
+   "soru": "Amerika kıtasına 1492 yılında ulaşan denizci ___ olarak bilinir.",
+   "kabul": [
+    "Kristof Kolomb",
+    "Kolomb"
+   ],
+   "celdiriciler": [
+    "Macellan",
+    "Vasco da Gama",
+    "Piri Reis"
+   ]
+  },
+  {
+   "no": 39,
+   "soru": "Telefonun mucidi olarak ___ kabul edilir.",
+   "kabul": [
+    "Alexander Graham Bell",
+    "Graham Bell",
+    "Bell"
+   ],
+   "celdiriciler": [
+    "Thomas Edison",
+    "Nikola Tesla",
+    "Isaac Newton"
+   ]
+  },
+  {
+   "no": 40,
+   "soru": "Birleşik Krallık'ın başkenti ___ şehridir.",
+   "kabul": [
+    "Londra"
+   ],
+   "celdiriciler": [
+    "Manchester",
+    "Liverpool",
+    "Edinburgh"
+   ]
+  },
+  {
+   "no": 41,
+   "soru": "İspanya'nın başkenti ___ şehridir.",
+   "kabul": [
+    "Madrid"
+   ],
+   "celdiriciler": [
+    "Barselona",
+    "Sevilla",
+    "Valensiya"
+   ]
+  },
+  {
+   "no": 42,
+   "soru": "Yunanistan'ın başkenti ___ şehridir.",
+   "kabul": [
+    "Atina"
+   ],
+   "celdiriciler": [
+    "Selanik",
+    "Girit",
+    "Rodos"
+   ]
+  },
+  {
+   "no": 43,
+   "soru": "Türkiye'nin en kalabalık şehri ___ şehridir.",
+   "kabul": [
+    "İstanbul"
+   ],
+   "celdiriciler": [
+    "Ankara",
+    "İzmir",
+    "Konya"
+   ]
+  },
+  {
+   "no": 44,
+   "soru": "Karbondioksitin kimyasal formülü ___ olarak yazılır.",
+   "kabul": [
+    "CO2"
+   ],
+   "celdiriciler": [
+    "H2O",
+    "O2",
+    "NaCl"
+   ]
+  },
+  {
+   "no": 45,
+   "soru": "Altının kimyasal simgesi ___ olarak yazılır.",
+   "kabul": [
+    "Au"
+   ],
+   "celdiriciler": [
+    "Ag",
+    "Fe",
+    "Al"
+   ]
+  },
+  {
+   "no": 46,
+   "soru": "Hamlet adlı oyunun yazarı ___ olarak bilinir.",
+   "kabul": [
+    "William Shakespeare",
+    "Shakespeare"
+   ],
+   "celdiriciler": [
+    "Molière",
+    "Goethe",
+    "Cervantes"
+   ]
+  },
+  {
+   "no": 47,
+   "soru": "Suç ve Ceza romanının yazarı ___ olarak bilinir.",
+   "kabul": [
+    "Fyodor Dostoyevski",
+    "Dostoyevski"
+   ],
+   "celdiriciler": [
+    "Lev Tolstoy",
+    "Anton Çehov",
+    "Victor Hugo"
+   ]
+  },
+  {
+   "no": 48,
+   "soru": "İnce Memed romanının yazarı ___ olarak bilinir.",
+   "kabul": [
+    "Yaşar Kemal"
+   ],
+   "celdiriciler": [
+    "Orhan Pamuk",
+    "Sait Faik",
+    "Kemal Tahir"
+   ]
+  },
+  {
+   "no": 49,
+   "soru": "Dünyanın en büyük kıtası ___ kıtasıdır.",
+   "kabul": [
+    "Asya"
+   ],
+   "celdiriciler": [
+    "Afrika",
+    "Avrupa",
+    "Avustralya"
+   ]
+  },
+  {
+   "no": 50,
+   "soru": "Işığın boşluktaki hızı saniyede yaklaşık ___ kilometredir.",
+   "kabul": [
+    "300.000",
+    "300 bin",
+    "üç yüz bin"
+   ],
+   "celdiriciler": [
+    "30.000",
+    "3.000",
+    "3.000.000"
+   ]
+  }
+ ]
+}
