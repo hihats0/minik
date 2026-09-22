@@ -6,7 +6,7 @@ Cagiran: elle `python minik.py` ile baslatilir."""
 import time
 
 from agiz import konsol
-from ortak import kaynak_olc, log
+from ortak import baglam_butce, kaynak_olc, log
 from ortak.ayar import KORTIZOL_CEZA_SIDDETI, MELATONIN_IS_TAVAN_SN
 from yuvalar import bekci, defter, hormonlar, kafa
 
@@ -70,6 +70,7 @@ def _tur_isle(soru, baglam, dusun, hormon_durumu):
     cevap gercek bir konusmadir, ham kayda girmemeli."""
     basladi = time.perf_counter()
     hormon_degerleri = hormon_durumu.oku()
+    baglam_butce.sinirla(baglam, soru)  # f3-f: 8192'lik baglam ~21. turda tasiyordu
     try:
         cevap, is_sn = dusun(soru, baglam, hormon_degerleri)
     except Exception as hata:
