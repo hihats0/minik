@@ -72,27 +72,31 @@ def sabah_sorulari(ders: dict) -> list[dict]:
             for b in ders["bilgiler"]]
 
 
-def okul_suz(cumleler) -> list[str]:
-    """3-6 kelimelik, tekrarsiz cumleleri tutar; yeterli sayi yoksa ValueError."""
-    if not isinstance(cumleler, list):
-        raise ValueError("cumleler liste degil")
+def okul_uygunlari(cumleler: list) -> list[str]:
+    """3-6 kelimelik, tekrarsiz cumleleri sirasiyla dondurur (sayi kontrolu yok)."""
     tutulan, gorulen = [], set()
     for c in cumleler:
         uygun = isinstance(c, str) and OKUL_EN_AZ_KELIME <= kelime_say(c) <= OKUL_EN_COK_KELIME
         if uygun and normal(c) not in gorulen:
             gorulen.add(normal(c))
             tutulan.append(c.strip())
+    return tutulan
+
+
+def okul_suz(cumleler) -> list[str]:
+    """3-6 kelimelik, tekrarsiz cumleleri tutar; yeterli sayi yoksa ValueError."""
+    if not isinstance(cumleler, list):
+        raise ValueError("cumleler liste degil")
+    tutulan = okul_uygunlari(cumleler)
     if len(tutulan) < OKUL_CUMLE_SAYISI:
         raise ValueError(f"{OKUL_EN_AZ_KELIME}-{OKUL_EN_COK_KELIME} kelimelik farkli cumle "
                          f"{len(tutulan)}, gereken {OKUL_CUMLE_SAYISI}")
     return tutulan[:OKUL_CUMLE_SAYISI]
 
 
-def bilgileri_suz(bilgiler, onceki_dersler: list[dict], okul: list[str]) -> list[dict]:
-    """Bicimi bozuk, onceki gecelerle ayni ya da cevabi egitim cumlesine sizan bilgileri atar.
-    Yeterli bilgi kalmazsa ValueError (ogretmen yeniden sorulur)."""
-    if not isinstance(bilgiler, list):
-        raise ValueError("bilgiler liste degil")
+def gecerli_bilgiler(bilgiler: list, onceki_dersler: list[dict], okul: list[str]) -> list[dict]:
+    """Bicimi bozuk, onceki gecelerle ayni ya da cevabi egitim cumlesine sizan bilgileri atar
+    (sayi kontrolu yok; biriktirici parti parti cagirir)."""
     eski_bilgi = {normal(b["bilgi"]) for d in onceki_dersler for b in d["bilgiler"]}
     eski_egitim = [normal(c) for d in onceki_dersler for c in egitim_cumleleri(d)]
     eski_sorular = [doldur(s["soru"], s["cevap"]) for d in onceki_dersler for s in sabah_sorulari(d)]
@@ -107,6 +111,14 @@ def bilgileri_suz(bilgiler, onceki_dersler: list[dict], okul: list[str]) -> list
         if any(sizar_mi(s, kendi) for s in eski_sorular):
             continue
         tutulan.append(b)
+    return tutulan
+
+
+def bilgileri_suz(bilgiler, onceki_dersler: list[dict], okul: list[str]) -> list[dict]:
+    """gecerli_bilgiler + sayi kontrolu. Yeterli bilgi kalmazsa ValueError."""
+    if not isinstance(bilgiler, list):
+        raise ValueError("bilgiler liste degil")
+    tutulan = gecerli_bilgiler(bilgiler, onceki_dersler, okul)
     if len(tutulan) < BILGI_SAYISI:
         sorunlar = sorted({s for s in map(bilgi_bicim_sorunu, bilgiler) if s})
         raise ValueError(f"gecerli bilgi {len(tutulan)}/{len(bilgiler)}, gereken {BILGI_SAYISI}; "

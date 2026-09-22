@@ -80,4 +80,5 @@ def json_iste(sor_fn, mesajlar: list[dict], dogrula, sicaklik: float):
             konusma = list(mesajlar) + [
                 {"role": "assistant", "content": metin},
                 {"role": "user", "content": f"Cevap kabul edilmedi: {hata}. Duzeltip yalnizca JSON dondur."}]
-    raise RuntimeError(f"ogretmen {DENEME_SAYISI} denemede gecerli JSON vermedi")
+    raise RuntimeError(f"ogretmen {DENEME_SAYISI} denemede dogrulamadan gecen cevap vermedi "
+                       "(JSON bozuk ya da icerik reddedildi, sebepler logda)")

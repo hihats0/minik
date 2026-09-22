@@ -1,10 +1,13 @@
 """D4-c: ogretmen modelden 7 gecelik dersi tek kosuda uretir (gece basina 10 kurgusal bilgi + 50 okul
-cumlesi), dogrular, cocuk/dersler/gece_N.json'a yazar. Cagiran: elle `python -m cocuk.ders_uret`.
+cumlesi), dogrular, cocuk/dersler/gece_N.json'a yazar. Cagiran: elle `python -m cocuk.ders_uret
+[--gece-sayisi N]`, araclar/d4-yedi-gece-zinciri.ps1.
 """
 
+import argparse
 import json
 import logging
 
+from cocuk import ders_biriktir as db
 from cocuk import ders_dogrula as dd
 from cocuk import ogretmen
 from cocuk.egit_araclari import COCUK_DIZINI
@@ -40,22 +43,28 @@ BILGI_BICIM = ('{"bilgiler": [{"bilgi": "...", "cumlelemeler": ["...", "...", ".
 log = logging.getLogger("ders_uret")
 
 
-def okul_mesajlari(gece: int) -> list[dict]:
+def tekrar_etme(eskiler: list[str]) -> str:
+    """Toplanmis parcalar istege eklenir; 50 cumle x ~10 token + 70 bilgi x ~20 token, 8192 baglama sigar."""
+    return f"Bunları tekrar etme: {'; '.join(eskiler)}\n" if eskiler else ""
+
+
+def okul_mesajlari(gece: int, toplanan: list[str]) -> list[dict]:
     istem = (f"Gece {gece} okul dersi. Seviye: {MUFREDAT[gece - 1]}.\n"
-             f"{dd.OKUL_CUMLE_SAYISI} kısa Türkçe cümle yaz. Her cümle {dd.OKUL_EN_AZ_KELIME} ile "
+             f"{db.OKUL_PARTI} kısa Türkçe cümle yaz. Her cümle {dd.OKUL_EN_AZ_KELIME} ile "
              f"{dd.OKUL_EN_COK_KELIME} kelime arasında olsun, dilbilgisi kusursuz, çocuk kitabı "
              "sadeliğinde, nokta, soru ya da ünlem işaretiyle bitsin. Cümleler birbirinden farklı olsun.\n"
-             f"Biçim: {OKUL_BICIM}")
+             f"{tekrar_etme(toplanan)}Biçim: {OKUL_BICIM}")
     return [{"role": "system", "content": SISTEM}, {"role": "user", "content": istem}]
 
 
-def bilgi_mesajlari(gece: int, onceki: list[dict]) -> list[dict]:
+def bilgi_mesajlari(gece: int, onceki: list[dict], toplanan: list[dict]) -> list[dict]:
     eski = "; ".join(b["bilgi"] for d in onceki for b in d["bilgiler"]) or "yok"
+    bu_gece = [b["bilgi"] for b in toplanan]
     istem = (f"Gece {gece} bilgi dersi. Konu: {KONULAR[gece - 1]}.\n"
-             f"Çocuğa öğretilecek {dd.BILGI_SAYISI} yeni bilgi uydur. Bilgiler kurgusal olsun: gerçek "
+             f"Çocuğa öğretilecek {db.BILGI_PARTI} yeni bilgi uydur. Bilgiler kurgusal olsun: gerçek "
              "dünyada ve Vikipedi'de bulunmayan uydurma adlar kullan (ör. \"Minik'in kedisinin adı "
              "Pamuk.\"). Her bilgi basit ve tek cümlelik olsun.\n"
-             f"Önceki gecelerin bilgilerini tekrar etme: {eski}\n"
+             f"Önceki gecelerin bilgilerini tekrar etme: {eski}\n{tekrar_etme(bu_gece)}"
              "Her bilgi için:\n- \"bilgi\": bilginin kendisi\n"
              f"- \"cumlelemeler\": aynı bilgiyi anlatan {dd.CUMLELEME_SAYISI} farklı kısa cümle, "
              "her birinde cevap kelimesi geçsin\n"
@@ -68,15 +77,27 @@ def bilgi_mesajlari(gece: int, onceki: list[dict]) -> list[dict]:
     return [{"role": "system", "content": SISTEM}, {"role": "user", "content": istem}]
 
 
+def bilgi_havuzu(adaylar: list, onceki: list[dict], okul: list[str]) -> list[dict]:
+    """Dogrulamadan gecen bilgiler, ayni bilgi iki kez gelirse ilki."""
+    tutulan, gorulen = [], set()
+    for b in dd.gecerli_bilgiler(adaylar, onceki, okul):
+        if dd.normal(b["bilgi"]) not in gorulen:
+            gorulen.add(dd.normal(b["bilgi"]))
+            tutulan.append(b)
+    return tutulan
+
+
 def geceyi_uret(gece: int, onceki: list[dict], sor_fn) -> dict:
-    """Once okul cumleleri, sonra bilgiler (bilgi sizinti kontrolu okul cumlelerini de tarar)."""
-    okul = ogretmen.json_iste(sor_fn, okul_mesajlari(gece),
-                              lambda v: dd.okul_suz(v["cumleler"]), ogretmen.URETIM_SICAKLIGI)
-    bilgiler = ogretmen.json_iste(sor_fn, bilgi_mesajlari(gece, onceki),
-                                  lambda v: dd.bilgileri_suz(v["bilgiler"], onceki, okul),
-                                  ogretmen.URETIM_SICAKLIGI)
+    """Once okul cumleleri, sonra bilgiler (bilgi sizinti kontrolu okul cumlelerini de tarar).
+    Parti parti toplanir, sonda tam dogrulama (okul_suz, bilgileri_suz) bir kez daha kosar."""
+    okul, o_olcum = db.biriktir(sor_fn, lambda h: okul_mesajlari(gece, h), dd.okul_uygunlari,
+                                "cumleler", dd.OKUL_CUMLE_SAYISI, ogretmen.URETIM_SICAKLIGI)
+    bilgiler, b_olcum = db.biriktir(sor_fn, lambda h: bilgi_mesajlari(gece, onceki, h),
+                                    lambda a: bilgi_havuzu(a, onceki, okul), "bilgiler",
+                                    dd.BILGI_SAYISI, ogretmen.URETIM_SICAKLIGI)
+    log.info("gece %d olcum: okul %s, bilgi %s", gece, o_olcum, b_olcum)
     return {"gece": gece, "konu": KONULAR[gece - 1], "seviye": MUFREDAT[gece - 1],
-            "bilgiler": bilgiler, "okul": okul}
+            "bilgiler": dd.bilgileri_suz(bilgiler, onceki, okul), "okul": dd.okul_suz(okul)}
 
 
 def hepsini_uret(sor_fn, gece_sayisi: int = GECE_SAYISI) -> list[dict]:
@@ -103,5 +124,8 @@ def hepsini_uret(sor_fn, gece_sayisi: int = GECE_SAYISI) -> list[dict]:
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(name)s %(message)s")
+    ayrac = argparse.ArgumentParser()
+    ayrac.add_argument("--gece-sayisi", type=int, default=GECE_SAYISI,
+                       help="1..N arasi geceler uretilir (var olan atlanir)")
     with ogretmen.acik_sunucu() as sor_fn:
-        hepsini_uret(sor_fn)
+        hepsini_uret(sor_fn, ayrac.parse_args().gece_sayisi)
