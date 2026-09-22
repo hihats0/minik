@@ -22,3 +22,6 @@ __pycache__/
 # D4 cocuk deneyi: veri ve agirliklar repoya girmez.
 /cocuk/veri/
 /cocuk/agirlik/
+
+# Oturum kilidi: canli oturum varken zamanlanmis kosu baslamasin.
+/.kilit
