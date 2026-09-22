@@ -27,7 +27,10 @@ from yuvalar import kafa
 HORMON_DINLENME = {"dopamin": 20, "noradrenalin": 20, "serotonin": 50, "kortizol": 10,
                     "oksitosin": 30, "melatonin": 10, "merak": 40}
 
-SAHTE_CEVAP = {"choices": [{"message": {"content": "merhaba"}}], "usage": {"completion_tokens": 3}}
+# timings alanlari f3-e'de gercek llama-server cevabinda olculdu (prompt_ms, predicted_ms).
+SAHTE_CEVAP = {"choices": [{"message": {"content": "merhaba"}}], "usage": {"completion_tokens": 3},
+               "timings": {"prompt_ms": 500.0, "predicted_ms": 1500.0}}
+SAHTE_IS_SN = 2.0  # (500 + 1500) ms
 
 
 class SahteYanit:
@@ -46,12 +49,12 @@ class SahteYanit:
         return self._govde
 
 
-def _sahte_urlopen_kur(yakalanan):
+def _sahte_urlopen_kur(yakalanan, cevap_json=SAHTE_CEVAP):
     """Giden istegi yakalayan sahte urlopen dondurur (govde ve timeout kaydedilir)."""
     def sahte_urlopen(istek, timeout):
         yakalanan["govde"] = json.loads(istek.data.decode("utf-8"))
         yakalanan["timeout"] = timeout
-        return SahteYanit(SAHTE_CEVAP)
+        return SahteYanit(cevap_json)
     return sahte_urlopen
 
 
@@ -100,8 +103,26 @@ class TestKafa(unittest.TestCase):
     def test_cevap_dogru_ayristiriliyor(self):
         """Sahte sunucunun dondurdugu icerik oldugu gibi geri gelmeli."""
         with patch("yuvalar.kafa.urllib.request.urlopen", side_effect=_sahte_urlopen_kur({})):
-            cevap = kafa.dusun("soru", [])
+            cevap, _ = kafa.dusun("soru", [])
         self.assertEqual(cevap, "merhaba")
+
+    def test_is_saniyesi_timingsten_gelir(self):
+        """K10 (f3-e): is saniyesi sunucunun kendi olcumu, prompt_ms + predicted_ms."""
+        with patch("yuvalar.kafa.urllib.request.urlopen", side_effect=_sahte_urlopen_kur({})):
+            _, is_sn = kafa.dusun("soru", [])
+        self.assertAlmostEqual(is_sn, SAHTE_IS_SN)
+
+    def test_timings_yoksa_loglanir_ve_sifir_kalmaz(self):
+        """Sunucu timings vermezse melatonin sessizce 0 kalmaz: duvar saati kullanilir ve
+        'hata' satiri loglanir."""
+        timingssiz = {k: v for k, v in SAHTE_CEVAP.items() if k != "timings"}
+        with patch("yuvalar.kafa.urllib.request.urlopen",
+                   side_effect=_sahte_urlopen_kur({}, timingssiz)),                 patch("yuvalar.kafa.log.yaz") as sahte_log:
+            _, is_sn = kafa.dusun("soru", [])
+        self.assertGreater(is_sn, 0.0)
+        hata_satirlari = [c for c in sahte_log.call_args_list if c.args[3] == "hata"]
+        self.assertEqual(len(hata_satirlari), 1)
+        self.assertIn("timings", hata_satirlari[0].args[4]["hata"])
 
 
 class TestKafaHormonModu(unittest.TestCase):

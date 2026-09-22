@@ -5,13 +5,13 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
-from unittest import mock
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 import minik
 
 CIKIS = minik.CIKIS_KELIMESI
+IS_SN = 1.0  # sahte Kafa'nin bildirdigi is saniyesi (dusun (cevap, is_sn) dondurur)
 
 
 class SahteAgiz:
@@ -47,7 +47,7 @@ class TestAkisHormon(unittest.TestCase):
 
         def kaydeden_dusun(soru, baglam, hormon=None):
             gorulenler.append(hormon)
-            return "cevap"
+            return "cevap", IS_SN
 
         agiz = SahteAgiz(["soru"])
         minik.calistir(dinle=agiz.dinle, soyle=agiz.soyle, dusun=kaydeden_dusun)
@@ -56,16 +56,24 @@ class TestAkisHormon(unittest.TestCase):
                            "oksitosin", "melatonin", "merak"})
 
     def test_basarili_tur_calisma_olayiyla_melatonini_yukseltir(self):
-        """R1: guncelleme akista yapilir. K10: siddet gercek CPU suresinden gelir; burada
-        olcumu sabitleyip (mock) melatoninin 'calisma'nin yukselme miktarinca (1,5) ciktigini
-        dogruluyoruz (dinlenme 10 -> 11,5)."""
+        """R1: guncelleme akista yapilir. K10 (f3-e): siddet Kafa'nin bildirdigi is saniyesinden
+        gelir. Tavan kadar is = siddet 1,0 -> melatonin 'calisma' yukselmesi kadar (1,5) cikar
+        (dinlenme 10 -> 11,5)."""
         agiz = SahteAgiz(["soru"])
         hormon_durumu = minik.hormonlar.Hormonlar()
-        with mock.patch.object(minik.kaynak_olc, "siddet", return_value=1.0):
-            minik.calistir(dinle=agiz.dinle, soyle=agiz.soyle,
-                            dusun=lambda soru, baglam, hormon=None: "cevap",
-                            hormon_durumu=hormon_durumu)
+        minik.calistir(dinle=agiz.dinle, soyle=agiz.soyle,
+                        dusun=lambda soru, baglam, hormon=None: ("cevap", minik.MELATONIN_IS_TAVAN_SN),
+                        hormon_durumu=hormon_durumu)
         self.assertAlmostEqual(hormon_durumu.oku()["melatonin"], 11.5)
+
+    def test_yarim_tavan_is_yarim_yukselme_verir(self):
+        """Olcek gercek: tavanin yarisi kadar is 1,5'in yarisini ekler (10 -> 10,75)."""
+        agiz = SahteAgiz(["soru"])
+        hormon_durumu = minik.hormonlar.Hormonlar()
+        minik.calistir(dinle=agiz.dinle, soyle=agiz.soyle,
+                        dusun=lambda soru, baglam, hormon=None: ("cevap", minik.MELATONIN_IS_TAVAN_SN / 2),
+                        hormon_durumu=hormon_durumu)
+        self.assertAlmostEqual(hormon_durumu.oku()["melatonin"], 10.75)
 
     def test_kafa_hatasi_kortizolu_ceza_olayiyla_yukseltir(self):
         """Kafa 'dusunemedi' derse kortizol 'ceza' olayiyla yukselir (VARSAYIM, rapora

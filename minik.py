@@ -7,7 +7,7 @@ import time
 
 from agiz import konsol
 from ortak import kaynak_olc, log
-from ortak.ayar import KORTIZOL_CEZA_SIDDETI, MELATONIN_CPU_TAVAN_SN
+from ortak.ayar import KORTIZOL_CEZA_SIDDETI, MELATONIN_IS_TAVAN_SN
 from yuvalar import bekci, defter, hormonlar, kafa
 
 YUVA_ADI = "akis"
@@ -22,6 +22,7 @@ def calistir(dinle=konsol.dinle, soyle=konsol.soyle, dusun=kafa.dusun, hormon_du
     """Sohbet dongusu: dinle -> dusun -> soyle -> Defter'e yaz -> logla. `cik` yazilinca
     durur; Defter yazamazsa da durur (kaydedilmeyen konusma en pahali kayiptir, spec 3.4).
     dinle/soyle/dusun disaridan verilebilir: agiz degisince bu dosya degismez (spec 2.6).
+    dusun (cevap, is_sn) dondurur (yuvalar/kafa.py sozlesmesi).
     hormon_durumu da disaridan verilebilir (testler icin); verilmezse taze bir Hormonlar()
     baslar, yani her calistir() cagrisi dinlenme degerleriyle acilir (defter/hormon.json gibi
     bir kalicilik bu kosunun kapsaminda degil, bkz. rapor)."""
@@ -63,20 +64,19 @@ def _tur_isle(soru, baglam, dusun, hormon_durumu):
     """Tek bir soru-cevap turunu isler, (cevap, basarili_mi) dondurur. Kafa hata yukseltirse
     akis cokmez, kullaniciya haber verir, kortizolu "ceza" olayiyla yukseltir ve nedenini loglar
     (hata burada kasitli yakalanir, yutulmaz). Basarili cagri "calisma" olayiyla melatonini
-    gercek harcanan CPU suresine gore yukseltir (K10). Kafa'nin cevabi agiza gitmeden Bekci'den
+    Kafa'nin llama-server'da harcadigi gercek is saniyesine gore yukseltir (K10, f3-e). Kafa'nin cevabi agiza gitmeden Bekci'den
     gecer (K6: karari Bekci verir, akis sadece uygular); Bekci "hayir" derse sabit metin soylenir.
     basarili_mi=False ise Defter'e yazilmaz: ne "Su an dusunemiyorum" ne de Bekci'nin engelledigi
     cevap gercek bir konusmadir, ham kayda girmemeli."""
     basladi = time.perf_counter()
-    is_baslangici = kaynak_olc.basla()
     hormon_degerleri = hormon_durumu.oku()
     try:
-        cevap = dusun(soru, baglam, hormon_degerleri)
+        cevap, is_sn = dusun(soru, baglam, hormon_degerleri)
     except Exception as hata:
         hormon_durumu.guncelle("ceza", KORTIZOL_CEZA_SIDDETI)
         log.yaz(YUVA_ADI, "tur", _gecen_ms(basladi), "hata", {"hata": str(hata)})
         return DUSUNEMIYORUM_METNI, False
-    hormon_durumu.guncelle("calisma", kaynak_olc.siddet(is_baslangici, MELATONIN_CPU_TAVAN_SN))
+    hormon_durumu.guncelle("calisma", kaynak_olc.siddet(is_sn, MELATONIN_IS_TAVAN_SN))
     gecebilir, gerekce = bekci.cikabilir_mi(cevap)
     if not gecebilir:
         log.yaz(YUVA_ADI, "tur", _gecen_ms(basladi), "ok", {"bekci": "engellendi", "gerekce": gerekce})

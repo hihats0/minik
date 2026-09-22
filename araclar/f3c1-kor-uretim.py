@@ -127,7 +127,7 @@ def kayitlari_uret(hormon_degerleri):
             for tekrar in range(1, TEKRAR + 1):
                 sicaklik_kontrol()
                 basla = time.perf_counter()
-                cevap = kafa.dusun(soru, None, dict(hormon_degerleri))
+                cevap, _ = kafa.dusun(soru, None, dict(hormon_degerleri))
                 sure_ms = int((time.perf_counter() - basla) * 1000)
                 kayitlar.append({
                     "soru_id": soru_id, "kategori": kategori, "soru": soru, "mod": mod_gercek,

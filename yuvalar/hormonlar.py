@@ -40,10 +40,12 @@ class Tanim:
 # yapismasiyla ayni sinif kusur: TAHMIN yanlisti, dusuruldu. dusme=4.0 ile ic dengeye oturuyor
 # (~18,4), taban 0'a degmiyor (bkz. reports/2026-09-21-f3a-hormon-revizyonu.md).
 #
-# K10 (2026-09-21, Yigit'in karari): melatonin artik soyut "calisma" sayaci degil, olculen CPU
-# saniyesi (ortak/kaynak_olc.py). "calisma" olay adi ve yukselme (1,5) DEGISMEDI: tek bicimlilik
+# K10 (2026-09-21, Yigit'in karari; f3-e 2026-09-22): melatonin artik soyut "calisma" sayaci
+# degil, Kafa'nin llama-server'da harcadigi olculen is saniyesi (timings, ortak/kaynak_olc.py).
+# Ilk surumdeki CPU saniyesi (process_time) harici sunucu isini goremedigi icin f3-e'de kaldirildi.
+# "calisma" olay adi ve yukselme (1,5) DEGISMEDI: tek bicimlilik
 # korunuyor (hormonlar.py hala sadece olay+siddet aliyor), degisen siddetin NEREDEN geldigi -
-# cagiran taraf artik siddeti gercek CPU suresinden hesaplayip veriyor, elle 1,0 vermiyor.
+# cagiran taraf artik siddeti gercek is suresinden hesaplayip veriyor, elle 1,0 vermiyor.
 # araclar/hormon-gunu.py ile olculdu: gercekci karisik is yukunde (hafif/orta/agir) gun sonu
 # tepe 48,5, ne tavana (100) ne tabana yapisiyor; 1,5 katsayisi bu rejimde de gecerli kaldi,
 # degistirilmedi (bkz. reports/2026-09-21-f3a-hormon-revizyonu.md).

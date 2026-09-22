@@ -1,6 +1,6 @@
 """Kafa, Defter, Bekci, Hormonlar ve akisin kullandigi adli sabitler: sunucu adresi, model yolu,
 zaman asimi, ornekleme, baglam, dosya yollari, sozluk. Cagiran: yuvalar/kafa.py, yuvalar/defter.py,
-yuvalar/bekci.py, ortak/kaynak_olc.py, minik.py."""
+yuvalar/bekci.py, minik.py, araclar/."""
 
 from pathlib import Path
 
@@ -42,16 +42,13 @@ BEKCI_KUFUR_KALIPLARI = [
     r"boklu\w*", r"boktan", r"gavat\w*", r"pezevenk\w*", r"kahpe\w*", r"kaltak\w*", r"yavsak\w*",
 ]
 
-# K10: melatonin artik gercek CPU saniyesiyle besleniyor (ortak/kaynak_olc.py). Bu, "bir is
-# adiminin siddeti 1,0 (tavan) sayilacagi CPU saniyesi". OLCULDU: time.process_time()'in Windows'ta
-# raporladigi cozunurluk (1e-07 sn) yalandir, GERCEK adim buyuklugu ~15,6 ms (GetProcessTimes'in
-# isletim sistemi zamanlayici tikine bagli kabaligi, bu oturumda 5x tekrarla olculdu). Tavan bu
-# kabaligin ~6 kati tutuldu, yoksa hafif/orta is ayni kareye yuvarlanip ayirt edilemiyordu (olculdu,
-# 0,02 sn'de hafif=orta cikti). TAHMIN: araclar/hormon-gunu.py'deki demo olceginde kalibre edildi
-# (bkz. reports/2026-09-21-f3a-hormon-revizyonu.md); gercek Kafa cagrisi cok daha uzun surer (f0
-# olcumu: en yavas cevap 10,1 sn, yukaridaki KAFA_ZAMAN_ASIMI_SN), akisa baglanirken (f3-b) bu
-# tavan o gercek sureye gore yeniden olculmeli.
-MELATONIN_CPU_TAVAN_SN = 0.10
+# K10 (f3-e): melatonin Kafa'nin llama-server'da harcadigi gercek is saniyesiyle (timings:
+# prompt_ms + predicted_ms) beslenir; bu sabit "siddet 1,0 sayilan is saniyesi". OLCULDU
+# (reports/2026-09-22-f3e-melatonin-gercek-is.md, 10 turluk gercek konusma): max_tokens sinirina
+# dayanan en uzun cevap ~7,0 sn (448 token, ~65 token/sn, RTX 4070 Laptop). Tavan bu en uzun
+# tur tutuldu: kisa cevap az, uzun cevap cok yorar, kirpilma olmaz (orantililik korunur).
+# Olculen karisik konusma surerse yorgun'a ~60. turda gecilir; en hizli 39. tur (her tur 1,0).
+MELATONIN_IS_TAVAN_SN = 7.0
 
 # f3-b, kademe 1 (reports/2026-09-20-hormon-mimarisi.md bolum 1): hormon -> Kafa'nin ornekleme
 # ayarlarina donusumu (donusum yuvalar/kafa.py'de, K6: akis karar vermez). YON rapordan:

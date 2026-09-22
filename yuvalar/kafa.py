@@ -1,4 +1,4 @@
-"""llama-server'in OpenAI uyumlu ucuna sorar, cevap metnini dondurur, sureyi loglar.
+"""llama-server'in OpenAI uyumlu ucuna sorar, cevap metnini ve gercek is saniyesini dondurur.
 Hormon degerlerini ornekleme ayarlarina cevirir (kademe 1, K6: donusum burada, akista degil).
 Cagiran: minik.py akisi."""
 
@@ -35,6 +35,10 @@ from ortak.ayar import (
 )
 
 YUVA_ADI = "kafa"
+# llama-server cevabindaki timings alanlari (f3-e'de gercek sunucuda olculdu, rapor).
+TIMINGS_PROMPT_MS = "prompt_ms"
+TIMINGS_URETIM_MS = "predicted_ms"
+MS_SANIYE = 1000.0
 # Onceki turun modu: cift esik (Schmitt tetikleyici) hafiza ister, tek surecli akis tek Kafa
 # kullandigi icin modul seviyesinde tutuluyor (testler dogrudan sifirlayabilir, DEFTER_KLASORU
 # gibi).
@@ -42,7 +46,8 @@ ONCEKI_MOD = MOD_UYANIK
 
 
 def dusun(soru, baglam=None, hormon_degerleri=None):
-    """Soruyu (varsa onceki mesajlarla birlikte) llama-server'a sorar, cevap metnini dondurur.
+    """Soruyu (varsa onceki mesajlarla birlikte) llama-server'a sorar, (cevap, is_sn) dondurur.
+    is_sn: sunucunun bu cevap icin harcadigi gercek is saniyesi (melatonini besler, K10).
     hormon_degerleri verilirse ornekleme ayarlari ondan hesaplanir (kademe 1); verilmezse f0'in
     olctugu sabit ayarlar kullanilir. Sunucu cevap vermezse hatayi yutmaz, yukseltir."""
     basladi = time.perf_counter()
@@ -51,15 +56,29 @@ def dusun(soru, baglam=None, hormon_degerleri=None):
     ayarlar, mod = _ornekleme_ayarlari(hormon_degerleri)
     govde = _govde_olustur(mesajlar, ayarlar)
     try:
-        cevap, token_sayisi = _sunucuya_sor(govde)
+        cevap, token_sayisi, timings = _sunucuya_sor(govde)
     except (urllib.error.URLError, OSError) as hata:
         log.yaz(YUVA_ADI, "dusun", _gecen_ms(basladi), "hata",
                 {"hata": str(hata), "model": KAFA_MODEL_YOLU, "mod": mod, "ayarlar": ayarlar})
         raise
+    is_sn = _is_saniyesi(timings, time.perf_counter() - basladi)
     log.yaz(YUVA_ADI, "dusun", _gecen_ms(basladi), "ok",
-            {"token": token_sayisi, "baglam": KAFA_BAGLAM, "model": KAFA_MODEL_YOLU,
-             "mod": mod, "ayarlar": ayarlar})
-    return cevap
+            {"token": token_sayisi, "is_sn": round(is_sn, 3), "baglam": KAFA_BAGLAM,
+             "model": KAFA_MODEL_YOLU, "mod": mod, "ayarlar": ayarlar})
+    return cevap, is_sn
+
+
+def _is_saniyesi(timings, duvar_sn):
+    """Sunucunun kendi olctugu is suresi: prompt okuma + uretim (prompt_ms + predicted_ms).
+    Neden bu: ikisi de GPU'nun bu tur icin gercekten calistigi sure; baglam buyudukce prompt_ms
+    de buyur, uzun cevapta predicted_ms buyur. timings yoksa melatonin sessizce 0 kalmasin diye
+    istegin duvar saati kullanilir ve bu durum 'hata' satiriyla loglanir."""
+    try:
+        return (timings[TIMINGS_PROMPT_MS] + timings[TIMINGS_URETIM_MS]) / MS_SANIYE
+    except (KeyError, TypeError) as hata:
+        log.yaz(YUVA_ADI, "is_saniyesi", 0, "hata",
+                {"hata": f"timings eksik ({hata!r}), duvar saati kullanildi", "duvar_sn": round(duvar_sn, 3)})
+        return duvar_sn
 
 
 def _ornekleme_ayarlari(hormon_degerleri):
@@ -117,7 +136,8 @@ def _govde_olustur(mesajlar, ayarlar):
 
 
 def _sunucuya_sor(govde):
-    """HTTP istegini yollar, (cevap_metni, token_sayisi) dondurur."""
+    """HTTP istegini yollar, (cevap_metni, token_sayisi, timings) dondurur. timings sunucu
+    vermezse None olur; karari _is_saniyesi verir."""
     istek = urllib.request.Request(
         KAFA_UC,
         data=json.dumps(govde, ensure_ascii=False).encode("utf-8"),
@@ -127,7 +147,7 @@ def _sunucuya_sor(govde):
         yanit_json = json.loads(yanit.read().decode("utf-8"))
     cevap = yanit_json["choices"][0]["message"]["content"]
     token_sayisi = yanit_json.get("usage", {}).get("completion_tokens", 0)
-    return cevap, token_sayisi
+    return cevap, token_sayisi, yanit_json.get("timings")
 
 
 def _gecen_ms(basladi):
