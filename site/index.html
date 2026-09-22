@@ -275,6 +275,33 @@
     </div>
   </section>
 
+  <section class="karar" data-karar="K25">
+    <div class="etiket"><span>Karar K25</span><span class="damga-isareti" hidden>Verildi</span></div>
+    <h2>Yorgun Minik sınavı yarım geçti, ne sayalım?</h2>
+    <p class="hikaye">Yorgun Minik'i daha büyük bir sınavla tekrar ölçtük. Bu sefer fark net çıktı: yorgunken <b>daha kısa</b> konuşuyor (her cevapta yaklaşık 243 harf az) ve <b>daha çabuk</b> cevap veriyor (1 saniyeden biraz fazla). Bu şans eseri olacak bir fark değil.</p>
+    <p class="hikaye">Ama cevapları kimin yazdığını söylemeden puanlattığımızda, genel olarak "bu daha iyi, bu daha kötü" diyen çıkmadı. Tek fark yine ters yönde: <b>yorgun Minik daha doğal</b> bulundu. Yani yorgun biri gibi az ve hızlı konuşuyor, ama kalitesi düşmüyor.</p>
+    <p class="hikaye">Hedefimiz "ruh hâli değişince davranışı ölçülebilir biçimde değişsin" idi. Davranış değişti; kalite değişmedi.</p>
+    <div class="secenekler">
+      <button class="secenek" data-secim="A">
+        <span class="secenek-basi"><span class="harf">A</span><span class="secenek-ad">Tamam, bu adım bitti sayılsın<span class="onerilir">Agent önerisi</span></span></span>
+        <span class="secenek-not">Yorgun Minik kısa ve hızlı konuşuyor, bu ölçüldü. Hedef cümlesi karşılandı, sıradaki işe geçilir.</span>
+      </button>
+      <button class="secenek" data-secim="B">
+        <span class="secenek-basi"><span class="harf">B</span><span class="secenek-ad">Kalite de değişmeli, yeniden ayarlayalım</span></span>
+        <span class="secenek-not">Yorgunluk ayarları baştan yazılır, sınav tekrar yapılır. Bir gece daha gider, sonuç yine aynı çıkabilir.</span>
+      </button>
+      <button class="secenek" data-secim="C">
+        <span class="secenek-basi"><span class="harf">C</span><span class="secenek-ad">Yeni kafa gelince tekrar ölçelim</span></span>
+        <span class="secenek-not">Minik'in kafası zaten değişecek (Türkçesi iyi 8B adaylar). O zaman aynı sınav yeni kafayla yapılır, o güne kadar bu adım "yarım" kalır.</span>
+      </button>
+    </div>
+    <p class="hikaye"><b>Agent'ın gerekçesi:</b> Hedef "davranış değişsin" diyordu ve değişti; kalitenin düşmemesi kusur değil, üstelik kafa değişince sınav zaten yeniden koşulacak.</p>
+    <div class="not-alani">
+      <label for="not-K25">Eklemek istediğin bir şey</label>
+      <textarea id="not-K25" data-not="K25" placeholder="Örnek: A, ama yeni kafayla da bir kez bakalım"></textarea>
+    </div>
+  </section>
+
   <section class="karar" data-karar="f0c" id="puanlama">
     <div class="etiket"><span>İş, karar değil</span><span class="damga-isareti" hidden>Bitti</span></div>
     <h2>Altı cevaba puan ver</h2>
@@ -319,7 +346,7 @@
       ipucu: "İlk cümle tam doğru, sonrası anlamsız döngü. Agent'ın en çok kararsız kaldığı cevap." }
   ];
 
-  const KARARLAR = ["K21", "K22", "K23"];
+  const KARARLAR = ["K21", "K22", "K23", "K25"];
   const durumKutusu = document.getElementById("durum");
   let db = null;
   const yerel = { kararlar: {}, puanlar: {} };
