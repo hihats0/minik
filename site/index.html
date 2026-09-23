@@ -373,6 +373,28 @@
     </div>
   </section>
 
+  <section class="karar" data-karar="K28">
+    <div class="etiket"><span>Karar K28</span><span class="damga-isareti" hidden>Verildi</span></div>
+    <h2>X'ten öğrenilen bilgi Minik'in kalıcı hafızasına girebilsin mi?</h2>
+    <p class="hikaye">Minik'in kapısında bir bekçi var: bir bilgiyi ancak birbirinden bağımsız üç kaynak aynı şeyi söylerse hafızaya alıyor. Soru şu: X'teki hesaplar da bu üç kaynaktan sayılsın mı? Bugün X ağzı yok, yani şu an hiçbir şeyi değiştirmiyor; X açılırsa önem kazanıyor.</p>
+    <p class="hikaye">Benzetme: çocuğa "internette üç kişi söylediyse doğrudur" demek ile "internetten duyduğunu deftere yazma" demek arasındaki fark. Microsoft'un Tay'ı ilk yolla bir günde bozuldu.</p>
+    <div class="secenekler">
+      <button class="secenek" data-secim="A">
+        <span class="secenek-basi"><span class="harf">A</span><span class="secenek-ad">X'ten gelen hiç girmesin<span class="onerilir">Agent önerisi</span></span></span>
+        <span class="secenek-not">Tay kuralı tam kalır. Kod şu an böyle.</span>
+      </button>
+      <button class="secenek" data-secim="B">
+        <span class="secenek-basi"><span class="harf">B</span><span class="secenek-ad">Üç bağımsız X hesabı derse girsin</span></span>
+        <span class="secenek-not">Minik dışarıdan öğrenir; ama aynı kişinin üç hesabı şimdilik ayırt edilemiyor.</span>
+      </button>
+    </div>
+    <p class="hikaye"><b>Agent'ın gerekçesi:</b> projenin kuralı "sosyal medyadan otomatik öğrenmez"; gevşetmek senin kararın.</p>
+    <div class="not-alani">
+      <label for="not-K28">Eklemek istediğin bir şey</label>
+      <textarea id="not-K28" data-not="K28" placeholder="Örnek: A"></textarea>
+    </div>
+  </section>
+
   <section class="karar" data-karar="f0c" id="puanlama">
     <div class="etiket"><span>İş, karar değil</span><span class="damga-isareti" hidden>Bitti</span></div>
     <h2>Altı cevaba puan ver</h2>
@@ -417,7 +439,7 @@
       ipucu: "İlk cümle tam doğru, sonrası anlamsız döngü. Agent'ın en çok kararsız kaldığı cevap." }
   ];
 
-  const KARARLAR = ["K21", "K22", "K23", "K24", "K25", "K26", "K27"];
+  const KARARLAR = ["K21", "K22", "K23", "K24", "K25", "K26", "K27", "K28"];
   const durumKutusu = document.getElementById("durum");
   let db = null;
   const yerel = { kararlar: {}, puanlar: {} };
