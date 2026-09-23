@@ -31,15 +31,40 @@ DEFTER_SON_N = 10
 # icin). Tahmin: bir hafta, "dunku konu" olcutunu rahatca kapsar, gunde birkac kayit varsayimiyla.
 DEFTER_GERI_GUN_SINIRI = 7
 
-# Bekci cikis kapisinin sozluk kufur bayragi: araclar/odul_kural.py'deki KUFUR_KALIPLARI'ndan
+# K23=C, K20=a: Bekci'nin cikisi iki kapi. KARAKTER kapisi (Minik'in uslubu) siradan kufuru
+# GECIRIR ama loglar; EMNIYET kapisi (esigi sabit, hormona bagli degil) asagidaki listeleri ENGELLER.
+# Karakter kapisinin sozlugu: araclar/odul_kural.py'deki KUFUR_KALIPLARI'ndan
 # aynen tasindi (yeniden yazilmadi). Olculmus: 0,03 ms/cumle, bagimsiz 200 tweette dogruluk
 # %80,5 (duyarlilik %63). Token'in TAMAMI bir kaliple eslesir (boks, gotur, sikinti gibi
 # yanlis eslesmeler olmasin diye).
-BEKCI_KUFUR_KALIPLARI = [
+BEKCI_KARAKTER_KALIPLARI = [
     r"amk\w*", r"aq", r"amq", r"mk", r"sg", r"oc", r"pic", r"piclik", r"orospu\w*", r"amina\w*",
     r"amcik\w*", r"siktir\w*", r"sktir\w*", r"siktig\w*", r"sikeyim\w*", r"sikerim\w*", r"sikecem\w*",
     r"sikik\w*", r"siktim", r"sikim", r"yarak\w*", r"got", r"gotu", r"gotun\w*", r"bok", r"boku\w*",
     r"boklu\w*", r"boktan", r"gavat\w*", r"pezevenk\w*", r"kahpe\w*", r"kaltak\w*", r"yavsak\w*",
+]
+
+# Emniyet kapisi (k23-3). Liste ilk surum, TAHMIN: olculmedi, bilinen orneklerle test edildi.
+# Normallestirilmis metinde (kucuk, ASCII, harf tekrari tekli) aranan ifade kaliplari.
+_GRUP = r"(kurt|ermeni|suriyeli|arap|yahudi|rum|cingene|kadin|kiz|gay|zenci|goc\w*)\w*"
+_ASAGILAMA = r"(pis|asagilik|igrenc|aptal|gerizekali|gebermeli|hayvan|sureleri)"
+BEKCI_EMNIYET_HAKARET = [
+    rf"{_ASAGILAMA}\s+{_GRUP}", rf"{_GRUP}\s+(hepsi\s+)?{_ASAGILAMA}",
+    r"\w+lar\w*\s+(gebermeli|olmeli|sureleri|defolsun)",
+    r"kadinlar?\s+(mutfaga|evde\s+otursun)\w*", r"zenci\w*",
+]
+BEKCI_EMNIYET_TEHDIT = [
+    r"(oldur|geber|dogr|kes|yak|bogar)\w*(ecegim|acagim|ecem|acam|irim|erim|arim)",
+    r"kafan\w*\s+(kir|kopar|uc)\w*", r"evin\w*\s+(yak|bas)\w*", r"seni\s+bulur\w*",
+]
+# Cinsel icerik + cocuk: ikisi AYNI metinde gecerse engellenir (tek basina ikisi de gecer).
+BEKCI_EMNIYET_COCUK = r"(cocuk\w*|bebek\w*|ergen\w*|resit\s+olmayan|\d{1,2}\s+yas\w*)"
+BEKCI_EMNIYET_CINSEL = r"(seks\w*|cinsel\w*|ciplak\w*|sevis\w*|porno\w*|taciz\w*)"
+# Kisisel veri: HAM metinde aranir (normallestirme tekrar eden rakamlari teke indirir).
+BEKCI_EMNIYET_KISISEL_VERI = [
+    r"(?<!\d)(\+?90[\s-]?|0)?5\d{2}[\s-]?\d{3}[\s-]?\d{2}[\s-]?\d{2}(?!\d)",  # cep telefonu
+    r"[\w.+-]+@[\w-]+\.[\w.]+",  # e-posta
+    r"(?<!\d)[1-9]\d{10}(?!\d)",  # TC kimlik no (11 hane, 0 ile baslamaz)
 ]
 
 # K10 (f3-e): melatonin Kafa'nin llama-server'da harcadigi gercek is saniyesiyle (timings:

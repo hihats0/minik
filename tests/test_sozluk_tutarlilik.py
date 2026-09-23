@@ -9,7 +9,7 @@ from pathlib import Path
 KOK = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(KOK))
 
-from ortak.ayar import BEKCI_KUFUR_KALIPLARI
+from ortak.ayar import BEKCI_KARAKTER_KALIPLARI
 
 OLCUM_ARACI = KOK / "araclar" / "odul_kural.py"
 
@@ -35,7 +35,7 @@ class SozlukTutarliligi(unittest.TestCase):
     def test_iki_sozluk_birebir_ayni(self):
         olcum = _olcum_aracini_yukle()
         self.assertEqual(
-            list(BEKCI_KUFUR_KALIPLARI),
+            list(BEKCI_KARAKTER_KALIPLARI),
             list(olcum.KUFUR_KALIPLARI),
             "Sozlukler ayrismis. Birini degistirdiysen digerini de guncelle ya da bilerek "
             "ayirdiysan bu testi gerekcesiyle degistir; sessizce ayrismasina izin verme.",
