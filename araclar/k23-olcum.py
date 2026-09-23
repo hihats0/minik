@@ -16,7 +16,7 @@ from sunucu_yonet import LLAMA_SERVER, LOG_KLASORU, hazir_bekle  # noqa: E402
 
 KOK = Path(__file__).resolve().parent.parent
 SINAV_DOSYASI = KOK / "notes/turkce-testi.md"
-HAM_KLASOR = KOK / "reports/k23-ham"
+HAM_KLASOR = KOK / "reports/k23-ham-cevaplar"
 PORT = 8090
 UC = f"http://127.0.0.1:{PORT}/v1/chat/completions"
 ORNEKLEME = {"temperature": 0.7, "top_p": 0.9, "seed": 42, "max_tokens": 512}  # f0 ve kafa.py ile ayni

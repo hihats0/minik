@@ -9,7 +9,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 import k23_ortak as ortak  # noqa: E402
 
 KOK = Path(__file__).resolve().parent.parent
-HAM_KLASOR = KOK / "reports/k23-ham"
+HAM_KLASOR = KOK / "reports/k23-ham-cevaplar"
 KOR_KLASOR = KOK / "reports/k23-kor-olcum"
 TOHUM = 2323
 BOLUM_SINAV = "Bolum A: Turkce uretim sinavi (20 soru, sistem promptu yok)"
