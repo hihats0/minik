@@ -44,6 +44,8 @@ YUVA_ADI = "kafa"
 TIMINGS_PROMPT_MS = "prompt_ms"
 TIMINGS_URETIM_MS = "predicted_ms"
 MS_SANIYE = 1000.0
+# Loga yazilan HTTP hata govdesinin en cok uzunlugu (tasma mesaji ~200 karakter).
+HATA_GOVDE_UZUNLUGU = 300
 # Karakter metni ile yorgun talimati arasina bos satir (tek sistem mesajinda iki paragraf).
 PARCA_AYIRICI = "\n\n"
 # Onceki turun modu: cift esik (Schmitt tetikleyici) hafiza ister, tek surecli akis tek Kafa
@@ -70,13 +72,21 @@ def dusun(soru, baglam=None, hormon_degerleri=None):
         cevap, token_sayisi, timings = _sunucuya_sor(govde)
     except (urllib.error.URLError, OSError) as hata:
         log.yaz(YUVA_ADI, "dusun", _gecen_ms(basladi), "hata",
-                {"hata": str(hata), "model": KAFA_MODEL_YOLU, "mod": mod, "ayarlar": ayarlar})
+                {"hata": _hata_metni(hata), "model": KAFA_MODEL_YOLU, "mod": mod, "ayarlar": ayarlar})
         raise
     is_sn = _is_saniyesi(timings, time.perf_counter() - basladi)
     log.yaz(YUVA_ADI, "dusun", _gecen_ms(basladi), "ok",
             {"token": token_sayisi, "is_sn": round(is_sn, 3), "baglam": KAFA_BAGLAM,
              "model": KAFA_MODEL_YOLU, "mod": mod, "ayarlar": ayarlar})
     return cevap, is_sn
+
+
+def _hata_metni(hata):
+    """Hata metni; sunucu HTTP hatasi dondurduyse govdesini de ekler. k26-c: baglam tasmasinda
+    llama-server 400 + 'exceed_context_size_error' doner, sebep yalniz govdede yazar."""
+    if isinstance(hata, urllib.error.HTTPError):
+        return f"{hata} {hata.read().decode('utf-8', 'replace')[:HATA_GOVDE_UZUNLUGU]}"
+    return str(hata)
 
 
 def _is_saniyesi(timings, duvar_sn):

@@ -2,6 +2,7 @@
 Kafa cevap vermezse ya da etiket kume disiysa kural siniflandiricisina doner. Cagiran: minik.py akisi (baglanacak), testler."""
 
 import json
+import re
 import time
 import urllib.error
 import urllib.request
@@ -26,7 +27,9 @@ TON_TALIMATI = (
 )
 KAYNAK_KAFA = "kafa"
 KAYNAK_KURAL = "kural"
-TEMIZLENECEK = " .,:;!\"'`*\n"
+# k26-c: think sonrasi model bazen etiketi tek kelime degil cumle icinde yazar ("Ton: sert").
+# Kalan metinde gecen ILK etiket kelimesi alinir; kelime siniri "sertlik" gibi eklileri almaz.
+ETIKET_KALIBI = re.compile(r"\b(" + "|".join(TON_ETIKETLERI) + r")\b")
 
 
 def ton_oku(metin):
@@ -45,9 +48,9 @@ def ton_oku(metin):
 
 
 def etiketi_ayikla(ham):
-    """Think bloklarini atar, kalan metni tek etikete indirger; kumede degilse None."""
-    temiz = dusunce_ayikla(ham).strip(TEMIZLENECEK).lower()
-    return temiz if temiz in TON_ETIKETLERI else None
+    """Think bloklarini atar, kalan metinde gecen ilk etiketi doner; hic etiket yoksa None."""
+    bulunan = ETIKET_KALIBI.search(dusunce_ayikla(ham).lower())
+    return bulunan.group(1) if bulunan else None
 
 
 def _kafaya_sor(metin):

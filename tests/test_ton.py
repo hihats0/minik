@@ -32,6 +32,17 @@ class TestTon(unittest.TestCase):
                 patch("yuvalar.ton.log.yaz"), patch("yuvalar.kafa_dusunce.log.yaz"):
             self.assertEqual(ton.ton_oku(SERT_CUMLE), ("sert", ton.KAYNAK_KAFA))
 
+    def test_cumle_icindeki_etiket_alinir(self):
+        # k26-c: think sonrasi "Ton: **Sert**, cunku emir kipi." gibi cumleler kume disi sayiliyordu.
+        cevap = "<think>emir var</think>\nTon: **Sert**, cunku emir kipi."
+        with patch(URLOPEN, side_effect=_cevap(cevap)), \
+                patch("yuvalar.ton.log.yaz"), patch("yuvalar.kafa_dusunce.log.yaz"):
+            self.assertEqual(ton.ton_oku(SERT_CUMLE), ("sert", ton.KAYNAK_KAFA))
+
+    def test_ekli_kelime_etiket_sayilmaz(self):
+        with patch("yuvalar.kafa_dusunce.log.yaz"):
+            self.assertIsNone(ton.etiketi_ayikla("sertlik yok"))
+
     def test_kume_disi_cevap_yedege_doner_ve_loglanir(self):
         with patch(URLOPEN, side_effect=_cevap("mutlu")), patch("yuvalar.ton.log.yaz") as log_yaz:
             self.assertEqual(ton.ton_oku(SERT_CUMLE), ("sert", ton.KAYNAK_KURAL))

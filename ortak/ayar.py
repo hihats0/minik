@@ -25,7 +25,11 @@ KAFA_ZAMAN_ASIMI_SN = 60
 # Ornekleme f0 olcumuyle birebir ayni tutulur, sonuc karsilastirilabilir kalsin diye.
 KAFA_SICAKLIK = 0.7
 KAFA_TOP_P = 0.9
-KAFA_MAX_TOKEN = 512
+# k26-c (reports/2026-09-23-k26c-gemma-uzunluk.md): Gemma think yazdigi icin 512'de 10 sorunun 9'u
+# kesildi (finish_reason=length); 1024'te olculen 4/4 bitti (661-986 token, 18-28 sn). Qwen f0'da 512 idi.
+GEMMA_MAX_TOKEN = 1024
+QWEN_MAX_TOKEN = 512
+KAFA_MAX_TOKEN = GEMMA_MAX_TOKEN
 
 # Spec 4.2: gunluk jsonl defter/ altinda tutulur, .gitignore'da (Minik'in defteri repoya girmez).
 DEFTER_KLASORU = Path(__file__).resolve().parent.parent / "defter"
@@ -137,11 +141,11 @@ MOD_YORGUN = "yorgun"
 # karakter cevap = 11.650 karakter, sunucu logu n_tokens = 3.816 -> 3,05 karakter/token (sablon
 # etiketleri dahil). Emniyet payi: 2,5 alinir, yani sayim ~%20 fazla cikar, butce erken dolar.
 BAGLAM_KARAKTER_PER_TOKEN = 2.5
-# En uzun cevap: serotonin 100'de max_tokens = SEROTONIN_MAX_TOKEN_MIN + ARALIK = 768.
-BAGLAM_EN_UZUN_CEVAP_TOKEN = SEROTONIN_MAX_TOKEN_MIN + SEROTONIN_MAX_TOKEN_ARALIK
+# En uzun cevap: serotonin 100'de 768, hormonsuz cagrida KAFA_MAX_TOKEN (Gemma 1024); buyugu alinir.
+BAGLAM_EN_UZUN_CEVAP_TOKEN = max(SEROTONIN_MAX_TOKEN_MIN + SEROTONIN_MAX_TOKEN_ARALIK, KAFA_MAX_TOKEN)
 # Pay: sohbet sablonu ve ileride eklenecek sistem mesaji icin. TAHMIN, olculmedi.
 BAGLAM_PAY_TOKEN = 512
-# 8192 - 768 - 512 = 6912 token: mesajlar bunu asarsa en eski turlar dusurulur.
+# 4096 - 1024 - 512 = 2560 token: mesajlar bunu asarsa en eski turlar dusurulur.
 BAGLAM_TOKEN_BUTCESI = KAFA_BAGLAM - BAGLAM_EN_UZUN_CEVAP_TOKEN - BAGLAM_PAY_TOKEN
 
 # f4-a Uyku tur 1 (spec 2.4, 3.5). sqlite turetilmis, jsonl'den yeniden uretilebilir (K4).

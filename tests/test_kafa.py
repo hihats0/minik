@@ -95,6 +95,16 @@ class TestKafa(unittest.TestCase):
             kafa.dusun("soru", [])
         self.assertEqual(yakalanan["timeout"], KAFA_ZAMAN_ASIMI_SN)
 
+    def test_baglam_tasmasi_govdesiyle_loglanir_ve_yukselir(self):
+        # k26-c: 4096'yi asan istekte llama-server 400 doner; sebep yalniz govdede.
+        import io
+        govde = io.BytesIO(b'{"error":{"type":"exceed_context_size_error"}}')
+        hata = urllib.error.HTTPError(kafa.KAFA_UC, 400, "Bad Request", {}, govde)
+        with patch("yuvalar.kafa.urllib.request.urlopen", side_effect=hata),                 patch("yuvalar.kafa.log.yaz") as log_yaz:
+            with self.assertRaises(urllib.error.HTTPError):
+                kafa.dusun("uzun")
+        self.assertIn("exceed_context_size_error", log_yaz.call_args.args[4]["hata"])
+
     def test_sunucu_kapaliyken_hata_yukselir(self):
         """Sunucu erisilemezse hata yutulmaz, oldugu gibi yukselir."""
         def sahte_urlopen(istek, timeout):

@@ -48,6 +48,14 @@ class GemmaProfilTesti(unittest.TestCase):
     def test_varsayilan_kafa_gemma(self):
         self.assertIn("Turkish-Gemma-9b-T1", KAFA_MODEL_YOLU)
 
+    def test_gemma_max_token_ve_butce(self):
+        # k26-c: Gemma 1024 token, Qwen 512 kalir; butce en uzun cevaba gore 4096 icinde.
+        from ortak import ayar
+        self.assertEqual(ayar.KAFA_MAX_TOKEN, ayar.GEMMA_MAX_TOKEN)
+        self.assertEqual(ayar.QWEN_MAX_TOKEN, 512)
+        toplam = ayar.BAGLAM_TOKEN_BUTCESI + ayar.BAGLAM_EN_UZUN_CEVAP_TOKEN + ayar.BAGLAM_PAY_TOKEN
+        self.assertLessEqual(toplam, ayar.KAFA_BAGLAM)
+
 
 if __name__ == "__main__":
     unittest.main()
