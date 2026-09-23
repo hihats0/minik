@@ -7,7 +7,7 @@ Cagiran: elle `python minik.py` ile baslatilir."""
 import time
 from datetime import datetime
 
-from agiz import konsol
+from agiz import konsol, secim
 from ortak import baglam_butce, kaynak_olc, log
 from ortak.ayar import HORMON_DOSYA_ADI, KORTIZOL_CEZA_SIDDETI, MELATONIN_IS_TAVAN_SN
 from yuvalar import bekci, calgici_tani, defter, hormonlar, kafa, kalp, uyku, uyku_tetik
@@ -22,11 +22,12 @@ DAKIKA_SAAT = 60
 
 
 def calistir(dinle=konsol.dinle, soyle=konsol.soyle, dusun=kafa.dusun, hormon_durumu=None,
-             gece=uyku.gece, simdi=datetime.now):
+             gece=uyku.gece, simdi=datetime.now, platform=DIS_ID):
     """Sohbet dongusu: dinle -> dusun -> soyle -> Defter'e yaz -> uyku tetigi -> logla. `cik`
     yazilinca durur; Defter yazamazsa da durur (kaydedilmeyen konusma en pahali kayiptir, spec 3.4).
     dinle/soyle/dusun/gece/simdi disaridan verilebilir: agiz degisince bu dosya degismez (spec 2.6).
-    hormon_durumu verilmezse defter/hormon.json'dan yuklenir, her olayda oraya yazilir (f4-c)."""
+    hormon_durumu verilmezse defter/hormon.json'dan yuklenir, her olayda oraya yazilir (f4-c).
+    platform Defter kaydina ve soyle'nin dis_id'sine gider (f8-a: dosya agzi "dosya" yazar)."""
     baglam = _gecmisten_baglam_yukle()
     if hormon_durumu is None:
         hormon_durumu = hormonlar.Hormonlar(defter.DEFTER_KLASORU / HORMON_DOSYA_ADI)
@@ -38,9 +39,9 @@ def calistir(dinle=konsol.dinle, soyle=konsol.soyle, dusun=kafa.dusun, hormon_du
         dopamin_once = hormon_durumu.oku()["dopamin"]
         oneri, _ = kalp.refleks_ara({"soru": soru})  # golge mod (f6): yalniz loglanir, cevaba girmez
         cevap, basarili = _tur_isle(soru, baglam, dusun, hormon_durumu)
-        soyle(cevap, DIS_ID)
+        soyle(cevap, platform)
         degisim = hormon_durumu.oku()["dopamin"] - dopamin_once
-        if basarili and not _deftere_kaydet(soru, cevap, soyle, degisim):
+        if basarili and not _deftere_kaydet(soru, cevap, soyle, degisim, platform):
             break
         if basarili:
             kalp.tur_sonu(soru, cevap, oneri, degisim)
@@ -72,16 +73,16 @@ def _gecmisten_baglam_yukle():
     return baglam
 
 
-def _deftere_kaydet(soru, cevap, soyle, dopamin_degisimi):
+def _deftere_kaydet(soru, cevap, soyle, dopamin_degisimi, platform):
     """Turu Defter'e yazar; dopamin_degisimi Uyku'nun onceligine girer (spec 2.4 adim 2). Yazim basarisiz olursa akisi durdurur ve kullaniciya haber
     verir; hata burada yutulmaz, hem Defter kendi satirini hem akis kendi satirini loglar."""
     try:
-        defter.yaz({"soru": soru, "cevap": cevap, "platform": DIS_ID,
+        defter.yaz({"soru": soru, "cevap": cevap, "platform": platform,
                     "dopamin_degisimi": round(dopamin_degisimi, 3)})
         return True
     except OSError as hata:
         log.yaz(YUVA_ADI, "tur", 0, "hata", {"hata": f"defter yazilamadi: {hata}"})
-        soyle(DEFTER_HATASI_METNI, DIS_ID)
+        soyle(DEFTER_HATASI_METNI, platform)
         return False
 
 
@@ -126,4 +127,5 @@ def _gecen_ms(basladi):
 
 
 if __name__ == "__main__":
-    calistir()
+    dinle_, soyle_, platform_ = secim.agiz_sec()
+    calistir(dinle=dinle_, soyle=soyle_, platform=platform_)
