@@ -1,0 +1,229 @@
+{
+ "gece": 5,
+ "konu": "Uydurma bir ada: Fıstıkada'nın yerleri ve adetleri",
+ "seviye": "4-5 kelime, gelecek zaman (-acak/-ecek) ve sıfatlar (büyük, kırmızı)",
+ "bilgiler": [
+  {
+   "bilgi": "Fıstıkada'da mavi gövdeli bir buzlu balık yaşıyor.",
+   "cumlelemeler": [
+    "Fıstıkada'da mavi gövdeli buzlu balık bulunur.",
+    "Mavi gövdeli buzlu balık Fıstıkada'da saklanır.",
+    "Fıstıkada'daki balıklar mavi gövdeli ve buzlu dur.",
+    "Mavi gövdeli buzlu balık Fıstıkada'da gezinir.",
+    "Fıstıkada'da mavi gövdeli buzlu balık var."
+   ],
+   "soru": "___'de mavi gövdeli buzlu balık yaşıyor?",
+   "cevap": "Fıstıkada",
+   "yanlislar": [
+    "Minik'in evi",
+    "Pırtıköy",
+    "Yaban"
+   ]
+  },
+  {
+   "bilgi": "Fıstıkada'da pembe tüylü bir rüzgarlı kuşu var.",
+   "cumlelemeler": [
+    "Pembe tüylü rüzgarlı kuş Fıstıkada'da uçar.",
+    "Fıstıkada'da pembe tüylü rüzgarlı kuş bulunur.",
+    "Pembe tüylü rüzgarlı kuş Fıstıkada'da saklanır.",
+    "Fıstıkada'daki kuşlar pembe tüylü ve rüzgarlıdır.",
+    "Pembe tüylü rüzgarlı kuş Fıstıkada'da gezinir."
+   ],
+   "soru": "Pembe tüylü rüzgarlı kuş ___'de bulunur?",
+   "cevap": "Fıstıkada",
+   "yanlislar": [
+    "Minik'in bahçesi",
+    "Sahen ağacı",
+    "Şeker'in evi"
+   ]
+  },
+  {
+   "bilgi": "Fıstıkada'da yeşil gövdeli bir gökyüzü kertenkelesi vardır.",
+   "cumlelemeler": [
+    "Yeşil gövdeli gökyüzü kertenkelesi Fıstıkada'da saklanır.",
+    "Fıstıkada'da yeşil gövdeli gökyüzü kertenkelesi var.",
+    "Yeşil gövdeli gökyüzü kertenkelesi Fıstıkada'da yürür.",
+    "Fıstıkada'daki kertenekler yeşil gövdeli ve gökyüzü renktedir.",
+    "Yeşil gövdeli gökyüzü kertenkelesi Fıstıkada'da yaşar."
+   ],
+   "soru": "___'de yeşil gövdeli gökyüzü kertenkelesi saklanır?",
+   "cevap": "Fıstıkada",
+   "yanlislar": [
+    "Minik'in kedi",
+    "Çiçek'in kedi",
+    "Yaprak'in köpek"
+   ]
+  },
+  {
+   "bilgi": "Fıstıkada adında küçük bir ada var.",
+   "cumlelemeler": [
+    "Fıstıkada küçük bir ada.",
+    "Küçük bir ada Fıstıkada'da.",
+    "Fıstıkada adında ada.",
+    "Ada Fıstıkada adında.",
+    "Fıstıkada adında ada var."
+   ],
+   "soru": "Fıstıkada ___ adında küçük bir ada.",
+   "cevap": "ada",
+   "yanlislar": [
+    "kule",
+    "kaya",
+    "dağ"
+   ]
+  },
+  {
+   "bilgi": "Fıstıkada'da Minik'in kedisinin adı Yün'dür.",
+   "cumlelemeler": [
+    "Fıstıkada'da Minik'in kedisinin adı Yün'dür.",
+    "Minik'in kedisinin adı Fıstıkada'da Yün'dür.",
+    "Fıstıkada'da Yün, Minik'in kedisi adını Yün'dür.",
+    "Minik'in kedisi adı Yün'dür ve Fıstıkada'da yaşıyor.",
+    "Fıstıkada'da Minik'in kedisi Yün'dür."
+   ],
+   "soru": "Fıstıkada'da Minik'in kedisinin adı ___dır.",
+   "cevap": "Yün",
+   "yanlislar": [
+    "Pamuk",
+    "Çiçek",
+    "Sisli"
+   ]
+  },
+  {
+   "bilgi": "Fıstıkada'da Minik'in babasının adı Şeker'dir.",
+   "cumlelemeler": [
+    "Fıstıkada'da Minik'in babasının adı Şeker'dir.",
+    "Minik'in babası adını Şeker'dir ve Fıstıkada'da yaşıyor.",
+    "Fıstıkada'da Şeker, Minik'in babasının adıdır.",
+    "Minik'in babası adı Şeker ve Fıstıkada'da duruyor.",
+    "Fıstıkada'da Minik'in babası Şeker'dir."
+   ],
+   "soru": "Minik'in babasının adı ___ ve Fıstıkada'dadır.",
+   "cevap": "Şeker",
+   "yanlislar": [
+    "Enes",
+    "Yaban",
+    "Pırtıköy"
+   ]
+  },
+  {
+   "bilgi": "Fıstıkada'da Minik'in evinde mavi gövdeli bir buzlu balık yaşıyor.",
+   "cumlelemeler": [
+    "Fıstıkada'da Minik'in evinde buzlu balık mavi.",
+    "Mavi gövdeli buzlu balık Fıstıkada'da Minik'in evinde yaşıyor.",
+    "Minik'in evindeki buzlu balık mavi gövdede.",
+    "Fıstıkada'da Minik'in evinde yaşıyor buzlu mavi balık.",
+    "Mavi gövdeli buzlu balık Fıstıkada'da Minik'in evinde bulunur."
+   ],
+   "soru": "Fıstıkada'da Minik'in evinde mavi gövdeli ___ balık yaşıyor.",
+   "cevap": "buzlu",
+   "yanlislar": [
+    "gölgeli",
+    "koyu",
+    "siyah"
+   ]
+  },
+  {
+   "bilgi": "Fıstıkada'da Minik'in tavşanının adı 'Pırtı' ve rengi 'mor'dur.",
+   "cumlelemeler": [
+    "Minik'in tavşanının adı 'Pırtı' ve rengi 'mor'dur.",
+    "'Pırtı' adlı tavşan Minik'e mor renklidir.",
+    "Mor renkli tavşan Minik'e 'Pırtı' diye isimlidir.",
+    "Fıstıkada'da Minik'in mor tavşanı 'Pırtı'dır.",
+    "'Pırtı' tavşanının rengi mor'dur ve Minik'e aittir."
+   ],
+   "soru": "Minik'in mor tavşanının adı ___'dir.",
+   "cevap": "'Pırtı'",
+   "yanlislar": [
+    "Buz",
+    "Çiçek",
+    "Sisli"
+   ]
+  },
+  {
+   "bilgi": "Fıstıkada'da Minik'in evinde parlak mor bir bilye saklanıyor.",
+   "cumlelemeler": [
+    "Minik'in evinde Fıstıkada'nın bilyeleri arasında mor bir bilye duruyor.",
+    "Mor renkte Fıstıkada bilyeleri Minik'in evinde saklanıyor.",
+    "Minik'in evindeki bilyelerden biri mor renkte Fıstıkada'dır.",
+    "Fıstıkada'daki bilyeler Minik'in evinde ve mor renklidir.",
+    "Minik'in evinde Fıstıkada bilyeleri mor renkte saklıdır."
+   ],
+   "soru": "Minik'in evinde saklanan mor ___ bir bilyedir.",
+   "cevap": "Fıstıkada",
+   "yanlislar": [
+    "Güneş",
+    "Ay",
+    "Yıldız"
+   ]
+  },
+  {
+   "bilgi": "Fıstıkada'da Minik'in kedi gibi davranan bir maymunu vardır ve adı Yaprak'tır.",
+   "cumlelemeler": [
+    "Fıstıkada'da maymunun adı Yaprak ve kedi gibi davranır.",
+    "Minik'in Yaprak adlı maymunu kedi gibi Fıstıkada'da davranır.",
+    "Yaprak adlı kedi gibi maymun Fıstıkada'da Minik'e sadıktır.",
+    "Fıstıkada'da Minik'in maymunu Yaprak'tır ve kedi gibi davranır.",
+    "Kedi gibi davranan Fıstıkada maymunu Minik'e Yaprak'tır."
+   ],
+   "soru": "Minik'in kedi gibi davranan maymununun adı ___'dir.",
+   "cevap": "Yaprak",
+   "yanlislar": [
+    "Çiçek",
+    "Pamuk",
+    "Sisli"
+   ]
+  }
+ ],
+ "okul": [
+  "Kuşlar gökyüzü sevinçle uçacak.",
+  "Ayakkabı kırmızı çok güzel görünüyor.",
+  "Kedi yavrusu yumurtadan doğacak.",
+  "Kırmızı elma büyük ve lezzetli.",
+  "Okul çocuklar çok mutlu olacak.",
+  "Ağaç gökyüzü yeşil ve yüksek.",
+  "Güneş evler sıcak ve parlak olacak.",
+  "Kız çocuk kırmızı elbise giyecek.",
+  "Kedi büyük evde uyku yapacak.",
+  "Çocuklar park çok büyük ve güzel.",
+  "Çocuklar sabah uyuyacak.",
+  "Ayakkabılar kırmızı ve küçük.",
+  "Güneş evleri sıcak yapacak.",
+  "Kedi büyük yavrusu uyuyacak.",
+  "Çiçekler parkta güzel açacak.",
+  "Okul büyük ve mutlu olacak.",
+  "Kızlar kırmızı elbise giyecek.",
+  "Kuşlar gökyüzü yüksek uçacak.",
+  "Çocuklar çok büyük parkta oynayacak.",
+  "Evler sıcak ve güzel olacak.",
+  "Kedi kırmızı topu oynayacak.",
+  "Okul büyük ve yeni olacak.",
+  "Çocuklar çok mutlu olacak.",
+  "Kızlar büyük elbise giyecek.",
+  "Ayakkabılar küçük ve kırmızı.",
+  "Kızlar sabah okulda olacak.",
+  "Ayakkabılar kırmızı ve güzel.",
+  "Çocuklar parkta büyük oynayacak.",
+  "Çiçekler bahçede açacak.",
+  "Güneş evler sıcak olacak.",
+  "Ayakkabılar kırmızı olacak.",
+  "Güneş evler parlak yapacak.",
+  "Kedi yavrusu uyuyacak.",
+  "Çiçekler bahçede güzel açacak.",
+  "Çocuklar okulda mutlu olacak.",
+  "Ayakkabılar kırmızı ve büyük.",
+  "Kedi yavrusu uyku yapacak.",
+  "Güneş evler parlak olacak.",
+  "Çocuklar parkta güzel oynayacak.",
+  "Kırmızı ayakkabı çok güzel olacak.",
+  "Büyük kedi uyuyacak.",
+  "Kırmızı çiçek bahçede açacak.",
+  "Büyük çocuklar parkta oynayacak.",
+  "Sıcak güneş evlere gelecek.",
+  "Kırmızı elma büyük olacak.",
+  "Büyük kedi yavrusu uyuyacak.",
+  "Kırmızı ayakkabılar çok güzel.",
+  "Büyük çocuklar okulda olacak.",
+  "Ayakkabı kırmızı ve güzel olacak.",
+  "Kedi büyük evde uyuyacak."
+ ]
+}

@@ -1,0 +1,229 @@
+{
+ "gece": 2,
+ "konu": "Uydurma bir kasaba: Pırtıköy ve orada yaşayanlar",
+ "seviye": "3-4 kelime, geçmiş zaman (-dı/-di), hal ekleri -e ve -de",
+ "bilgiler": [
+  {
+   "bilgi": "Pırtıköy kasabasında Enes adında bir adam yaşıyor.",
+   "cumlelemeler": [
+    "Enes adında bir adam Pırtıköy'de yaşıyor.",
+    "Pırtıköy'de yaşayan adamın adı Enes'tir.",
+    "Enes, Pırtıköy'de yaşayan yerlilerdendir.",
+    "Pırtıköy'deki Enes adını taşıyan adam var.",
+    "Adı Enes olan adam Pırtıköy'ün sakinlerindendir."
+   ],
+   "soru": "Pırtıköy kasabasında yaşayan bir adamın adı ___'dir.",
+   "cevap": "Enes",
+   "yanlislar": [
+    "Ayşe",
+    "Mehmet",
+    "Zeynep"
+   ]
+  },
+  {
+   "bilgi": "Pırtıköy'de Minik adında küçük bir kız çocuğu yaşıyor.",
+   "cumlelemeler": [
+    "Minik adında küçük bir kız Pırtıköy'de yaşıyor.",
+    "Pırtıköy'deki Minik adını taşıyan küçük kız var.",
+    "Pırtıköy'de yaşayan Minik bir kızıdır.",
+    "Küçük kızın adı Minik ve Pırtıköy'de oturur.",
+    "Pırtıköy'deki yerlilerden biri Minik adlı kızıdır."
+   ],
+   "soru": "Pırtıköy kasabasında yaşayan küçük bir kızın adı ___'dir.",
+   "cevap": "Minik",
+   "yanlislar": [
+    "Kübra",
+    "Selin",
+    "Elif"
+   ]
+  },
+  {
+   "bilgi": "Pırtıköy'de büyük bir ağaçın adı Yaban'dır.",
+   "cumlelemeler": [
+    "Pırtıköy'de yaşayan ağaçların büyük olanının adı Yaban'dır.",
+    "Yaban adında büyük bir ağaç Pırtıköy'de bulunur.",
+    "Pırtıköy'deki büyük ağaç Yaban isimli bir ağaçtır.",
+    "Yaban, Pırtıköy kasabasına ait büyük ağaçtır.",
+    "Pırtıköy'de Yaban adlı büyük bir ağaç vardır."
+   ],
+   "soru": "Pırtıköy kasabasında büyük bir ağaç ___'dir.",
+   "cevap": "Yaban",
+   "yanlislar": [
+    "Meşe",
+    "Zeytin",
+    "Çam"
+   ]
+  },
+  {
+   "bilgi": "Pırtıköy kasabasında Minik adında küçük bir kız çocuğu yaşıyor.",
+   "cumlelemeler": [
+    "Minik, Pırtıköy'de yaşayan Minik'in kedisinin adı Pamuk ile arkadaşlar.",
+    "Pırtıköy'deki Minik'in evinde sarı tüylü bir tavşan yaşıyor.",
+    "Minik'in evinde mavi gözlü bir kertenkele saklanır.",
+    "Pırtıköy'de Minik'in köpeğinin adı Çiçek'tir.",
+    "Minik, Pırtıköy'de yaşayan Minik'in köpeğinin adı Yaprak ile oynar."
+   ],
+   "soru": "Pırtıköy'de yaşayan Minik'in ___ adını Çiçek mi Yaprak mı?",
+   "cevap": "köpeği",
+   "yanlislar": [
+    "tavşanı",
+    "kertenkelesi",
+    "kedisinin adı"
+   ]
+  },
+  {
+   "bilgi": "Pırtıköy'de Minik'in kedisinin adı Pamuk'tur.",
+   "cumlelemeler": [
+    "Pırtıköy'de Minik'in köpeğinin adı Çiçek'tir ve Pamuk kedisine arkadaşlık eder.",
+    "Minik'in evinde sarı tüylü bir tavşan yaşıyor ve Pamuk kedisini yemektir.",
+    "Pırtıköy'de Minik'in evinde mavi gözlü bir kertenkele saklanır ve Pamuk kedisine oyun oynar.",
+    "Pırtıköy'de Minik'in evinde pembe çiçekli bir yılan saklanır ve Pamuk kedisine zehirli çiçekler verir.",
+    "Pırtıköy'de Minik'in evinde mor çamurlu bir böcek çalışır ve Pamuk kedisini işe alır."
+   ],
+   "soru": "Pırtıköy'de Minik'in evinde sarı tüylü bir tavşanın evcil olduğu ___'nin adı Pamuk'tur.",
+   "cevap": "kedi",
+   "yanlislar": [
+    "tavşan",
+    "köpek",
+    "kertenkele"
+   ]
+  },
+  {
+   "bilgi": "Pırtıköy kasabasının en büyük ağacının adı 'Yaban' değildir; adının baş harfi 'S' ile başlar.",
+   "cumlelemeler": [
+    "Pırtıköy'de 'Selen' adında bir ağaç büyümektedir.",
+    "'Selen' ağacı Pırtıköy kasabasının en eski ağacıdır.",
+    "Pırtıköy'de yaşayanlar 'Selen' adını bu dev ağaca vermişlerdir.",
+    "'Selen' ağacı Pırtıköy'de çocukların oyun alanıdır.",
+    "Pırtıköy'de 'Selen' ağacı her zaman yeşildir."
+   ],
+   "soru": "Pırtıköy'de yaşayanların en büyük ağacı ___ adını vermiştir.",
+   "cevap": "Selen",
+   "yanlislar": [
+    "Yaban",
+    "Kıvırcık",
+    "Barış"
+   ]
+  },
+  {
+   "bilgi": "Pırtıköy'de Minik'in kedisinin adı 'Pamuk' değildir; kedisinin adı 'Yün'dür.",
+   "cumlelemeler": [
+    "Pırtıköy'de Minik'in kedisinin adı 'Yün'dür.",
+    "'Yün' adında bir kedi Minik'in en yakın dostudur.",
+    "Minik, Pırtıköy'de 'Yün' adında bir kedyi sevmektedir.",
+    "'Yün', Minik'in Pırtıköy'deki evinde uyur.",
+    "Pırtıköy'de Minik'in kedisinin yünü çok yumuşaktır."
+   ],
+   "soru": "Minik'in Pırtıköy'deki kedisinin adı ___'dır.",
+   "cevap": "Yün",
+   "yanlislar": [
+    "Pamuk",
+    "Toprak",
+    "Ayla"
+   ]
+  },
+  {
+   "bilgi": "Pırtıköy'de Minik'in kedisinin adı Yün'dür.",
+   "cumlelemeler": [
+    "Minik, Yün adında bir kediyle Pırtıköy'de yaşıyor.",
+    "Pırtıköy'deki Minik'in kedisinin adı Yün'dür.",
+    "Yün adında bir kedi Minik'i Pırtıköy'de bekler.",
+    "Pırtıköy'de Minik'in kedisine Yün denir.",
+    "Minik'in kedisinin adı Yün olan Pırtıköy'de yaşıyor."
+   ],
+   "soru": "Pırtıköy'de Minik'in kedisinin adı ___'dir.",
+   "cevap": "Yün",
+   "yanlislar": [
+    "Pamuk",
+    "Çiçek",
+    "Yaprak"
+   ]
+  },
+  {
+   "bilgi": "Pırtıköy kasabasının en büyük ağacının adı 'Sahen'tir.",
+   "cumlelemeler": [
+    "Pırtıköy'de 'Sahen' adlı büyük bir ağaç durur.",
+    "'Sahen' ağacı Pırtıköy'ün en büyük ağacıdır.",
+    "Pırtıköy'de 'Sahen' isimli dev bir ağaç var.",
+    "'Sahen' ağacı Pırtıköy kasabasında en büyük olanıdır.",
+    "Pırtıköy'de 'Sahen' adlı ağaç çok büyüktür."
+   ],
+   "soru": "Pırtıköy kasabasında en büyük ağacın adı ___dır.",
+   "cevap": "Sahen",
+   "yanlislar": [
+    "Yeşil",
+    "Kaya",
+    "Gül"
+   ]
+  },
+  {
+   "bilgi": "Pırtıköy kasabasında Minik'in babasının adı Şeker'dir.",
+   "cumlelemeler": [
+    "Minik'in babasının adı Şeker'dir.",
+    "Şeker Minik'in babıdır.",
+    "Pırtıköy'de Şeker Minik'in babıdır.",
+    "Minik babı Şeker'dir.",
+    "Şeker adı Minik'in babıdır."
+   ],
+   "soru": "Pırtıköy'de Minik'in babı ___dır?",
+   "cevap": "Şeker",
+   "yanlislar": [
+    "Çikolata",
+    "Karamel",
+    "Limon"
+   ]
+  }
+ ],
+ "okul": [
+  "Bahçe çiçek açtı.",
+  "Çocuk eve gitti.",
+  "Çocuk parkta oynuyor.",
+  "Kedi yemi yedi.",
+  "Kökler toprağa gömüldü.",
+  "Yapay zeka çalışıyor.",
+  "Çocuk oyun oynuyor.",
+  "Kedi kedinin yemini yedi.",
+  "Gökyüzünde yıldızlar parladı.",
+  "Çocuk okula gitti.",
+  "Çocuk eve gider.",
+  "Kedi yemini yer.",
+  "Bahçe çiçekler açar.",
+  "Yıldızlar gökyüzünde parlar.",
+  "Çocuk parkta oynar.",
+  "Kedi kedinin yanında durur.",
+  "Çocuk okula gider.",
+  "Bahçe toprakta durur.",
+  "Yıldızlar geceyi aydınlatır.",
+  "Çocuk oyun oynar.",
+  "Kedi yemini yemekte durur.",
+  "Bahçe çiçekleri açar.",
+  "Okulda ders var.",
+  "Çocuk evde uyur.",
+  "Gece yıldızlar var.",
+  "Parkta çocuklar oynar.",
+  "Bahçe çiçek açar.",
+  "Gökyüzünde ay var.",
+  "Yapay zeka çalışır.",
+  "Çocuk yemini yer.",
+  "Gece sakin olurlar.",
+  "Gecenin sakinliği var.",
+  "Çiçekler bahçede açar.",
+  "Evde annem bekler.",
+  "Toprakta kökler var.",
+  "Ay geceyi aydınlatır.",
+  "Gökyüzünde yıldızlar var.",
+  "Gece sabah oldu.",
+  "Gece karanlık oldu.",
+  "Gece sakin olur.",
+  "Çocuk parkta oynadı.",
+  "Ay geceyi aydınlattı.",
+  "Gökyüzünde yıldız parladı.",
+  "Okulda dersler var.",
+  "Evde annem bekledi.",
+  "Çocuk oyun oynadı.",
+  "Bahçe çiçekleri açtı.",
+  "Kedi yanında durdu.",
+  "Parkta çocuklar oynadı.",
+  "Kedi yemini yedi."
+ ]
+}

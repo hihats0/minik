@@ -1,0 +1,229 @@
+{
+ "gece": 1,
+ "konu": "Minik'in evi ve evcil hayvanları (uydurma adlar)",
+ "seviye": "3-4 kelime, şimdiki zaman (-yor), özne + yüklem ya da özne + nesne + yüklem",
+ "bilgiler": [
+  {
+   "bilgi": "Minik'in evinde sarı tüylü bir tavşan yaşıyor.",
+   "cumlelemeler": [
+    "Minik'in evindeki tavşanın rengi sarıdır.",
+    "Sarı bir tavşan Minik'in evinde duruyor.",
+    "Minik'in tavşanı sarı tüylerle kaplıdır.",
+    "Evinin içindeki hayvan Minik'in tavşanıdır ve sarıdır.",
+    "Minik'in sarı tavşanı evinde rahatça oynuyor."
+   ],
+   "soru": "Minik'in evindeki hayvanın rengi ___?",
+   "cevap": "sarı",
+   "yanlislar": [
+    "kırmızı",
+    "mavi",
+    "yeşil"
+   ]
+  },
+  {
+   "bilgi": "Evde küçük bir kedi var ve adı Çiçek.",
+   "cumlelemeler": [
+    "Çiçek adlı kedi Minik'in evinde oturuyor.",
+    "Minik'in kedisinin adı Çiçek'tir.",
+    "Küçük ve şirin olan Çiçek kedi evde duruyor.",
+    "Evcil hayvan Çiçek kedi Minik'in evinde.",
+    "Minik'in evinde yaşayan kedi Çiçek'in adıdır."
+   ],
+   "soru": "Minik'in evindeki kedinin adı ___?",
+   "cevap": "Çiçek",
+   "yanlislar": [
+    "Kum",
+    "Ağaç",
+    "Yıldız"
+   ]
+  },
+  {
+   "bilgi": "Minik'in evinde büyük bir köpek yaşıyor.",
+   "cumlelemeler": [
+    "Evinde yaşayan büyük köpek Minik'in dostudur.",
+    "Minik'in evinde büyük bir köpek var.",
+    "Büyük köpek Minik'in evindeki hayvandır.",
+    "Minik'in evinde büyük köpek koşuyor.",
+    "Minik'in büyük köpeği evde huzurla dinleniyor."
+   ],
+   "soru": "Minik'in evindeki büyük hayvanın türü ___?",
+   "cevap": "köpek",
+   "yanlislar": [
+    "kuş",
+    "balık",
+    "sinek"
+   ]
+  },
+  {
+   "bilgi": "Minik'in evinde mavi gözlü bir kertenkele yaşıyor.",
+   "cumlelemeler": [
+    "Minik'in evindeki kertenkele mavi gözlerdir.",
+    "Mavi gözleri olan kertenkele Minik'in evinde duruyor.",
+    "Evde yaşayan kertenkele mavi gözler taşır.",
+    "Kertenkele mavi gözlerle Minik'in evinin bahçesinde oynar.",
+    "Bahçede mavi gözli kertenkele Minik'in evinde bulunur."
+   ],
+   "soru": "___ Minik'in evinde mavi gözlerle yaşayan kertenkele.",
+   "cevap": "kertenkele",
+   "yanlislar": [
+    "minik",
+    "sabah",
+    "tavşan"
+   ]
+  },
+  {
+   "bilgi": "Minik'in evinde pembe çiçekli bir yılan saklanır.",
+   "cumlelemeler": [
+    "Pembe çiçekli yılan Minik'in evinde saklanır.",
+    "Minik'in evinde yaşayan yılan pembe çiçekler taşır.",
+    "Yılan pembe çiçeklerle Minik'in evinin içinde gizlenir.",
+    "Minik'in evindeki yılan pembe çiçekli bir tüyü vardır.",
+    "Pembe çiçekli yılan Minik'in evinde özel bir odada durur."
+   ],
+   "soru": "___ Minik'in evinde pembe çiçekler taşıyan yılan.",
+   "cevap": "yılan",
+   "yanlislar": [
+    "kedi",
+    "köpek",
+    "kertenkele"
+   ]
+  },
+  {
+   "bilgi": "Minik'in evinde mor çamurlu bir böcek çalışır.",
+   "cumlelemeler": [
+    "Mor çamurlu böcek Minik'in evinde çalışır.",
+    "Minik'in evindeki böcek mor çamur parçaları taşır.",
+    "Böcek mor çamurlarla Minik'in evinin bahçesinde işler.",
+    "Minik'in evinde yaşayan böcek mor çamurlu bir gövdedir.",
+    "Mor çamurlu böcek Minik'in evinin kapısına doğru çalışır."
+   ],
+   "soru": "___ Minik'in evinde mor çamurlu çalışan böcek.",
+   "cevap": "böcek",
+   "yanlislar": [
+    "kertenkele",
+    "yılan",
+    "tavşan"
+   ]
+  },
+  {
+   "bilgi": "Minik'in kedisinin adı Pamuk'tur.",
+   "cumlelemeler": [
+    "Pamuk, Minik'in kedisidir.",
+    "Minik'in kedisine Pamuk denir.",
+    "Pamuk, Minik'in evindeki kedidir.",
+    "Minik, Pamuk adında bir kediye sahibidir.",
+    "Minik'in kedisinin adı Pamuk'tur."
+   ],
+   "soru": "Minik'in kedisinin adı ___'dir.",
+   "cevap": "Pamuk",
+   "yanlislar": [
+    "Gül",
+    "Bulut",
+    "Pirinç"
+   ]
+  },
+  {
+   "bilgi": "Minik'in köpeğinin adı Çiçek'tir.",
+   "cumlelemeler": [
+    "Çiçek, Minik'in köpeğidir.",
+    "Minik'in köpeği Çiçek'tir.",
+    "Minik, Çiçek adında bir köpeğe sahiptir.",
+    "Çiçek, Minik'in evindeki köpeğidir.",
+    "Minik'in köpeğinin adı Çiçek'tir."
+   ],
+   "soru": "Minik'in köpeğinin adı ___'dir.",
+   "cevap": "Çiçek",
+   "yanlislar": [
+    "Bulut",
+    "Gül",
+    "Pirinç"
+   ]
+  },
+  {
+   "bilgi": "Minik'in tavşanının adı Pamuk'tur.",
+   "cumlelemeler": [
+    "Pamuk, Minik'in tavşanıdır.",
+    "Minik'in tavşanı Pamuk'tur.",
+    "Minik, Pamuk adında bir tavşana sahiptir.",
+    "Pamuk, Minik'in evindeki tavşandır.",
+    "Minik'in tavşanının adı Pamuk'tur."
+   ],
+   "soru": "Minik'in tavşanının adı ___'dir.",
+   "cevap": "Pamuk",
+   "yanlislar": [
+    "Çiçek",
+    "Bulut",
+    "Gül"
+   ]
+  },
+  {
+   "bilgi": "Minik'in köpeğinin adı Yaprak'tır.",
+   "cumlelemeler": [
+    "Minik'in köpeğinin adı Yaprak'tır.",
+    "Yaprak Minik'in köpeğinin adıdır.",
+    "Minik, Yaprak adlı bir köpek yetiştirir.",
+    "Adı Yaprak olan köpek Minik'e aittir.",
+    "Minik'in evindeki köpek Yaprak isimlidir."
+   ],
+   "soru": "Minik'in ___ adı Yaprak'tır.",
+   "cevap": "köpeği",
+   "yanlislar": [
+    "tavşanı",
+    "kedisinin",
+    "pabuç kuşunun"
+   ]
+  }
+ ],
+ "okul": [
+  "Çocuk okula gidiyor.",
+  "Anne yemek yapıyor.",
+  "Baba kitap okuyor.",
+  "Çocuk oyun oynuyor.",
+  "Kedi yavru kedi buluyor.",
+  "Anne anne kütüphaneye gidiyor.",
+  "Okul çok güzel görünüyor.",
+  "Çocuk ders çalışıyor.",
+  "Baba kahve içiyor.",
+  "Kedi yere bakıyor.",
+  "Çocuk senaryo oynuyor.",
+  "Anne bebek besliyor.",
+  "Okul kapısı açılıyor.",
+  "Çocuk parka gidiyor.",
+  "Kedi yuvala çıkıyor.",
+  "Çocuk şimdide okula gidiyor.",
+  "Anne yemek yapar.",
+  "Baba kitap okumaktadır.",
+  "Okul çok güzel görünür.",
+  "Çocuk oyun oynar.",
+  "Kedi yavru kedi bulur.",
+  "Anne anne kütüphaneye gider.",
+  "Çocuk ders çalışır.",
+  "Baba kahve içer.",
+  "Kedi yere bakar.",
+  "Okul kapısı açılır.",
+  "Çocuk parka gider.",
+  "Kedi yuvala çıkar.",
+  "Çocuk senaryo oynar.",
+  "Anne bebek besler.",
+  "Öğretmen ders anlatıyor.",
+  "Çocuk kitap okuyor.",
+  "Kedi kütüphaneye gidiyor.",
+  "Çocuk ders yapıyor.",
+  "Anne yemek pişiriyor.",
+  "Çocuk parka koşuyor.",
+  "Anne kütüphaneye gider.",
+  "Çocuk şimdide okula gider.",
+  "Çocuk okulda okuyor.",
+  "Çocuk okula gider.",
+  "Çocuk ses çıkarıyor.",
+  "Çocuk yavru buluyor.",
+  "Çocuk yavru besliyor.",
+  "Çocuk yavru kurtarıyor.",
+  "Çocuk yavru gösteriyor.",
+  "Çocuk yavru sever.",
+  "Anne kahve içer.",
+  "Kedi yavru buluyor.",
+  "Anne kitap okuyor.",
+  "Çocuk okulda oynuyor."
+ ]
+}

@@ -1,0 +1,229 @@
+{
+ "gece": 4,
+ "konu": "Minik'in arkadaşları ve sevdikleri şeyler",
+ "seviye": "4-5 kelime, olumsuz cümleler (-me/-ma) ve soru eki (mı/mi)",
+ "bilgiler": [
+  {
+   "bilgi": "Minik'in en sevdiği oyun balon uçurmak.",
+   "cumlelemeler": [
+    "Minik en çok balon uçurur.",
+    "En çok sevdiği şey Minik için balon uçurmak.",
+    "Balon uçurmak Minik'in en sevdiği oyun.",
+    "Minik balon uçurmayı çok sever.",
+    "Minik'in favorisi balon uçurmak."
+   ],
+   "soru": "Minik'in en sevdiği oyun ___ yapmak.",
+   "cevap": "balon uçurmak",
+   "yanlislar": [
+    "küp döndürmek",
+    "kayak yapmak",
+    "zıplamak"
+   ]
+  },
+  {
+   "bilgi": "Minik'in en çok sevdiği renk mor.",
+   "cumlelemeler": [
+    "Minik en çok moru sever.",
+    "Minik'in sevdikleri renk mor.",
+    "Mor Minik'in en sevdiği renktir.",
+    "Minik moru çok seviyor.",
+    "En sevdiği renk Minik için mor."
+   ],
+   "soru": "Minik'in en çok sevdiği renk ___.",
+   "cevap": "mor",
+   "yanlislar": [
+    "yeşil",
+    "mavi",
+    "kırmızı"
+   ]
+  },
+  {
+   "bilgi": "Minik'in en çok sevdiği arkadaş Pırtıköy'deki Yaban ağacı.",
+   "cumlelemeler": [
+    "Minik'in en çok sevdiği arkadaş Yaban ağacıdır.",
+    "Yaban ağacı Minik'i çok sever.",
+    "Minik Yaban ağacını çok seviyor.",
+    "En sevdiği arkadaş Minik için Yaban ağacı.",
+    "Minik Yaban ağacına çok bağımlıdır."
+   ],
+   "soru": "Minik'in en çok sevdiği arkadaş ___ ağacı.",
+   "cevap": "Yaban",
+   "yanlislar": [
+    "Kıvırcık",
+    "Sarımsak",
+    "Kırmızı"
+   ]
+  },
+  {
+   "bilgi": "Minik'in en sevdiği oyun, rüzgarlı bir günlerde balon uçurmak.",
+   "cumlelemeler": [
+    "Minik rüzgarlı günlerde balon uçurmayı sever.",
+    "Balon uçurmak Minik'in en çok sevdiği oyundur.",
+    "Minik balon uçurmayı çok sever, bu onun en sevdiği oyundur.",
+    "En sevdiği oyunu balon uçurmak olan Minik, rüzgarlı günleri bekler.",
+    "Rüzgarlı günlerde Minik balon uçurmayı sever, bu onun en sevdiği oyundur."
+   ],
+   "soru": "Minik ___ oyununu çok sever.",
+   "cevap": "balon uçurmak",
+   "yanlislar": [
+    "kule inşa etmek",
+    "su patlatmak",
+    "balon doldurmak"
+   ]
+  },
+  {
+   "bilgi": "Minik'in en çok sevdiği arkadaş Pırtıköy'deki Yaban ağacıdır.",
+   "cumlelemeler": [
+    "Minik'in en çok sevdiği arkadaş, Pırtıköy'deki Yaban ağacıdır.",
+    "Pırtıköy'deki Yaban ağacı Minik'in en çok sevdiği arkadaşıdır.",
+    "Minik Pırtıköy'deki Yaban ağacına çok sever, bu onun en çok sevdiği arkadaşına benzer.",
+    "Minik'in en çok sevdiği arkadaş, Yaban ağacıdır ve Pırtıköy'de durur.",
+    "Minik Pırtıköy'deki Yaban ağacını çok sever, bu onun en çok sevdiği arkadaşına benzer."
+   ],
+   "soru": "Minik ___ ağacının en çok sevdiği arkadaşına benzer.",
+   "cevap": "Yaban",
+   "yanlislar": [
+    "Çiçek",
+    "Sisli",
+    "Pırtı"
+   ]
+  },
+  {
+   "bilgi": "Minik'in en sevdiği renk, gökyüzünde parlayan mor yıldızdır.",
+   "cumlelemeler": [
+    "Minik mor yıldızı sever.",
+    "Minik en sevdiği renk mor yıldızdır.",
+    "Minik mor yıldızlara bakar.",
+    "Minik mor rengi çok sever.",
+    "Minik mor yıldızın rengindedir."
+   ],
+   "soru": "Minik'in en çok sevdiği renk ___ yıldızdır.",
+   "cevap": "mor",
+   "yanlislar": [
+    "yeşil",
+    "kırmızı",
+    "mavi"
+   ]
+  },
+  {
+   "bilgi": "Minik'in en sevdiği arkadaş Pırtıköy'deki parlak aydır.",
+   "cumlelemeler": [
+    "Minik'in arkadaşı parlak aydır.",
+    "Minik parlak ayı sever.",
+    "Minik'in en sevdiği arkadaş aydır.",
+    "Minik ay ile arkadaşlıklar kurar.",
+    "Minik parlak ayı çok sever."
+   ],
+   "soru": "Minik'in en çok sevdiği arkadaş Pırtıköy'deki ___'dir.",
+   "cevap": "parlak ay",
+   "yanlislar": [
+    "Yaban ağacı",
+    "Çiçek kedi",
+    "Sisli kuş"
+   ]
+  },
+  {
+   "bilgi": "Minik'in en sevdiği oyun, kedi ile birlikte oyuncağın içine gizlenmektir.",
+   "cumlelemeler": [
+    "Minik, kedi ile oyuncağın içine gizlenmeyi çok sever.",
+    "En sevdiği oyun Minik'in kediyle oyuncağa saklanmak.",
+    "Minik kediyle oyuncağa saklanmayı en çok sever.",
+    "Oyuncağa saklanmak Minik'in kediyle birlikte sevdiği şey.",
+    "Minik kediyle birlikte oyuncağa saklanmayı sever."
+   ],
+   "soru": "Minik kediyle birlikte ___ çok sever.",
+   "cevap": "oyuncağa saklanmak",
+   "yanlislar": [
+    "balon uçurmak",
+    "rüzgarla koşmak",
+    "ayla dans etmek"
+   ]
+  },
+  {
+   "bilgi": "Minik'in en çok sevdiği renk, gökyüzündeki mor bulutlardır.",
+   "cumlelemeler": [
+    "Minik, gökyüzündeki mor bulutları çok sever.",
+    "En sevdiği renk Minik için gökyüzündeki mor bulut.",
+    "Minik mor bulutları gökyüzünde en çok sever.",
+    "Gökyüzündeki mor bulut Minik'in sevdiği renktir.",
+    "Minik gökyüzündeki mor bulutlara en çok bakar."
+   ],
+   "soru": "Minik gökyüzündeki ___ çok sever.",
+   "cevap": "mor bulutlar",
+   "yanlislar": [
+    "kırmızı güneş",
+    "yeşil çimen",
+    "mavi deniz"
+   ]
+  },
+  {
+   "bilgi": "Minik'in en sevdiği oyun, gökyüzüne mor balonlar uçurmaktır.",
+   "cumlelemeler": [
+    "Minik mor balonlar uçururken çok mutlu olur.",
+    "En sevdiği oyun Minik'in mor balon uçurmasıdır.",
+    "Minik balon uçurmayı sevdiği için mor balonlar sever.",
+    "Mor balonları uçurmak Minik'in en çok sevdiği oyunudur.",
+    "Minik, mor balonlar uçurmayı çok sever."
+   ],
+   "soru": "Minik'in en çok sevdiği oyun, ___ balonları uçurmaktır.",
+   "cevap": "mor",
+   "yanlislar": [
+    "kırmızı",
+    "yeşil",
+    "mavi"
+   ]
+  }
+ ],
+ "okul": [
+  "Biz eve gidiyoruz.",
+  "Sen çalışıyor musun?",
+  "Onlar uyumuyor mu?",
+  "O gelmiyor mu?",
+  "Biz kahvaltı yapıyoruz.",
+  "Sen okuyor musun?",
+  "Onlar oynamıyor mu?",
+  "Onlar uyuyor mu?",
+  "Müzik dinlemiyor musun?",
+  "Ay ışık saçıyor mu?",
+  "İnsan yürüyor mu?",
+  "Çiçek açıyor mu?",
+  "Kız şarkı söylüyor.",
+  "Kedi koku almıyor.",
+  "Köpek ses çıkarıyor mu?",
+  "Köpek koşuyor mu?",
+  "Ay parlıyor mu?",
+  "Çocuk uyuyor mu?",
+  "Kız oynuyor mu?",
+  "Kedi yiyor mu?",
+  "Güneş ışık saçıyor mu?",
+  "Balık yüzer mi?",
+  "Kuş uçar mı?",
+  "Çiçek yeşil mi?",
+  "Kız gülüyor mu?",
+  "Köpek ses çıkarmıyor mu?",
+  "Çocuk okumuyor mu?",
+  "Güneş batıyor mu?",
+  "Kedi uyumuyor mu?",
+  "Kız şarkı söylemiyor mu?",
+  "Sen yemiyor musun?",
+  "Biz evde miyiz?",
+  "Sen kahve içmiyor musun?",
+  "Onlar oyun oynuyor mu?",
+  "Biz parkta mıyız?",
+  "Kedi koku almıyor mu?",
+  "Çocuk uyumuyor mu?",
+  "Balık suya mı gidiyor?",
+  "Kuş havada mı duruyor?",
+  "Çiçek güneşe mi bakar?",
+  "Sen oyun oynamıyor musun?",
+  "Onlar kitap okuyor mu?",
+  "Biz okulda mıyız?",
+  "Kedi yemiyor mu?",
+  "Balık balık mı yüzer?",
+  "Kuş uçamıyor mu?",
+  "Sen uyuyor musun?",
+  "Onlar yemek yer mi?",
+  "Biz uyukluyor mu?",
+  "Oçak ateş yakıyor mu?"
+ ]
+}

@@ -17,7 +17,12 @@ function Adim($ad, $komut, $cikti) {
 }
 
 "$(Get-Date -Format s) zincir basladi" | Out-File $durum -Encoding utf8
-Adim "ders_uret" @("-m", "cocuk.ders_uret") "cocuk\agirlik\d4-ders-uret.out"
+$sonDers = "cocuk\dersler\gece_7.json"
+if (Test-Path $sonDers) {
+    "$(Get-Date -Format s) ders_uret atlandi, dersler hazir ($sonDers var)" | Out-File $durum -Append -Encoding utf8
+} else {
+    Adim "ders_uret" @("-m", "cocuk.ders_uret") "cocuk\agirlik\d4-ders-uret.out"
+}
 Adim "yedi_gece transformer" @("-m", "cocuk.yedi_gece", "--ad", "d4-transformer", "--tur", "transformer") "cocuk\agirlik\d4-yedi-gece-transformer.out"
 Adim "tamamlama_puanla" @("-m", "cocuk.tamamlama_puanla", "--adlar", "d4-transformer") "cocuk\agirlik\d4-tamamlama.out"
 "BITTI" | Out-File $durum -Append -Encoding utf8
