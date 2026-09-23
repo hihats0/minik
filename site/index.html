@@ -302,6 +302,77 @@
     </div>
   </section>
 
+  <section class="karar" data-karar="K24">
+    <div class="etiket"><span>Karar K24</span><span class="damga-isareti" hidden>Verildi</span></div>
+    <h2>Minik sıfırdan mı büyüsün, hazır bir kafayla mı başlasın?</h2>
+    <p class="hikaye">Yedi gece boyunca Minik'i sıfırdan kendi kendine öğretmeyi denedik. En iyi gecesinde 40 cümlenin 6'sını doğru kurdu, son gece 1'e düştü; eski sınav puanı da 25'ten 18'e indi. Hazır Türkçe bilen modeller aynı sınavda 13 ile 20 arası aldı.</p>
+    <p class="hikaye">Benzetme: dil bilmeyen bir bebeğe her gece bir saat ders vermek ile Türkçe bilen bir gence her gece yeni şeyler öğretmek arasındaki fark gibi.</p>
+    <div class="secenekler">
+      <button class="secenek" data-secim="A">
+        <span class="secenek-basi"><span class="harf">A</span><span class="secenek-ad">Sıfırdan büyüyen çocuk devam etsin</span></span>
+        <span class="secenek-not">Tamamen kendi Minik'imiz olur ama ölçümler şu an ilerleme göstermiyor.</span>
+      </button>
+      <button class="secenek" data-secim="B">
+        <span class="secenek-basi"><span class="harf">B</span><span class="secenek-ad">Hazır Türkçe kafa, geceleri küçük eklerle öğrensin<span class="onerilir">Agent önerisi</span></span></span>
+        <span class="secenek-not">Minik baştan konuşabilir; her gece küçük bir ek dosyayla (LoRA) yeni şeyleri öğrenir.</span>
+      </button>
+    </div>
+    <p class="hikaye"><b>Agent'ın gerekçesi:</b> Sıfırdan yolda üç şartın ikisi geçmedi; hazır kafa bugün zaten daha iyi konuşuyor.</p>
+    <div class="not-alani">
+      <label for="not-K24">Eklemek istediğin bir şey</label>
+      <textarea id="not-K24" data-not="K24" placeholder="Örnek: B, ama çocuk denemesini arşivde tut"></textarea>
+    </div>
+  </section>
+
+  <section class="karar" data-karar="K26">
+    <div class="etiket"><span>Karar K26</span><span class="damga-isareti" hidden>Verildi</span></div>
+    <h2>Minik'in kafası değişsin mi?</h2>
+    <p class="hikaye">Dört adayı kimin yazdığını gizleyerek Türkçe sınavdan geçirdik: Turkish-Gemma 40'ta 20, şimdiki kafa (Qwen 4B) 13, Trendyol 9, dördüncü aday 5 aldı. Gemma açık ara en iyisi ama üç kusuru var.</p>
+    <p class="hikaye">Kapattığımız hâlde içinden düşünme notları (&lt;think&gt;) yazıyor, ekran kartında 6,5 GB sınırımızı biraz aşıyor ve 10 turluk uzun bir sohbette hafızası yetmeyip düştü.</p>
+    <p class="hikaye">Benzetme: sınavda birinci olan ama odaya sığmayan bir öğrenci; önce masayı ayarlamak gerek.</p>
+    <div class="secenekler">
+      <button class="secenek" data-secim="A">
+        <span class="secenek-basi"><span class="harf">A</span><span class="secenek-ad">Gemma'ya geçelim, önce kusurlar ölçülsün<span class="onerilir">Agent önerisi</span></span></span>
+        <span class="secenek-not">Düşünme notları ayıklanır, daha uzun hafızayla (4096) sıkıştırılmış önbellek denenir; ekran kartı sınırda kalırsa geçilir.</span>
+      </button>
+      <button class="secenek" data-secim="B">
+        <span class="secenek-basi"><span class="harf">B</span><span class="secenek-ad">Şimdiki 4B kafa kalsın</span></span>
+        <span class="secenek-not">Sorunsuz çalışıyor, sığıyor; ama Türkçesi daha zayıf.</span>
+      </button>
+      <button class="secenek" data-secim="C">
+        <span class="secenek-basi"><span class="harf">C</span><span class="secenek-ad">Başka aday arayalım</span></span>
+        <span class="secenek-not">Yeni modeller indirilip aynı sınav yapılır; birkaç gün sürer.</span>
+      </button>
+    </div>
+    <p class="hikaye"><b>Agent'ın gerekçesi:</b> Türkçe farkı büyük; kusurlar ölçülerek çözülebilecek türden, çözülmezse B'ye dönülür.</p>
+    <div class="not-alani">
+      <label for="not-K26">Eklemek istediğin bir şey</label>
+      <textarea id="not-K26" data-not="K26" placeholder="Örnek: A, ama sığmazsa hiç zorlama"></textarea>
+    </div>
+  </section>
+
+  <section class="karar" data-karar="K27">
+    <div class="etiket"><span>Karar K27</span><span class="damga-isareti" hidden>Verildi</span></div>
+    <h2>Minik'in ses tonunu okuyan parça nerede çalışsın?</h2>
+    <p class="hikaye">Minik her cümlenin tonunu (kızgın mı, neşeli mi) okuyor. Bunu bilgisayarın ana işlemcisinde yapınca cümle başına 1,3 saniye sürüyor ve 4,4 GB bellek yiyor; ekran kartındaki kafaya sorunca 0,3 saniye sürüyor ve ek yer istemiyor. Doğruluk ikisinde de aynı (%81 civarı).</p>
+    <p class="hikaye">Benzetme: zaten masada oturan uzmana soru sormak ile yan odadan ikinci birini çağırmak gibi.</p>
+    <div class="secenekler">
+      <button class="secenek" data-secim="A">
+        <span class="secenek-basi"><span class="harf">A</span><span class="secenek-ad">Ana işlemcide ayrı çalışsın</span></span>
+        <span class="secenek-not">Kafa meşgulken de çalışır, ama 4 kat yavaş ve belleği doldurur.</span>
+      </button>
+      <button class="secenek" data-secim="B">
+        <span class="secenek-basi"><span class="harf">B</span><span class="secenek-ad">Ekran kartındaki kafaya sorulsun<span class="onerilir">Agent önerisi</span></span></span>
+        <span class="secenek-not">Hızlı ve bedava; kafa meşgulken sıraya girer, görüntü büyütücü açıkken durur.</span>
+      </button>
+    </div>
+    <p class="hikaye"><b>Agent'ın gerekçesi:</b> 4,7 kat hızlı, doğruluk aynı, 4,4 GB bellek geri gelir.</p>
+    <div class="not-alani">
+      <label for="not-K27">Eklemek istediğin bir şey</label>
+      <textarea id="not-K27" data-not="K27" placeholder="Örnek: B"></textarea>
+    </div>
+  </section>
+
   <section class="karar" data-karar="f0c" id="puanlama">
     <div class="etiket"><span>İş, karar değil</span><span class="damga-isareti" hidden>Bitti</span></div>
     <h2>Altı cevaba puan ver</h2>
@@ -346,7 +417,7 @@
       ipucu: "İlk cümle tam doğru, sonrası anlamsız döngü. Agent'ın en çok kararsız kaldığı cevap." }
   ];
 
-  const KARARLAR = ["K21", "K22", "K23", "K25"];
+  const KARARLAR = ["K21", "K22", "K23", "K24", "K25", "K26", "K27"];
   const durumKutusu = document.getElementById("durum");
   let db = null;
   const yerel = { kararlar: {}, puanlar: {} };
