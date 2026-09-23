@@ -10,6 +10,7 @@ import urllib.error
 import urllib.request
 
 from ortak import log
+from yuvalar.kafa_dusunce import dusunce_ayikla
 from ortak.ayar import (
     ALT_ESIK,
     KAFA_BAGLAM,
@@ -180,7 +181,7 @@ def _sunucuya_sor(govde):
     )
     with urllib.request.urlopen(istek, timeout=KAFA_ZAMAN_ASIMI_SN) as yanit:
         yanit_json = json.loads(yanit.read().decode("utf-8"))
-    cevap = yanit_json["choices"][0]["message"]["content"]
+    cevap = dusunce_ayikla(yanit_json["choices"][0]["message"]["content"])
     token_sayisi = yanit_json.get("usage", {}).get("completion_tokens", 0)
     return cevap, token_sayisi, yanit_json.get("timings")
 

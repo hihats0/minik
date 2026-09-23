@@ -12,6 +12,14 @@ KAFA_UC = f"http://{KAFA_HOST}:{KAFA_PORT}/v1/chat/completions"
 KAFA_MODEL_YOLU = r"C:\Projelerim\modeller\Qwen3.5-4B-Q4_K_M.gguf"
 KAFA_BAGLAM = 8192
 
+# K26=A aday Kafa: secilebilir profil, varsayilan degil (gecis k26-b olcumune bagli). GPU'da
+# baglam 4096 ve q8 KV ile 8 GB VRAM sinirina sigmasi hedefleniyor (olculmedi).
+GEMMA_MODEL_YOLU = r"C:\Projelerim\modeller\Turkish-Gemma-9b-T1.Q4_K_M.gguf"
+GEMMA_BAGLAM = 4096
+GEMMA_SUNUCU_ARGUMANLARI = ["-m", GEMMA_MODEL_YOLU, "-c", str(GEMMA_BAGLAM),
+                            "--cache-type-k", "q8_0", "--cache-type-v", "q8_0",
+                            "--device", "Vulkan1"]
+
 # f0'da olculen en yavas tek cevap 10,1 sn (reports/f0-ham-cevaplar/, wall_s); 60 sn genis pay.
 KAFA_ZAMAN_ASIMI_SN = 60
 
