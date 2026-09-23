@@ -77,6 +77,10 @@ UST_ESIK = 58.0
 # Carpanlarin SAYISI VARSAYIM, rapor sadece yon veriyor.
 MELATONIN_YORGUN_SICAKLIK_CARPANI = 0.7
 MELATONIN_YORGUN_MAX_TOKEN_CARPANI = 0.5
+# f3-g (K25=B): yorgun modda kalite de degisir. Yalniz yorgunken mesaj listesinin basina tek
+# cumlelik sistem talimati eklenir. Metin TAHMIN, f3-g olcumu bekliyor (reports/2026-09-23-f3g-yorgun-kalite-kodu.md).
+MELATONIN_YORGUN_TALIMATI = ("Cok yorgunsun ve konusmaya isteksizsin: kisa, biraz daginik ve "
+                             "az ayrintili cevap ver, ama duzgun Turkce yaz.")
 
 # f3-b: Kafa "dusunemedi" (hata yukseltti) derse kortizol "ceza" olayiyla yukselir. VARSAYIM:
 # rapor akis hatasini kortizole baglamiyor; bir cagrinin tumden basarisiz olmasi en yuksek

@@ -22,6 +22,7 @@ from ortak.ayar import (
     KORTIZOL_REPEAT_PENALTY_MIN,
     MELATONIN_YORGUN_MAX_TOKEN_CARPANI,
     MELATONIN_YORGUN_SICAKLIK_CARPANI,
+    MELATONIN_YORGUN_TALIMATI,
     MOD_UYANIK,
     MOD_YORGUN,
     MOD_ZORLA_DEGISKENI,
@@ -54,7 +55,9 @@ def dusun(soru, baglam=None, hormon_degerleri=None):
     mesajlar = list(baglam) if baglam else []
     mesajlar.append({"role": "user", "content": soru})
     ayarlar, mod = _ornekleme_ayarlari(hormon_degerleri)
+    mesajlar = _mod_talimati_ekle(mesajlar, mod)
     govde = _govde_olustur(mesajlar, ayarlar)
+    ayarlar = {**ayarlar, "talimat": MELATONIN_YORGUN_TALIMATI if mod == MOD_YORGUN else None}
     try:
         cevap, token_sayisi, timings = _sunucuya_sor(govde)
     except (urllib.error.URLError, OSError) as hata:
@@ -128,6 +131,14 @@ def _mod_zorlanan():
     None doner, normal hesaplama calisir."""
     deger = os.environ.get(MOD_ZORLA_DEGISKENI)
     return deger if deger in (MOD_UYANIK, MOD_YORGUN) else None
+
+
+def _mod_talimati_ekle(mesajlar, mod):
+    """Yorgun modda (f3-g, K25=B) listenin basina tek cumlelik sistem talimati koyar;
+    uyanik modda liste degismeden doner. Ornekleme ayarlarinin yanina kaliteyi de degistirir."""
+    if mod != MOD_YORGUN:
+        return mesajlar
+    return [{"role": "system", "content": MELATONIN_YORGUN_TALIMATI}] + mesajlar
 
 
 def _govde_olustur(mesajlar, ayarlar):

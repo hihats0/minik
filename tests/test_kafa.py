@@ -19,6 +19,7 @@ from ortak.ayar import (
     KAFA_ZAMAN_ASIMI_SN,
     MOD_UYANIK,
     MOD_YORGUN,
+    MELATONIN_YORGUN_TALIMATI,
     MOD_ZORLA_DEGISKENI,
     UST_ESIK,
 )
@@ -200,3 +201,24 @@ class TestKafaHormonModu(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestYorgunTalimat(unittest.TestCase):
+    """f3-g (K25=B): yorgun modda tek cumlelik sistem talimati istege ve loga girer."""
+
+    def _sor(self, mod):
+        yakalanan = {}
+        with mock.patch.dict(os.environ, {MOD_ZORLA_DEGISKENI: mod}),                 patch("yuvalar.kafa.urllib.request.urlopen", side_effect=_sahte_urlopen_kur(yakalanan)),                 patch("yuvalar.kafa.log.yaz") as log_yaz:
+            kafa.dusun("soru", [], HORMON_DINLENME)
+        return yakalanan["govde"]["messages"], log_yaz.call_args[0][4]["ayarlar"]
+
+    def test_yorgun_modda_talimat_istege_ve_loga_girer(self):
+        mesajlar, ayarlar = self._sor(MOD_YORGUN)
+        self.assertEqual(mesajlar[0], {"role": "system", "content": MELATONIN_YORGUN_TALIMATI})
+        self.assertEqual(mesajlar[-1]["content"], "soru")
+        self.assertEqual(ayarlar["talimat"], MELATONIN_YORGUN_TALIMATI)
+
+    def test_uyanik_modda_talimat_yok(self):
+        mesajlar, ayarlar = self._sor(MOD_UYANIK)
+        self.assertEqual([m["role"] for m in mesajlar], ["user"])
+        self.assertIsNone(ayarlar["talimat"])
