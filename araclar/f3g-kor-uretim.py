@@ -12,6 +12,7 @@ from pathlib import Path
 KOK = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(KOK))
 sys.path.insert(0, str(KOK / "araclar"))
+import f3g_sizinti  # noqa: E402
 import sunucu_yonet  # noqa: E402
 from ortak.ayar import KAFA_HOST, KAFA_PORT, MOD_YORGUN, MOD_ZORLA_DEGISKENI  # noqa: E402
 from ortak.gpu_sicaklik import SicaklikBekcisi, sicakta_dene  # noqa: E402
@@ -136,10 +137,7 @@ def anonim_yaz(klasor, dosya):
                if "cevap" in s and "hata" not in s and "olcum" not in s}
     f3c3.CIKTI_KLASORU = klasor
     f3c3.yaz(list(gecerli.values()))
-    eslesmeler = f3c3.sizinti_tara((klasor / "anonim-cevaplar.md").read_text(encoding="utf-8"))
-    print(f"[sizinti] {len(eslesmeler)} eslesme", flush=True)
-    for no, satir in eslesmeler:
-        print(f"  {no}: {satir[:200]}", flush=True)
+    f3g_sizinti.isaretle(klasor)
 
 
 def kos(klasor, isler, sunucu_baslat=k26d.gercek_sunucu_baslat, port=KAFA_PORT, okuyucu=None, aralik_sn=None,

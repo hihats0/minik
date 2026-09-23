@@ -22,6 +22,8 @@ _spec.loader.exec_module(f3g)
 SORULAR = f3g.f3c3.SORULAR[:2]
 DINLENME = {"dopamin": 20, "noradrenalin": 20, "serotonin": 50, "kortizol": 10,
             "oksitosin": 30, "melatonin": 10, "merak": 40}
+METIN = "\n\n".join(["# Yonerge", "## Kayit AAAA", "**Cevap:**", "Vay! *(Not: 79 karakter)*",
+                    "## Kayit BBBB", "**Cevap:**", "Yagmur buharla yagar.", ""])
 ZAMANLAMA = {"prompt_ms": 100, "predicted_ms": 900}
 
 
@@ -101,6 +103,20 @@ class TestF3gUretim(unittest.TestCase):
         self.assertEqual(sonuc, f3g.YARIM)
         self.assertEqual(satirlar, [])
         self.assertFalse((self.klasor / "anonim-cevaplar.md").exists())
+
+
+    def test_sizinti_meta_not_isaretlenir_temiz_gecer(self):
+        (self.klasor / "anonim-cevaplar.md").write_text(
+            METIN, encoding="utf-8")
+        (self.klasor / "anahtar.json").write_text(json.dumps({"AAAA": {}, "BBBB": {}}), encoding="utf-8")
+        self.assertEqual(f3g.f3g_sizinti.isaretle(self.klasor), 1)
+        anahtarlar = json.loads((self.klasor / "anahtar.json").read_text(encoding="utf-8"))
+        self.assertEqual((anahtarlar["AAAA"]["sizinti"], anahtarlar["BBBB"]["sizinti"]), (True, False))
+
+    def test_dusunce_payi_768_ve_baglam_butcesi_pozitif(self):
+        from ortak.ayar import BAGLAM_TOKEN_BUTCESI, GEMMA_DUSUNCE_PAYI_TOKEN
+        self.assertEqual(GEMMA_DUSUNCE_PAYI_TOKEN, 768)
+        self.assertEqual(BAGLAM_TOKEN_BUTCESI, 2048)
 
 
 if __name__ == "__main__":
