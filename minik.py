@@ -1,5 +1,5 @@
 """Akis: sirayi tutar, karar vermez (K6). Agizdan alir, Kafa'ya sorar, Bekci'den gecirir,
-Defter'e yazar, agiza soyler, loglar. Tur sonunda Uyku tetigine sorar, "uyu" derse gece isini
+Defter'e yazar, agiza soyler, loglar. Kalp'in refleks onerisi golge modda yalniz loglanir (f6). Tur sonunda Uyku tetigine sorar, "uyu" derse gece isini
 cagirir (P5, A7: ayri surec degil). Her turda Hormonlar'i olayla gunceller (R1: akis
 gunceller, ama hangi hormonun nasil degisecegine hormonlar.py karar verir).
 Cagiran: elle `python minik.py` ile baslatilir."""
@@ -10,7 +10,7 @@ from datetime import datetime
 from agiz import konsol
 from ortak import baglam_butce, kaynak_olc, log
 from ortak.ayar import HORMON_DOSYA_ADI, KORTIZOL_CEZA_SIDDETI, MELATONIN_IS_TAVAN_SN
-from yuvalar import bekci, defter, hormonlar, kafa, uyku, uyku_tetik
+from yuvalar import bekci, defter, hormonlar, kafa, kalp, uyku, uyku_tetik
 
 YUVA_ADI = "akis"
 DIS_ID = "konsol"
@@ -36,11 +36,14 @@ def calistir(dinle=konsol.dinle, soyle=konsol.soyle, dusun=kafa.dusun, hormon_du
         if soru == CIKIS_KELIMESI:
             break
         dopamin_once = hormon_durumu.oku()["dopamin"]
+        oneri, _ = kalp.refleks_ara({"soru": soru})  # golge mod (f6): yalniz loglanir, cevaba girmez
         cevap, basarili = _tur_isle(soru, baglam, dusun, hormon_durumu)
         soyle(cevap, DIS_ID)
         degisim = hormon_durumu.oku()["dopamin"] - dopamin_once
         if basarili and not _deftere_kaydet(soru, cevap, soyle, degisim):
             break
+        if basarili:
+            kalp.tur_sonu(soru, cevap, oneri, degisim)
         _uyku_gerekirse(tetik, hormon_durumu, gece, simdi())
 
 
