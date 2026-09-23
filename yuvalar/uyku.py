@@ -13,7 +13,7 @@ from ortak.ayar import (
     DEFTER_KLASORU, GOMME_EN_YAKIN_K, GOMME_UC, SM2_BASARILI_KALITE, SM2_BASARISIZ_KALITE,
     UYKU_PROVA_KALIBI, UYKU_SABAH_OZET_KALIBI,
 )
-from yuvalar import defter, defter_sqlite, gorunur, kafa
+from yuvalar import buyume, defter, defter_sqlite, gorunur, kafa
 from yuvalar import uyku_secim as secim
 
 YUVA_ADI = "uyku"
@@ -72,14 +72,16 @@ def gun_isle(tarih, gomme_al=None, prova=None, klasor=None):
         if defter_sqlite.islendi_mi(baglanti, tarih):
             log.yaz(YUVA_ADI, "gece", _gecen_ms(basladi), "ok", {"tarih": tarih, "atlandi": True})
             return ZATEN_ISLENDI, 0, 0
-        yeni = _yeni_anilar(klasor, tarih, gomme_al or _sunucudan_gomme)
+        kayitlar = _gun_kayitlari(klasor, tarih)
+        yeni = _yeni_anilar(kayitlar, tarih, gomme_al or _sunucudan_gomme)
         guncellemeler = _provalar(baglanti, tarih, prova or _kafaya_sor)
         budanan = defter.isle(baglanti, tarih, yeni, guncellemeler)
         komsular = _komsular(baglanti, yeni)
+        cift_satiri = buyume.ozet_satiri(*buyume.biriktir(klasor, tarih, kayitlar))
     finally:
         baglanti.close()
     etiketlenen = sum(1 for a in yeni if a["etiket"] != secim.ETIKET_SIRADAN)
-    ozet = _sabah_ozeti(tarih, yeni, guncellemeler, budanan, komsular)
+    ozet = _sabah_ozeti(tarih, yeni, guncellemeler, budanan, komsular) + cift_satiri + "\n"
     (klasor / UYKU_SABAH_OZET_KALIBI.format(tarih=tarih)).write_text(ozet, encoding="utf-8")
     log.yaz(YUVA_ADI, "gece", _gecen_ms(basladi), "ok",
             {"tarih": tarih, "okunan": len(yeni), "etiketlenen": etiketlenen,
@@ -92,13 +94,17 @@ def _gun_ekle(tarih, gun_sayisi):
     return (date.fromisoformat(tarih) + timedelta(days=gun_sayisi)).isoformat()
 
 
-def _yeni_anilar(klasor, tarih, gomme_al):
-    """Gunun jsonl'ini SALT OKUNUR acar, kayitlari etiketli ve SM-2 baslangicli aniya cevirir."""
+def _gun_kayitlari(klasor, tarih):
+    """Gunun jsonl'ini SALT OKUNUR acar, kayit listesini dondurur (dosya yoksa bos)."""
     dosya = klasor / f"{JSONL_ON_EKI}{tarih}.jsonl"
     if not dosya.exists():
         return []
     with dosya.open("r", encoding="utf-8") as f:
-        kayitlar = [json.loads(s) for s in f if s.strip()]
+        return [json.loads(s) for s in f if s.strip()]
+
+
+def _yeni_anilar(kayitlar, tarih, gomme_al):
+    """Gunun kayitlarini etiketli ve SM-2 baslangicli aniya cevirir."""
     anilar = []
     for sira, kayit in enumerate(secim.etiketle(kayitlar), start=1):
         vektor = gomme_al(kayit.get("soru", ""))
