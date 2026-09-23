@@ -14,7 +14,8 @@ HAZIR_BAYRAGI = "egitim-hazir.flag"
 # K11: ~500-1.000 filtreli cift (tahmin, LIMA ~1.000). Alt ucu secildi: bayrak yalniz haber verir.
 EGITIM_ESIGI = 500
 # S7/KT8: X icerigi egitim girdisi olamaz. "x" disinda X'ten gelen kaydin baska adi yok (minik.py).
-X_PLATFORMLARI = {"x", "twitter"}
+# "dosya" agzi (f8-a) da eleniyor: dosyayi kimin yazdigi bilinmiyor, X'ten kopya olabilir.
+X_PLATFORMLARI = {"x", "twitter", "dosya"}
 KABUL_SINAVLARI = ("turkce", "odul")
 
 
