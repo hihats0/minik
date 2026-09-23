@@ -45,8 +45,8 @@ class GemmaProfilTesti(unittest.TestCase):
             self.assertEqual(a[a.index(bayrak) + 1], deger)
         self.assertIn("Turkish-Gemma-9b-T1", a[a.index("-m") + 1])
 
-    def test_varsayilan_kafa_degismedi(self):
-        self.assertIn("Qwen3.5-4B", KAFA_MODEL_YOLU)
+    def test_varsayilan_kafa_gemma(self):
+        self.assertIn("Turkish-Gemma-9b-T1", KAFA_MODEL_YOLU)
 
 
 if __name__ == "__main__":

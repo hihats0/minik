@@ -8,14 +8,13 @@ KAFA_HOST = "127.0.0.1"
 KAFA_PORT = 8080
 KAFA_UC = f"http://{KAFA_HOST}:{KAFA_PORT}/v1/chat/completions"
 
-# f0-a'da 25/40 ile secilen model (reports/2026-09-21-f0-turkce-uretim.md).
-KAFA_MODEL_YOLU = r"C:\Projelerim\modeller\Qwen3.5-4B-Q4_K_M.gguf"
-KAFA_BAGLAM = 8192
-
-# K26=A aday Kafa: secilebilir profil, varsayilan degil (gecis k26-b olcumune bagli). GPU'da
-# baglam 4096 ve q8 KV ile 8 GB VRAM sinirina sigmasi hedefleniyor (olculmedi).
+# K26=A: Kafa Gemma. k26-b'de GPU'da olculdu: zirve VRAM 6382 MiB (<= 6656), think 15/15 temiz,
+# 10 tur dusmedi (reports/2026-09-23-k26b-gemma-olcumu.md). Onceki Qwen (f0-a) yedek profil.
 GEMMA_MODEL_YOLU = r"C:\Projelerim\modeller\Turkish-Gemma-9b-T1.Q4_K_M.gguf"
 GEMMA_BAGLAM = 4096
+QWEN_MODEL_YOLU = r"C:\Projelerim\modeller\Qwen3.5-4B-Q4_K_M.gguf"
+KAFA_MODEL_YOLU = GEMMA_MODEL_YOLU
+KAFA_BAGLAM = GEMMA_BAGLAM
 GEMMA_SUNUCU_ARGUMANLARI = ["-m", GEMMA_MODEL_YOLU, "-c", str(GEMMA_BAGLAM),
                             "--cache-type-k", "q8_0", "--cache-type-v", "q8_0",
                             "--device", "Vulkan1"]
@@ -31,7 +30,7 @@ KAFA_MAX_TOKEN = 512
 # Spec 4.2: gunluk jsonl defter/ altinda tutulur, .gitignore'da (Minik'in defteri repoya girmez).
 DEFTER_KLASORU = Path(__file__).resolve().parent.parent / "defter"
 # Baglama giren son kayit sayisi: olculmedi (f2 kapattigi varsayim V14 "ilk sayim"), 10 tur
-# (~20 mesaj) hem "dunku konuyu hatirlamaya" yeter hem KAFA_BAGLAM'i (8192) zorlamaz.
+# (~20 mesaj) hem "dunku konuyu hatirlamaya" yeter hem KAFA_BAGLAM'i (4096) zorlamaz.
 DEFTER_SON_N = 10
 
 # oku() DEFTER_SON_N'i bugunku dosya karsilamazsa gun dosyalarinda geriye gider; en cok kac
