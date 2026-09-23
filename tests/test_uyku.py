@@ -36,12 +36,15 @@ class TestUyku(unittest.TestCase):
                     _kayit("10:40", "kus ucar mi"), _kayit("14:00", "yagmur yagar mi")]
         self.jsonl = self.klasor / f"gunluk-{TARIH}.jsonl"
         self.jsonl.write_text("".join(json.dumps(k) + "\n" for k in kayitlar), encoding="utf-8")
+        self._log_yamasi = mock.patch.object(uyku.log, "LOG_KLASORU", self.klasor / "loglar")
+        self._log_yamasi.start()
 
     def tearDown(self):
+        self._log_yamasi.stop()
         self._gecici.cleanup()
 
-    def _gece(self, tarih=TARIH, prova=lambda ani: True, **ek):
-        return uyku.gece(tarih, gomme_al=_sahte_gomme, prova=prova, klasor=self.klasor, **ek)
+    def _gece(self, tarih=TARIH, prova=lambda ani: True):
+        return uyku.gun_isle(tarih, gomme_al=_sahte_gomme, prova=prova, klasor=self.klasor)
 
     def _ani_sayisi(self):
         baglanti = defter_sqlite.baglan(self.klasor)
@@ -100,15 +103,16 @@ class TestUyku(unittest.TestCase):
         hata = OSError("sunucu yok")
         with mock.patch.object(uyku, "vektor_al", side_effect=hata), \
              mock.patch.object(uyku.kafa, "dusun", side_effect=hata):
-            uyku.gece(TARIH, klasor=self.klasor)
-            ozet, _, _ = uyku.gece("2026-09-21", klasor=self.klasor)
+            uyku.gun_isle(TARIH, klasor=self.klasor)
+            ozet, _, _ = uyku.gun_isle("2026-09-21", klasor=self.klasor)
         self.assertIn("Prova: 0 ani", ozet)
         self.assertEqual(self._ani_sayisi(), 4)
 
     def test_sabah_ozeti_ve_melatonin(self):
         durum = hormonlar.Hormonlar()
         durum._deger["melatonin"] = 90.0
-        ozet, etiketlenen, _ = self._gece(hormon_durumu=durum)
+        ozet, etiketlenen, _ = uyku.gece("2026-09-21", hormon_durumu=durum, gomme_al=_sahte_gomme,
+                                         prova=lambda ani: True, klasor=self.klasor)
         self.assertEqual(etiketlenen, 3)
         self.assertTrue((self.klasor / f"sabah-ozet-{TARIH}.md").exists())
         self.assertLess(durum.oku()["melatonin"], 20.0)

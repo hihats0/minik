@@ -1,5 +1,5 @@
 """Defter'in turetilmis yarisi: defter/minik.sqlite (anilar, SM-2 alanlari, gomme BLOB'u, islenen geceler).
-Cagiran: yuvalar/defter.py (`isle`) ve yuvalar/uyku.py (okuma yardimcilari). Gunduz hattinda cagrilmaz."""
+Cagiran: yuvalar/defter.py (`isle`), yuvalar/uyku.py ve yuvalar/gorunur.py (okuma yardimcilari). Gunduz hattinda cagrilmaz."""
 
 import array
 import sqlite3
@@ -29,6 +29,17 @@ def islendi_mi(baglanti, tarih):
     """Bu tarihin gecesi daha once tamamlandiysa True (ayni gun iki kez calismasin diye)."""
     satir = baglanti.execute("SELECT 1 FROM geceler WHERE tarih = ?", (tarih,)).fetchone()
     return satir is not None
+
+
+def islenmis_geceler(baglanti):
+    """Tamamlanmis gecelerin tarih kumesi."""
+    return {s["tarih"] for s in baglanti.execute("SELECT tarih FROM geceler")}
+
+
+def etiket_sayilari(baglanti):
+    """Tutulan anilarin etikete gore sayisi, gorunur sayfa icin."""
+    sorgu = "SELECT etiket, COUNT(*) AS sayi FROM anilar GROUP BY etiket"
+    return {s["etiket"]: s["sayi"] for s in baglanti.execute(sorgu)}
 
 
 def vadesi_gelenler(baglanti, tarih):

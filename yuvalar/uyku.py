@@ -1,10 +1,11 @@
-"""Uyku yuvasi, tur 1 (egitimsiz): gunun jsonl'ini okur, etiketler, SM-2 provasi yapar, budar,
+"""Uyku yuvasi (egitimsiz): kapanmis gunlerin jsonl'ini okur, etiketler, SM-2 provasi yapar, budar,
 sqlite'a tek islemle yazar, sabah ozeti birakir, melatonini indirir (spec 2.4, 3.5).
-Cagiran: minik.py akisi (uyku_tetik "uyu" deyince), elle ya da testler (`gece(tarih)`)."""
+Cagiran: minik.py akisi (uyku_tetik "uyu" deyince), araclar/f4b-unutma-olc.py, testler."""
 
 import json
 import time
 import urllib.error
+from datetime import date, timedelta
 
 from araclar.gomme_istemci import vektor_al
 from ortak import log
@@ -12,16 +13,57 @@ from ortak.ayar import (
     DEFTER_KLASORU, GOMME_EN_YAKIN_K, GOMME_UC, SM2_BASARILI_KALITE, SM2_BASARISIZ_KALITE,
     UYKU_PROVA_KALIBI, UYKU_SABAH_OZET_KALIBI,
 )
-from yuvalar import defter, defter_sqlite, kafa
+from yuvalar import defter, defter_sqlite, gorunur, kafa
 from yuvalar import uyku_secim as secim
 
 YUVA_ADI = "uyku"
 ZATEN_ISLENDI = "zaten islendi"
+ISLENECEK_GUN_YOK = "islenecek kapanmis gun yok"
+JSONL_ON_EKI = "gunluk-"
+JSONL_DESENI = "gunluk-*.jsonl"
 UYKU_SIDDETI = 1.0
 
 
-def gece(tarih, hormon_durumu=None, gomme_al=None, prova=None, klasor=None):
-    """Bir gunun gecesini isler, (ozet, etiketlenen_sayisi, budanan_sayisi) dondurur.
+def gece(bugun, hormon_durumu=None, gomme_al=None, prova=None, klasor=None):
+    """Bir uyku: islenmemis en eski gunden DUNE kadar her gunu sirayla isler, (son_ozet,
+    etiketlenen, budanan) dondurur. Bugun islenmez: gun kapanmadan gelen kayitlar yarim kalirdi,
+    bu yuzden bugunun kayitlari bir sonraki uykuya kalir (f4-b tarih karari).
+    Hic gun islenmese de Minik uyumustur: melatonin iner, yas artar, gorunur sayfa yazilir."""
+    klasor = klasor or DEFTER_KLASORU
+    ozet, etiketlenen, budanan = ISLENECEK_GUN_YOK, 0, 0
+    for tarih in islenecek_gunler(klasor, bugun):
+        ozet, etiketli, budanmis = gun_isle(tarih, gomme_al, prova, klasor)
+        etiketlenen, budanan = etiketlenen + etiketli, budanan + budanmis
+    if hormon_durumu is not None:
+        hormon_durumu.guncelle("uyku", UYKU_SIDDETI)
+    gorunur.yaz(klasor, hormon_durumu, ozet, budanan)
+    return ozet, etiketlenen, budanan
+
+
+def islenecek_gunler(klasor, bugun):
+    """Islenmemis en eski jsonl gunu (ya da son islenen geceden sonraki gun) ile dun arasindaki
+    butun takvim gunleri. jsonl'i olmayan gunler de girer: SM-2 provasi her gun yapilmali."""
+    baglanti = defter_sqlite.baglan(klasor)
+    try:
+        islenmis = defter_sqlite.islenmis_geceler(baglanti)
+    finally:
+        baglanti.close()
+    jsonl_gunleri = {d.stem.removeprefix(JSONL_ON_EKI) for d in klasor.glob(JSONL_DESENI)}
+    baslangiclar = [g for g in jsonl_gunleri if g not in islenmis and g < bugun]
+    if islenmis:
+        baslangiclar.append(_gun_ekle(max(islenmis), 1))
+    if not baslangiclar:
+        return []
+    gun, gunler = min(baslangiclar), []
+    while gun < bugun:
+        if gun not in islenmis:
+            gunler.append(gun)
+        gun = _gun_ekle(gun, 1)
+    return gunler
+
+
+def gun_isle(tarih, gomme_al=None, prova=None, klasor=None):
+    """Tek bir gunun gecesini isler, (ozet, etiketlenen_sayisi, budanan_sayisi) dondurur.
     gomme_al/prova/klasor testler icin disaridan verilebilir; verilmezse gercekleri kullanilir."""
     basladi = time.perf_counter()
     klasor = klasor or DEFTER_KLASORU
@@ -36,8 +78,6 @@ def gece(tarih, hormon_durumu=None, gomme_al=None, prova=None, klasor=None):
         komsular = _komsular(baglanti, yeni)
     finally:
         baglanti.close()
-    if hormon_durumu is not None:
-        hormon_durumu.guncelle("uyku", UYKU_SIDDETI)
     etiketlenen = sum(1 for a in yeni if a["etiket"] != secim.ETIKET_SIRADAN)
     ozet = _sabah_ozeti(tarih, yeni, guncellemeler, budanan, komsular)
     (klasor / UYKU_SABAH_OZET_KALIBI.format(tarih=tarih)).write_text(ozet, encoding="utf-8")
@@ -47,9 +87,14 @@ def gece(tarih, hormon_durumu=None, gomme_al=None, prova=None, klasor=None):
     return ozet, etiketlenen, budanan
 
 
+def _gun_ekle(tarih, gun_sayisi):
+    """ISO tarihe gun ekler, yine ISO tarih dondurur."""
+    return (date.fromisoformat(tarih) + timedelta(days=gun_sayisi)).isoformat()
+
+
 def _yeni_anilar(klasor, tarih, gomme_al):
     """Gunun jsonl'ini SALT OKUNUR acar, kayitlari etiketli ve SM-2 baslangicli aniya cevirir."""
-    dosya = klasor / f"gunluk-{tarih}.jsonl"
+    dosya = klasor / f"{JSONL_ON_EKI}{tarih}.jsonl"
     if not dosya.exists():
         return []
     with dosya.open("r", encoding="utf-8") as f:

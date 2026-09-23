@@ -8,6 +8,7 @@ import tempfile
 import unittest
 from datetime import datetime
 from pathlib import Path
+from unittest import mock
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
@@ -43,9 +44,12 @@ class TestF4c(unittest.TestCase):
         self.klasor = Path(self._gecici.name)
         self._eski = minik.defter.DEFTER_KLASORU
         minik.defter.DEFTER_KLASORU = self.klasor
+        self._log_yamasi = mock.patch.object(uyku.log, "LOG_KLASORU", self.klasor / "loglar")
+        self._log_yamasi.start()
 
     def tearDown(self):
         minik.defter.DEFTER_KLASORU = self._eski
+        self._log_yamasi.stop()
         self._gecici.cleanup()
 
     def _kayitlar(self):
@@ -116,7 +120,9 @@ class TestF4c(unittest.TestCase):
         sonra = hormonlar.Hormonlar(dosya)
         self.assertEqual(sonra.yas, 1)
         self.assertLess(sonra.oku()["melatonin"], UYKU_ALT_ESIK)
-        self.assertTrue((self.klasor / "sabah-ozet-2026-09-23.md").exists())
+        # f4-b: bugunun kayitlari gun kapanmadan islenmez, bir sonraki uykuya kalir
+        self.assertFalse((self.klasor / "sabah-ozet-2026-09-23.md").exists())
+        self.assertTrue((self.klasor / "loglar" / "gorunur.html").exists())
 
 
 if __name__ == "__main__":
