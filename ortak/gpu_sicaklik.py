@@ -83,3 +83,30 @@ class SicaklikBekcisi:
             time.sleep(SOGUMA_YOKLAMA_SN)
         self.kesildi = False
         return round(time.perf_counter() - basladi, 1)
+
+
+# Sicak kesmede istek sonucu satirina yazilan isaretler (k26-d, f3-g ayni degerleri kullanir).
+SICAK_ATLANDI = "sicak_olculemedi"
+SICAK_TEKRAR = "kesildi_tekrar_denenecek"
+# k26-d kurali: ayni istek 2 kez kesilirse atla, toplam 4 kesmede kosuyu bitir.
+AYNI_ISTEK_KESME_SINIRI = 2
+TOPLAM_KESME_SINIRI = 4
+
+
+def sicakta_dene(olc, bekci, kaydet, yeniden_baslat, sayac):
+    """olc() bir istegi olcup satir dondurur. Istek surerken sicak kesme olursa 70 C'ye kadar bekler,
+    sunucuyu yeniden acar, tekrar dener; ust uste AYNI_ISTEK_KESME_SINIRI kesmede istegi atlar.
+    Her satir kaydet()'e gider. sayac["kesme"] kosu boyunca birikir. False: toplam kesme siniri doldu."""
+    for deneme in range(1, AYNI_ISTEK_KESME_SINIRI + 1):
+        satir = olc()
+        if not bekci.kesildi:
+            kaydet(satir)
+            return True
+        sayac["kesme"] += 1
+        satir["olcum"] = SICAK_ATLANDI if deneme == AYNI_ISTEK_KESME_SINIRI else SICAK_TEKRAR
+        satir["kesme_sonrasi_bekleme_sn"] = bekci.kesme_sonrasi_bekle()
+        kaydet(satir)
+        if sayac["kesme"] >= TOPLAM_KESME_SINIRI:
+            return False
+        yeniden_baslat()
+    return True

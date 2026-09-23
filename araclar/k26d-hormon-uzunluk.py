@@ -15,7 +15,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import sunucu_yonet  # noqa: E402
 from ortak.ayar import (GEMMA_SUNUCU_ARGUMANLARI, KAFA_DUSUNCE_PAYI_TOKEN, KAFA_HOST, KAFA_PORT,  # noqa: E402
                         MOD_UYANIK, MOD_YORGUN)
-from ortak.gpu_sicaklik import SicaklikBekcisi  # noqa: E402
+from ortak.gpu_sicaklik import SICAK_ATLANDI, SICAK_TEKRAR, SicaklikBekcisi, sicakta_dene  # noqa: E402,F401
 from yuvalar import kafa  # noqa: E402
 from yuvalar.kafa_dusunce import KAPALI_BLOK, dusunce_ayikla  # noqa: E402
 
@@ -28,12 +28,8 @@ EK_ARGUMAN = ["-ngl", "99", "-np", "1", "--port", str(KAFA_PORT)]
 ZAMAN_ASIMI_SN = 180
 DUSUNCE_KAPANIS = "</think>"
 SICAK_DURUM = "olculemedi: sicak"
-SICAK_ATLANDI = "sicak_olculemedi"
-SICAK_TEKRAR = "kesildi_tekrar_denenecek"
 SURE_DOLDU = "olculemedi: 90 dk GPU siniri"
-# Gorev (k26-d kalani): ayni istek 2 kez kesilirse atla, toplam 4 kesmede bitir, kesintisiz GPU en cok 90 dk.
-AYNI_ISTEK_KESME_SINIRI = 2
-TOPLAM_KESME_SINIRI = 4
+# Gorev (k26-d kalani): kesintisiz GPU en cok 90 dk. Kesme sinirlari ortak/gpu_sicaklik.py'de.
 GPU_SURE_SINIRI_SN = 90 * 60
 DINLENME = {"dopamin": 20, "noradrenalin": 20, "serotonin": 50, "kortizol": 10,
             "oksitosin": 30, "melatonin": 10, "merak": 40}
@@ -111,21 +107,9 @@ def olc(kok_url, soru, durum, bekci):
 
 
 def istegi_dene(kok_url, soru, durum, bekci, dosya, yeniden_baslat, sayac):
-    """Bir istek; kesilirse 70 C'ye kadar bekler, sunucuyu yeniden acar, tekrar dener.
-    Ust uste AYNI_ISTEK_KESME_SINIRI kesmede istegi atlar. False: toplam kesme siniri doldu."""
-    for deneme in range(1, AYNI_ISTEK_KESME_SINIRI + 1):
-        satir = olc(kok_url, soru, durum, bekci)
-        if not bekci.kesildi:
-            yaz(dosya, satir)
-            return True
-        sayac["kesme"] += 1
-        satir["olcum"] = SICAK_ATLANDI if deneme == AYNI_ISTEK_KESME_SINIRI else SICAK_TEKRAR
-        satir["kesme_sonrasi_bekleme_sn"] = bekci.kesme_sonrasi_bekle()
-        yaz(dosya, satir)
-        if sayac["kesme"] >= TOPLAM_KESME_SINIRI:
-            return False
-        yeniden_baslat()
-    return True
+    """Bir istek, sicak kesmede ortak sogu/yeniden ac/tekrar dene duzeniyle. False: toplam kesme siniri doldu."""
+    return sicakta_dene(lambda: olc(kok_url, soru, durum, bekci), bekci, lambda satir: yaz(dosya, satir),
+                        yeniden_baslat, sayac)
 
 
 def olcum_dongusu(kok_url, bekci, dosya, yeniden_baslat):
