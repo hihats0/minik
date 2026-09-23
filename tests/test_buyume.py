@@ -31,6 +31,17 @@ class TestFiltre(unittest.TestCase):
         ciftler = buyume.cift_adaylari(kayitlar, TARIH, emniyet=_gecir)
         self.assertEqual([c["girdi"] for c in ciftler], ["d"])
 
+    def test_x_onekli_kaynak_x_sayilir(self):
+        self.assertTrue(buyume.x_kaynakli_mi({"kaynak": "x:ali"}))
+        self.assertTrue(buyume.x_kaynakli_mi({"kaynak": "  X:Ali"}))
+        self.assertTrue(buyume.x_kaynakli_mi({"platform": None, "kaynak": "x:ali"}))
+        self.assertTrue(buyume.x_kaynakli_mi({}))
+        self.assertFalse(buyume.x_kaynakli_mi({"kaynak": "@ali"}))  # belirsiz, X sayilmaz
+
+    def test_cift_adaylari_x_onekli_eler(self):
+        kayitlar = [{"soru": "a", "cevap": "b", "platform": "konsol", "kaynak": "x:ali"}]
+        self.assertEqual(buyume.cift_adaylari(kayitlar, TARIH, emniyet=_gecir), [])
+
     def test_emniyet_reddi_girmiyor_gercek_bekci(self):
         kayitlar = [_k("iyi"), _k("kotu", cevap="numaram 0532 123 45 67 ara")]
         ciftler = buyume.cift_adaylari(kayitlar, TARIH)

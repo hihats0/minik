@@ -6,7 +6,7 @@ import json
 import time
 
 from ortak import log
-from yuvalar import bekci
+from yuvalar import bekci, bekci_giris
 
 YUVA_ADI = "buyume"
 CIFT_DOSYASI = "egitim-ciftleri.jsonl"
@@ -16,15 +16,17 @@ EGITIM_ESIGI = 500
 # S7/KT8: X icerigi egitim girdisi olamaz. "x" disinda X'ten gelen kaydin baska adi yok (minik.py).
 # "dosya" agzi (f8-a) da eleniyor: dosyayi kimin yazdigi bilinmiyor, X'ten kopya olabilir.
 # "site" (f8-b): ziyaretci Yigit degil, yazdigi bilinmeyen dis kaynak; egitime girmez.
-X_PLATFORMLARI = {"x", "twitter", "dosya", "site"}
+X_PLATFORMLARI = bekci_giris.X_PLATFORMLARI | {"dosya", "site"}
 KABUL_SINAVLARI = ("turkce", "odul")
 
 
 def x_kaynakli_mi(kayit):
     """Kaydin platform ya da kaynak alani X'i gosteriyorsa True; alan yoksa da True (bilinmeyen
-    kaynak guvenli tarafta kalir, S7)."""
+    kaynak guvenli tarafta kalir, S7). Kaynak "x:" onekliyse de X (Bekci X hesabini boyle yazar).
+    Yalniz "@ali" (platform yok, onek yok) belirsiz sayilir, X sayilmaz."""
     platform = str(kayit.get("platform", kayit.get("kaynak", "x"))).strip().lower()
-    return platform in X_PLATFORMLARI
+    kaynak = str(kayit.get("kaynak", "")).strip().lower()
+    return platform in X_PLATFORMLARI or kaynak.startswith(bekci_giris.X_ONEKI)
 
 
 def cift_adaylari(kayitlar, tarih, emniyet=bekci.cikabilir_mi):
