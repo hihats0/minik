@@ -1,21 +1,28 @@
-"""Komut satirindan agiz secer: `--agiz konsol` (varsayilan) ya da `--agiz dosya --girdi X --cikti Y`.
+"""Komut satirindan agiz secer: `--agiz konsol` (varsayilan), `dosya`, `site` ya da `x` (yerel kuyruk).
 Yuva dosyalarina dokunmadan agiz degistirmenin tek yeri. Cagiran: minik.py (__main__)."""
 
 import argparse
 
-from agiz import dosya, konsol
+from agiz import dosya, konsol, site, x
 
 KONSOL = "konsol"
+# Her agiz: (sinif, varsayilan girdi, varsayilan cikti). x'in ciktisi gonderim kuyrugudur.
+DOSYALI_AGIZLAR = {
+    dosya.PLATFORM: (dosya.DosyaAgzi, dosya.VARSAYILAN_GIRDI, dosya.VARSAYILAN_CIKTI),
+    site.PLATFORM: (site.SiteAgzi, site.VARSAYILAN_GIRDI, site.VARSAYILAN_CIKTI),
+    x.PLATFORM: (x.XAgzi, x.VARSAYILAN_GIRDI, x.VARSAYILAN_KUYRUK),
+}
 
 
 def agiz_sec(argumanlar=None):
     """(dinle, soyle, platform) dondurur; platform Defter kaydinin `platform` alanina yazilir."""
     ayristirici = argparse.ArgumentParser(description="Minik ile konus")
-    ayristirici.add_argument("--agiz", choices=[KONSOL, dosya.PLATFORM], default=KONSOL)
-    ayristirici.add_argument("--girdi", default=str(dosya.VARSAYILAN_GIRDI))
-    ayristirici.add_argument("--cikti", default=str(dosya.VARSAYILAN_CIKTI))
+    ayristirici.add_argument("--agiz", choices=[KONSOL, *DOSYALI_AGIZLAR], default=KONSOL)
+    ayristirici.add_argument("--girdi", default=None)
+    ayristirici.add_argument("--cikti", default=None)
     secim = ayristirici.parse_args(argumanlar)
     if secim.agiz == KONSOL:
         return konsol.dinle, konsol.soyle, KONSOL
-    agiz = dosya.DosyaAgzi(secim.girdi, secim.cikti)
-    return agiz.dinle, agiz.soyle, dosya.PLATFORM
+    sinif, girdi, cikti = DOSYALI_AGIZLAR[secim.agiz]
+    agiz = sinif(secim.girdi or girdi, secim.cikti or cikti)
+    return agiz.dinle, agiz.soyle, secim.agiz

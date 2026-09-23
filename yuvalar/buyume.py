@@ -15,7 +15,8 @@ HAZIR_BAYRAGI = "egitim-hazir.flag"
 EGITIM_ESIGI = 500
 # S7/KT8: X icerigi egitim girdisi olamaz. "x" disinda X'ten gelen kaydin baska adi yok (minik.py).
 # "dosya" agzi (f8-a) da eleniyor: dosyayi kimin yazdigi bilinmiyor, X'ten kopya olabilir.
-X_PLATFORMLARI = {"x", "twitter", "dosya"}
+# "site" (f8-b): ziyaretci Yigit degil, yazdigi bilinmeyen dis kaynak; egitime girmez.
+X_PLATFORMLARI = {"x", "twitter", "dosya", "site"}
 KABUL_SINAVLARI = ("turkce", "odul")
 
 

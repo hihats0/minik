@@ -25,3 +25,8 @@ __pycache__/
 
 # Oturum kilidi: canli oturum varken zamanlanmis kosu baslamasin.
 /.kilit
+
+# Agiz kuyruklari (f8-b): yerel, repoya girmez.
+/dosya-agzi/
+/x-agzi/
+/site-agzi/
