@@ -73,3 +73,13 @@ class SicaklikBekcisi:
         while self.son_c > DEVAM_C and not self.kesildi:
             time.sleep(SOGUMA_YOKLAMA_SN)
         return round(time.perf_counter() - basladi, 1)
+
+    def kesme_sonrasi_bekle(self):
+        """Kesmeden sonra cagrilir: DEVAM_C'ye inene kadar bekler, kesildi bayragini indirir (yeni sunucu
+        yeniden kesilebilsin). Bekledigi saniyeyi dondurur."""
+        basladi = time.perf_counter()
+        log.yaz(YUVA_ADI, "kesme_sonrasi_bekle", 0, "ok", {"c": self.son_c})
+        while self.son_c > DEVAM_C:
+            time.sleep(SOGUMA_YOKLAMA_SN)
+        self.kesildi = False
+        return round(time.perf_counter() - basladi, 1)

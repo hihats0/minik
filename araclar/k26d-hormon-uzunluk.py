@@ -28,6 +28,13 @@ EK_ARGUMAN = ["-ngl", "99", "-np", "1", "--port", str(KAFA_PORT)]
 ZAMAN_ASIMI_SN = 180
 DUSUNCE_KAPANIS = "</think>"
 SICAK_DURUM = "olculemedi: sicak"
+SICAK_ATLANDI = "sicak_olculemedi"
+SICAK_TEKRAR = "kesildi_tekrar_denenecek"
+SURE_DOLDU = "olculemedi: 90 dk GPU siniri"
+# Gorev (k26-d kalani): ayni istek 2 kez kesilirse atla, toplam 4 kesmede bitir, kesintisiz GPU en cok 90 dk.
+AYNI_ISTEK_KESME_SINIRI = 2
+TOPLAM_KESME_SINIRI = 4
+GPU_SURE_SINIRI_SN = 90 * 60
 DINLENME = {"dopamin": 20, "noradrenalin": 20, "serotonin": 50, "kortizol": 10,
             "oksitosin": 30, "melatonin": 10, "merak": 40}
 # Uc durum: serotonin iki ucta (uyanik), yorgunda serotonin dinlenmede, melatonin ust esik ustunde.
@@ -91,29 +98,53 @@ def tek_istek(kok_url, soru, durum):
             "cevap_karakter": len(dusunce_ayikla(ham)), "sure_sn": sure}
 
 
-def olcum_dongusu(kok_url, bekci, dosya):
-    """18 istek; her istekten once serinle, istek sirasinda 83 C'de bekci sunucuyu keser -> dur."""
+def olc(kok_url, soru, durum, bekci):
+    """Serinle, tek istek at; baglanti hatasi (kesme dahil) satira yazilir."""
+    bekledi = bekci.serinle()
+    satir = {"sicaklik_once": bekci.son_c, "soguma_sn": bekledi}
+    try:
+        satir.update(tek_istek(kok_url, soru, durum))
+    except OSError as hata:
+        satir.update({"durum": durum, "soru": soru, "hata": str(hata)})
+    satir["sicaklik_sonra"] = bekci.son_c
+    return satir
+
+
+def istegi_dene(kok_url, soru, durum, bekci, dosya, yeniden_baslat, sayac):
+    """Bir istek; kesilirse 70 C'ye kadar bekler, sunucuyu yeniden acar, tekrar dener.
+    Ust uste AYNI_ISTEK_KESME_SINIRI kesmede istegi atlar. False: toplam kesme siniri doldu."""
+    for deneme in range(1, AYNI_ISTEK_KESME_SINIRI + 1):
+        satir = olc(kok_url, soru, durum, bekci)
+        if not bekci.kesildi:
+            yaz(dosya, satir)
+            return True
+        sayac["kesme"] += 1
+        satir["olcum"] = SICAK_ATLANDI if deneme == AYNI_ISTEK_KESME_SINIRI else SICAK_TEKRAR
+        satir["kesme_sonrasi_bekleme_sn"] = bekci.kesme_sonrasi_bekle()
+        yaz(dosya, satir)
+        if sayac["kesme"] >= TOPLAM_KESME_SINIRI:
+            return False
+        yeniden_baslat()
+    return True
+
+
+def olcum_dongusu(kok_url, bekci, dosya, yeniden_baslat):
+    """18 istek; toplam kesme sinirinda ya da GPU sure sinirinda kosuyu bitirir."""
+    sayac = {"kesme": 0}
+    basladi = time.monotonic()
     for durum in DURUMLAR:
         for soru in SORULAR:
-            bekledi = bekci.serinle()
-            satir = {"sicaklik_once": bekci.son_c, "soguma_sn": bekledi}
-            try:
-                satir.update(tek_istek(kok_url, soru, durum))
-            except OSError as hata:
-                satir.update({"durum": durum, "soru": soru, "hata": str(hata)})
-            satir["sicaklik_sonra"] = bekci.son_c
-            if bekci.kesildi:
-                satir["olcum"] = SICAK_DURUM
-                yaz(dosya, satir)
+            if time.monotonic() - basladi > GPU_SURE_SINIRI_SN:
+                return SURE_DOLDU
+            if not istegi_dene(kok_url, soru, durum, bekci, dosya, yeniden_baslat, sayac):
                 return SICAK_DURUM
-            yaz(dosya, satir)
     return "tamam"
 
 
 def gercek_sunucu_baslat():
     """Gemma'yi GPU'da (Vulkan1) acar; ortak/ayar.py'deki k26-b profili."""
     SUNUCU_LOG.parent.mkdir(exist_ok=True)
-    log = SUNUCU_LOG.open("w", encoding="utf-8")
+    log = SUNUCU_LOG.open("a", encoding="utf-8")
     return subprocess.Popen([sunucu_yonet.LLAMA_SERVER, *GEMMA_SUNUCU_ARGUMANLARI, *EK_ARGUMAN, "--no-webui"],
                             stdout=log, stderr=subprocess.STDOUT)
 
@@ -124,15 +155,22 @@ def kos(sunucu_baslat=gercek_sunucu_baslat, okuyucu=None, port=KAFA_PORT, dosya=
     vram = vram or sunucu_yonet.gpu_bellek_mib
     kok_url = f"http://{KAFA_HOST}:{port}"
     yaz(dosya, {"basla": datetime.now().isoformat(timespec="seconds"), "dusunce_payi": KAFA_DUSUNCE_PAYI_TOKEN})
-    proc = sunucu_baslat()
+    sunucu = {"proc": sunucu_baslat()}
+
+    def yeniden_baslat():
+        sunucu_yonet.durdur(sunucu["proc"])
+        sunucu["proc"] = sunucu_baslat()
+        sunucu_yonet.hazir_bekle(sunucu["proc"], port)
+
     ek = {k: v for k, v in (("okuyucu", okuyucu), ("aralik_sn", aralik_sn)) if v is not None}
-    bekci = SicaklikBekcisi(kes=lambda: sunucu_yonet.durdur(proc), **ek).baslat()
+    bekci = SicaklikBekcisi(kes=lambda: sunucu_yonet.durdur(sunucu["proc"]), **ek).baslat()
     try:
-        sunucu_yonet.hazir_bekle(proc, port)
-        sonuc = olcum_dongusu(kok_url, bekci, dosya)
+        sunucu_yonet.hazir_bekle(sunucu["proc"], port)
+        sonuc = olcum_dongusu(kok_url, bekci, dosya, yeniden_baslat)
     finally:
         bekci.bitir()
-        sunucu_yonet.durdur(proc)
+        sunucu_yonet.durdur(sunucu["proc"])
+    proc = sunucu["proc"]
     yaz(dosya, {"bitti": sonuc, "en_yuksek_c": bekci.en_yuksek_c, "vram_sonra_mib": vram(),
                 "sunucu_kapali": proc.poll() is not None})
     return sonuc

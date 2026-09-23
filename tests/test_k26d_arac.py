@@ -23,6 +23,8 @@ _spec.loader.exec_module(k26d)
 HAM = "<think>once dusunuyorum biraz</think>Yagmur buharin yogusmasiyla yagar."
 ISTEK_GECIKME_SN = 0.3
 SAHTE_ARALIK_SN = 0.05
+# Sahte okuyucu icin: kac istek geldi, su an istek suruyor mu (istek surerken "sicak" denebilsin).
+DURUM = {"istek": 0, "surer": False}
 
 
 class Sahte(BaseHTTPRequestHandler):
@@ -45,7 +47,10 @@ class Sahte(BaseHTTPRequestHandler):
             self._json({"tokens": istek["content"].split()})
             return
         self.server.max_tokens.append(istek["max_tokens"])
+        DURUM["istek"] += 1
+        DURUM["surer"] = True
         time.sleep(ISTEK_GECIKME_SN)
+        DURUM["surer"] = False
         self._json({"choices": [{"message": {"content": HAM}, "finish_reason": "stop"}],
                     "usage": {"completion_tokens": 20}})
 
@@ -53,8 +58,8 @@ class Sahte(BaseHTTPRequestHandler):
 class SahteSurec:
     """Popen yerine: sahte sunucuyu ayri is parcaciginda calistirir; terminate kapatir."""
 
-    def __init__(self):
-        self.sunucu = ThreadingHTTPServer(("127.0.0.1", 0), Sahte)
+    def __init__(self, port=0):
+        self.sunucu = ThreadingHTTPServer(("127.0.0.1", port), Sahte)
         self.sunucu.max_tokens = []
         self.port = self.sunucu.server_address[1]
         self.kapali = False
@@ -74,17 +79,26 @@ class SahteSurec:
 
 
 def _kos(okuyucu):
-    surec = SahteSurec()
+    DURUM.update(istek=0, surer=False)
+    surecler = [SahteSurec()]
+    port = surecler[0].port
+
+    def baslat():
+        if surecler[-1].kapali:
+            surecler.append(SahteSurec(port))
+        return surecler[-1]
+
     dosya = Path(tempfile.mkdtemp()) / "k26d.jsonl"
-    sonuc = k26d.kos(sunucu_baslat=lambda: surec, okuyucu=okuyucu, port=surec.port, dosya=dosya,
-                     vram=lambda: 34, aralik_sn=SAHTE_ARALIK_SN)
+    with mock.patch.object(gpu_sicaklik, "SOGUMA_YOKLAMA_SN", SAHTE_ARALIK_SN):
+        sonuc = k26d.kos(sunucu_baslat=baslat, okuyucu=okuyucu, port=port, dosya=dosya,
+                         vram=lambda: 34, aralik_sn=SAHTE_ARALIK_SN)
     satirlar = [json.loads(s) for s in dosya.read_text(encoding="utf-8").splitlines()]
-    return sonuc, satirlar, surec
+    return sonuc, satirlar, surecler
 
 
 class TestK26dArac(unittest.TestCase):
     def test_uctan_uca_18_istek_ve_kapanis(self):
-        sonuc, satirlar, surec = _kos(lambda: 60)
+        sonuc, satirlar, surecler = _kos(lambda: 60)
         olcumler = [s for s in satirlar if "durum" in s]
         self.assertEqual(sonuc, "tamam")
         self.assertEqual(len(olcumler), 18)
@@ -93,16 +107,30 @@ class TestK26dArac(unittest.TestCase):
         self.assertTrue(all(s["bitis"] == "stop" for s in olcumler))
         son = satirlar[-1]
         self.assertEqual((son["en_yuksek_c"], son["vram_sonra_mib"], son["sunucu_kapali"]), (60, 34, True))
-        self.assertTrue(surec.kapali)
+        self.assertEqual(len(surecler), 1)
+        self.assertTrue(surecler[0].kapali)
 
-    def test_83te_istek_sirasinda_sunucu_kesilir_temiz_cikar(self):
-        okumalar = iter([70] + [84] * 1000)
-        sonuc, satirlar, surec = _kos(lambda: next(okumalar))
+    def test_kesilen_istek_soguyunca_yeni_sunucuyla_tekrar_denenir(self):
+        # Yalniz ilk istek surerken 84 C; sonra hep serin.
+        sonuc, satirlar, surecler = _kos(lambda: 84 if DURUM["surer"] and DURUM["istek"] == 1 else 60)
+        olcumler = [s for s in satirlar if "durum" in s]
+        self.assertEqual(sonuc, "tamam")
+        self.assertEqual(olcumler[0]["olcum"], k26d.SICAK_TEKRAR)
+        self.assertEqual(len([s for s in olcumler if "olcum" not in s]), 18)
+        self.assertEqual(len(surecler), 2)
+        self.assertTrue(all(s.kapali for s in surecler))
+
+    def test_ayni_istek_iki_kez_kesilirse_atlanir_toplam_4te_biter(self):
+        sonuc, satirlar, surecler = _kos(lambda: 84 if DURUM["surer"] else 60)
+        olcumler = [s for s in satirlar if "durum" in s]
         self.assertEqual(sonuc, k26d.SICAK_DURUM)
-        self.assertEqual(satirlar[-2]["olcum"], k26d.SICAK_DURUM)
-        self.assertLess(len([s for s in satirlar if "durum" in s]), 18)
+        self.assertEqual([s["olcum"] for s in olcumler],
+                         [k26d.SICAK_TEKRAR, k26d.SICAK_ATLANDI] * 2)
+        self.assertEqual(olcumler[0]["soru"], olcumler[1]["soru"])
+        self.assertNotEqual(olcumler[1]["soru"], olcumler[2]["soru"])
         self.assertEqual(satirlar[-1]["en_yuksek_c"], 84)
-        self.assertTrue(surec.kapali)
+        self.assertEqual(len(surecler), 4)
+        self.assertTrue(all(s.kapali for s in surecler))
 
 
 class TestSerinle(unittest.TestCase):
