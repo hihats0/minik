@@ -451,6 +451,57 @@
     </div>
   </section>
 
+  <section class="karar" data-karar="K31">
+    <div class="etiket"><span>Karar K31</span><span class="damga-isareti" hidden>Verildi</span></div>
+    <h2>Webde okuduğu bilgi Defter'e nasıl girsin?</h2>
+    <p class="hikaye">Web ağzı yazıldı (f10). Minik Vikipedi'yi okuyabiliyor, ama DuckDuckGo onu bot sayıp engelledi. Bekçi bir bilgiyi ancak üç farklı siteden duyarsa kabul ediyor; elde tek site var ve siteler aynı şeyi farklı cümleyle yazdığı için birebir metin karşılaştırması hiç eşleşme bulmuyor. Denemede 10 bulgudan 0'ı geçti.</p>
+    <p class="hikaye">Benzetme: çocuk bir şeyi üç ayrı kişiden duymadan inanmıyor, ama şu an sadece bir öğretmeni var ve herkes aynı şeyi başka kelimeyle söylüyor.</p>
+    <div class="secenekler">
+      <button class="secenek" data-secim="A">
+        <span class="secenek-basi"><span class="harf">A</span><span class="secenek-ad">Kaynak ekle, anlamca karşılaştır<span class="onerilir">Agent önerisi</span></span></span>
+        <span class="secenek-not">Engelsiz başka kaynaklar denenir (İngilizce Vikipedi, bot engeli olmayan başka arama motoru, engelsiz mi ölçülmedi). "Aynı şeyi mi söylüyorlar" sorusu Kafa'ya sorulur (GPU işi). Üç ağız kuralı aynen kalır.</span>
+      </button>
+      <button class="secenek" data-secim="B">
+        <span class="secenek-basi"><span class="harf">B</span><span class="secenek-ad">Web için eşik iki kaynak</span></span>
+        <span class="secenek-not">Daha kolay geçer, yanlış bilgi girme riski artar.</span>
+      </button>
+      <button class="secenek" data-secim="C">
+        <span class="secenek-basi"><span class="harf">C</span><span class="secenek-ad">"Doğrulanmamış" etiketiyle girsin</span></span>
+        <span class="secenek-not">Minik tek kaynaktan okuduğunu "bir yerde okudum" diye söyler, ama kesin bilgi sayılmaz ve gece öğrenmesine girmez.</span>
+      </button>
+    </div>
+    <p class="hikaye"><b>Agent'ın gerekçesi:</b> üç ağız kuralı Minik'in yalan öğrenmesini önleyen tek süzgeç, onu gevşetmek yerine kaynak eklemek daha güvenli. Cevap gelene kadar A ile ilerlenir. Ayrıntı: <code>reports/2026-09-23-f10-web-agzi.md</code>.</p>
+    <div class="not-alani">
+      <label for="not-K31">Eklemek istediğin bir şey</label>
+      <textarea id="not-K31" data-not="K31" placeholder="Örnek: A, ama önce C ile başla"></textarea>
+    </div>
+  </section>
+
+  <section class="karar" data-karar="K32">
+    <div class="etiket"><span>Karar K32</span><span class="damga-isareti" hidden>Verildi</span></div>
+    <h2>Çok hesaplı X kandırmasına sınır koyalım mı?</h2>
+    <p class="hikaye">K28 ile X hesapları artık Bekçi'nin üç ağzından biri sayılıyor (k28-a bitti). Ama "üç hesap" "üç insan" demek değil: tek kişi üç hesap açıp ya da bir bot ağı bir yalanı Defter'e sokabilir. Bugün hesap başına günde 20 iddia sınırı var, X içeriği gece öğrenmesine zaten girmiyor.</p>
+    <div class="secenekler">
+      <button class="secenek" data-secim="A">
+        <span class="secenek-basi"><span class="harf">A</span><span class="secenek-ad">X en fazla iki ağız<span class="onerilir">Agent önerisi</span></span></span>
+        <span class="secenek-not">Bir bilgi için X hesapları en fazla 2 ağız sayılır, üçüncüsü X dışından (web, site) gelmeli.</span>
+      </button>
+      <button class="secenek" data-secim="B">
+        <span class="secenek-basi"><span class="harf">B</span><span class="secenek-ad">Olduğu gibi kalsın</span></span>
+        <span class="secenek-not">Her X hesabı bir ağız. Üç hesap yeter.</span>
+      </button>
+      <button class="secenek" data-secim="C">
+        <span class="secenek-basi"><span class="harf">C</span><span class="secenek-ad">A + yeni hesaplar sayılmaz</span></span>
+        <span class="secenek-not">Ek olarak yeni açılmış hesaplar ağız sayılmaz (hesap yaşı X'ten okunabilirse).</span>
+      </button>
+    </div>
+    <p class="hikaye"><b>Agent'ın gerekçesi:</b> tek kişinin Minik'e yalan öğretmesini en ucuza zorlaştıran yol A. Cevap gelene kadar kod senin K28 kararındaki gibi (B) kalır. Ayrıntı: <code>reports/2026-09-23-k28a-bekci-x.md</code>.</p>
+    <div class="not-alani">
+      <label for="not-K32">Eklemek istediğin bir şey</label>
+      <textarea id="not-K32" data-not="K32" placeholder="Örnek: A"></textarea>
+    </div>
+  </section>
+
   <section class="karar" data-karar="f0c" id="puanlama">
     <div class="etiket"><span>İş, karar değil</span><span class="damga-isareti" hidden>Bitti</span></div>
     <h2>Altı cevaba puan ver</h2>
@@ -496,7 +547,7 @@
       ipucu: "İlk cümle tam doğru, sonrası anlamsız döngü. Agent'ın en çok kararsız kaldığı cevap." }
   ];
 
-  const KARARLAR = ["K21", "K22", "K23", "K24", "K25", "K26", "K27", "K28", "K29", "K30"];
+  const KARARLAR = ["K21", "K22", "K23", "K24", "K25", "K26", "K27", "K28", "K29", "K30", "K31", "K32"];
   const durumKutusu = document.getElementById("durum");
   let db = null;
   const yerel = { kararlar: {}, puanlar: {} };
