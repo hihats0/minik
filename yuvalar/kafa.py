@@ -14,6 +14,7 @@ from yuvalar.kafa_dusunce import dusunce_ayikla
 from ortak.ayar import (
     ALT_ESIK,
     KAFA_BAGLAM,
+    KAFA_DUSUNCE_PAYI_TOKEN,
     KAFA_MAX_TOKEN,
     KAFA_MODEL_YOLU,
     KAFA_SICAKLIK,
@@ -115,7 +116,6 @@ def _ornekleme_ayarlari(hormon_degerleri):
     zorlanan = _mod_zorlanan()
     mod = zorlanan if zorlanan else _mod_hesapla(hormon_degerleri["melatonin"], ONCEKI_MOD)
     ONCEKI_MOD = mod
-
     sicaklik = NORADRENALIN_SICAKLIK_MIN + (hormon_degerleri["noradrenalin"] / 100) * NORADRENALIN_SICAKLIK_ARALIK
     top_p = NORADRENALIN_TOP_P_MIN + (hormon_degerleri["noradrenalin"] / 100) * NORADRENALIN_TOP_P_ARALIK
     max_token = SEROTONIN_MAX_TOKEN_MIN + (hormon_degerleri["serotonin"] / 100) * SEROTONIN_MAX_TOKEN_ARALIK
@@ -124,6 +124,7 @@ def _ornekleme_ayarlari(hormon_degerleri):
     if mod == MOD_YORGUN:
         sicaklik *= MELATONIN_YORGUN_SICAKLIK_CARPANI
         max_token *= MELATONIN_YORGUN_MAX_TOKEN_CARPANI
+    max_token += KAFA_DUSUNCE_PAYI_TOKEN  # k26-d: pay yoksa Gemma'nin think'i cevap butcesini yer
 
     ayarlar = {
         "temperature": round(sicaklik, 3),

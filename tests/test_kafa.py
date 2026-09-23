@@ -203,6 +203,29 @@ class TestKafaHormonModu(unittest.TestCase):
             _, mod = kafa._ornekleme_ayarlari(HORMON_DINLENME)
         self.assertEqual(mod, MOD_YORGUN)
 
+    def test_gemma_butcesi_uclarda_dusunce_payi_arti_asgari_cevap(self):
+        """k26-d: serotonin 0/100 ve yorgun uclarda Gemma butcesi >= dusunce payi + asgari cevap."""
+        from ortak.ayar import (GEMMA_DUSUNCE_PAYI_TOKEN, MELATONIN_YORGUN_MAX_TOKEN_CARPANI,
+                                SEROTONIN_MAX_TOKEN_MIN)
+        asgari_cevap = int(SEROTONIN_MAX_TOKEN_MIN * MELATONIN_YORGUN_MAX_TOKEN_CARPANI)
+        uclar = [({**HORMON_DINLENME, "serotonin": s, "melatonin": m}, onceki)
+                 for s in (0, 100) for m, onceki in ((10, MOD_UYANIK), (90, MOD_YORGUN))]
+        with patch.object(kafa, "KAFA_DUSUNCE_PAYI_TOKEN", GEMMA_DUSUNCE_PAYI_TOKEN):
+            for hormon, onceki in uclar:
+                kafa.ONCEKI_MOD = onceki
+                ayar, _ = kafa._ornekleme_ayarlari(hormon)
+                self.assertGreaterEqual(ayar["max_tokens"], GEMMA_DUSUNCE_PAYI_TOKEN + asgari_cevap)
+
+    def test_qwen_profilinde_hormon_butcesi_eskisi_gibi(self):
+        """Qwen payi 0: serotonin 0 -> 128, 100 -> 768, yorgun serotonin 0 -> 64 (k26-d oncesi degerler)."""
+        from ortak.ayar import QWEN_DUSUNCE_PAYI_TOKEN
+        beklenen = {(0, 10, MOD_UYANIK): 128, (100, 10, MOD_UYANIK): 768, (0, 90, MOD_YORGUN): 64}
+        with patch.object(kafa, "KAFA_DUSUNCE_PAYI_TOKEN", QWEN_DUSUNCE_PAYI_TOKEN):
+            for (s, m, onceki), deger in beklenen.items():
+                kafa.ONCEKI_MOD = onceki
+                ayar, _ = kafa._ornekleme_ayarlari({**HORMON_DINLENME, "serotonin": s, "melatonin": m})
+                self.assertEqual(ayar["max_tokens"], deger)
+
     def test_hormonsuz_cagri_f0_sabitlerini_kullanir(self):
         """hormon_degerleri verilmezse (eski cagiranlar, testler) f0'in olctugu sabit
         ayarlar degismeden kullanilir: geriye donuk uyumluluk."""

@@ -30,6 +30,14 @@ KAFA_TOP_P = 0.9
 GEMMA_MAX_TOKEN = 1024
 QWEN_MAX_TOKEN = 512
 KAFA_MAX_TOKEN = GEMMA_MAX_TOKEN
+# k26-d: hormonlu yolda Gemma'nin max_tokens'i = dusunce payi + hormonun ayarladigi cevap butcesi
+# (hormon cevabi yonetir, think'i degil). Pay OLCUMDEN turetildi: k26-c'de max 512'de kesilen bir
+# cevapta think sonrasi yalniz 51 karakter kaldi (~20 token, 2,5 karakter/token) -> think ~490 token;
+# k26-b'de think ~1200 karakter (/2,5 = 480), k27-a'da 856-1048 karakter. En buyugu yukari yuvarlandi.
+# k26-d GPU olcumu think token'ini /tokenize ile sayar, pay dar kalirsa orada gorunur.
+GEMMA_DUSUNCE_PAYI_TOKEN = 512
+QWEN_DUSUNCE_PAYI_TOKEN = 0  # Qwen think'siz calisiyor (f0), hormon yolu eskisi gibi kalir
+KAFA_DUSUNCE_PAYI_TOKEN = GEMMA_DUSUNCE_PAYI_TOKEN
 
 # Spec 4.2: gunluk jsonl defter/ altinda tutulur, .gitignore'da (Minik'in defteri repoya girmez).
 DEFTER_KLASORU = Path(__file__).resolve().parent.parent / "defter"
@@ -141,11 +149,13 @@ MOD_YORGUN = "yorgun"
 # karakter cevap = 11.650 karakter, sunucu logu n_tokens = 3.816 -> 3,05 karakter/token (sablon
 # etiketleri dahil). Emniyet payi: 2,5 alinir, yani sayim ~%20 fazla cikar, butce erken dolar.
 BAGLAM_KARAKTER_PER_TOKEN = 2.5
-# En uzun cevap: serotonin 100'de 768, hormonsuz cagrida KAFA_MAX_TOKEN (Gemma 1024); buyugu alinir.
-BAGLAM_EN_UZUN_CEVAP_TOKEN = max(SEROTONIN_MAX_TOKEN_MIN + SEROTONIN_MAX_TOKEN_ARALIK, KAFA_MAX_TOKEN)
+# En uzun cevap: serotonin 100'de dusunce payi + 768 (Gemma 1280), hormonsuz cagrida KAFA_MAX_TOKEN
+# (Gemma 1024); buyugu alinir.
+BAGLAM_EN_UZUN_CEVAP_TOKEN = max(KAFA_DUSUNCE_PAYI_TOKEN + SEROTONIN_MAX_TOKEN_MIN + SEROTONIN_MAX_TOKEN_ARALIK,
+                                 KAFA_MAX_TOKEN)
 # Pay: sohbet sablonu ve ileride eklenecek sistem mesaji icin. TAHMIN, olculmedi.
 BAGLAM_PAY_TOKEN = 512
-# 4096 - 1024 - 512 = 2560 token: mesajlar bunu asarsa en eski turlar dusurulur.
+# 4096 - 1280 - 512 = 2304 token (k26-d oncesi 2560): mesajlar bunu asarsa en eski turlar dusurulur.
 BAGLAM_TOKEN_BUTCESI = KAFA_BAGLAM - BAGLAM_EN_UZUN_CEVAP_TOKEN - BAGLAM_PAY_TOKEN
 
 # f4-a Uyku tur 1 (spec 2.4, 3.5). sqlite turetilmis, jsonl'den yeniden uretilebilir (K4).
