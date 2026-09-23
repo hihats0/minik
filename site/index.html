@@ -395,6 +395,62 @@
     </div>
   </section>
 
+  <section class="karar" data-karar="K29">
+    <div class="etiket"><span>Karar K29</span><span class="damga-isareti" hidden>Verildi</span></div>
+    <h2>Minik dış dünyaya ne kadar açılsın?</h2>
+    <p class="hikaye">Üç kapı yazıldı ama hepsi kilitli: X ağzı (Minik X'te paylaşım yapar), site ağzı (internetten gelen mesajı okur) ve karne (Minik'in ölçüm sonuçlarını gösteren sayfa). Kod bunları yalnız bilgisayarında çalıştırıyor; gerçek gönderim yolu hiç yazılmadı. Dışarı çıkan şey geri alınamadığı için kilidi sen açarsın.</p>
+    <p class="hikaye">Benzetme: çocuğun karnesini buzdolabına asmak ile onu sokağa yalnız göndermek aynı şey değil. Karne sadece gösterir; X ve site ağzı dışarıdan söz almak da demek.</p>
+    <div class="secenekler">
+      <button class="secenek" data-secim="A">
+        <span class="secenek-basi"><span class="harf">A</span><span class="secenek-ad">Hepsi kapalı kalsın</span></span>
+        <span class="secenek-not">Hiçbir şey değişmez. Minik sadece senin bilgisayarında.</span>
+      </button>
+      <button class="secenek" data-secim="B">
+        <span class="secenek-basi"><span class="harf">B</span><span class="secenek-ad">Yalnız karne yayında<span class="onerilir">Agent önerisi</span></span></span>
+        <span class="secenek-not">Karne Vercel'e konur, kişisel veri yok, dışarıdan girdi almaz. X ve site ağzı kapalı.</span>
+      </button>
+      <button class="secenek" data-secim="C">
+        <span class="secenek-basi"><span class="harf">C</span><span class="secenek-ad">Karne + site ağzı</span></span>
+        <span class="secenek-not">İnsanlar sitede Minik'e yazabilir. Bekçi süzer ama kötü niyetli girdi riski başlar.</span>
+      </button>
+      <button class="secenek" data-secim="D">
+        <span class="secenek-basi"><span class="harf">D</span><span class="secenek-ad">Hepsi açık, X dahil</span></span>
+        <span class="secenek-not">X hesabı ve token gerekir (hesabı sen açarsın). Paylaşımlar [Automated] etiketli, 280 karakter.</span>
+      </button>
+    </div>
+    <p class="hikaye"><b>Agent'ın gerekçesi:</b> karne GitHub'da gösterilebilir proje hedefine uyar ve hiçbir şey almaz, riski yok denecek kadar az. Dışarıdan girdi alan kapılar Tay dersine dokunuyor; önce K28'in cevabı lazım.</p>
+    <div class="not-alani">
+      <label for="not-K29">Eklemek istediğin bir şey</label>
+      <textarea id="not-K29" data-not="K29" placeholder="Örnek: B, karneyi README'ye de bağla"></textarea>
+    </div>
+  </section>
+
+  <section class="karar" data-karar="K30">
+    <div class="etiket"><span>Karar K30</span><span class="damga-isareti" hidden>Verildi</span></div>
+    <h2>Minik hangi makinede yaşasın?</h2>
+    <p class="hikaye">Minik'in beyni (Kafa) bir yerde çalışmalı, gece öğrenmesi (LoRA, modele küçük bir ek katman eğitmek) de bir yerde yapılmalı. Üç yol var, fiyatları çok farklı. Kaba bir hesapla LoRA eşiğine ~33 gün var, yani acele yok.</p>
+    <p class="hikaye">Benzetme: çocuğu evde büyütmek (bedava ama sen yokken uyuyor), yurda vermek (aylık ücret, hep uyanık) ya da özel okula vermek (çok pahalı).</p>
+    <div class="secenekler">
+      <button class="secenek" data-secim="A">
+        <span class="secenek-basi"><span class="harf">A</span><span class="secenek-ad">Bedava: laptop + ücretsiz GPU<span class="onerilir">Agent önerisi</span></span></span>
+        <span class="secenek-not">Aylık 0 euro. Kafa laptopta (GPU yasağında CPU'da 17-38 sn cevap). LoRA Kaggle/Colab'da. Laptop kapanınca Minik yok.</span>
+      </button>
+      <button class="secenek" data-secim="B">
+        <span class="secenek-basi"><span class="harf">B</span><span class="secenek-ad">CPU sunucu 7/24 (Hetzner CX43)</span></span>
+        <span class="secenek-not">Aylık ~16 euro. Hep açık. 9B modelin orada hızı ölçülmedi (tahmin 15-37 sn).</span>
+      </button>
+      <button class="secenek" data-secim="C">
+        <span class="secenek-basi"><span class="harf">C</span><span class="secenek-ad">GPU kiralama 7/24</span></span>
+        <span class="secenek-not">Aylık 130-194 $. Cevap ~5 sn. Bütçenin çok üstünde, "bulut harcaması yok" kuralına ters.</span>
+      </button>
+    </div>
+    <p class="hikaye"><b>Agent'ın gerekçesi:</b> bugün para harcamayı haklı kılan kanıt yok. B'ye geçmeden önce bedava test: laptopta 9B modelin CPU hızını ölçmek. Çağrı başı 20 sn altındaysa B'yi yeniden konuşuruz.</p>
+    <div class="not-alani">
+      <label for="not-K30">Eklemek istediğin bir şey</label>
+      <textarea id="not-K30" data-not="K30" placeholder="Örnek: A, CPU testini de yap"></textarea>
+    </div>
+  </section>
+
   <section class="karar" data-karar="f0c" id="puanlama">
     <div class="etiket"><span>İş, karar değil</span><span class="damga-isareti" hidden>Bitti</span></div>
     <h2>Altı cevaba puan ver</h2>
@@ -439,7 +495,7 @@
       ipucu: "İlk cümle tam doğru, sonrası anlamsız döngü. Agent'ın en çok kararsız kaldığı cevap." }
   ];
 
-  const KARARLAR = ["K21", "K22", "K23", "K24", "K25", "K26", "K27", "K28"];
+  const KARARLAR = ["K21", "K22", "K23", "K24", "K25", "K26", "K27", "K28", "K29", "K30"];
   const durumKutusu = document.getElementById("durum");
   let db = null;
   const yerel = { kararlar: {}, puanlar: {} };
