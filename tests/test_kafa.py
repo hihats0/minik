@@ -13,6 +13,8 @@ from unittest.mock import patch
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from ortak.ayar import (
+    KARAKTER_DOSYASI,
+    KARAKTER_OZET_UZUNLUGU,
     ALT_ESIK,
     KAFA_SICAKLIK,
     KAFA_TOP_P,
@@ -74,8 +76,9 @@ class TestKafa(unittest.TestCase):
         onceki = [{"role": "user", "content": "ilk soru"}, {"role": "assistant", "content": "ilk cevap"}]
         with patch("yuvalar.kafa.urllib.request.urlopen", side_effect=_sahte_urlopen_kur(yakalanan)):
             kafa.dusun("ikinci soru", onceki)
-        self.assertEqual(len(yakalanan["govde"]["messages"]), 3)
-        self.assertEqual(yakalanan["govde"]["messages"][0]["content"], "ilk soru")
+        # k23-2: ilk mesaj karakterin sistem mesaji, onceki baglam ondan sonra gelir.
+        self.assertEqual(len(yakalanan["govde"]["messages"]), 4)
+        self.assertEqual(yakalanan["govde"]["messages"][1]["content"], "ilk soru")
 
     def test_ornekleme_ayarlari_govdeye_giriyor(self):
         """Sicaklik ve top_p, ortak/ayar.py'daki sabitlerle birebir ayni gitmeli."""
@@ -214,11 +217,44 @@ class TestYorgunTalimat(unittest.TestCase):
 
     def test_yorgun_modda_talimat_istege_ve_loga_girer(self):
         mesajlar, ayarlar = self._sor(MOD_YORGUN)
-        self.assertEqual(mesajlar[0], {"role": "system", "content": MELATONIN_YORGUN_TALIMATI})
+        self.assertEqual([m["role"] for m in mesajlar], ["system", "user"])
+        self.assertTrue(mesajlar[0]["content"].endswith(MELATONIN_YORGUN_TALIMATI))
+        self.assertIn("Minik", mesajlar[0]["content"])
         self.assertEqual(mesajlar[-1]["content"], "soru")
         self.assertEqual(ayarlar["talimat"], MELATONIN_YORGUN_TALIMATI)
 
     def test_uyanik_modda_talimat_yok(self):
         mesajlar, ayarlar = self._sor(MOD_UYANIK)
-        self.assertEqual([m["role"] for m in mesajlar], ["user"])
+        self.assertEqual([m["role"] for m in mesajlar], ["system", "user"])
+        self.assertNotIn(MELATONIN_YORGUN_TALIMATI, mesajlar[0]["content"])
         self.assertIsNone(ayarlar["talimat"])
+
+
+class TestKarakter(unittest.TestCase):
+    """k23-2: karakter dosyasi her istekte sistem mesaji olur; yoksa akis cokmez, loglanir."""
+
+    def _sor(self, baglam=None):
+        yakalanan = {}
+        with patch("yuvalar.kafa.urllib.request.urlopen", side_effect=_sahte_urlopen_kur(yakalanan)),                 patch("yuvalar.kafa.log.yaz") as log_yaz:
+            kafa.dusun("soru", baglam)
+        return yakalanan["govde"]["messages"], log_yaz
+
+    def test_karakter_her_istekte_ilk_sistem_mesaji(self):
+        beklenen = KARAKTER_DOSYASI.read_text(encoding="utf-8").strip()
+        for baglam in (None, [{"role": "user", "content": "a"}, {"role": "assistant", "content": "b"}]):
+            mesajlar, _ = self._sor(baglam)
+            self.assertEqual(mesajlar[0], {"role": "system", "content": beklenen})
+            self.assertEqual(sum(m["role"] == "system" for m in mesajlar), 1)
+
+    def test_logda_karakter_ozeti_var(self):
+        _, log_yaz = self._sor()
+        ozet = log_yaz.call_args[0][4]["ayarlar"]["karakter"]
+        self.assertEqual(len(ozet), KARAKTER_OZET_UZUNLUGU)
+
+    def test_dosya_yoksa_cokmez_ve_loglar(self):
+        with patch("yuvalar.kafa.KARAKTER_DOSYASI", Path("yok/boyle-dosya.md")):
+            mesajlar, log_yaz = self._sor()
+        self.assertEqual([m["role"] for m in mesajlar], ["user"])
+        hata_satirlari = [c for c in log_yaz.call_args_list if c[0][1] == "karakter_oku"]
+        self.assertEqual(hata_satirlari[0][0][3], "hata")
+        self.assertIsNone(log_yaz.call_args[0][4]["ayarlar"]["karakter"])

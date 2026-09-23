@@ -112,6 +112,12 @@ MELATONIN_YORGUN_TALIMATI = ("Cok yorgunsun ve konusmaya isteksizsin: kisa, bira
 # siddet (tavan) sayildi. Akista kullanilir (minik.py).
 KORTIZOL_CEZA_SIDDETI = 1.0
 
+# k23-2: Minik'in kimligi. Her istekte sistem mesaji olarak gider (yorgun talimati ayni mesaja
+# eklenir). Kisa tutuldu: 21 Eyl olcumunde uzun karakter promptu 4B'nin Turkcesini bozdu.
+KARAKTER_DOSYASI = Path(__file__).resolve().parent.parent / "karakter" / "minik.md"
+# Logdaki karakter surumu: sha256'nin ilk 12 hanesi (hangi metinle olculdugu bilinsin diye).
+KARAKTER_OZET_UZUNLUGU = 12
+
 # f3-c'nin "ayni soru, iki mod" kosusu icin: bu ortam degiskeni "uyanik"/"yorgun" degerlerinden
 # biriyle set edilirse Kafa'nin hesapladigi mod'u ezer (minik.py'nin calistir imzasi degismez).
 MOD_ZORLA_DEGISKENI = "MINIK_HORMON_MOD_ZORLA"

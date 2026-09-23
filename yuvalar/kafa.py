@@ -2,6 +2,7 @@
 Hormon degerlerini ornekleme ayarlarina cevirir (kademe 1, K6: donusum burada, akista degil).
 Cagiran: minik.py akisi."""
 
+import hashlib
 import json
 import os
 import time
@@ -18,6 +19,8 @@ from ortak.ayar import (
     KAFA_TOP_P,
     KAFA_UC,
     KAFA_ZAMAN_ASIMI_SN,
+    KARAKTER_DOSYASI,
+    KARAKTER_OZET_UZUNLUGU,
     KORTIZOL_REPEAT_PENALTY_ARALIK,
     KORTIZOL_REPEAT_PENALTY_MIN,
     MELATONIN_YORGUN_MAX_TOKEN_CARPANI,
@@ -40,6 +43,8 @@ YUVA_ADI = "kafa"
 TIMINGS_PROMPT_MS = "prompt_ms"
 TIMINGS_URETIM_MS = "predicted_ms"
 MS_SANIYE = 1000.0
+# Karakter metni ile yorgun talimati arasina bos satir (tek sistem mesajinda iki paragraf).
+PARCA_AYIRICI = "\n\n"
 # Onceki turun modu: cift esik (Schmitt tetikleyici) hafiza ister, tek surecli akis tek Kafa
 # kullandigi icin modul seviyesinde tutuluyor (testler dogrudan sifirlayabilir, DEFTER_KLASORU
 # gibi).
@@ -55,9 +60,11 @@ def dusun(soru, baglam=None, hormon_degerleri=None):
     mesajlar = list(baglam) if baglam else []
     mesajlar.append({"role": "user", "content": soru})
     ayarlar, mod = _ornekleme_ayarlari(hormon_degerleri)
-    mesajlar = _mod_talimati_ekle(mesajlar, mod)
+    karakter, karakter_ozeti = _karakter_oku()
+    mesajlar = _sistem_mesaji_ekle(mesajlar, karakter, mod)
     govde = _govde_olustur(mesajlar, ayarlar)
-    ayarlar = {**ayarlar, "talimat": MELATONIN_YORGUN_TALIMATI if mod == MOD_YORGUN else None}
+    ayarlar = {**ayarlar, "talimat": MELATONIN_YORGUN_TALIMATI if mod == MOD_YORGUN else None,
+               "karakter": karakter_ozeti}
     try:
         cevap, token_sayisi, timings = _sunucuya_sor(govde)
     except (urllib.error.URLError, OSError) as hata:
@@ -133,12 +140,29 @@ def _mod_zorlanan():
     return deger if deger in (MOD_UYANIK, MOD_YORGUN) else None
 
 
-def _mod_talimati_ekle(mesajlar, mod):
-    """Yorgun modda (f3-g, K25=B) listenin basina tek cumlelik sistem talimati koyar;
-    uyanik modda liste degismeden doner. Ornekleme ayarlarinin yanina kaliteyi de degistirir."""
-    if mod != MOD_YORGUN:
+def _karakter_oku():
+    """Karakter dosyasini okur, (metin, sha256 kisa ozeti) dondurur. Dosya yoksa ya da
+    okunamazsa hatayi loglar ve (None, None) doner: Minik karaktersiz konusur ama susmaz."""
+    try:
+        ham = KARAKTER_DOSYASI.read_bytes()
+    except OSError as hata:
+        log.yaz(YUVA_ADI, "karakter_oku", 0, "hata",
+                {"hata": str(hata), "dosya": str(KARAKTER_DOSYASI)})
+        return None, None
+    ozet = hashlib.sha256(ham).hexdigest()[:KARAKTER_OZET_UZUNLUGU]
+    return ham.decode("utf-8").strip(), ozet
+
+
+def _sistem_mesaji_ekle(mesajlar, karakter, mod):
+    """Listenin basina TEK sistem mesaji koyar: karakter metni, yorgun modda altina tek cumlelik
+    talimat (f3-g, K25=B). Iki ayri sistem mesaji yok: sohbet sablonlari sistem mesajini listenin
+    basinda tek parca bekler. Ikisi de yoksa liste degismeden doner."""
+    parcalar = [karakter] if karakter else []
+    if mod == MOD_YORGUN:
+        parcalar.append(MELATONIN_YORGUN_TALIMATI)
+    if not parcalar:
         return mesajlar
-    return [{"role": "system", "content": MELATONIN_YORGUN_TALIMATI}] + mesajlar
+    return [{"role": "system", "content": PARCA_AYIRICI.join(parcalar)}] + mesajlar
 
 
 def _govde_olustur(mesajlar, ayarlar):
