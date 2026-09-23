@@ -94,7 +94,8 @@ def _kapidan_gecenler(baglanti, kayitlar, tarih):
     Kaynak kimligi `kaynak` alani, yoksa `platform` alani (tur 1 siniri, rapor)."""
     return [k for k in kayitlar
             if bekci_giris.gecsin_mi(baglanti, k.get("soru", ""),
-                                     k.get("kaynak", k.get("platform")), tarih)[0]]
+                                     k.get("kaynak", k.get("platform")), tarih,
+                                     k.get("platform"))[0]]
 
 
 def _gun_ekle(tarih, gun_sayisi):

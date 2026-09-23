@@ -173,3 +173,7 @@ UYKU_UST_ESIK = 75.0
 UYKU_ALT_ESIK = 60.0
 # Kalici hormon durumu ve gece sayaci (yas): defter/hormon.json (spec 2.4 gunduz, adim 7).
 HORMON_DOSYA_ADI = "hormon.json"
+
+# Tay kurali (CLAUDE.md, devam.md bolum 0): sosyal medya kaynagi giris kapisindan kaliciya hic gecmez;
+# gevsemesi ayri Yigit karari (f5).
+KALICIYA_KAPALI_PLATFORMLAR = {"x", "twitter"}

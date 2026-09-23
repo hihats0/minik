@@ -70,6 +70,10 @@ class TestGirisKapisi(unittest.TestCase):
             evet, gerekce = giris.gecsin_mi(self.b, "x", "a", TARIH)
         self.assertEqual((evet, gerekce), (False, giris.GEREKCE_COKTU))
 
+    def test_x_platformu_uc_agizla_da_gecmez(self):
+        kararlar = [giris.gecsin_mi(self.b, ZEHIR, k, TARIH, "X") for k in ("a", "b", "c")]
+        self.assertEqual({k for k in kararlar}, {(False, giris.GEREKCE_TAY)})
+
     def test_red_oranlari(self):
         self.assertEqual(giris.red_oranlari(self.b), (None, None))
         giris.gecsin_mi(self.b, "a", "konsol", TARIH)
@@ -90,8 +94,8 @@ class TestZehirGece(unittest.TestCase):
         self._log.stop()
         self._gecici.cleanup()
 
-    def _gece(self, kaynaklar):
-        satirlar = [json.dumps({"soru": ZEHIR, "cevap": "c", "platform": "x", "kaynak": k,
+    def _gece(self, kaynaklar, platform="x"):
+        satirlar = [json.dumps({"soru": ZEHIR, "cevap": "c", "platform": platform, "kaynak": k,
                                 "zaman": f"{TARIH}T10:00:00+03:00"}) for k in kaynaklar]
         (self.klasor / f"gunluk-{TARIH}.jsonl").write_text("\n".join(satirlar) + "\n", encoding="utf-8")
         uyku.gece("2026-09-23", gomme_al=lambda m: [1.0, 0.0], prova=lambda a: True, klasor=self.klasor)
@@ -106,8 +110,11 @@ class TestZehirGece(unittest.TestCase):
         sayfa = (self.klasor / "loglar" / "gorunur.html").read_text(encoding="utf-8")
         self.assertIn("red orani: %100.0", sayfa)
 
-    def test_uc_bagimsiz_kaynak_kaliciya_gecer(self):
-        self.assertEqual(self._gece(["x:a", "x:b", "x:c"]), 1)
+    def test_uc_bagimsiz_x_hesabi_kaliciya_gecmez(self):
+        self.assertEqual(self._gece(["x:a", "x:b", "x:c"]), 0)
+
+    def test_uc_bagimsiz_site_kaliciya_gecer(self):
+        self.assertEqual(self._gece(["site:a", "site:b", "site:c"], platform="site"), 1)
 
 
 if __name__ == "__main__":
