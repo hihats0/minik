@@ -1,5 +1,5 @@
 """Akis: sirayi tutar, karar vermez (K6). Agizdan alir, Kafa'ya sorar, Bekci'den gecirir,
-Defter'e yazar, agiza soyler, loglar. Kalp'in refleks onerisi golge modda yalniz loglanir (f6). Tur sonunda Uyku tetigine sorar, "uyu" derse gece isini
+Defter'e yazar, agiza soyler, loglar. Kalp'in refleks onerisi golge modda yalniz loglanir (f6). Hesap taninirsa Calgici sonucu Kafa'ya baglam olur (f7). Tur sonunda Uyku tetigine sorar, "uyu" derse gece isini
 cagirir (P5, A7: ayri surec degil). Her turda Hormonlar'i olayla gunceller (R1: akis
 gunceller, ama hangi hormonun nasil degisecegine hormonlar.py karar verir).
 Cagiran: elle `python minik.py` ile baslatilir."""
@@ -10,7 +10,7 @@ from datetime import datetime
 from agiz import konsol
 from ortak import baglam_butce, kaynak_olc, log
 from ortak.ayar import HORMON_DOSYA_ADI, KORTIZOL_CEZA_SIDDETI, MELATONIN_IS_TAVAN_SN
-from yuvalar import bekci, defter, hormonlar, kafa, kalp, uyku, uyku_tetik
+from yuvalar import bekci, calgici_tani, defter, hormonlar, kafa, kalp, uyku, uyku_tetik
 
 YUVA_ADI = "akis"
 DIS_ID = "konsol"
@@ -97,7 +97,7 @@ def _tur_isle(soru, baglam, dusun, hormon_durumu):
     hormon_degerleri = hormon_durumu.oku()
     baglam_butce.sinirla(baglam, soru)  # f3-f: 8192'lik baglam ~21. turda tasiyordu
     try:
-        cevap, is_sn = dusun(soru, baglam, hormon_degerleri)
+        cevap, is_sn = dusun(soru, _kafa_baglami(soru, baglam, hormon_durumu), hormon_degerleri)
     except Exception as hata:
         hormon_durumu.guncelle("ceza", KORTIZOL_CEZA_SIDDETI)
         log.yaz(YUVA_ADI, "tur", _gecen_ms(basladi), "hata", {"hata": str(hata)})
@@ -111,6 +111,13 @@ def _tur_isle(soru, baglam, dusun, hormon_durumu):
     baglam.append({"role": "assistant", "content": cevap})
     log.yaz(YUVA_ADI, "tur", _gecen_ms(basladi), "ok", {"soru_uzunlugu": len(soru)})
     return cevap, True
+
+
+def _kafa_baglami(soru, baglam, hormon_durumu):
+    """Hesap taninirsa Calgici sonucu bu tura ozel sistem mesaji olarak eklenir (f7), kalici
+    baglama girmez. Hesap sonucu Kafa'nin metninden okunmaz, hep Calgici'dan gelir (spec 3.3)."""
+    ek = calgici_tani.baglam_mesaji(soru, hormon_durumu)
+    return baglam if ek is None else baglam + [ek]
 
 
 def _gecen_ms(basladi):
