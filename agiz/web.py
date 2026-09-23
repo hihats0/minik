@@ -1,4 +1,4 @@
-"""Web agzi (f10): merak edilen sorguyu DuckDuckGo HTML ve Turkce Vikipedi'den okur, sonuclari Bekci giris
+"""Web agzi (f10): merak edilen sorguyu DuckDuckGo HTML, Turkce Vikipedi ve web_ek kaynaklarindan okur, sonuclari Bekci giris
 kaydina cevirir (kaynak = alan adi). Oturum acmaz, engel gorurse durur. Cagiran: araclar/f10-web-dene.py, testler."""
 
 import html
@@ -10,6 +10,7 @@ import urllib.parse
 import urllib.request
 from html.parser import HTMLParser
 
+from agiz import web_ek
 from ortak import log
 
 YUVA_ADI = "agiz_web"
@@ -130,19 +131,27 @@ def kayda_cevir(sorgu, sonuc):
 
 
 def ara(sorgu, en_cok=EN_COK_SONUC):
-    """Sorguyu iki kaynakta arar, bos ozetleri atar, kayit listesi dondurur. Engel yukseltir, yutulmaz."""
+    """Sorguyu butun kaynaklarda arar, bos ozetleri atar, kayit listesi dondurur. Engelli ya da ulasilamayan
+    kaynak loglanip atlanir (asilmaz); digerleriyle devam edilir."""
     kodlu = urllib.parse.quote(sorgu)
+    kaynaklar = [("ddg", DDG_ADRESI + kodlu, ddg_ayristir),
+                 ("tr_viki", VIKI_ADRESI.format(n=en_cok) + kodlu, viki_ayristir)] + web_ek.adresler(kodlu, en_cok)
     sonuclar = []
-    try:
-        sonuclar = ddg_ayristir(getir(DDG_ADRESI + kodlu))[:en_cok]
-    except Engellendi as hata:
-        # Engel getir() icinde loglandi; o site icin durulur, asilmaz, Vikipedi ile devam edilir.
-        log.yaz(YUVA_ADI, "ara", 0, "hata", {"sorgu": sorgu, "hata": str(hata), "devam": VIKI_ALANI})
-    sonuclar += viki_ayristir(getir(VIKI_ADRESI.format(n=en_cok) + kodlu))
+    for ad, adres, ayristirici in kaynaklar:
+        sonuclar += _kaynaktan(sorgu, ad, adres, ayristirici)[:en_cok]
     kayitlar = [kayda_cevir(sorgu, s) for s in sonuclar if s["ozet"].strip()]
     log.yaz(YUVA_ADI, "ara", 0, "ok", {"sorgu": sorgu, "kayit": len(kayitlar),
                                         "alan": len({k["kaynak"] for k in kayitlar})})
     return kayitlar
+
+
+def _kaynaktan(sorgu, ad, adres, ayristirici):
+    """Tek kaynagi okur; engel ya da ag hatasi loglanir ve bos liste doner, bir kaynak digerlerini durdurmaz."""
+    try:
+        return ayristirici(getir(adres))
+    except (Engellendi, urllib.error.URLError, TimeoutError, ValueError, KeyError) as hata:
+        log.yaz(YUVA_ADI, "ara", 0, "hata", {"sorgu": sorgu, "kaynak": ad, "hata": str(hata)})
+        return []
 
 
 def _ms(basladi):
