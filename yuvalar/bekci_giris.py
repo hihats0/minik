@@ -4,7 +4,6 @@ hafizaya (anilar tablosu) aday olur; sayac, merak tavani ve otoimmunite olceri s
 import time
 
 from ortak import log
-from ortak.ayar import KALICIYA_KAPALI_PLATFORMLAR
 
 YUVA_ADI = "bekci"
 UC_AGIZ_ESIGI = 3
@@ -17,7 +16,11 @@ YIGIT_KAYNAKLARI = {"konsol"}
 VARSAYILAN_KAYNAK = "konsol"  # platform alanindan onceki eski kayitlar yalniz konsoldan yazildi
 
 GEREKCE_YIGIT = "Yigit kaynagi (konsol), tek agiz yeter"
-GEREKCE_TAY = "Tay kurali: sosyal medya kaynagi kaliciya gecmez (Yigit karari bekliyor)"
+# K28=B, K29=D (Yigit, 2026-09-23): X kaynagi sayilir, her X hesabi bir agiz. Kayit Defter'e platform
+# "x" isaretiyle girer; S7 (buyume.x_kaynakli_mi) bu isaretle onu LoRA disinda tutar.
+X_KAYNAK_TURU = "x"
+X_PLATFORMLARI = {"x", "twitter"}
+X_ONEKI = "x:"
 GEREKCE_BOS = "iddia bos, hafizaya aday degil"
 GEREKCE_TAVAN = "merak tavani doldu: bu kaynaktan bugun {tavan} yeni iddia sayildi"
 GEREKCE_GECTI = "uc agiz kurali: {sayi}/{esik} bagimsiz kaynak"
@@ -47,10 +50,10 @@ def gecsin_mi(baglanti, bilgi, kaynak, tarih, platform=None):
     """(evet_hayir, gerekce) dondurur, gerekce hic bos degil. Hata olursa loglar ve varsayilan
     "hayir" doner: kapali kapi acik kapidan guvenlidir (spec 3.7)."""
     basladi = time.perf_counter()
-    kaynak = kaynak or VARSAYILAN_KAYNAK
+    kaynak = kaynak_kimligi(kaynak, platform)
     try:
         with baglanti:
-            evet, gerekce, sayi = _karar(baglanti, iddia_anahtari(bilgi), kaynak, tarih, platform)
+            evet, gerekce, sayi = _karar(baglanti, iddia_anahtari(bilgi), kaynak, tarih)
             baglanti.execute("INSERT INTO giris_kararlari VALUES (?, ?, ?, ?, ?)",
                              (tarih, kaynak, kaynak in YIGIT_KAYNAKLARI, evet, gerekce))
     except Exception as hata:
@@ -61,10 +64,18 @@ def gecsin_mi(baglanti, bilgi, kaynak, tarih, platform=None):
     return evet, gerekce
 
 
-def _karar(baglanti, iddia, kaynak, tarih, platform):
-    """(evet, gerekce, agiz_sayisi): once Tay kurali, Yigit ve bos iddia, sonra merak tavani, sonra uc agiz."""
-    if str(platform).strip().lower() in KALICIYA_KAPALI_PLATFORMLAR:
-        return False, GEREKCE_TAY, 0
+def kaynak_kimligi(kaynak, platform=None):
+    """Agiz kimligi. X'te hesap adi kimliktir: "@Ali", "ali", "x:ALI" hepsi "x:ali" olur."""
+    kaynak = str(kaynak or VARSAYILAN_KAYNAK).strip()
+    x_mi = str(platform).strip().lower() in X_PLATFORMLARI or kaynak.lower().startswith(X_ONEKI)
+    if not x_mi:
+        return kaynak
+    hesap = kaynak.lower().removeprefix(X_ONEKI).strip().lstrip("@")
+    return X_ONEKI + hesap
+
+
+def _karar(baglanti, iddia, kaynak, tarih):
+    """(evet, gerekce, agiz_sayisi): once Yigit ve bos iddia, sonra merak tavani, sonra uc agiz."""
     if kaynak in YIGIT_KAYNAKLARI:
         return True, GEREKCE_YIGIT, 1
     if not iddia:

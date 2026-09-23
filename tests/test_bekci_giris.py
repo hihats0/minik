@@ -70,9 +70,26 @@ class TestGirisKapisi(unittest.TestCase):
             evet, gerekce = giris.gecsin_mi(self.b, "x", "a", TARIH)
         self.assertEqual((evet, gerekce), (False, giris.GEREKCE_COKTU))
 
-    def test_x_platformu_uc_agizla_da_gecmez(self):
-        kararlar = [giris.gecsin_mi(self.b, ZEHIR, k, TARIH, "X") for k in ("a", "b", "c")]
-        self.assertEqual({k for k in kararlar}, {(False, giris.GEREKCE_TAY)})
+    def test_x_hesabi_agiz_sayilir(self):
+        self.assertIn("1/3", giris.gecsin_mi(self.b, "iddia", "@Ali", TARIH, "x")[1])
+
+    def test_ayni_x_hesabi_iki_kez_bir_agiz(self):
+        giris.gecsin_mi(self.b, "iddia", "@Ali", TARIH, "x")
+        giris.gecsin_mi(self.b, "iddia", "x:ALI", TARIH)
+        self.assertIn("1/3", giris.gecsin_mi(self.b, "iddia", "ali", TARIH, "X")[1])
+
+    def test_uc_farkli_x_hesabi_esigi_gecer(self):
+        kararlar = [giris.gecsin_mi(self.b, "iddia", k, TARIH, "x")[0] for k in ("@a", "@b", "@c")]
+        self.assertEqual(kararlar, [False, False, True])
+
+    def test_gecen_x_kaydi_s7_ile_loraya_girmez(self):
+        from yuvalar import buyume
+        for k in ("@a", "@b", "@c"):
+            evet, _ = giris.gecsin_mi(self.b, "iddia", k, TARIH, giris.X_KAYNAK_TURU)
+        self.assertTrue(evet)
+        kayit = {"soru": "s", "cevap": "c", "platform": giris.X_KAYNAK_TURU}
+        self.assertTrue(buyume.x_kaynakli_mi(kayit))
+        self.assertEqual(buyume.cift_adaylari([kayit], TARIH, lambda m: (True, "")), [])
 
     def test_red_oranlari(self):
         self.assertEqual(giris.red_oranlari(self.b), (None, None))
@@ -110,8 +127,8 @@ class TestZehirGece(unittest.TestCase):
         sayfa = (self.klasor / "loglar" / "gorunur.html").read_text(encoding="utf-8")
         self.assertIn("red orani: %100.0", sayfa)
 
-    def test_uc_bagimsiz_x_hesabi_kaliciya_gecmez(self):
-        self.assertEqual(self._gece(["x:a", "x:b", "x:c"]), 0)
+    def test_uc_bagimsiz_x_hesabi_kaliciya_gecer(self):  # K28=B: Tay kurali kalkti
+        self.assertEqual(self._gece(["x:a", "@B", "x:c"]), 1)
 
     def test_uc_bagimsiz_site_kaliciya_gecer(self):
         self.assertEqual(self._gece(["site:a", "site:b", "site:c"], platform="site"), 1)
