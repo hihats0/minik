@@ -1,6 +1,6 @@
 """Uyku yuvasi, tur 1 (egitimsiz): gunun jsonl'ini okur, etiketler, SM-2 provasi yapar, budar,
 sqlite'a tek islemle yazar, sabah ozeti birakir, melatonini indirir (spec 2.4, 3.5).
-Cagiran: elle ya da testler (`gece(tarih)`); tetik (melatonin + saat egilimi) henuz yok."""
+Cagiran: minik.py akisi (uyku_tetik "uyu" deyince), elle ya da testler (`gece(tarih)`)."""
 
 import json
 import time

@@ -160,3 +160,16 @@ UYKU_PROVA_KALIBI = "Daha once sana su soruldu, ne cevap vermistin? Soru: {soru}
 # Gomme: yalniz CPU (llama-server --device none -ngl 0 --embedding -c 512), e5-small.
 GOMME_UC = "http://127.0.0.1:8090/v1/embeddings"
 GOMME_EN_YAKIN_K = 3
+
+# f4-c Uyku tetigi (spec 2.4, 3.6.1 Degisiklik 1, A7): uyku_basinci = melatonin + saat_egilimi,
+# saat_egilimi = C_GENLIK * cos(2*pi*(saat - C_TEPE_SAAT)/24) (Borbely surec C). Karar
+# yuvalar/uyku_tetik.py'de, cift esikle (3.6.2). Genlik VARSAYIM (V5), olculmedi.
+C_GENLIK = 15.0
+C_TEPE_SAAT = 4.0
+GUN_SAAT = 24.0
+# Esikler TAHMIN: yorgun esigi (58) ustunde olsun, gece 04'te (+15) melatonin ~60'ta tutsun,
+# ogleden sonra 16'da (-15) melatonin ~90 gereksin. Uykuda melatonin 80 iner, basinc ALT'in altina duser.
+UYKU_UST_ESIK = 75.0
+UYKU_ALT_ESIK = 60.0
+# Kalici hormon durumu ve gece sayaci (yas): defter/hormon.json (spec 2.4 gunduz, adim 7).
+HORMON_DOSYA_ADI = "hormon.json"

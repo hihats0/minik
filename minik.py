@@ -1,14 +1,16 @@
 """Akis: sirayi tutar, karar vermez (K6). Agizdan alir, Kafa'ya sorar, Bekci'den gecirir,
-Defter'e yazar, agiza soyler, loglar. Her turda Hormonlar'i olayla gunceller (R1: akis
+Defter'e yazar, agiza soyler, loglar. Tur sonunda Uyku tetigine sorar, "uyu" derse gece isini
+cagirir (P5, A7: ayri surec degil). Her turda Hormonlar'i olayla gunceller (R1: akis
 gunceller, ama hangi hormonun nasil degisecegine hormonlar.py karar verir).
 Cagiran: elle `python minik.py` ile baslatilir."""
 
 import time
+from datetime import datetime
 
 from agiz import konsol
 from ortak import baglam_butce, kaynak_olc, log
-from ortak.ayar import KORTIZOL_CEZA_SIDDETI, MELATONIN_IS_TAVAN_SN
-from yuvalar import bekci, defter, hormonlar, kafa
+from ortak.ayar import HORMON_DOSYA_ADI, KORTIZOL_CEZA_SIDDETI, MELATONIN_IS_TAVAN_SN
+from yuvalar import bekci, defter, hormonlar, kafa, uyku, uyku_tetik
 
 YUVA_ADI = "akis"
 DIS_ID = "konsol"
@@ -16,26 +18,45 @@ CIKIS_KELIMESI = "cik"
 DUSUNEMIYORUM_METNI = "Su an dusunemiyorum."
 DEFTER_HATASI_METNI = "Defter yazilamadi, Minik duruyor."
 ENGELLENDI_METNI = "Bunu boyle soyleyemem."
+DAKIKA_SAAT = 60
 
 
-def calistir(dinle=konsol.dinle, soyle=konsol.soyle, dusun=kafa.dusun, hormon_durumu=None):
-    """Sohbet dongusu: dinle -> dusun -> soyle -> Defter'e yaz -> logla. `cik` yazilinca
-    durur; Defter yazamazsa da durur (kaydedilmeyen konusma en pahali kayiptir, spec 3.4).
-    dinle/soyle/dusun disaridan verilebilir: agiz degisince bu dosya degismez (spec 2.6).
-    dusun (cevap, is_sn) dondurur (yuvalar/kafa.py sozlesmesi).
-    hormon_durumu da disaridan verilebilir (testler icin); verilmezse taze bir Hormonlar()
-    baslar, yani her calistir() cagrisi dinlenme degerleriyle acilir (defter/hormon.json gibi
-    bir kalicilik bu kosunun kapsaminda degil, bkz. rapor)."""
+def calistir(dinle=konsol.dinle, soyle=konsol.soyle, dusun=kafa.dusun, hormon_durumu=None,
+             gece=uyku.gece, simdi=datetime.now):
+    """Sohbet dongusu: dinle -> dusun -> soyle -> Defter'e yaz -> uyku tetigi -> logla. `cik`
+    yazilinca durur; Defter yazamazsa da durur (kaydedilmeyen konusma en pahali kayiptir, spec 3.4).
+    dinle/soyle/dusun/gece/simdi disaridan verilebilir: agiz degisince bu dosya degismez (spec 2.6).
+    hormon_durumu verilmezse defter/hormon.json'dan yuklenir, her olayda oraya yazilir (f4-c)."""
     baglam = _gecmisten_baglam_yukle()
-    hormon_durumu = hormon_durumu if hormon_durumu is not None else hormonlar.Hormonlar()
+    if hormon_durumu is None:
+        hormon_durumu = hormonlar.Hormonlar(defter.DEFTER_KLASORU / HORMON_DOSYA_ADI)
+    tetik = uyku_tetik.UykuTetigi()
     while True:
         soru = dinle()
         if soru == CIKIS_KELIMESI:
             break
+        dopamin_once = hormon_durumu.oku()["dopamin"]
         cevap, basarili = _tur_isle(soru, baglam, dusun, hormon_durumu)
         soyle(cevap, DIS_ID)
-        if basarili and not _deftere_kaydet(soru, cevap, soyle):
+        degisim = hormon_durumu.oku()["dopamin"] - dopamin_once
+        if basarili and not _deftere_kaydet(soru, cevap, soyle, degisim):
             break
+        _uyku_gerekirse(tetik, hormon_durumu, gece, simdi())
+
+
+def _uyku_gerekirse(tetik, hormon_durumu, gece, an):
+    """Karari uyku_tetik verir (K6); akis yalniz sorar ve "uyu" denirse gece isini cagirir.
+    Gece isi hata verirse akis durmaz, hata loglanir (Minik ertesi yorgunlukta yeniden dener)."""
+    saat = an.hour + an.minute / DAKIKA_SAAT
+    if not tetik.uyumali_mi(hormon_durumu.oku()["melatonin"], saat):
+        return
+    tarih = an.date().isoformat()
+    try:
+        gece(tarih, hormon_durumu=hormon_durumu, klasor=defter.DEFTER_KLASORU)
+    except Exception as hata:
+        log.yaz(YUVA_ADI, "uyku", 0, "hata", {"hata": f"gece isi basarisiz: {hata}", "tarih": tarih})
+        return
+    log.yaz(YUVA_ADI, "uyku", 0, "ok", {"tarih": tarih, "yas": hormon_durumu.yas})
 
 
 def _gecmisten_baglam_yukle():
@@ -48,11 +69,12 @@ def _gecmisten_baglam_yukle():
     return baglam
 
 
-def _deftere_kaydet(soru, cevap, soyle):
-    """Turu Defter'e yazar. Yazim basarisiz olursa akisi durdurur ve kullaniciya haber
+def _deftere_kaydet(soru, cevap, soyle, dopamin_degisimi):
+    """Turu Defter'e yazar; dopamin_degisimi Uyku'nun onceligine girer (spec 2.4 adim 2). Yazim basarisiz olursa akisi durdurur ve kullaniciya haber
     verir; hata burada yutulmaz, hem Defter kendi satirini hem akis kendi satirini loglar."""
     try:
-        defter.yaz({"soru": soru, "cevap": cevap, "platform": DIS_ID})
+        defter.yaz({"soru": soru, "cevap": cevap, "platform": DIS_ID,
+                    "dopamin_degisimi": round(dopamin_degisimi, 3)})
         return True
     except OSError as hata:
         log.yaz(YUVA_ADI, "tur", 0, "hata", {"hata": f"defter yazilamadi: {hata}"})

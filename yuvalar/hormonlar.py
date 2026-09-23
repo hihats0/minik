@@ -1,7 +1,9 @@
 """Yedi hormonu tutar ve olaylara gore gunceller. Bu sayilar Minik'in her karar noktasini surer.
-Cagiran: minik.py akisi (henuz yok), araclar/hormon-gunu.py, araclar/hormon-yoksunluk-gunu.py.
+Dosya verilirse (defter/hormon.json) baslarken okunur, her olayda yazilir; "uyku" olayi yasi 1 artirir.
+Cagiran: minik.py akisi, yuvalar/uyku.py, araclar/hormon-gunu.py, araclar/hormon-yoksunluk-gunu.py.
 Hicbir yuva bunu dogrudan cagirmaz (K1)."""
 
+import json
 import time
 from dataclasses import dataclass
 
@@ -12,6 +14,7 @@ EN_COK = 100.0
 EN_AZ_SIDDET = 0.0
 EN_COK_SIDDET = 1.0
 YUVA_ADI = "hormonlar"
+GECE_OLAYI = "uyku"  # bir gece gecti: yas (gece sayaci) bir artar
 
 
 @dataclass(frozen=True)
@@ -70,8 +73,34 @@ class Hormonlar:
     girdisinden beslenir. Gerekce raporda: yedi hormon birbirini etkilerse 42 bag olur ve
     "bu sayi neden boyle cikti" sorusunun cevabi kalmaz."""
 
-    def __init__(self):
+    def __init__(self, dosya=None):
+        """dosya None ise kalicilik yok (testler, araclar). Dosya yoksa ya da bozuksa dinlenme
+        degerleriyle ve yas 0 ile baslanir; bozuk dosya loglanir, yutulmaz."""
+        self._dosya = dosya
         self._deger = {ad: t.dinlenme for ad, t in HORMONLAR.items()}
+        self.yas = 0
+        if dosya is not None and dosya.exists():
+            self._dosyadan_yukle()
+
+    def _dosyadan_yukle(self):
+        """hormon.json'u okur. Bozuksa dinlenme degerlerinde kalir ve nedenini loglar."""
+        try:
+            veri = json.loads(self._dosya.read_text(encoding="utf-8"))
+            deger = {ad: float(veri["deger"][ad]) for ad in HORMONLAR}
+            yas = int(veri["yas"])
+        except (OSError, ValueError, KeyError, TypeError) as hata:
+            log.yaz(YUVA_ADI, "yukle", 0, "hata", {"hata": f"hormon.json okunamadi: {hata}"})
+            return
+        self._deger, self.yas = deger, yas
+
+    def _dosyaya_yaz(self):
+        """Durumu once gecici dosyaya yazip sonra degistirir: yarim yazilmis dosya kalmasin."""
+        if self._dosya is None:
+            return
+        self._dosya.parent.mkdir(parents=True, exist_ok=True)
+        gecici = self._dosya.with_suffix(".tmp")
+        gecici.write_text(json.dumps({"deger": self._deger, "yas": self.yas}), encoding="utf-8")
+        gecici.replace(self._dosya)
 
     def oku(self):
         """O anki yedi sayiyi verir. Disariya kopya gider, icerideki sozluk korunur."""
@@ -90,8 +119,11 @@ class Hormonlar:
         self._sondur()
         if olay is not None:
             self._olayi_isle(olay, siddet)
+        if olay == GECE_OLAYI:
+            self.yas += 1
+        self._dosyaya_yaz()
         log.yaz(YUVA_ADI, "guncelle", _gecen_ms(basladi), "ok",
-                {"olay": olay, "siddet": siddet, "deger": self.oku()})
+                {"olay": olay, "siddet": siddet, "deger": self.oku(), "yas": self.yas})
         return self.oku()
 
     def _sondur(self):
