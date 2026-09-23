@@ -5,6 +5,7 @@ import array
 import sqlite3
 
 from ortak.ayar import DEFTER_SQLITE_ADI, UYKU_BUDAMA_SINIRI
+from yuvalar import bekci_giris
 
 SEMA = """
 CREATE TABLE IF NOT EXISTS anilar (
@@ -22,6 +23,7 @@ def baglan(klasor):
     baglanti = sqlite3.connect(klasor / DEFTER_SQLITE_ADI)
     baglanti.row_factory = sqlite3.Row
     baglanti.executescript(SEMA)
+    bekci_giris.kur(baglanti)
     return baglanti
 
 

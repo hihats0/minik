@@ -13,7 +13,7 @@ from ortak.ayar import (
     DEFTER_KLASORU, GOMME_EN_YAKIN_K, GOMME_UC, SM2_BASARILI_KALITE, SM2_BASARISIZ_KALITE,
     UYKU_PROVA_KALIBI, UYKU_SABAH_OZET_KALIBI,
 )
-from yuvalar import buyume, defter, defter_sqlite, gorunur, kafa
+from yuvalar import bekci_giris, buyume, defter, defter_sqlite, gorunur, kafa
 from yuvalar import uyku_secim as secim
 
 YUVA_ADI = "uyku"
@@ -73,7 +73,7 @@ def gun_isle(tarih, gomme_al=None, prova=None, klasor=None):
             log.yaz(YUVA_ADI, "gece", _gecen_ms(basladi), "ok", {"tarih": tarih, "atlandi": True})
             return ZATEN_ISLENDI, 0, 0
         kayitlar = _gun_kayitlari(klasor, tarih)
-        yeni = _yeni_anilar(kayitlar, tarih, gomme_al or _sunucudan_gomme)
+        yeni = _yeni_anilar(_kapidan_gecenler(baglanti, kayitlar, tarih), tarih, gomme_al or _sunucudan_gomme)
         guncellemeler = _provalar(baglanti, tarih, prova or _kafaya_sor)
         budanan = defter.isle(baglanti, tarih, yeni, guncellemeler)
         komsular = _komsular(baglanti, yeni)
@@ -87,6 +87,14 @@ def gun_isle(tarih, gomme_al=None, prova=None, klasor=None):
             {"tarih": tarih, "okunan": len(yeni), "etiketlenen": etiketlenen,
              "budanan": budanan, "ogeler": len(guncellemeler)})
     return ozet, etiketlenen, budanan
+
+
+def _kapidan_gecenler(baglanti, kayitlar, tarih):
+    """Kalici hafizaya yazmadan once her kaydi Bekci giris kapisina sorar (K6: karar gece verilir).
+    Kaynak kimligi `kaynak` alani, yoksa `platform` alani (tur 1 siniri, rapor)."""
+    return [k for k in kayitlar
+            if bekci_giris.gecsin_mi(baglanti, k.get("soru", ""),
+                                     k.get("kaynak", k.get("platform")), tarih)[0]]
 
 
 def _gun_ekle(tarih, gun_sayisi):

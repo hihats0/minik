@@ -6,7 +6,7 @@ import time
 from datetime import datetime
 
 from ortak import log
-from yuvalar import defter_sqlite
+from yuvalar import bekci_giris, defter_sqlite
 
 YUVA_ADI = "gorunur"
 SAYFA_ADI = "gorunur.html"
@@ -19,6 +19,8 @@ SAYFA_KALIBI = """<!doctype html>
 <h2>Anilar</h2>
 <ul><li>Tutulan ani: {tutulan}</li><li>Etiketlere gore: {etiketler}</li>
 <li>Bu uykuda budanan: {budanan}</li><li>Islenmis gece: {gece_sayisi}</li></ul>
+<h2>Bekci (otoimmunite olceri)</h2>
+<ul><li>Giris kapisi red orani: {red}</li><li>Yigit kaynakli red orani (~0 olmali): {yigit_red}</li></ul>
 <h2>Yas ve hormonlar</h2>
 <p>Yas (gece sayaci): {yas}</p>
 <table border="1"><tr><th>Hormon</th><th>Deger</th></tr>{hormon_satirlari}</table>
@@ -35,12 +37,13 @@ def yaz(klasor, hormon_durumu, ozet, budanan):
     try:
         etiketler = defter_sqlite.etiket_sayilari(baglanti)
         gece_sayisi = len(defter_sqlite.islenmis_geceler(baglanti))
+        red, yigit_red = bekci_giris.red_oranlari(baglanti)
     finally:
         baglanti.close()
     metin = SAYFA_KALIBI.format(
         zaman=datetime.now().astimezone().isoformat(timespec="seconds"),
         tutulan=sum(etiketler.values()), etiketler=html.escape(str(etiketler)),
-        budanan=budanan, gece_sayisi=gece_sayisi,
+        budanan=budanan, gece_sayisi=gece_sayisi, red=_oran(red), yigit_red=_oran(yigit_red),
         yas=BILINMIYOR if hormon_durumu is None else hormon_durumu.yas,
         hormon_satirlari=_hormon_satirlari(hormon_durumu), ozet=html.escape(ozet))
     log.LOG_KLASORU.mkdir(parents=True, exist_ok=True)
@@ -57,3 +60,8 @@ def _hormon_satirlari(hormon_durumu):
         return f"<tr><td>{BILINMIYOR}</td><td>-</td></tr>"
     return "".join(f"<tr><td>{html.escape(ad)}</td><td>{deger:.1f}</td></tr>"
                    for ad, deger in hormon_durumu.oku().items())
+
+
+def _oran(deger):
+    """Orani yuzde olarak yazar; hic karar yoksa 'bilinmiyor'."""
+    return BILINMIYOR if deger is None else f"%{deger * 100:.1f}"
