@@ -136,3 +136,27 @@ BAGLAM_EN_UZUN_CEVAP_TOKEN = SEROTONIN_MAX_TOKEN_MIN + SEROTONIN_MAX_TOKEN_ARALI
 BAGLAM_PAY_TOKEN = 512
 # 8192 - 768 - 512 = 6912 token: mesajlar bunu asarsa en eski turlar dusurulur.
 BAGLAM_TOKEN_BUTCESI = KAFA_BAGLAM - BAGLAM_EN_UZUN_CEVAP_TOKEN - BAGLAM_PAY_TOKEN
+
+# f4-a Uyku tur 1 (spec 2.4, 3.5). sqlite turetilmis, jsonl'den yeniden uretilebilir (K4).
+DEFTER_SQLITE_ADI = "minik.sqlite"
+UYKU_SABAH_OZET_KALIBI = "sabah-ozet-{tarih}.md"
+# Oncelik = |dopamin_degisimi| * yakinlik_carpani (spec 2.4 adim 2). Kayitta alan yoksa 0 ve 1 sayilir.
+UYKU_VARSAYILAN_YAKINLIK = 1.0  # TAHMIN: yakinlik henuz kayda yazilmiyor
+UYKU_YUKSEK_ONCELIK_ESIGI = 10.0  # TAHMIN: dopamin puani, olculmedi (f4 tur 2'de ayarlanacak)
+UYKU_YAKALAMA_PENCERESI_DK = 30  # TAHMIN: Frey-Morris cizgisi saat duzeyi, dakika sayisi olculmedi
+# SM-2 (araclar/aralikli-tekrar-olc.py'deki olcumle ayni sayilar, super-memory.com sm2).
+SM2_BASLANGIC_EF = 2.5
+SM2_EN_KUCUK_EF = 1.3
+SM2_ILK_ARALIK_GUN = 1
+SM2_IKINCI_ARALIK_GUN = 6
+SM2_BASARILI_KALITE = 4
+SM2_BASARISIZ_KALITE = 2
+SM2_EN_IYI_KALITE = 5
+# Budama: 3 kez UST USTE hatirlanamayan ani atilir (spec 2.4 adim 5, olculdu M3).
+UYKU_BUDAMA_SINIRI = 3
+# Prova: Kafa'nin cevabi eski cevabin kelimelerinin en az bu oranini icerirse "hatirladi". TAHMIN.
+UYKU_HATIRLAMA_ORTUSME = 0.3
+UYKU_PROVA_KALIBI = "Daha once sana su soruldu, ne cevap vermistin? Soru: {soru}"
+# Gomme: yalniz CPU (llama-server --device none -ngl 0 --embedding -c 512), e5-small.
+GOMME_UC = "http://127.0.0.1:8090/v1/embeddings"
+GOMME_EN_YAKIN_K = 3

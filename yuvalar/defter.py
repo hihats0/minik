@@ -1,14 +1,13 @@
-"""Ham konusmayi gunluk jsonl'e yazar, geri okur (spec 3.4, R2: uc ad `yaz`/`oku`/`isle`).
-Ucuncu ad `isle` sqlite'taki turetilmis tabloyu tazeleyecek; sqlite Uyku ile birlikte f4'te
-doguyor, o yuzden simdi burada yazilmiyor (notes/kod-yazma-kurallari.md: ileride lazim
-olabilecek soyutlama yazilmaz). Sonraki kosu bunu "ad eksik" sanip geri eklemesin.
-Cagiran: minik.py akisi (yaz, oku)."""
+"""Ham konusmayi gunluk jsonl'e yazar, geri okur, gece sqlite'a isler (spec 3.4, R2: uc ad
+`yaz`/`oku`/`isle`). `isle` turetilmis tabloyu (defter/minik.sqlite) tazeler; ham jsonl'e dokunmaz.
+Cagiran: minik.py akisi (yaz, oku), yuvalar/uyku.py (yalniz isle)."""
 
 import json
 import time
 from datetime import datetime
 
 from ortak import log
+from yuvalar import defter_sqlite
 from ortak.ayar import DEFTER_GERI_GUN_SINIRI, DEFTER_KLASORU, DEFTER_SON_N
 
 YUVA_ADI = "defter"
@@ -54,6 +53,22 @@ def oku(kac_tane=DEFTER_SON_N):
     log.yaz(YUVA_ADI, "oku", _gecen_ms(basladi), "ok",
             {"istenen": kac_tane, "bulunan": len(sonuc), "dosya_sayisi": dosya_sayisi})
     return sonuc
+
+
+def isle(baglanti, tarih, yeni_anilar, guncellemeler):
+    """Uyku'nun gece sonucunu sqlite'a TEK transaction ile yazar; yarida hata olursa hepsi geri
+    alinir ve hata yukselir. Budanan ani sayisini dondurur. Yalniz Uyku cagirir (R2)."""
+    basladi = time.perf_counter()
+    zaman = datetime.now().astimezone().isoformat(timespec="seconds")
+    try:
+        budanan = defter_sqlite.islem(baglanti, tarih, yeni_anilar, guncellemeler, zaman)
+    except Exception as hata:
+        log.yaz(YUVA_ADI, "isle", _gecen_ms(basladi), "hata", {"tarih": tarih, "hata": str(hata)})
+        raise
+    log.yaz(YUVA_ADI, "isle", _gecen_ms(basladi), "ok",
+            {"tarih": tarih, "yeni": len(yeni_anilar), "guncellenen": len(guncellemeler),
+             "budanan": budanan})
+    return budanan
 
 
 def _bugunku_dosya():
