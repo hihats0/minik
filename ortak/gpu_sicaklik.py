@@ -16,9 +16,9 @@ DEVAM_C = 70
 # Istekten once bu sicakligin ustundeyse DEVAM_C'ye inene kadar beklenir: laptop tek istekte ~12 C isiniyor
 # (f3-g 23 Eyl olcumu), 76-82 C'de baslayan istekler 83'u gecti. Kart 80 -> 70'e 10-15 sn'de iniyor.
 ISTEK_ONCESI_ESIK_C = DEVAM_C
-# Yigit 80-84 kisa asimi kabul etti (22 Eyl, "84 sorun degil, ama laptop"); 85 gpu-bekci siniriyla ayni,
-# arac bekciden sik okudugu icin once keser.
-KES_C = 85
+# Bekci 85'te oldurur, arac bir derece once temiz kessin; 84'e kadar kisa asim Yigit onayli (22 Eyl).
+# 85 denendi: 24 Eyl 00:15'te bekci aractan once davrandi (aracin son okumasi 83'tu).
+KES_C = 84
 # Gorev: en az 10 sn'de bir okuma. k26-c'de tek istek ~28 sn, 30 sn aralik istegi kacirabiliyordu.
 OKUMA_ARALIGI_SN = 10
 SOGUMA_YOKLAMA_SN = 5

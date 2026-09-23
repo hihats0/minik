@@ -156,8 +156,8 @@ class TestSerinle(unittest.TestCase):
             bekci.bitir()
         self.assertLessEqual(bekci.son_c, gpu_sicaklik.DEVAM_C)
 
-    def test_84te_kesmez_85te_keser(self):
-        for derece, kesilir in ((84, False), (85, True)):
+    def test_83te_kesmez_84te_keser(self):
+        for derece, kesilir in ((83, False), (84, True)):
             kesilen = []
             bekci = gpu_sicaklik.SicaklikBekcisi(kes=lambda: kesilen.append(1), okuyucu=lambda: derece,
                                                  aralik_sn=SAHTE_ARALIK_SN).baslat()
