@@ -23,6 +23,11 @@ EN_COK_TOKEN = 4096  # 10 bilgi x (5 cumle + soru + 3 sik) ~2k token (tahmin), i
 ZAMAN_ASIMI_SN = 300  # 4B ~40 token/sn (f0 olcumu civari) ile 4k token ~100 sn; genis pay.
 DENEME_SAYISI = 4
 SUNUCU_LOG_ADI = "d4c-ogretmen-sunucu.log"
+# Puanlama cevabi {"puan": 1, "gerekce": "<=12 kelime"} ~40 token; 23 Eyl'de gerekce tekrar dongusune
+# girip 4096 tokende kesildi. Kucuk tavan dongude hizli keser, tekrar cezasi donguyu azaltir.
+PUANLAMA_EN_COK_TOKEN = 128
+TEKRAR_CEZASI = 1.15  # llama-server repeat_penalty; 1.0 = ceza yok.
+PUANLAMA_AYARI = {"en_cok_token": PUANLAMA_EN_COK_TOKEN, "tekrar_cezasi": TEKRAR_CEZASI}
 JSON_ZORLA = {"type": "json_object"}  # llama-server bunu JSON dilbilgisine (grammar) cevirir.
 
 log = logging.getLogger("ogretmen")
@@ -38,10 +43,13 @@ def _f3c1_yukle():
     return f3c1
 
 
-def sor(mesajlar: list[dict], sicaklik: float) -> str:
+def sor(mesajlar: list[dict], sicaklik: float, en_cok_token: int = EN_COK_TOKEN,
+        tekrar_cezasi: float | None = None) -> str:
     """Tek istek; cevabin metnini dondurur. Ag hatasi yukari cikar (yutulmaz)."""
-    govde = {"messages": mesajlar, "temperature": sicaklik, "max_tokens": EN_COK_TOKEN,
+    govde = {"messages": mesajlar, "temperature": sicaklik, "max_tokens": en_cok_token,
              "response_format": JSON_ZORLA}
+    if tekrar_cezasi is not None:
+        govde["repeat_penalty"] = tekrar_cezasi
     istek = urllib.request.Request(KAFA_UC, data=json.dumps(govde, ensure_ascii=False).encode("utf-8"),
                                    headers={"Content-Type": "application/json; charset=utf-8"})
     with urllib.request.urlopen(istek, timeout=ZAMAN_ASIMI_SN) as yanit:
@@ -49,8 +57,8 @@ def sor(mesajlar: list[dict], sicaklik: float) -> str:
 
 
 @contextmanager
-def acik_sunucu():
-    """llama-server'i GPU'da acar (--device Vulkan1 -ngl 999 -c 8192 --reasoning off), her istekten
+def acik_sunucu(ayar: dict | None = None):
+    """ayar: sor()'a giden ek anahtarlar (or. PUANLAMA_AYARI). llama-server'i GPU'da acar (--device Vulkan1 -ngl 999 -c 8192 --reasoning off), her istekten
     once 80/70 C kuralini uygulayan bir sor_fn verir, cikista sunucuyu kapatir."""
     f3c1 = _f3c1_yukle()
     proc = f3c1.sunucu_baslat()
@@ -59,7 +67,7 @@ def acik_sunucu():
 
         def sor_fn(mesajlar, sicaklik):
             f3c1.sicaklik_kontrol()
-            return sor(mesajlar, sicaklik)
+            return sor(mesajlar, sicaklik, **(ayar or {}))
 
         yield sor_fn
     finally:

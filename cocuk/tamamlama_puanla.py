@@ -7,6 +7,7 @@ import argparse
 import json
 import logging
 import random
+import re
 from collections import defaultdict
 
 from cocuk import ders_dogrula as dd
@@ -19,8 +20,15 @@ from cocuk.sabah_sinavi import TAMAMLAMA_DIZINI
 EN_AZ_KELIME, EN_COK_KELIME = 3, 5
 KOR_DIZIN_ADI = "kor_puanlama"
 SONUC_ADI = "sart1.json"
+GECERLI_PUANLAR = (0, 1)
+GEREKCE_EN_COK_KELIME = 12
 SISTEM = ("Sen Türkçe dilbilgisi puanlayan titiz bir öğretmensin. Yalnızca "
-          '{"puan": 0 ya da 1, "gerekce": "kısa açıklama"} biçiminde JSON döndür.')
+          '{"puan": 0 ya da 1, "gerekce": "kısa açıklama"} biçiminde JSON döndür. '
+          f"Gerekçe en fazla {GEREKCE_EN_COK_KELIME} kelime olsun, kelime tekrarlama.")
+# Kesilmis cevabin basinda puan okunabiliyorsa kurtarilir (23 Eyl: gerekce dongusu JSON'u yarim birakti).
+PUAN_DESENI = re.compile(r'^\s*\{\s*"puan"\s*:\s*(\d+)\s*[,}]')
+KESILDI = "kesildi"
+PUANLANAMADI = "puanlanamadi"
 
 log = logging.getLogger("tamamlama_puanla")
 
@@ -45,24 +53,47 @@ def anonimlestir(kayitlar: list[dict], uretec: random.Random) -> dict:
     return {f"C{i:04d}": k for i, k in enumerate(karisik)}
 
 
+def kesik_kurtar(metin: str) -> str:
+    """Bozuk JSON'un basinda gecerli puan varsa onu tasiyan saglam JSON dondurur, yoksa metni aynen."""
+    try:
+        json.loads(metin)
+        return metin
+    except ValueError:
+        eslesme = PUAN_DESENI.match(metin)
+    if eslesme is None or int(eslesme.group(1)) not in GECERLI_PUANLAR:
+        return metin
+    log.warning("kesilmis ogretmen cevabi kurtarildi, puan=%s | cevap basi: %r", eslesme.group(1), metin[:80])
+    return json.dumps({"puan": int(eslesme.group(1)), "gerekce": KESILDI})
+
+
 def ogretmen_puani(sor_fn, yonerge: str, cumle: str) -> dict:
+    """Puan dict'i ya da hep bozuk cevapta {"puan": None, "gerekce": PUANLANAMADI} (loglanir)."""
     mesajlar = [{"role": "system", "content": SISTEM},
                 {"role": "user", "content": f"Yönerge: {yonerge}\n\nCümle: {cumle}"}]
 
     def dogrula(veri):
-        if veri.get("puan") not in (0, 1):
+        if veri.get("puan") not in GECERLI_PUANLAR:
             raise ValueError("puan 0 ya da 1 degil")
         return {"puan": veri["puan"], "gerekce": str(veri.get("gerekce", ""))}
 
-    return ogretmen.json_iste(sor_fn, mesajlar, dogrula, ogretmen.PUANLAMA_SICAKLIGI)
+    try:
+        return ogretmen.json_iste(lambda m, s: kesik_kurtar(sor_fn(m, s)), mesajlar, dogrula,
+                                  ogretmen.PUANLAMA_SICAKLIGI)
+    except RuntimeError as hata:
+        log.error("cumle puanlanamadi, ortalamaya girmeyecek: %r | %s", cumle, hata)
+        return {"puan": None, "gerekce": PUANLANAMADI}
 
 
 def ozetle(perde: dict, puanlar: dict) -> dict:
-    """ad -> gece -> {toplam, ogretmen_1, kelime_uygun, puan}; puan = ogretmen 1 VE 3-5 kelime."""
-    bos = {"toplam": 0, "ogretmen_1": 0, "kelime_uygun": 0, "puan": 0}
+    """ad -> gece -> {toplam, ogretmen_1, kelime_uygun, puan, puanlanamadi}; puan = ogretmen 1 VE
+    3-5 kelime. Puanlanamayan kayit toplama girmez, ayri sayilir."""
+    bos = {"toplam": 0, "ogretmen_1": 0, "kelime_uygun": 0, "puan": 0, PUANLANAMADI: 0}
     ozet = defaultdict(lambda: defaultdict(lambda: dict(bos)))
     for kimlik, k in perde.items():
         hucre = ozet[k["ad"]][str(k["gece"])]
+        if puanlar[kimlik]["puan"] is None:
+            hucre[PUANLANAMADI] += 1
+            continue
         kelime_uygun = EN_AZ_KELIME <= dd.kelime_say(k["cumle"]) <= EN_COK_KELIME
         hucre["toplam"] += 1
         hucre["ogretmen_1"] += puanlar[kimlik]["puan"]
@@ -97,5 +128,5 @@ if __name__ == "__main__":
     p.add_argument("--adlar", nargs="+", required=True)
     p.add_argument("--tohum", type=int, default=1337, help="karistirma tohumu")
     arg = p.parse_args()
-    with ogretmen.acik_sunucu() as sor_fn:
+    with ogretmen.acik_sunucu(ogretmen.PUANLAMA_AYARI) as sor_fn:
         print(json.dumps(puanla(arg.adlar, sor_fn, arg.tohum), ensure_ascii=False, indent=1))
