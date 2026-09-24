@@ -13,32 +13,12 @@ from ortak import log
 from yuvalar.duygu import duygu_cumleleri
 from yuvalar.kafa_dusunce import dusunce_ayikla
 from ortak.ayar import (
-    ALT_ESIK,
-    KAFA_BAGLAM,
-    KAFA_DUSUNCE_PAYI_TOKEN,
-    KAFA_MAX_TOKEN,
-    KAFA_MODEL_YOLU,
-    KAFA_SICAKLIK,
-    KAFA_TOP_P,
-    KAFA_UC,
-    KAFA_ZAMAN_ASIMI_SN,
-    KARAKTER_DOSYASI,
-    KARAKTER_OZET_UZUNLUGU,
-    KORTIZOL_REPEAT_PENALTY_ARALIK,
-    KORTIZOL_REPEAT_PENALTY_MIN,
-    MELATONIN_YORGUN_MAX_TOKEN_CARPANI,
-    MELATONIN_YORGUN_SICAKLIK_CARPANI,
-    MELATONIN_YORGUN_TALIMATI,
-    MOD_UYANIK,
-    MOD_YORGUN,
-    MOD_ZORLA_DEGISKENI,
-    NORADRENALIN_SICAKLIK_ARALIK,
-    NORADRENALIN_SICAKLIK_MIN,
-    NORADRENALIN_TOP_P_ARALIK,
-    NORADRENALIN_TOP_P_MIN,
-    SEROTONIN_MAX_TOKEN_ARALIK,
-    SEROTONIN_MAX_TOKEN_MIN,
-    UST_ESIK,
+    ALT_ESIK, KAFA_BAGLAM, KAFA_DUSUNCE_PAYI_TOKEN, KAFA_MAX_TOKEN, KAFA_MODEL_YOLU, KAFA_SICAKLIK,
+    KAFA_TOP_P, KAFA_UC, KAFA_ZAMAN_ASIMI_SN, KARAKTER_DOSYASI, KARAKTER_OZET_UZUNLUGU,
+    KORTIZOL_REPEAT_PENALTY_ARALIK, KORTIZOL_REPEAT_PENALTY_MIN, MELATONIN_YORGUN_MAX_TOKEN_CARPANI,
+    MELATONIN_YORGUN_SICAKLIK_CARPANI, MELATONIN_YORGUN_TALIMATI, MOD_UYANIK, MOD_YORGUN,
+    MOD_ZORLA_DEGISKENI, NORADRENALIN_SICAKLIK_ARALIK, NORADRENALIN_SICAKLIK_MIN, NORADRENALIN_TOP_P_ARALIK,
+    NORADRENALIN_TOP_P_MIN, SEROTONIN_MAX_TOKEN_ARALIK, SEROTONIN_MAX_TOKEN_MIN, UST_ESIK
 )
 
 YUVA_ADI = "kafa"
@@ -46,14 +26,13 @@ YUVA_ADI = "kafa"
 TIMINGS_PROMPT_MS = "prompt_ms"
 TIMINGS_URETIM_MS = "predicted_ms"
 MS_SANIYE = 1000.0
-# Loga yazilan HTTP hata govdesinin en cok uzunlugu (tasma mesaji ~200 karakter).
-HATA_GOVDE_UZUNLUGU = 300
+HATA_GOVDE_UZUNLUGU = 300  # loga yazilan HTTP hata govdesi (tasma mesaji ~200 karakter)
 # Karakter metni ile yorgun talimati arasina bos satir (tek sistem mesajinda iki paragraf).
 PARCA_AYIRICI = "\n\n"
-# Onceki turun modu: cift esik (Schmitt tetikleyici) hafiza ister, tek surecli akis tek Kafa
-# kullandigi icin modul seviyesinde tutuluyor (testler dogrudan sifirlayabilir, DEFTER_KLASORU
-# gibi).
+# Onceki turun modu: cift esik hafiza ister; tek surecli akis tek Kafa kullandigi icin modulde tutulur.
 ONCEKI_MOD = MOD_UYANIK
+# emoji-a: kural yalniz en bastaydi; duygu cumlesi ve uzun gecmisten sonra model unutuyordu, sonda bir daha.
+BICIM_HATIRLATMA = "Duz metin yaz: emoji, yildiz, madde isareti ve uzun tire kullanma."
 
 
 def dusun(soru, baglam=None, hormon_degerleri=None):
@@ -174,6 +153,8 @@ def _sistem_mesaji_ekle(mesajlar, karakter, mod, hormon_degerleri=None):
     if mod == MOD_YORGUN:
         parcalar.append(MELATONIN_YORGUN_TALIMATI)
     parcalar.extend(duygu_cumleleri(hormon_degerleri))
+    if karakter:
+        parcalar.append(BICIM_HATIRLATMA)
     if not parcalar:
         return mesajlar
     return [{"role": "system", "content": PARCA_AYIRICI.join(parcalar)}] + mesajlar

@@ -251,7 +251,8 @@ class TestYorgunTalimat(unittest.TestCase):
     def test_yorgun_modda_talimat_istege_ve_loga_girer(self):
         mesajlar, ayarlar = self._sor(MOD_YORGUN)
         self.assertEqual([m["role"] for m in mesajlar], ["system", "user"])
-        self.assertTrue(mesajlar[0]["content"].endswith(MELATONIN_YORGUN_TALIMATI))
+        self.assertIn(MELATONIN_YORGUN_TALIMATI, mesajlar[0]["content"])
+        self.assertTrue(mesajlar[0]["content"].endswith(kafa.BICIM_HATIRLATMA))  # emoji-a: kural sonda
         self.assertIn("Minik", mesajlar[0]["content"])
         self.assertEqual(mesajlar[-1]["content"], "soru")
         self.assertEqual(ayarlar["talimat"], MELATONIN_YORGUN_TALIMATI)
@@ -276,7 +277,8 @@ class TestKarakter(unittest.TestCase):
         beklenen = KARAKTER_DOSYASI.read_text(encoding="utf-8").strip()
         for baglam in (None, [{"role": "user", "content": "a"}, {"role": "assistant", "content": "b"}]):
             mesajlar, _ = self._sor(baglam)
-            self.assertEqual(mesajlar[0], {"role": "system", "content": beklenen})
+            self.assertEqual(mesajlar[0], {"role": "system",
+                                           "content": beklenen + kafa.PARCA_AYIRICI + kafa.BICIM_HATIRLATMA})
             self.assertEqual(sum(m["role"] == "system" for m in mesajlar), 1)
 
     def test_logda_karakter_ozeti_var(self):

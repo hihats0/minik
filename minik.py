@@ -8,7 +8,7 @@ import time
 from datetime import datetime
 
 from agiz import konsol, secim
-from ortak import baglam_butce, kaynak_olc, log
+from ortak import baglam_butce, duz_metin, kaynak_olc, log
 from ortak.ayar import HORMON_DOSYA_ADI, KORTIZOL_CEZA_SIDDETI, MELATONIN_IS_TAVAN_SN
 from yuvalar import bekci, calgici_tani, defter, hormonlar, kafa, kalp, ton, ton_hormon, uyku, uyku_tetik
 
@@ -67,11 +67,12 @@ def _uyku_gerekirse(tetik, hormon_durumu, gece, an):
 
 def _gecmisten_baglam_yukle():
     """Defter'deki son kayitlari Kafa'nin baglamina cevirir: f1'deki 'baglam sinirsiz
-    buyuyor' acigini kapatir (f2, V14). Her kayit bir soru + bir cevap mesaji olur."""
+    buyuyor' acigini kapatir (f2, V14). Her kayit bir soru + bir cevap mesaji olur. Eski cevaplar
+    duz metne indirilir: emojili gecmis Kafa'ya ornek olup yeni cevaba emoji tasiyordu (emoji-a)."""
     baglam = []
     for kayit in defter.oku():
         baglam.append({"role": "user", "content": kayit.get("soru", "")})
-        baglam.append({"role": "assistant", "content": kayit.get("cevap", "")})
+        baglam.append({"role": "assistant", "content": duz_metin.temizle(kayit.get("cevap", ""))})
     return baglam
 
 
@@ -106,6 +107,7 @@ def _tur_isle(soru, baglam, dusun, hormon_durumu):
         log.yaz(YUVA_ADI, "tur", _gecen_ms(basladi), "hata", {"hata": str(hata)})
         return DUSUNEMIYORUM_METNI, False
     hormon_durumu.guncelle("calisma", kaynak_olc.siddet(is_sn, MELATONIN_IS_TAVAN_SN))
+    cevap = duz_metin.temizle(cevap)  # guvenlik agi; asil sebep gecmisti (emoji-a)
     gecebilir, gerekce = bekci.cikabilir_mi(cevap)
     if not gecebilir:
         log.yaz(YUVA_ADI, "tur", _gecen_ms(basladi), "ok", {"bekci": "engellendi", "gerekce": gerekce})

@@ -57,7 +57,7 @@ class SistemMesaji(unittest.TestCase):
 
     def test_normalde_cumle_yok(self):
         mesajlar = kafa._sistem_mesaji_ekle([], "KARAKTER", MOD_UYANIK, DINLENME)
-        self.assertEqual(mesajlar[0]["content"], "KARAKTER")
+        self.assertEqual(mesajlar[0]["content"], "KARAKTER" + kafa.PARCA_AYIRICI + kafa.BICIM_HATIRLATMA)
 
 
 class KarakterDosyasi(unittest.TestCase):
