@@ -17,6 +17,8 @@ EGITIM_ESIGI = 500
 # "dosya" agzi (f8-a) da eleniyor: dosyayi kimin yazdigi bilinmiyor, X'ten kopya olabilir.
 # "site" (f8-b): ziyaretci Yigit degil, yazdigi bilinmeyen dis kaynak; egitime girmez.
 X_PLATFORMLARI = bekci_giris.X_PLATFORMLARI | {"dosya", "site"}
+# K34 revize: "vikipedi_okudum" etiketli kayit tek agizdir, tam bilgi gibi LoRA'ya girmez (merak.py).
+ETIKETLI_GUVENLER = {"vikipedi_okudum"}
 KABUL_SINAVLARI = ("turkce", "odul")
 
 
@@ -34,7 +36,7 @@ def cift_adaylari(kayitlar, tarih, emniyet=bekci.cikabilir_mi):
     ciftler = []
     for kayit in kayitlar:
         girdi, cikti = kayit.get("soru", ""), kayit.get("cevap", "")
-        if x_kaynakli_mi(kayit) or not girdi or not cikti:
+        if x_kaynakli_mi(kayit) or kayit.get("guven") in ETIKETLI_GUVENLER or not girdi or not cikti:
             continue
         gecti, _ = emniyet(cikti)
         if gecti:

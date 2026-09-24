@@ -6,7 +6,7 @@ import sqlite3
 import unittest
 
 from agiz import web, web_ek
-from yuvalar import bekci_giris, iddia_esle, merak
+from yuvalar import bekci_giris, buyume, iddia_esle, merak
 
 TARIH = "2026-09-24"
 IDDIA = "Photosynthesis converts light energy into chemical energy in plants"
@@ -62,14 +62,40 @@ class Akis(unittest.TestCase):
         self.assertEqual(yazilan[0]["kaynak"], "a.com,b.org,c.net")
 
     def test_ayni_kurum_tek_agiz(self):
-        kabul, yazilan = self.calistir(["tr.wikipedia.org", "en.wikipedia.org", "wikidata.org"])
-        self.assertEqual((kabul, yazilan), ([], []))
+        _, yazilan = self.calistir(["tr.wikipedia.org", "en.wikipedia.org", "wikidata.org"])
+        self.assertEqual([y["guven"] for y in yazilan], [merak.GUVEN_VIKIPEDI])
         kabul, _ = self.calistir(["tr.wikipedia.org", "wikidata.org", "b.org", "c.net"])
         self.assertEqual(kabul[0]["agizlar"], ["b.org", "c.net", "wikimedia"])
 
     def test_iki_alan_girmez(self):
         kabul, yazilan = self.calistir(["a.com", "a.com", "b.org"])
         self.assertEqual((kabul, yazilan), ([], []))
+
+
+class VikipediGuven(unittest.TestCase):
+    """K34 revize (Yigit, 24 Eyl): yalniz Vikipedi etiketli girer, bagimsiz agizla tam kabul."""
+    calistir = Akis.calistir
+
+    def test_yalniz_vikipedi_etiketli(self):
+        _, yazilan = self.calistir(["tr.wikipedia.org"])
+        self.assertEqual([y["guven"] for y in yazilan], [merak.GUVEN_VIKIPEDI])
+
+    def test_vikipedi_ve_bagimsiz_tam(self):
+        _, yazilan = self.calistir(["tr.wikipedia.org", "b.org"])
+        self.assertEqual([y["guven"] for y in yazilan], [merak.GUVEN_TAM])
+
+    def test_tek_bagimsiz_site_red(self):
+        self.assertEqual(self.calistir(["b.org"]), ([], []))
+
+    def test_kirmizi_iki_wikimedia_tam_sayilmaz(self):
+        _, yazilan = self.calistir(["tr.wikipedia.org", "en.wikipedia.org"])
+        self.assertEqual([y["guven"] for y in yazilan], [merak.GUVEN_VIKIPEDI])
+
+    def test_kirmizi_etiketli_egitime_girmez(self):
+        _, yazilan = self.calistir(["tr.wikipedia.org"])
+        tam = dict(yazilan[0], guven=merak.GUVEN_TAM)
+        ciftler = buyume.cift_adaylari([yazilan[0], tam], TARIH, emniyet=lambda m: (True, ""))
+        self.assertEqual(len(ciftler), 1)
 
 
 if __name__ == "__main__":
