@@ -24,6 +24,8 @@ SOGUMA_SN = 15 * 60
 TOPLAM_SN = 24 * 3600  # Yigit 25 Eyl: sure siniri yok; bu yalniz sonsuz donguye karsi emniyet
 KOSU_PAYI_SN = 35 * 60  # bir kosunun soguma duraklariyla en uzun tahmini
 TOHUMLAR = (1, 2, 3)
+EGITIM_IMZASI = "cocuk.az_egit"
+BEKLEME_SN = 60
 KOLLAR = {  # ad: (az_egit ek bayraklari, az_olc ek bayraklari); kosulacaklar komut satirindan
     "adamw": ([], []),
     "muon": (["--optimizer", "muon"], []),
@@ -56,6 +58,14 @@ def upscaler_canli() -> bool:
                             "Get-CimInstance Win32_Process | % CommandLine"],
                            **METIN).stdout
     return UPSCALER_SURECI in cikti.lower()
+
+
+def baska_egitim_var() -> bool:
+    """25 Eyl dersi: olmedigi sanilan bekleyici ikinci yurutucu baslatti, 3 egitim ayni GPU'da kostu."""
+    cikti = subprocess.run(["powershell", "-NoProfile", "-Command",
+                            "Get-CimInstance Win32_Process -Filter \"Name='python.exe'\" | % CommandLine"],
+                           **METIN).stdout
+    return any(EGITIM_IMZASI in satir for satir in cikti.splitlines())
 
 
 def engel() -> str | None:
@@ -108,6 +118,9 @@ def main(secilen: list):
         if time.time() - deney_basi + KOSU_PAYI_SN > TOPLAM_SN:
             log.info("6 saat tavani: yeni kosu baslatilmiyor")
             return
+        while baska_egitim_var():
+            log.info("baska egitim sureci var, bekleniyor")
+            time.sleep(BEKLEME_SN)
         if (sebep := engel()):
             log.error("durdu: %s", sebep)
             return
