@@ -24,6 +24,7 @@ def bayraklari_oku(argv=None):
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--ad", required=True)
     p.add_argument("--tohum", type=int, required=True)
+    p.add_argument("--tur", choices=("transformer", "minik"), default="transformer")
     p.add_argument("--optimizer", choices=("adamw", "muon"), default="adamw")
     p.add_argument("--sade-oran", type=float, default=0.0, help="batch'in sade.bin'den gelen payi")
     p.add_argument("--token-milyon", type=float, default=50.0)
@@ -68,7 +69,8 @@ def adim_at(model, opts, veriler, arg, uretec, amp) -> float:
     for _ in range(arg.birikim):
         x, y = karisik_pencere(veriler, arg, uretec)
         with torch.autocast(arg.cihaz.type, dtype=torch.bfloat16, enabled=amp):
-            kayip = ea.kayip_hesapla(model, x, y) / arg.birikim
+            kayip = ea.kayip_hesapla(model, x, y)
+            kayip = (kayip + getattr(model, "yan_kayip", 0.0)) / arg.birikim  # minik: enerji butcesi
         kayip.backward()
         toplam += kayip.item()
     torch.nn.utils.clip_grad_norm_(model.parameters(), d4.GRAD_KIRPMA)
@@ -93,7 +95,8 @@ def dongu(model, opts, arg, kayit) -> dict:
         if amp and adim % SICAKLIK_ARALIGI == 0:
             bekleme += ea.soguyana_kadar_bekle(kayit)
         if adim % LOG_ARALIGI == 0 or adim == toplam_adim:
-            kayit({"adim": adim, "kayip": round(kayip, 4), "sicaklik": ea.gpu_olc()[0]})
+            kayit({"adim": adim, "kayip": round(kayip, 4), "sicaklik": ea.gpu_olc()[0],
+                   "gecis_orani": getattr(model, "gecis_orani", None)})
     return {"adim": toplam_adim, "sure_sn": round(time.time() - baslangic - bekleme),
             "soguma_sn": round(bekleme)}
 
@@ -101,7 +104,7 @@ def dongu(model, opts, arg, kayit) -> dict:
 def egit(arg) -> dict:
     torch.manual_seed(arg.tohum)
     arg.cihaz = torch.device(arg.cihaz)
-    model = ea.model_kur("transformer", json.loads(arg.ayar)).to(arg.cihaz)
+    model = ea.model_kur(arg.tur, json.loads(arg.ayar)).to(arg.cihaz)
     cikti = ea.AGIRLIK_DIZINI / arg.ad
     cikti.mkdir(parents=True, exist_ok=True)
     log_dosyasi = open(cikti / "log.jsonl", "a", encoding="utf-8")
@@ -115,7 +118,8 @@ def egit(arg) -> dict:
     with GucOlcer() as olcer:
         sonuc = dongu(model, optimizerlar(model, arg), arg, kayit)
     sonuc.update({"enerji_wh": round(olcer.wh, 2), "ort_watt": olcer.ort_watt})
-    torch.save({"tur": "transformer", "ayar": model.ayar, "model": model.state_dict(),
+    sonuc["gecis_orani"] = getattr(model, "gecis_orani", None)
+    torch.save({"tur": arg.tur, "ayar": model.ayar, "model": model.state_dict(),
                 "adim": sonuc["adim"], "token": int(arg.token_milyon * MILYON)}, cikti / "son.pt")
     kayit({"olay": "bitti", **sonuc})
     return sonuc

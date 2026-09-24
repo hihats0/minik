@@ -150,6 +150,39 @@ class TestAzDeney(unittest.TestCase):
         saat_sonrasi = cevrilmis[ids.index(sp.piece_to_id("▁saat")) + 1]
         self.assertLess(saat_sonrasi, sp.get_piece_size())  # alinti: kural "lerce"yi uretemez
 
+    def test_minik_nedensel(self):
+        torch.manual_seed(0)
+        model = ea.model_kur("minik", {**KUCUK, "katman": 4}).eval()
+        ids = torch.randint(0, 500, (2, 20))
+        degisik = ids.clone()
+        degisik[:, 12:] = torch.randint(0, 500, (2, 8))
+        with torch.no_grad():
+            self.assertTrue(torch.allclose(model(ids)[:, :12], model(degisik)[:, :12], atol=1e-5))
+        self.assertTrue(0.0 <= model.gecis_orani <= 1.0)
+
+    def test_kapi_hepsi_gecince_duz_blokla_ayni(self):
+        from cocuk.model_minik import KapiliBlok
+        from cocuk.model_transformer import Blok, rope_tablosu
+        torch.manual_seed(0)
+        kapili = KapiliBlok({**KUCUK, "baglam": 32})
+        duz = Blok({**KUCUK, "baglam": 32})
+        duz.load_state_dict({k: v for k, v in kapili.state_dict().items() if not k.startswith("kapi.")})
+        torch.nn.init.constant_(kapili.kapi.bias, 30.0)  # p = 1: her token gecer, agirlik 1
+        cos, sin = rope_tablosu(32, 16)
+        x = torch.randn(2, 10, 64)
+        with torch.no_grad():
+            self.assertTrue(torch.allclose(kapili(x, cos, sin), duz(x, cos, sin), atol=1e-4))
+
+    def test_kapiya_gradyan_ve_butce(self):
+        torch.manual_seed(0)
+        model = ea.model_kur("minik", {**KUCUK, "katman": 4})
+        ids = torch.randint(0, 500, (2, 16))
+        kayip = ea.kayip_hesapla(model, ids[:, :-1], ids[:, 1:]) + model.yan_kayip
+        kayip.backward()
+        kapi = model.bloklar[-1].kapi.weight.grad
+        self.assertIsNotNone(kapi)
+        self.assertGreater(kapi.abs().sum().item(), 0)
+
 
 if __name__ == "__main__":
     unittest.main()

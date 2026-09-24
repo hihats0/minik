@@ -17,7 +17,8 @@ from cocuk.model_ssm import ssd_tarama
 
 KUCUK = {"transformer": {"katman": 2, "boyut": 64, "kafa": 4, "ara_boyut": 128, "sozluk": 500},
          "ssm": {"katman": 2, "boyut": 64, "durum": 8, "kafa_boyutu": 16, "parca": 16,
-                 "sozluk": 500}}
+                 "sozluk": 500},
+         "minik": {"katman": 4, "boyut": 64, "kafa": 4, "ara_boyut": 128, "sozluk": 500}}
 PARAMETRE_ALT, PARAMETRE_UST = 25_000_000, 35_000_000
 TOLERANS = 1e-4
 
