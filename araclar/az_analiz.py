@@ -13,9 +13,10 @@ KOK = Path(__file__).resolve().parent.parent
 SONUCLAR = KOK / "cocuk" / "agirlik" / "az_sonuclar.jsonl"
 CIKTI = KOK / "cocuk" / "agirlik" / "az_analiz.json"
 TABAN = "adamw"
-ANA_OLCULER = ("dogrulama_kaybi", "ciftler", "eski_sinav", "rakamli_tamamlama")  # Holm ailesi
+ANA_OLCULER = ("bpc", "ciftler", "eski_sinav", "enerji_wh")  # Holm ailesi
 INTEGRAL_ADIMI = 2000
 OLCULER = {  # ad: sonuc satirindan deger cikaran fonksiyon
+    "bpc": lambda s: s["olcum"]["bpc"],  # farkli sozluklu kollari kiyaslayan tek ortak olcu
     "dogrulama_kaybi": lambda s: s["olcum"]["dogrulama_kaybi"],
     "ciftler": lambda s: s["olcum"]["dilbilgisi_ciftleri"]["toplam_logp"]["hepsi"],
     "eski_sinav": lambda s: s["olcum"]["eski_sinav"]["dogru"],
@@ -86,8 +87,16 @@ def karsilastir(tablo: dict) -> dict:
     return {"ham": ham, "holm": holm(ana)}
 
 
+def guncel_olcum(satir: dict) -> dict:
+    """Koşudan sonra yeniden olculmus olabilir (ör. BPC sonradan eklendi): dosyadaki olcum esas."""
+    dosya = SONUCLAR.parent / satir["ad"] / "az_olcum.json"
+    if dosya.exists():
+        satir["olcum"] = json.loads(dosya.read_text("utf-8"))
+    return satir
+
+
 def main():
-    satirlar = [json.loads(s) for s in SONUCLAR.read_text("utf-8").splitlines() if s.strip()]
+    satirlar = [guncel_olcum(json.loads(s)) for s in SONUCLAR.read_text("utf-8").splitlines() if s.strip()]
     tablo = ozet(kollara_ayir(satirlar))
     sonuc = {"tablo": tablo, "testler": karsilastir(tablo)}
     CIKTI.write_text(json.dumps(sonuc, ensure_ascii=False, indent=1), encoding="utf-8")
