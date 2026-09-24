@@ -210,6 +210,15 @@ class TestAzDeney(unittest.TestCase):
             az_olc.BPC_PARAGRAF = eski
         self.assertTrue(0 < deger < 20)
 
+    def test_sohbet_ayiklama(self):
+        from cocuk.sohbet_uret import sohbetleri_ayikla
+        iyi = ["A: Merhaba!", "B: Merhaba, nasılsın?", "A: İyiyim.", "B: Ben de."]
+        kotu_sira = ["A: Selam.", "A: Yine ben.", "B: Tamam.", "B: Peki."]
+        kisa = ["A: Selam.", "B: Selam."]
+        baslikli = ["Sohbet 1", "A: Selam.", "B: Selam.", "A: Naber?", "B: İyi."]
+        metin = "###".join(chr(10).join(s) for s in (iyi, kotu_sira, kisa, baslikli))
+        self.assertEqual(sohbetleri_ayikla(metin), [iyi])
+
 
 class _SozlukSP:
     """bpc testi icin: her harf bir id (500'den kucuk)."""
