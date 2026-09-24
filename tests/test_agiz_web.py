@@ -11,8 +11,9 @@ from yuvalar import bekci_giris
 DDG_SAYFA = """<div><a class="result__a" href="//duckduckgo.com/l/?uddg=https%3A%2F%2Fwww.ornek.com%2Fa">Fotosentez</a>
 <a class="result__snippet" href="x">Bitkiler <b>isik</b> ile besin yapar.</a></div>
 <div><a class="result__a" href="https://duckduckgo.com/y.js?ad=1">Reklam</a></div>"""
-VIKI_JSON = json.dumps({"query": {"search": [
-    {"title": "Fotosentez", "snippet": "<span class=\"searchmatch\">Fotosentez</span> &amp; isik"}]}})
+VIKI_JSON = json.dumps({"query": {"pages": {
+    "9": {"index": 2, "title": "Klorofil", "extract": "Klorofil yesil bir pigmenttir."},
+    "5": {"index": 1, "title": "Fotosentez", "extract": "Fotosentez  bitkilerin isikla besin yapmasidir. Ek cumle."}}}})
 TARIH = "2026-09-23"
 
 
@@ -25,7 +26,7 @@ class Ayristirma(unittest.TestCase):
 
     def test_viki(self):
         s = web.viki_ayristir(VIKI_JSON)
-        self.assertEqual(s[0]["ozet"], "Fotosentez & isik")
+        self.assertEqual(s[0]["ozet"], "Fotosentez bitkilerin isikla besin yapmasidir.")
         self.assertTrue(s[0]["adres"].startswith("https://tr.wikipedia.org/wiki/"))
 
     def test_engel(self):

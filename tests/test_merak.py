@@ -26,8 +26,9 @@ class EkKaynaklar(unittest.TestCase):
         self.assertEqual(web.kayda_cevir("q", mg[0])["kaynak"], "ornek.edu")
 
     def test_en_viki(self):
-        s = web_ek.en_viki_ayristir(json.dumps({"query": {"search": [{"title": "A B", "snippet": "<b>x</b> &amp; y"}]}}))
-        self.assertEqual((s[0]["ozet"], s[0]["adres"]), ("x & y", "https://en.wikipedia.org/wiki/A_B"))
+        s = web_ek.en_viki_ayristir(json.dumps({"query": {"pages": {"1": {"index": 1, "title": "A B",
+                                                                           "extract": "A B is a long thing."}}}}))
+        self.assertEqual((s[0]["ozet"], s[0]["adres"]), ("A B is a long thing.", "https://en.wikipedia.org/wiki/A_B"))
 
 
 class Esleme(unittest.TestCase):
@@ -59,6 +60,12 @@ class Akis(unittest.TestCase):
         kabul, yazilan = self.calistir(["a.com", "b.org", "c.net"])
         self.assertEqual((len(kabul), len(yazilan)), (1, 1))
         self.assertEqual(yazilan[0]["kaynak"], "a.com,b.org,c.net")
+
+    def test_ayni_kurum_tek_agiz(self):
+        kabul, yazilan = self.calistir(["tr.wikipedia.org", "en.wikipedia.org", "wikidata.org"])
+        self.assertEqual((kabul, yazilan), ([], []))
+        kabul, _ = self.calistir(["tr.wikipedia.org", "wikidata.org", "b.org", "c.net"])
+        self.assertEqual(kabul[0]["agizlar"], ["b.org", "c.net", "wikimedia"])
 
     def test_iki_alan_girmez(self):
         kabul, yazilan = self.calistir(["a.com", "a.com", "b.org"])

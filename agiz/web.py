@@ -1,25 +1,24 @@
 """Web agzi (f10): merak edilen sorguyu DuckDuckGo HTML, Turkce Vikipedi ve web_ek kaynaklarindan okur, sonuclari Bekci giris
-kaydina cevirir (kaynak = alan adi). Oturum acmaz, engel gorurse durur. Cagiran: araclar/f10-web-dene.py, testler."""
+kaydina cevirir (kaynak = alan adi, iddia = kisa cumle). Oturum acmaz, engel gorurse durur. Cagiran: yuvalar/merak.py, araclar/."""
 
-import html
 import json
-import re
 import time
 import urllib.error
 import urllib.parse
 import urllib.request
 from html.parser import HTMLParser
 
-from agiz import web_ek
+from agiz import web_ek, web_iddia
 from ortak import log
 
 YUVA_ADI = "agiz_web"
 PLATFORM = "web"
 DDG_ADRESI = "https://html.duckduckgo.com/html/?q="
-VIKI_ADRESI = "https://tr.wikipedia.org/w/api.php?action=query&list=search&format=json&srlimit={n}&srsearch="
 VIKI_ALANI = "tr.wikipedia.org"
 EN_COK_SONUC = 10
 ZAMAN_ASIMI_SN = 15
+# f10-b: Marginalia 5 istekten 4unde zaman asimina dustu; zaman asiminda bir kez daha denenir, loglanir.
+ZAMAN_ASIMI_TEKRAR = 1
 SITE_ARASI_SN = 1.0  # ayni siteye saniyede en fazla bir istek
 TARAYICI_KIMLIGI = "Mozilla/5.0 (Minik arastirma; tek kullanici, saniyede 1 istek)"
 KOD_COZUMU = "utf-8"
@@ -27,7 +26,6 @@ KOD_COZUMU = "utf-8"
 ENGEL_ISARETLERI = ("anomaly-modal", "challenge-form", "captcha")
 ENGEL_KODU = 202
 DDG_YONLENDIRME_ANAHTARI = "uddg"
-ETIKET_DESENI = re.compile(r"<[^>]+>")
 
 
 class Engellendi(RuntimeError):
@@ -117,11 +115,8 @@ def ddg_ayristir(sayfa):
 
 
 def viki_ayristir(metin):
-    """Vikipedi arama API JSON'unu sonuc listesine cevirir; ozetteki vurgu etiketleri silinir."""
-    arama = json.loads(metin)["query"]["search"]
-    return [{"baslik": s["title"], "ozet": html.unescape(ETIKET_DESENI.sub("", s["snippet"])),
-             "adres": f"https://{VIKI_ALANI}/wiki/" + urllib.parse.quote(s["title"].replace(" ", "_"))}
-            for s in arama]
+    """Turkce Vikipedi giris cumleli arama JSON'unu sonuc listesine cevirir (ozet = kisa iddia)."""
+    return web_iddia.viki_giris_ayristir(metin, VIKI_ALANI)
 
 
 def kayda_cevir(sorgu, sonuc):
@@ -135,7 +130,7 @@ def ara(sorgu, en_cok=EN_COK_SONUC):
     kaynak loglanip atlanir (asilmaz); digerleriyle devam edilir."""
     kodlu = urllib.parse.quote(sorgu)
     kaynaklar = [("ddg", DDG_ADRESI + kodlu, ddg_ayristir),
-                 ("tr_viki", VIKI_ADRESI.format(n=en_cok) + kodlu, viki_ayristir)] + web_ek.adresler(kodlu, en_cok)
+                 ("tr_viki", web_iddia.viki_giris_adresi(VIKI_ALANI, kodlu, en_cok), viki_ayristir)] + web_ek.adresler(kodlu, en_cok)
     sonuclar = []
     for ad, adres, ayristirici in kaynaklar:
         sonuclar += _kaynaktan(sorgu, ad, adres, ayristirici)[:en_cok]
@@ -148,10 +143,27 @@ def ara(sorgu, en_cok=EN_COK_SONUC):
 def _kaynaktan(sorgu, ad, adres, ayristirici):
     """Tek kaynagi okur; engel ya da ag hatasi loglanir ve bos liste doner, bir kaynak digerlerini durdurmaz."""
     try:
-        return ayristirici(getir(adres))
+        return ayristirici(_zaman_asiminda_tekrarla(sorgu, ad, adres))
     except (Engellendi, urllib.error.URLError, TimeoutError, ValueError, KeyError) as hata:
         log.yaz(YUVA_ADI, "ara", 0, "hata", {"sorgu": sorgu, "kaynak": ad, "hata": str(hata)})
         return []
+
+
+def _zaman_asiminda_tekrarla(sorgu, ad, adres, getirici=None):
+    """getir(adres); zaman asiminda ZAMAN_ASIMI_TEKRAR kez daha dener, her tekrar loglanir. Diger hatalar gecer."""
+    getirici = getirici or getir
+    for deneme in range(ZAMAN_ASIMI_TEKRAR + 1):
+        try:
+            return getirici(adres)
+        except (urllib.error.URLError, TimeoutError) as hata:
+            if not zaman_asimi_mi(hata) or deneme == ZAMAN_ASIMI_TEKRAR:
+                raise
+            log.yaz(YUVA_ADI, "yeniden_dene", 0, "ok", {"sorgu": sorgu, "kaynak": ad, "hata": str(hata)})
+
+
+def zaman_asimi_mi(hata):
+    """urllib zaman asimini iki bicimde verir: dogrudan TimeoutError ya da URLError(reason=TimeoutError)."""
+    return isinstance(hata, TimeoutError) or isinstance(getattr(hata, "reason", None), TimeoutError)
 
 
 def _ms(basladi):

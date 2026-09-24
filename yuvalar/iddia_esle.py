@@ -11,6 +11,10 @@ EN_AZ_ORTAK = 3  # TAHMIN: iki uc kelimelik tanim tesadufen %50 ortusmesin diye
 KAFA_SORUSU = ("Iki metin ayni bilgiyi mi soyluyor? Yalniz 'evet' ya da 'hayir' yaz.\n"
                "1: {a}\n2: {b}")
 KAFA_EVET = "evet"
+# K34 varsayimi A (f10-c): ayni kurumun alanlari tek agiz; uc agizin amaci bagimsiz kaynak. tr/en Vikipedi ve
+# Wikidata ayni vakfin (Wikimedia). Anahtar alan adinin sonu, deger kurum adi.
+KURUMLAR = {"wikipedia.org": "wikimedia", "wikidata.org": "wikimedia", "wiktionary.org": "wikimedia",
+            "wikimedia.org": "wikimedia"}
 
 
 def kelimeler(metin):
@@ -34,9 +38,18 @@ def kafa_ayni_mi(sor):
     return ayni_mi
 
 
+def kurum(alan):
+    """Alan adinin kurumu (agiz kimligi): KURUMLAR'da varsa kurum adi, yoksa alan adinin kendisi."""
+    for son, ad in KURUMLAR.items():
+        if alan == son or alan.endswith("." + son):
+            return ad
+    return alan
+
+
 def grupla(kayitlar, ayni_mi=basit_ayni_mi):
     """Kayitlari gruplar: her kayit, temsilcisi ayni iddiayi soyleyen ilk gruba girer, yoksa yeni grup acar.
-    Donen grup: {"iddia": temsilci metin, "kayitlar": [...], "alanlar": sirali farkli alan adlari}."""
+    Donen grup: {"iddia": temsilci metin, "kayitlar": [...], "alanlar": sirali farkli alan adlari,
+    "agizlar": sirali farkli kurumlar (Bekci'ye giden bagimsiz kaynaklar)}."""
     gruplar = []
     for kayit in kayitlar:
         grup = next((g for g in gruplar if ayni_mi(g["iddia"], kayit["soru"])), None)
@@ -46,4 +59,5 @@ def grupla(kayitlar, ayni_mi=basit_ayni_mi):
         grup["kayitlar"].append(kayit)
     for g in gruplar:
         g["alanlar"] = sorted({k["kaynak"] for k in g["kayitlar"]})
+        g["agizlar"] = sorted({kurum(a) for a in g["alanlar"]})
     return gruplar

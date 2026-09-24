@@ -21,17 +21,18 @@ def ogren(baglanti, sorgu, tarih, ara=web.ara, ayni_mi=iddia_esle.basit_ayni_mi,
              "platform": PLATFORM, "sorgu": sorgu, "adresler": [k["adres"] for k in g["kayitlar"]]})
     log.yaz(YUVA_ADI, "ogren", _gecen_ms(basladi), "ok",
             {"sorgu": sorgu, "grup": len(gruplar), "kabul": len(kabul),
-             "en_cok_alan": max((len(g["alanlar"]) for g in gruplar), default=0)})
+             "en_cok_alan": max((len(g["alanlar"]) for g in gruplar), default=0),
+             "en_cok_agiz": max((len(g["agizlar"]) for g in gruplar), default=0)})
     return kabul
 
 
 def _bekci_gecirir_mi(baglanti, grup, tarih):
-    """Grubun her alan adini ayri agiz olarak Bekci'ye sorar; son karar (hepsi sayildiktan sonra) gecerlidir."""
+    """Grubun her kurumunu (K34: ayni kurumun alanlari tek agiz) Bekci'ye sorar; son karar gecerlidir."""
     karar, gerekce = False, ""
-    for alan in grup["alanlar"]:
-        karar, gerekce = bekci_giris.gecsin_mi(baglanti, grup["iddia"], alan, tarih, PLATFORM)
+    for agiz in grup["agizlar"]:
+        karar, gerekce = bekci_giris.gecsin_mi(baglanti, grup["iddia"], agiz, tarih, PLATFORM)
     if not karar:
-        log.yaz(YUVA_ADI, "defter_disi", 0, "ok", {"iddia": grup["iddia"][:120], "alanlar": grup["alanlar"],
+        log.yaz(YUVA_ADI, "defter_disi", 0, "ok", {"iddia": grup["iddia"][:120], "agizlar": grup["agizlar"],
                                                    "gerekce": gerekce})
     return karar
 
