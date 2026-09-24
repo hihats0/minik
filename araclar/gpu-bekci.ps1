@@ -1,7 +1,7 @@
 # GPU bekcisi: Yigit evde yokken GPU sicakligini 15 sn'de bir okur, 85 °C'de Minik'in GPU islerini durdurur.
 # Cagiran: ana oturum ya da minik-devam rutini, ayri surec olarak (Start-Process pwsh -File ... -WindowStyle Hidden).
 
-$SINIR_DURDUR_C = 85        # Yigit'in laptop kurali: 85+ olursa mudahale (memory: laptop-sicaklik)
+$SINIR_DURDUR_C = 90        # Yigit 25 Eyl: sicaklik siniri kalkti; GPU ~87'de kendini kisiyor, 90 yalniz fan arizasina karsi son fren
 $ARALIK_SN = 15
 $LOG = "C:\Projelerim\minik\loglar\gpu-bekci.log"
 $PROJE = "C:\Projelerim\minik"
@@ -32,3 +32,4 @@ while ($true) {
     }
     Start-Sleep -Seconds $ARALIK_SN
 }
+
