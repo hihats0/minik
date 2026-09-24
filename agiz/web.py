@@ -8,7 +8,9 @@ import urllib.parse
 import urllib.request
 from html.parser import HTMLParser
 
-from agiz import web_ek, web_iddia
+import functools
+
+from agiz import web_chrome, web_ek, web_iddia
 from ortak import log
 
 YUVA_ADI = "agiz_web"
@@ -45,15 +47,20 @@ def bekle(alan, saat=time.monotonic, uyu=time.sleep):
     _son_istek[alan] = simdi
 
 
-def getir(adres):
+def _urllib_oku(adres):
+    """Adresi urllib ile okur, (kod, metin) dondurur."""
+    istek = urllib.request.Request(adres, headers={"User-Agent": TARAYICI_KIMLIGI})
+    with urllib.request.urlopen(istek, timeout=ZAMAN_ASIMI_SN) as yanit:
+        return yanit.status, yanit.read().decode(KOD_COZUMU, errors="replace")
+
+
+def getir(adres, okuyucu=_urllib_oku):
     """Adresi hiz sinirina uyarak okur, metni dondurur; her istek loglanir, engel Engellendi yukseltir."""
     alan = alan_adi(adres)
     bekle(alan)
     basladi = time.perf_counter()
-    istek = urllib.request.Request(adres, headers={"User-Agent": TARAYICI_KIMLIGI})
     try:
-        with urllib.request.urlopen(istek, timeout=ZAMAN_ASIMI_SN) as yanit:
-            kod, metin = yanit.status, yanit.read().decode(KOD_COZUMU, errors="replace")
+        kod, metin = okuyucu(adres)
     except (urllib.error.URLError, TimeoutError) as hata:
         log.yaz(YUVA_ADI, "istek", _ms(basladi), "hata", {"alan": alan, "hata": str(hata)})
         raise
@@ -133,17 +140,19 @@ def ara(sorgu, en_cok=EN_COK_SONUC):
                  ("tr_viki", web_iddia.viki_giris_adresi(VIKI_ALANI, kodlu, en_cok), viki_ayristir)] + web_ek.adresler(kodlu, en_cok)
     sonuclar = []
     for ad, adres, ayristirici in kaynaklar:
-        sonuclar += _kaynaktan(sorgu, ad, adres, ayristirici)[:en_cok]
+        # f10-e: DDG yalniz gercek Chrome'a sonuc veriyor; diger kaynaklar urllib ile.
+        getirici = DDG_GETIRICI if ad == "ddg" else getir
+        sonuclar += _kaynaktan(sorgu, ad, adres, ayristirici, getirici)[:en_cok]
     kayitlar = [kayda_cevir(sorgu, s) for s in sonuclar if s["ozet"].strip()]
     log.yaz(YUVA_ADI, "ara", 0, "ok", {"sorgu": sorgu, "kayit": len(kayitlar),
                                         "alan": len({k["kaynak"] for k in kayitlar})})
     return kayitlar
 
 
-def _kaynaktan(sorgu, ad, adres, ayristirici):
+def _kaynaktan(sorgu, ad, adres, ayristirici, getirici=None):
     """Tek kaynagi okur; engel ya da ag hatasi loglanir ve bos liste doner, bir kaynak digerlerini durdurmaz."""
     try:
-        return ayristirici(_zaman_asiminda_tekrarla(sorgu, ad, adres))
+        return ayristirici(_zaman_asiminda_tekrarla(sorgu, ad, adres, getirici))
     except (Engellendi, urllib.error.URLError, TimeoutError, ValueError, KeyError) as hata:
         log.yaz(YUVA_ADI, "ara", 0, "hata", {"sorgu": sorgu, "kaynak": ad, "hata": str(hata)})
         return []
@@ -159,6 +168,9 @@ def _zaman_asiminda_tekrarla(sorgu, ad, adres, getirici=None):
             if not zaman_asimi_mi(hata) or deneme == ZAMAN_ASIMI_TEKRAR:
                 raise
             log.yaz(YUVA_ADI, "yeniden_dene", 0, "ok", {"sorgu": sorgu, "kaynak": ad, "hata": str(hata)})
+
+
+DDG_GETIRICI = functools.partial(getir, okuyucu=web_chrome.oku)
 
 
 def zaman_asimi_mi(hata):
