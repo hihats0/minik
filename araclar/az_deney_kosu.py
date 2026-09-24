@@ -31,6 +31,7 @@ KOLLAR = {  # ad: (az_egit ek bayraklari, az_olc ek bayraklari); kosulacaklar ko
     "arsifonem": (["--veri-eki", "_ars", "--ayar", '{"sozluk": 17408}'], ["--sozluk", "arsifonem"]),
     "hece": (["--veri-eki", "_hece"], ["--sozluk", "hece"]),
     "minik": (["--tur", "minik"], []),
+    "merak": (["--merak-oran", "0.5"], []),
 }
 TOKEN_MILYON = "50"
 

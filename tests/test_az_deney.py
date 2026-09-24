@@ -219,6 +219,16 @@ class TestAzDeney(unittest.TestCase):
         metin = "###".join(chr(10).join(s) for s in (iyi, kotu_sira, kisa, baslikli))
         self.assertEqual(sohbetleri_ayikla(metin), [iyi])
 
+    def test_merakli_kayip_sasirticiyi_secer(self):
+        torch.manual_seed(0)
+        model = ea.model_kur("transformer", KUCUK)
+        x, y = torch.randint(0, 500, (2, 16)), torch.randint(0, 500, (2, 16))
+        duz = az_egit.merakli_kayip(model, x, y, 1.0)
+        merakli = az_egit.merakli_kayip(model, x, y, 0.5)
+        self.assertGreater(merakli.item(), duz.item())  # en zor yari ortalamanin ustunde
+        merakli.backward()
+        self.assertIsNotNone(model.gomme.weight.grad)
+
 
 class _SozlukSP:
     """bpc testi icin: her harf bir id (500'den kucuk)."""

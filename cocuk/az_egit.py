@@ -9,6 +9,7 @@ import time
 
 import numpy as np
 import torch
+import torch.nn.functional as F
 
 from cocuk import egit as d4
 from cocuk import egit_araclari as ea
@@ -35,6 +36,8 @@ def bayraklari_oku(argv=None):
     p.add_argument("--lr-taban", type=float, default=1e-4)
     p.add_argument("--isinma", type=int, default=300)
     p.add_argument("--ayar", default="{}")
+    p.add_argument("--merak-oran", type=float, default=1.0,
+                   help="1'den kucukse: yalniz en sasirtici bu pay kadar tokendan ogren (beyin: merak/dikkat)")
     p.add_argument("--veri-eki", default="", help='"_ars": T1 arsifonem verisi (egitim_ars.bin)')
     p.add_argument("--cihaz", default="cuda" if torch.cuda.is_available() else "cpu")
     return p.parse_args(argv)
@@ -64,12 +67,23 @@ def karisik_pencere(veriler, arg, uretec):
     return torch.cat([x, xs]), torch.cat([y, ys])
 
 
+def merakli_kayip(model, x, y, oran: float):
+    """oran=1: duz kayip. Degilse batch'teki en yuksek kayipli (en sasirtici) oran kadar token secilir,
+    yalniz onlarin ortalamasi ogrenilir; zaten bilinen tokenlar gradyan almaz."""
+    if oran >= 1.0:
+        return ea.kayip_hesapla(model, x, y)
+    logit = model(x)
+    tek = F.cross_entropy(logit.float().view(-1, logit.size(-1)), y.reshape(-1), reduction="none")
+    secilen = tek.topk(max(1, int(oran * tek.numel()))).values
+    return secilen.mean()
+
+
 def adim_at(model, opts, veriler, arg, uretec, amp) -> float:
     toplam = 0.0
     for _ in range(arg.birikim):
         x, y = karisik_pencere(veriler, arg, uretec)
         with torch.autocast(arg.cihaz.type, dtype=torch.bfloat16, enabled=amp):
-            kayip = ea.kayip_hesapla(model, x, y)
+            kayip = merakli_kayip(model, x, y, arg.merak_oran)
             kayip = (kayip + getattr(model, "yan_kayip", 0.0)) / arg.birikim  # minik: enerji butcesi
         kayip.backward()
         toplam += kayip.item()
