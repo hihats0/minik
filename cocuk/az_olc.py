@@ -13,6 +13,7 @@ import torch
 
 from cocuk import degerlendir as dg
 from cocuk import egit_araclari as ea
+from cocuk.arsifonem import ArsifonemSP, Donusturucu
 
 DOGRULAMA_PENCERE = 200  # cocuk/egit.py ile ayni pencereler, D4 kaybiyla dogrudan kiyas
 DOGRULAMA_BATCH = 16
@@ -68,11 +69,15 @@ def tamamlama_olculeri(cumleler: list[str], baslangiclar: list[str], sozluk: set
             "cumle_bitti": biten, "toplam": n}
 
 
-def olc(ad: str, cihaz) -> dict:
+def olc(ad: str, cihaz, arsifonem: bool = False) -> dict:
+    """arsifonem: T1 modeli; sinav metinleri arsifonem idlerine cevrilir, dogrulama ayni konumlarda."""
     model, paket = dg.yukle(ad, cihaz)
     sp = spm.SentencePieceProcessor(model_file=str(dg.TOKENIZER_YOLU))
+    if arsifonem:  # ayni sinif arayuzu: encode/decode/eos_id
+        sp = ArsifonemSP(sp, Donusturucu(sp))
     amp = cihaz.type == "cuda"
-    kayip = ea.dogrulama_kaybi(model, ea.veri_ac("dogrulama"), model.ayar["baglam"],
+    kayip = ea.dogrulama_kaybi(model, ea.veri_ac("dogrulama" + ("_ars" if arsifonem else "")),
+                               model.ayar["baglam"],
                                DOGRULAMA_BATCH, DOGRULAMA_PENCERE, cihaz, amp)
     baslangiclar = json.loads((dg.SINAV_DIZINI / "dilbilgisi.json").read_text("utf-8"))["baslangiclar"]
     cumleler = [tamamla(model, sp, b, cihaz).strip() for b in baslangiclar]
@@ -90,6 +95,7 @@ if __name__ == "__main__":
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--ad", required=True)
     p.add_argument("--cihaz", default="cuda" if torch.cuda.is_available() else "cpu")
+    p.add_argument("--arsifonem", action="store_true")
     a = p.parse_args()
-    s = olc(a.ad, torch.device(a.cihaz))
+    s = olc(a.ad, torch.device(a.cihaz), a.arsifonem)
     print(json.dumps({k: v for k, v in s.items() if k != "cumleler"}, ensure_ascii=False))

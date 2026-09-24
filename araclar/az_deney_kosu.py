@@ -24,12 +24,13 @@ SOGUMA_SN = 15 * 60
 TOPLAM_SN = 6 * 3600  # goal: toplam deney 6 saati gecmez
 KOSU_PAYI_SN = 35 * 60  # bir kosunun soguma duraklariyla en uzun tahmini
 TOHUMLAR = (1, 2, 3)
-KOLLAR = {  # ad: (optimizer, sade_oran, token_milyon); muon25 en sonda, sure kalirsa
-    "adamw": ("adamw", 0.0, 50),
-    "muon": ("muon", 0.0, 50),
-    "sade": ("adamw", 0.25, 50),
-    "muon25": ("muon", 0.0, 25),
+KOLLAR = {  # ad: (az_egit ek bayraklari, az_olc ek bayraklari); kosulacaklar komut satirindan
+    "adamw": ([], []),
+    "muon": (["--optimizer", "muon"], []),
+    "sade": (["--sade-oran", "0.25"], []),
+    "arsifonem": (["--veri-eki", "_ars", "--ayar", '{"sozluk": 17408}'], ["--arsifonem"]),
 }
+TOKEN_MILYON = "50"
 
 METIN = {"capture_output": True, "text": True, "encoding": "utf-8", "errors": "replace",
          "env": {**os.environ, "PYTHONIOENCODING": "utf-8"}}
@@ -67,15 +68,15 @@ def engel() -> str | None:
 def kos(kol: str, tohum: int) -> dict | None:
     """Bir kolun bir tohumunu egitir ve olcer; basarisizsa None."""
     ad = f"az-{kol}-t{tohum}"
-    optimizer, sade, token = KOLLAR[kol]
+    egit_ek, olc_ek = KOLLAR[kol]
     egit = [sys.executable, "-m", "cocuk.az_egit", "--ad", ad, "--tohum", str(tohum),
-            "--optimizer", optimizer, "--sade-oran", str(sade), "--token-milyon", str(token)]
+            "--token-milyon", TOKEN_MILYON, *egit_ek]
     sonuc = subprocess.run(egit, cwd=KOK, **METIN)
     if sonuc.returncode != 0:
         log.error("%s egitim hatasi: %s", ad, sonuc.stderr[-800:])
         return None
     egitim = json.loads(sonuc.stdout.strip().splitlines()[-1])
-    olc = subprocess.run([sys.executable, "-m", "cocuk.az_olc", "--ad", ad], cwd=KOK, **METIN)
+    olc = subprocess.run([sys.executable, "-m", "cocuk.az_olc", "--ad", ad, *olc_ek], cwd=KOK, **METIN)
     if olc.returncode != 0:
         log.error("%s olcum hatasi: %s", ad, olc.stderr[-800:])
         return None
@@ -89,15 +90,14 @@ def yapilmis() -> set:
     return {json.loads(s)["ad"] for s in SONUCLAR.read_text("utf-8").splitlines() if s.strip()}
 
 
-def sira() -> list:
-    """Once uc ana kol x uc tohum (dengeli), sonra muon25'in tohumlari."""
-    ana = [(k, t) for t in TOHUMLAR for k in KOLLAR if k != "muon25"]
-    return ana + [("muon25", t) for t in TOHUMLAR]
+def sira(secilen: list) -> list:
+    """Secilen kollar tohum tohum dengeli sirayla (once hepsinin tohum 1'i)."""
+    return [(k, t) for t in TOHUMLAR for k in secilen]
 
 
-def main():
+def main(secilen: list):
     seans_basi = deney_basi = time.time()
-    for kol, tohum in sira():
+    for kol, tohum in sira(secilen):
         if f"az-{kol}-t{tohum}" in yapilmis():
             continue
         if time.time() - deney_basi + KOSU_PAYI_SN > TOPLAM_SN:
@@ -125,4 +125,4 @@ if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s",
                         handlers=[logging.FileHandler(KOK / "loglar" / "az-deney-kosu.log",
                                                       encoding="utf-8"), logging.StreamHandler()])
-    main()
+    main(sys.argv[1:] or ["adamw"])  # ornek: python araclar/az_deney_kosu.py adamw arsifonem

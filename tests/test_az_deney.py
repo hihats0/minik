@@ -16,7 +16,7 @@ sys.path.insert(0, str(KOK))
 sys.path.insert(0, str(KOK / "araclar"))
 
 import az_analiz
-from cocuk import ani_deposu, az_egit, az_olc, egit_araclari as ea
+from cocuk import ani_deposu, arsifonem, az_egit, az_olc, egit_araclari as ea
 from cocuk.guc_olcer import GucOlcer, enerji_wh
 from cocuk.sade_veri import sade_mi
 
@@ -128,6 +128,27 @@ class TestAzDeney(unittest.TestCase):
             anili.yaz(ids[0])
             sonra = anili(ids)[0, 5, ids[0, 6]].item()
         self.assertGreater(sonra, once)
+
+    def test_arsifonem_kural(self):
+        self.assertEqual(arsifonem.soyutla("ler"), "lAr")
+        self.assertEqual(arsifonem.soyutla("te"), "DA")
+        self.assertEqual(arsifonem.gerceklestir("lAr", "kitap"), "lar")
+        self.assertEqual(arsifonem.gerceklestir("lAr", "ev"), "ler")
+        self.assertEqual(arsifonem.gerceklestir("DA", "kitap"), "ta")
+        self.assertEqual(arsifonem.gerceklestir("DA", "okul"), "da")
+        self.assertEqual(arsifonem.gerceklestir("I", "göz"), "ü")
+
+    def test_arsifonem_gidis_donus_ve_istisna(self):
+        import sentencepiece as spm
+        sp = spm.SentencePieceProcessor(model_file=str(KOK / "cocuk/tokenizer/tr16k.model"))
+        d = arsifonem.Donusturucu(sp)
+        metin = "Kitaplarımızdan saatlerce okulda ders çalıştık."
+        ids = sp.encode(metin)
+        cevrilmis = d.cevir(ids)
+        self.assertEqual(d.geri(cevrilmis), ids)
+        self.assertGreater(sum(i >= sp.get_piece_size() for i in cevrilmis), 0)
+        saat_sonrasi = cevrilmis[ids.index(sp.piece_to_id("▁saat")) + 1]
+        self.assertLess(saat_sonrasi, sp.get_piece_size())  # alinti: kural "lerce"yi uretemez
 
 
 if __name__ == "__main__":

@@ -34,6 +34,7 @@ def bayraklari_oku(argv=None):
     p.add_argument("--lr-taban", type=float, default=1e-4)
     p.add_argument("--isinma", type=int, default=300)
     p.add_argument("--ayar", default="{}")
+    p.add_argument("--veri-eki", default="", help='"_ars": T1 arsifonem verisi (egitim_ars.bin)')
     p.add_argument("--cihaz", default="cuda" if torch.cuda.is_available() else "cpu")
     return p.parse_args(argv)
 
@@ -79,7 +80,7 @@ def adim_at(model, opts, veriler, arg, uretec, amp) -> float:
 
 def dongu(model, opts, arg, kayit) -> dict:
     """Egitim dongusu; soguma beklemesi egitim suresinden ayri sayilir."""
-    veriler = (ea.veri_ac("egitim"), ea.veri_ac("sade") if arg.sade_oran else None)
+    veriler = (ea.veri_ac("egitim" + arg.veri_eki), ea.veri_ac("sade") if arg.sade_oran else None)
     uretec, amp = np.random.default_rng(arg.tohum), arg.cihaz.type == "cuda"
     toplam_adim = int(arg.token_milyon * MILYON) // (arg.batch * arg.birikim * arg.baglam)
     baslangic, bekleme = time.time(), 0.0
