@@ -12,6 +12,11 @@ from ortak.ayar import DEFTER_GERI_GUN_SINIRI, DEFTER_KLASORU, DEFTER_SON_N
 
 YUVA_ADI = "defter"
 
+# Satir sayaci: {dosya_yolu: (boyut, degisme_ns, satir_sayisi)}. Baska surec (orn. agiz.web_sohbet)
+# ayni dosyaya yazarsa boyut/degisme zamani tutmaz, dosya yeniden sayilir. Iki surecin ayni anda
+# yazdigi pencerede kayit_no yine kayabilir (eski kodda da ayni yaris vardi).
+_sayac = {}
+
 
 def yaz(kayit):
     """Kaydi bugunku jsonl dosyasinin SONUNA ekler, var olan satirlara asla dokunmaz.
@@ -23,9 +28,10 @@ def yaz(kayit):
     dosya = _bugunku_dosya()
     try:
         dosya.parent.mkdir(parents=True, exist_ok=True)
-        onceki = _satir_sayisi(dosya) if dosya.exists() else 0
+        onceki = _sayac_oku(dosya)
         with dosya.open("a", encoding="utf-8") as f:
             f.write(json.dumps(satir, ensure_ascii=False) + "\n")
+        _sayac_yaz(dosya, onceki + 1)
     except OSError as hata:
         log.yaz(YUVA_ADI, "yaz", _gecen_ms(basladi), "hata", {"hata": str(hata)})
         raise
@@ -90,6 +96,23 @@ def _satir_sayisi(dosya):
     """Dosyadaki bos olmayan satir sayisini dondurur (bir sonraki kayit_no icin)."""
     with dosya.open(encoding="utf-8") as f:
         return sum(1 for satir in f if satir.strip())
+
+
+def _sayac_oku(dosya):
+    """Onbellekteki satir sayisini verir; dosya boyutu ya da degisme zamani degistiyse yeniden sayar."""
+    if not dosya.exists():
+        return 0
+    durum = dosya.stat()
+    kayitli = _sayac.get(str(dosya))
+    if kayitli and kayitli[:2] == (durum.st_size, durum.st_mtime_ns):
+        return kayitli[2]
+    return _satir_sayisi(dosya)
+
+
+def _sayac_yaz(dosya, sayi):
+    """Yazimdan sonraki boyut ve degisme zamaniyla sayaci kaydeder."""
+    durum = dosya.stat()
+    _sayac[str(dosya)] = (durum.st_size, durum.st_mtime_ns, sayi)
 
 
 def _satirlari_ayristir(dosya, basladi):
