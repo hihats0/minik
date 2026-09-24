@@ -13,12 +13,14 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from ortak.ayar import KAFA_SICAKLIK, KAFA_TOP_P, KAFA_UC  # noqa: E402
 from yuvalar import kafa, ton  # noqa: E402
 from yuvalar.kafa_dusunce import dusunce_ayikla  # noqa: E402
+from ortak.gpu_sicaklik import DEVAM_ESIGI_C, DURAK_ESIGI_C  # noqa: E402
 
 KOK = Path(__file__).resolve().parent.parent
 GPU_CSV = KOK / "loglar" / "k26c-gpu.csv"
 CIKTI = KOK / "loglar" / "k26c-sonuc.json"
-DURAKLA_C = 80
-DEVAM_C = 70
+# Esikler ortak/gpu_sicaklik.py'de tek yerde (sicak-a).
+DURAKLA_C = DURAK_ESIGI_C
+DEVAM_C = DEVAM_ESIGI_C
 SOGUMA_BEKLE_SN = 15
 ZAMAN_ASIMI_SN = 180
 DENENEN_MAX_TOKEN = (512, 1024, 1536)

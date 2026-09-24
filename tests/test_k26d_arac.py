@@ -152,7 +152,7 @@ class TestSerinle(unittest.TestCase):
             bekci.baslat()
             bekci.serinle()
             bekci.bitir()
-        self.assertLessEqual(bekci.son_c, gpu_sicaklik.DEVAM_C)
+        self.assertLessEqual(bekci.son_c, gpu_sicaklik.DEVAM_ESIGI_C)
         self.assertEqual(bekci.en_yuksek_c, 81)
         self.assertFalse(bekci.kesildi)
 
@@ -164,7 +164,7 @@ class TestSerinle(unittest.TestCase):
             bekci.baslat()
             bekci.serinle()
             bekci.bitir()
-        self.assertLessEqual(bekci.son_c, gpu_sicaklik.DEVAM_C)
+        self.assertLessEqual(bekci.son_c, gpu_sicaklik.DEVAM_ESIGI_C)
 
     def test_83te_kesmez_84te_keser(self):
         for derece, kesilir in ((83, False), (84, True)):

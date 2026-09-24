@@ -17,6 +17,7 @@ sys.path.insert(0, str(KOK))
 
 from ortak.ayar import KAFA_MODEL_YOLU, KAFA_PORT, MOD_UYANIK, MOD_YORGUN, MOD_ZORLA_DEGISKENI  # noqa: E402
 from yuvalar import hormonlar, kafa  # noqa: E402
+from ortak.gpu_sicaklik import DEVAM_ESIGI_C, DURAK_ESIGI_C  # noqa: E402
 
 LLAMA_SERVER = str(Path(os.environ["LOCALAPPDATA"]) / "Microsoft/WinGet/Packages/"
                     "ggml.llamacpp_Microsoft.Winget.Source_8wekyb3d8bbwe/llama-server.exe")
@@ -25,8 +26,9 @@ CIKTI_KLASORU = KOK / "reports" / "f3c-kor-olcum"
 HAZIR_BEKLEME_SN = 180
 YOKLAMA_ARALIGI_SN = 0.5
 TEKRAR = 3
-SICAKLIK_DURAKLAMA = 80
-SICAKLIK_DEVAM = 70
+# Esikler ortak/gpu_sicaklik.py'de tek yerde (sicak-a).
+SICAKLIK_DURAKLAMA = DURAK_ESIGI_C
+SICAKLIK_DEVAM = DEVAM_ESIGI_C
 SICAKLIK_YOKLAMA_SN = 5
 MODLAR = [MOD_UYANIK, MOD_YORGUN]
 

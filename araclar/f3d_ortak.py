@@ -3,9 +3,15 @@ Cagiran: araclar/f3d-ton-gpu.py, tests/test_f3d_ortak.py.
 """
 
 import math
+import sys
+from pathlib import Path
 
-DURAKLA_C = 80
-DEVAM_C = 70
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from ortak.gpu_sicaklik import DEVAM_ESIGI_C, DURAK_ESIGI_C  # noqa: E402
+
+# Esikler ortak/gpu_sicaklik.py'de tek yerde (sicak-a).
+DURAKLA_C = DURAK_ESIGI_C
+DEVAM_C = DEVAM_ESIGI_C
 YUZDELIK = 0.95
 
 
