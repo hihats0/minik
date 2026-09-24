@@ -16,7 +16,7 @@ sys.path.insert(0, str(KOK))
 sys.path.insert(0, str(KOK / "araclar"))
 
 import az_analiz
-from cocuk import az_egit, az_olc, egit_araclari as ea
+from cocuk import ani_deposu, az_egit, az_olc, egit_araclari as ea
 from cocuk.guc_olcer import GucOlcer, enerji_wh
 from cocuk.sade_veri import sade_mi
 
@@ -103,6 +103,31 @@ class TestAzDeney(unittest.TestCase):
     def test_holm_tekduze(self):
         d = az_analiz.holm({"x": 0.01, "y": 0.04, "z": 0.03})
         self.assertEqual((round(d["x"], 3), round(d["z"], 3), round(d["y"], 3)), (0.03, 0.06, 0.06))
+
+    def test_ani_deposu_olasilik_ve_lambda0(self):
+        torch.manual_seed(0)
+        model = ea.model_kur("transformer", KUCUK).eval()
+        ids = torch.randint(0, 500, (1, 12))
+        anili = ani_deposu.AniliModel(model, lamda=0.25)
+        anili.yaz(ids[0])
+        with torch.no_grad():
+            olasilik = anili(ids).exp().sum(-1)
+            self.assertTrue(torch.allclose(olasilik, torch.ones_like(olasilik), atol=1e-4))
+            anili.lamda = 0.0
+            taban = torch.log_softmax(model(ids).float(), -1)
+            self.assertTrue(torch.allclose(anili(ids), taban, atol=1e-5))
+
+    def test_ani_deposu_hatirlar(self):
+        # Depoya yazilan dizide ayni baglam gelince yazilan sonraki token daha olasi olmali.
+        torch.manual_seed(0)
+        model = ea.model_kur("transformer", KUCUK).eval()
+        ids = torch.randint(0, 500, (1, 12))
+        anili = ani_deposu.AniliModel(model, lamda=0.5)
+        with torch.no_grad():
+            once = anili(ids)[0, 5, ids[0, 6]].item()
+            anili.yaz(ids[0])
+            sonra = anili(ids)[0, 5, ids[0, 6]].item()
+        self.assertGreater(sonra, once)
 
 
 if __name__ == "__main__":
