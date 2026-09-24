@@ -502,6 +502,27 @@
     </div>
   </section>
 
+  <section class="karar" data-karar="K35">
+    <div class="etiket"><span>Karar K35</span><span class="damga-isareti" hidden>Verildi</span></div>
+    <h2>Laya için yeni Python paketi kurulsun mu?</h2>
+    <p class="hikaye">Laya (322M, küçük karar modeli) tonu Gemma'dan çok daha hızlı seçebilir (6-10 sn yerine ~0,5 sn, CPU'da). Ama çalıştırmanın tek resmi yolu <code>laya</code> paketi; Hugging Face'te yalnız ağırlık var, kod yok. Kurallar yeni paketi yasaklıyor, o yüzden 24 Eylül'de ölçülemedi.</p>
+    <div class="secenekler">
+      <button class="secenek" data-secim="A">
+        <span class="secenek-basi"><span class="harf">A</span><span class="secenek-ad">Kurulsun<span class="onerilir">Agent önerisi</span></span></span>
+        <span class="secenek-not">Önce paketin kaynak kodu okunur, zararsızsa kurulur, ton ölçümü (duygu-b) tekrar koşulur.</span>
+      </button>
+      <button class="secenek" data-secim="B">
+        <span class="secenek-basi"><span class="harf">B</span><span class="secenek-ad">Kurulmasın</span></span>
+        <span class="secenek-not">Laya rafa kalkar, ton Gemma'da kalır (bugünkü hâli).</span>
+      </button>
+    </div>
+    <p class="hikaye"><b>Agent'ın gerekçesi:</b> kazanç büyük (Kalp, Bekçi, Çalgıcı da Laya'ya geçebilir), risk tek paket ve önce okunuyor. Ama model kartına göre Türkçe sıfır atışta zayıf, büyük ihtimalle ince ayar da gerekecek. Ayrıntı: <code>reports/2026-09-24-duygu-b-laya-ton.md</code>.</p>
+    <div class="not-alani">
+      <label for="not-K35">Eklemek istediğin bir şey</label>
+      <textarea id="not-K35" data-not="K35" placeholder="Örnek: A"></textarea>
+    </div>
+  </section>
+
   <section class="karar" data-karar="f0c" id="puanlama">
     <div class="etiket"><span>İş, karar değil</span><span class="damga-isareti" hidden>Bitti</span></div>
     <h2>Altı cevaba puan ver</h2>
@@ -547,7 +568,7 @@
       ipucu: "İlk cümle tam doğru, sonrası anlamsız döngü. Agent'ın en çok kararsız kaldığı cevap." }
   ];
 
-  const KARARLAR = ["K21", "K22", "K23", "K24", "K25", "K26", "K27", "K28", "K29", "K30", "K31", "K32"];
+  const KARARLAR = ["K21", "K22", "K23", "K24", "K25", "K26", "K27", "K28", "K29", "K30", "K31", "K32", "K35"];
   const durumKutusu = document.getElementById("durum");
   let db = null;
   const yerel = { kararlar: {}, puanlar: {} };
