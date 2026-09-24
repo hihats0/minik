@@ -1,0 +1,97 @@
+"""Az-veri deneyinin testi: sade cumle suzgeci, enerji integrali, Muon parametre ayrimi, karisik
+batch payi ve tamamlamada bosluk duzeltmesi. CPU, kucuk ayar. Cagiran: `python -m unittest`.
+"""
+
+import argparse
+import sys
+import unittest
+from pathlib import Path
+
+import numpy as np
+import torch
+
+KOK = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(KOK))
+
+from cocuk import az_egit, az_olc, egit_araclari as ea
+from cocuk.guc_olcer import GucOlcer, enerji_wh
+from cocuk.sade_veri import sade_mi
+
+KUCUK = {"katman": 2, "boyut": 64, "kafa": 4, "ara_boyut": 128, "sozluk": 500}
+
+
+class SahteSP:
+    """Kelime basina bir id; decode bastaki boslugu dusurur (SentencePiece gibi)."""
+
+    def __init__(self):
+        self.kelimeler = ["<eos>", "Ben", "okula", "gitti."]
+
+    def eos_id(self):
+        return 0
+
+    def encode(self, metin):
+        return [self.kelimeler.index(k) for k in metin.split()]
+
+    def decode(self, ids):
+        return " ".join(self.kelimeler[i] for i in ids if i)
+
+
+class SiraliModel(torch.nn.Module):
+    """Her zaman 'gitti.' (id 3) uretir."""
+
+    def forward(self, ids):
+        logit = torch.zeros(1, ids.shape[1], 4)
+        logit[..., 3] = 1.0
+        return logit
+
+
+class TestAzDeney(unittest.TestCase):
+    def test_sade_suzgec(self):
+        self.assertTrue(sade_mi("Kedi evde uyuyor."))
+        for kotu in ("Kedi 1992 yilinda dogdu.", "kedi evde uyuyor.", "Kedi (evcil) uyur.",
+                     "Kedi.", "Ali Veli Ayse Fatma geldi.", "Kedi evde uyuyor"):
+            self.assertFalse(sade_mi(kotu), kotu)
+
+    def test_enerji_integrali(self):
+        # 100 W sabit, 36 sn -> 1 Wh
+        self.assertAlmostEqual(enerji_wh([(0, 100.0), (18, 100.0), (36, 100.0)]), 1.0)
+
+    def test_guc_olcer_okunamayani_sayar(self):
+        okumalar = iter([50.0, None, 50.0] + [None] * 100)
+        with GucOlcer(okuyucu=lambda: next(okumalar), aralik=0.01) as olcer:
+            import time
+            time.sleep(0.1)
+        self.assertGreaterEqual(olcer.okunamayan, 1)
+        self.assertEqual(olcer.ort_watt, 50.0)
+
+    def test_muon_gommeyi_almaz(self):
+        model = ea.model_kur("transformer", KUCUK)
+        arg = argparse.Namespace(optimizer="muon", lr=1e-3)
+        muon, adamw = az_egit.optimizerlar(model, arg)
+        muon_idleri = {id(p) for g in muon.param_groups for p in g["params"]}
+        self.assertNotIn(id(model.gomme.weight), muon_idleri)
+        self.assertTrue(all(p.dim() == 2 for g in muon.param_groups for p in g["params"]))
+        toplam = sum(len(g["params"]) for o in (muon, adamw) for g in o.param_groups)
+        self.assertEqual(toplam, len(list(model.parameters())))
+
+    def test_karisik_batch_payi(self):
+        egitim = np.full(5000, 7, dtype=np.uint16)
+        sade = np.full(5000, 9, dtype=np.uint16)
+        arg = argparse.Namespace(batch=16, sade_oran=0.25, baglam=32, cihaz="cpu")
+        x, _ = az_egit.karisik_pencere((egitim, sade), arg, np.random.default_rng(0))
+        self.assertEqual(x.shape[0], 16)
+        self.assertEqual(int((x[:, 0] == 9).sum()), 4)
+
+    def test_tamamlama_boslugu_korur(self):
+        cumle = az_olc.tamamla(SiraliModel(), SahteSP(), "Ben okula", "cpu")
+        self.assertEqual(cumle, "Ben okula gitti.")
+
+    def test_tamamlama_olculeri(self):
+        o = az_olc.tamamlama_olculeri(["Kedi 1992 yil.", "Ben okulagitti"], ["Kedi", "Ben"],
+                                      {"yil", "okula", "gitti"})
+        self.assertEqual((o["rakamli"], o["cumle_bitti"]), (1, 1))
+        self.assertAlmostEqual(o["gercek_kelime_orani"], 0.5)
+
+
+if __name__ == "__main__":
+    unittest.main()
