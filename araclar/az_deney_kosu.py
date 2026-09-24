@@ -21,8 +21,10 @@ SOHBET_UCU = "http://127.0.0.1:8090/durum"
 UPSCALER_SURECI = "upscal"
 SEANS_SN = 90 * 60
 SOGUMA_SN = 15 * 60
+TOPLAM_SN = 6 * 3600  # goal: toplam deney 6 saati gecmez
+KOSU_PAYI_SN = 35 * 60  # bir kosunun soguma duraklariyla en uzun tahmini
 TOHUMLAR = (1, 2, 3)
-KOLLAR = {  # ad: (optimizer, sade_oran, token_milyon)
+KOLLAR = {  # ad: (optimizer, sade_oran, token_milyon); muon25 en sonda, sure kalirsa
     "adamw": ("adamw", 0.0, 50),
     "muon": ("muon", 0.0, 50),
     "sade": ("adamw", 0.25, 50),
@@ -87,27 +89,35 @@ def yapilmis() -> set:
     return {json.loads(s)["ad"] for s in SONUCLAR.read_text("utf-8").splitlines() if s.strip()}
 
 
+def sira() -> list:
+    """Once uc ana kol x uc tohum (dengeli), sonra muon25'in tohumlari."""
+    ana = [(k, t) for t in TOHUMLAR for k in KOLLAR if k != "muon25"]
+    return ana + [("muon25", t) for t in TOHUMLAR]
+
+
 def main():
-    seans_basi = time.time()
-    for tohum in TOHUMLAR:
-        for kol in KOLLAR:
-            if f"az-{kol}-t{tohum}" in yapilmis():
-                continue
-            if (sebep := engel()):
-                log.error("durdu: %s", sebep)
-                return
-            if time.time() - seans_basi > SEANS_SN:
-                log.info("90 dk doldu, 15 dk soguma")
-                time.sleep(SOGUMA_SN)
-                seans_basi = time.time()
-            log.info("basliyor az-%s-t%d", kol, tohum)
-            satir = kos(kol, tohum)
-            if satir is None:
-                log.error("kosu basarisiz, yeniden baslatilmiyor")
-                return
-            with open(SONUCLAR, "a", encoding="utf-8") as f:
-                f.write(json.dumps(satir, ensure_ascii=False) + "\n")
-            log.info("bitti %s", json.dumps(satir["egitim"]))
+    seans_basi = deney_basi = time.time()
+    for kol, tohum in sira():
+        if f"az-{kol}-t{tohum}" in yapilmis():
+            continue
+        if time.time() - deney_basi + KOSU_PAYI_SN > TOPLAM_SN:
+            log.info("6 saat tavani: yeni kosu baslatilmiyor")
+            return
+        if (sebep := engel()):
+            log.error("durdu: %s", sebep)
+            return
+        if time.time() - seans_basi > SEANS_SN:
+            log.info("90 dk doldu, 15 dk soguma")
+            time.sleep(SOGUMA_SN)
+            seans_basi = time.time()
+        log.info("basliyor az-%s-t%d", kol, tohum)
+        satir = kos(kol, tohum)
+        if satir is None:
+            log.error("kosu basarisiz, yeniden baslatilmiyor")
+            return
+        with open(SONUCLAR, "a", encoding="utf-8") as f:
+            f.write(json.dumps(satir, ensure_ascii=False) + "\n")
+        log.info("bitti %s", json.dumps(satir["egitim"]))
     log.info("hepsi bitti")
 
 

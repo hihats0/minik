@@ -15,7 +15,7 @@ from cocuk import egit_araclari as ea
 from cocuk.guc_olcer import GucOlcer
 
 MILYON = 1_000_000
-SICAKLIK_ARALIGI = 50  # adim; ~12 sn, proje kurali en seyrek 30 sn
+SICAKLIK_ARALIGI = 25  # adim; ~6 sn. 50 adimda (12 sn) 82 C goruldu, kural 80
 LOG_ARALIGI = 500
 MUON_AYARI = "match_rms_adamw"  # Moonlight tarifi: AdamW'nin LR'si aynen kullanilabilir
 
