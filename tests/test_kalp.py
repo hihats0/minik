@@ -11,6 +11,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 import minik
+
+SAHTE_TON = lambda metin: ("notr", "sahte")  # aga gitmesin
 from ortak import log
 from yuvalar import kalp
 
@@ -92,7 +94,7 @@ class TestKalp(unittest.TestCase):
         kalp._dosya().write_text(json.dumps(veri), encoding="utf-8")
         sorular = ["selam", minik.CIKIS_KELIMESI]
         soylenen = []
-        minik.calistir(dinle=lambda: sorular.pop(0), soyle=lambda m, d: soylenen.append(m),
+        minik.calistir(ton_oku=SAHTE_TON, dinle=lambda: sorular.pop(0), soyle=lambda m, d: soylenen.append(m),
                        dusun=lambda s, b, h=None: (KAFA_CEVABI, IS_SN), gece=lambda *a, **k: None)
         self.assertEqual(soylenen, [KAFA_CEVABI])
         self.assertNotIn("REFLEKS", soylenen)

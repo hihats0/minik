@@ -11,6 +11,8 @@ from unittest import mock
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 import minik
+
+SAHTE_TON = lambda metin: ("notr", "sahte")  # aga gitmesin
 from agiz import dosya, konsol, secim
 from yuvalar import defter, hormonlar
 
@@ -44,7 +46,7 @@ class TestDosyaAgzi(unittest.TestCase):
         minik.defter.DEFTER_KLASORU = self.klasor / ad
         kafa = KaydedenKafa()
         hormon = hormonlar.Hormonlar(self.klasor / ad / "hormon.json")
-        minik.calistir(dinle=dinle, soyle=soyle, dusun=kafa, hormon_durumu=hormon,
+        minik.calistir(ton_oku=SAHTE_TON, dinle=dinle, soyle=soyle, dusun=kafa, hormon_durumu=hormon,
                        gece=lambda *a, **k: None, platform=platform)
         return kafa.cagrilar, defter.oku()
 

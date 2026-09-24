@@ -10,7 +10,7 @@ from datetime import datetime
 from agiz import konsol, secim
 from ortak import baglam_butce, kaynak_olc, log
 from ortak.ayar import HORMON_DOSYA_ADI, KORTIZOL_CEZA_SIDDETI, MELATONIN_IS_TAVAN_SN
-from yuvalar import bekci, calgici_tani, defter, hormonlar, kafa, kalp, uyku, uyku_tetik
+from yuvalar import bekci, calgici_tani, defter, hormonlar, kafa, kalp, ton, ton_hormon, uyku, uyku_tetik
 
 YUVA_ADI = "akis"
 DIS_ID = "konsol"
@@ -22,12 +22,13 @@ DAKIKA_SAAT = 60
 
 
 def calistir(dinle=konsol.dinle, soyle=konsol.soyle, dusun=kafa.dusun, hormon_durumu=None,
-             gece=uyku.gece, simdi=datetime.now, platform=DIS_ID):
+             gece=uyku.gece, simdi=datetime.now, platform=DIS_ID, ton_oku=ton.ton_oku):
     """Sohbet dongusu: dinle -> dusun -> soyle -> Defter'e yaz -> uyku tetigi -> logla. `cik`
     yazilinca durur; Defter yazamazsa da durur (kaydedilmeyen konusma en pahali kayiptir, spec 3.4).
     dinle/soyle/dusun/gece/simdi disaridan verilebilir: agiz degisince bu dosya degismez (spec 2.6).
     hormon_durumu verilmezse defter/hormon.json'dan yuklenir, her olayda oraya yazilir (f4-c).
-    platform Defter kaydina ve soyle'nin dis_id'sine gider (f8-a: dosya agzi "dosya" yazar)."""
+    platform Defter kaydina ve soyle'nin dis_id'sine gider (f8-a: dosya agzi "dosya" yazar).
+    Ton gecikmeli islenir (spec 2.3 madde 11): cevap soylenip Defter'e yazildiktan sonra; sonraki cevaba girer."""
     baglam = _gecmisten_baglam_yukle()
     if hormon_durumu is None:
         hormon_durumu = hormonlar.Hormonlar(defter.DEFTER_KLASORU / HORMON_DOSYA_ADI)
@@ -45,6 +46,7 @@ def calistir(dinle=konsol.dinle, soyle=konsol.soyle, dusun=kafa.dusun, hormon_du
             break
         if basarili:
             kalp.tur_sonu(soru, cevap, oneri, degisim)
+            ton_hormon.isle(soru, hormon_durumu, ton_oku)
         _uyku_gerekirse(tetik, hormon_durumu, gece, simdi())
 
 

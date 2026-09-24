@@ -13,6 +13,8 @@ from unittest import mock
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 import minik
+
+SAHTE_TON = lambda metin: ("notr", "sahte")  # aga gitmesin
 from ortak.ayar import HORMON_DOSYA_ADI, UYKU_ALT_ESIK, UYKU_UST_ESIK
 from yuvalar import hormonlar, uyku, uyku_secim, uyku_tetik
 
@@ -57,7 +59,7 @@ class TestF4c(unittest.TestCase):
         return [json.loads(s) for s in dosya.read_text(encoding="utf-8").splitlines()]
 
     def test_dopamin_alani_yaziliyor_ve_oncelige_giriyor(self):
-        minik.calistir(dinle=_sorular(2), soyle=lambda m, d: None, dusun=_sahte_dusun,
+        minik.calistir(ton_oku=SAHTE_TON, dinle=_sorular(2), soyle=lambda m, d: None, dusun=_sahte_dusun,
                        hormon_durumu=OdulluHormonlar(), gece=lambda *a, **k: None)
         kayitlar = self._kayitlar()
         self.assertTrue(all(k["dopamin_degisimi"] > 0 for k in kayitlar))
@@ -65,7 +67,7 @@ class TestF4c(unittest.TestCase):
         self.assertEqual(uyku_secim.oncelik({"soru": "eski kayit"}), 0)
 
     def test_odulsuz_gunde_alan_sifir(self):
-        minik.calistir(dinle=_sorular(1), soyle=lambda m, d: None, dusun=_sahte_dusun,
+        minik.calistir(ton_oku=SAHTE_TON, dinle=_sorular(1), soyle=lambda m, d: None, dusun=_sahte_dusun,
                        hormon_durumu=hormonlar.Hormonlar(), gece=lambda *a, **k: None)
         self.assertEqual(self._kayitlar()[0]["dopamin_degisimi"], 0)
 
@@ -114,7 +116,7 @@ class TestF4c(unittest.TestCase):
             geceler.append(tarih)
             return uyku.gece(tarih, gomme_al=lambda m: None, prova=lambda a: True, **ek)
 
-        minik.calistir(dinle=_sorular(TUR_SAYISI), soyle=lambda m, d: None, dusun=_sahte_dusun,
+        minik.calistir(ton_oku=SAHTE_TON, dinle=_sorular(TUR_SAYISI), soyle=lambda m, d: None, dusun=_sahte_dusun,
                        gece=gece, simdi=lambda: GECE_SAATI)
         self.assertEqual(geceler, ["2026-09-23"])
         sonra = hormonlar.Hormonlar(dosya)

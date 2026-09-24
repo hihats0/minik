@@ -10,6 +10,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 import minik
 
+SAHTE_TON = lambda metin: ("notr", "sahte")  # aga gitmesin
+
 CIKIS = minik.CIKIS_KELIMESI
 IS_SN = 1.0  # sahte Kafa'nin bildirdigi is saniyesi (dusun (cevap, is_sn) dondurur)
 
@@ -50,7 +52,7 @@ class TestAkisHormon(unittest.TestCase):
             return "cevap", IS_SN
 
         agiz = SahteAgiz(["soru"])
-        minik.calistir(dinle=agiz.dinle, soyle=agiz.soyle, dusun=kaydeden_dusun)
+        minik.calistir(ton_oku=SAHTE_TON, dinle=agiz.dinle, soyle=agiz.soyle, dusun=kaydeden_dusun)
         self.assertEqual(set(gorulenler[0]),
                           {"dopamin", "noradrenalin", "serotonin", "kortizol",
                            "oksitosin", "melatonin", "merak"})
@@ -61,7 +63,7 @@ class TestAkisHormon(unittest.TestCase):
         (dinlenme 10 -> 11,5)."""
         agiz = SahteAgiz(["soru"])
         hormon_durumu = minik.hormonlar.Hormonlar()
-        minik.calistir(dinle=agiz.dinle, soyle=agiz.soyle,
+        minik.calistir(ton_oku=SAHTE_TON, dinle=agiz.dinle, soyle=agiz.soyle,
                         dusun=lambda soru, baglam, hormon=None: ("cevap", minik.MELATONIN_IS_TAVAN_SN),
                         hormon_durumu=hormon_durumu)
         self.assertAlmostEqual(hormon_durumu.oku()["melatonin"], 11.5)
@@ -70,7 +72,7 @@ class TestAkisHormon(unittest.TestCase):
         """Olcek gercek: tavanin yarisi kadar is 1,5'in yarisini ekler (10 -> 10,75)."""
         agiz = SahteAgiz(["soru"])
         hormon_durumu = minik.hormonlar.Hormonlar()
-        minik.calistir(dinle=agiz.dinle, soyle=agiz.soyle,
+        minik.calistir(ton_oku=SAHTE_TON, dinle=agiz.dinle, soyle=agiz.soyle,
                         dusun=lambda soru, baglam, hormon=None: ("cevap", minik.MELATONIN_IS_TAVAN_SN / 2),
                         hormon_durumu=hormon_durumu)
         self.assertAlmostEqual(hormon_durumu.oku()["melatonin"], 10.75)
@@ -84,7 +86,7 @@ class TestAkisHormon(unittest.TestCase):
         def patlayan_dusun(soru, baglam, hormon=None):
             raise RuntimeError("sunucu kapali")
 
-        minik.calistir(dinle=agiz.dinle, soyle=agiz.soyle, dusun=patlayan_dusun,
+        minik.calistir(ton_oku=SAHTE_TON, dinle=agiz.dinle, soyle=agiz.soyle, dusun=patlayan_dusun,
                         hormon_durumu=hormon_durumu)
         self.assertAlmostEqual(hormon_durumu.oku()["kortizol"], 45.0)
 

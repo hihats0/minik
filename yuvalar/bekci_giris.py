@@ -12,7 +12,8 @@ OKSITOSIN_ESIGI = 2
 OKSITOSIN_YUKSEK = 60.0  # TAHMIN: oksitosin dinlenme degeri 30, bunun iki kati "yuksek" sayildi
 MERAK_TAVANI = 20  # TAHMIN: bir kaynaktan bir gunde en fazla bu kadar yeni iddia sayilir
 # Yigit'in konsolu tek agizla gecer: Yigit Minik'in sahibi, spec olcutu "Yigit kaynakli red ~0".
-YIGIT_KAYNAKLARI = {"konsol"}
+# site_yigit: web sohbet sitesi (agiz/web_sohbet.py), X-Anahtar ile korunur, yalniz Yigit kullanir (24 Eyl).
+YIGIT_KAYNAKLARI = {"konsol", "site_yigit"}
 VARSAYILAN_KAYNAK = "konsol"  # platform alanindan onceki eski kayitlar yalniz konsoldan yazildi
 
 GEREKCE_YIGIT = "Yigit kaynagi (konsol), tek agiz yeter"

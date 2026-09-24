@@ -12,6 +12,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 import minik
+
+SAHTE_TON = lambda metin: ("notr", "sahte")  # aga gitmesin
 from ortak import baglam_butce, log
 from ortak.ayar import BAGLAM_TOKEN_BUTCESI
 
@@ -47,7 +49,7 @@ class TestBaglamButce(unittest.TestCase):
             gidenler.append(list(baglam) + [{"role": "user", "content": soru}])
             return "x" * CEVAP_KARAKTER, IS_SN
 
-        minik.calistir(dinle=lambda: sorular.pop(0), soyle=lambda metin, dis_id: None,
+        minik.calistir(ton_oku=SAHTE_TON, dinle=lambda: sorular.pop(0), soyle=lambda metin, dis_id: None,
                        dusun=sahte_dusun)
         return gidenler
 

@@ -11,6 +11,8 @@ from unittest import mock
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 import minik
+
+SAHTE_TON = lambda metin: ("notr", "sahte")  # aga gitmesin
 from yuvalar import calgici_tani, calgicilar, hormonlar
 
 KAYNAKLAR = [Path(calgicilar.__file__), Path(calgici_tani.__file__)]
@@ -108,7 +110,7 @@ class TestAkis(unittest.TestCase):
             return "Bence 999.", 0.0
 
         sorular = [soru, minik.CIKIS_KELIMESI]
-        minik.calistir(dinle=lambda: sorular.pop(0), soyle=lambda metin, dis_id: None,
+        minik.calistir(ton_oku=SAHTE_TON, dinle=lambda: sorular.pop(0), soyle=lambda metin, dis_id: None,
                        dusun=sahte_kafa, hormon_durumu=hormonlar.Hormonlar())
         return gorulen[0]
 

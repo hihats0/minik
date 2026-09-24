@@ -14,6 +14,8 @@ from unittest import mock
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 import minik
+
+SAHTE_TON = lambda metin: ("notr", "sahte")  # aga gitmesin
 from ortak import log
 
 CIKIS = minik.CIKIS_KELIMESI
@@ -57,7 +59,7 @@ class TestAkis(unittest.TestCase):
     def test_akis_kafanin_cevabini_degistirmeden_iletir(self):
         """Akis Kafa'nin cevabini yorumlamiyor/filtrelemiyor (K6): oldugu gibi agiza iletir."""
         agiz = SahteAgiz(["selam"])
-        minik.calistir(dinle=agiz.dinle, soyle=agiz.soyle, dusun=lambda soru, baglam, hormon=None: ("cevap: " + soru, IS_SN))
+        minik.calistir(ton_oku=SAHTE_TON, dinle=agiz.dinle, soyle=agiz.soyle, dusun=lambda soru, baglam, hormon=None: ("cevap: " + soru, IS_SN))
         self.assertEqual(agiz.soylenenler[0], ("cevap: selam", minik.DIS_ID))
 
     def test_kafa_hata_yukseltince_akis_cokmez(self):
@@ -67,7 +69,7 @@ class TestAkis(unittest.TestCase):
         def patlayan_dusun(soru, baglam, hormon=None):
             raise RuntimeError("sunucu kapali")
 
-        minik.calistir(dinle=agiz.dinle, soyle=agiz.soyle, dusun=patlayan_dusun)
+        minik.calistir(ton_oku=SAHTE_TON, dinle=agiz.dinle, soyle=agiz.soyle, dusun=patlayan_dusun)
 
         self.assertEqual(agiz.soylenenler[0][0], minik.DUSUNEMIYORUM_METNI)
         satir = _son_log_satiri()
@@ -81,8 +83,8 @@ class TestAkis(unittest.TestCase):
         agiz2 = SahteAgiz(["ayni soru"])
         dusun = lambda soru, baglam, hormon=None: ("yanit", IS_SN)
 
-        minik.calistir(dinle=agiz1.dinle, soyle=agiz1.soyle, dusun=dusun)
-        minik.calistir(dinle=agiz2.dinle, soyle=agiz2.soyle, dusun=dusun)
+        minik.calistir(ton_oku=SAHTE_TON, dinle=agiz1.dinle, soyle=agiz1.soyle, dusun=dusun)
+        minik.calistir(ton_oku=SAHTE_TON, dinle=agiz2.dinle, soyle=agiz2.soyle, dusun=dusun)
 
         self.assertEqual(agiz1.soylenenler, agiz2.soylenenler)
 
@@ -95,7 +97,7 @@ class TestAkis(unittest.TestCase):
             return f"cevap-{len(baglam)}", IS_SN
 
         agiz = SahteAgiz(["ilk", "ikinci"])
-        minik.calistir(dinle=agiz.dinle, soyle=agiz.soyle, dusun=kaydeden_dusun)
+        minik.calistir(ton_oku=SAHTE_TON, dinle=agiz.dinle, soyle=agiz.soyle, dusun=kaydeden_dusun)
 
         self.assertEqual(gorulen_baglamlar[0], [])
         self.assertEqual(len(gorulen_baglamlar[1]), 2)
@@ -106,7 +108,7 @@ class TestAkis(unittest.TestCase):
         agiz = SahteAgiz(["soru1", "soru2"])
 
         with mock.patch.object(minik.defter, "yaz", side_effect=OSError("disk dolu")):
-            minik.calistir(dinle=agiz.dinle, soyle=agiz.soyle,
+            minik.calistir(ton_oku=SAHTE_TON, dinle=agiz.dinle, soyle=agiz.soyle,
                             dusun=lambda soru, baglam, hormon=None: ("cevap", IS_SN))
 
         self.assertEqual(len(agiz.soylenenler), 2)
@@ -124,7 +126,7 @@ class TestAkis(unittest.TestCase):
         agiz = SahteAgiz(["kufurlu soru"])
 
         with mock.patch.object(minik.bekci, "cikabilir_mi", return_value=(False, "test gerekcesi")):
-            minik.calistir(dinle=agiz.dinle, soyle=agiz.soyle, dusun=lambda soru, baglam, hormon=None: ("kufurlu cevap", IS_SN))
+            minik.calistir(ton_oku=SAHTE_TON, dinle=agiz.dinle, soyle=agiz.soyle, dusun=lambda soru, baglam, hormon=None: ("kufurlu cevap", IS_SN))
 
         self.assertEqual(agiz.soylenenler[0], (minik.ENGELLENDI_METNI, minik.DIS_ID))
         satir = _son_log_satiri()
@@ -139,7 +141,7 @@ class TestAkis(unittest.TestCase):
         agiz = SahteAgiz(["temiz soru"])
 
         with mock.patch.object(minik.bekci, "cikabilir_mi", return_value=(True, "temiz")):
-            minik.calistir(dinle=agiz.dinle, soyle=agiz.soyle, dusun=lambda soru, baglam, hormon=None: ("temiz cevap", IS_SN))
+            minik.calistir(ton_oku=SAHTE_TON, dinle=agiz.dinle, soyle=agiz.soyle, dusun=lambda soru, baglam, hormon=None: ("temiz cevap", IS_SN))
 
         self.assertEqual(agiz.soylenenler[0], ("temiz cevap", minik.DIS_ID))
         self.assertEqual(len(minik.defter.oku()), 1)
@@ -155,7 +157,7 @@ class TestAkis(unittest.TestCase):
             return "yeni cevap", IS_SN
 
         agiz = SahteAgiz(["yeni soru"])
-        minik.calistir(dinle=agiz.dinle, soyle=agiz.soyle, dusun=kaydeden_dusun)
+        minik.calistir(ton_oku=SAHTE_TON, dinle=agiz.dinle, soyle=agiz.soyle, dusun=kaydeden_dusun)
 
         self.assertEqual(gorulen_baglamlar[0], [
             {"role": "user", "content": "dunku soru"},
