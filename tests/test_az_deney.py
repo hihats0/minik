@@ -16,7 +16,7 @@ sys.path.insert(0, str(KOK))
 sys.path.insert(0, str(KOK / "araclar"))
 
 import az_analiz
-from cocuk import ani_deposu, arsifonem, az_egit, az_olc, egit_araclari as ea
+from cocuk import ani_deposu, arsifonem, az_egit, az_olc, egit_araclari as ea, hece
 from cocuk.guc_olcer import GucOlcer, enerji_wh
 from cocuk.sade_veri import sade_mi
 
@@ -182,6 +182,13 @@ class TestAzDeney(unittest.TestCase):
         kapi = model.bloklar[-1].kapi.weight.grad
         self.assertIsNotNone(kapi)
         self.assertGreater(kapi.abs().sum().item(), 0)
+
+    def test_hece_kurali_ve_geri_donus(self):
+        self.assertEqual(hece.hecele("kitaplarımızdan"), ["ki", "tap", "la", "rı", "mız", "dan"])
+        self.assertEqual(hece.hecele("Türkçe"), ["Türk", "çe"])
+        self.assertEqual(hece.hecele("saat"), ["sa", "at"])
+        metin = "Kitaplarımızdan saatlerce okulda ders çalıştık."
+        self.assertEqual(hece.birlestir(hece.metni_hecele(metin)), metin)
 
 
 if __name__ == "__main__":
