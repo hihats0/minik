@@ -5,6 +5,7 @@ CPU hizi olculur. Cagiran: araclar/tohum_sonra.sh (sohbet uretimi bitince) ya da
 """
 
 import json
+import re
 import time
 
 import numpy as np
@@ -22,6 +23,7 @@ VIKIPEDI_PAYI = 0.25  # unutmaya karsi capa (D4 gece dersi karisimindaki Vikiped
 LR = 3e-4
 URETIM_TOKEN = 40
 SICAKLIK, TOHUM = 0.8, 1
+SAHNE_NOTU = re.compile(r"\s*\([^)]*\)")  # Gemma bazen "(Gulerek)" gibi sahne notu yaziyor
 ACILISLAR = ["A: Merhaba, adın ne?", "A: Bugün ne yaptın?", "A: En sevdiğin hayvan hangisi?",
              "A: Karnım acıktı.", "A: Yağmur yağıyor, dışarı çıkalım mı?", "A: Okulda ne öğrendin?",
              "A: Neden gökyüzü mavi?", "A: Bana bir oyun öner.", "A: Çok yorgunum.", "A: Beni seviyor musun?"]
@@ -31,7 +33,8 @@ def sohbet_idleri(sp) -> np.ndarray:
     """Her sohbet tek satir: 'A: ... B: ...' + EOS; replikler bosluklu dizilir (tr16k'da satir sonu yok)."""
     ids = []
     for satir in (ea.VERI_DIZINI / "sohbet.jsonl").read_text("utf-8").splitlines():
-        ids.extend(sp.encode(" ".join(json.loads(satir)["replikler"])) + [sp.eos_id()])
+        metin = SAHNE_NOTU.sub("", " ".join(json.loads(satir)["replikler"]))
+        ids.extend(sp.encode(metin) + [sp.eos_id()])
     return np.array(ids, dtype=np.int64)
 
 
