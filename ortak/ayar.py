@@ -182,7 +182,9 @@ UYKU_BUDAMA_SINIRI = 3
 UYKU_HATIRLAMA_ORTUSME = 0.3
 UYKU_PROVA_KALIBI = "Daha once sana su soruldu, ne cevap vermistin? Soru: {soru}"
 # Gomme: yalniz CPU (llama-server --device none -ngl 0 --embedding -c 512), e5-small.
-GOMME_UC = "http://127.0.0.1:8090/v1/embeddings"
+# Port: araclar/f4b-unutma-olc.py gommeyi 8093te baslatir; 8080 Kafa, 8090 web sohbet.
+GOMME_PORT = 8093
+GOMME_UC = f"http://127.0.0.1:{GOMME_PORT}/v1/embeddings"
 GOMME_EN_YAKIN_K = 3
 
 # f4-c Uyku tetigi (spec 2.4, 3.6.1 Degisiklik 1, A7): uyku_basinci = melatonin + saat_egilimi,

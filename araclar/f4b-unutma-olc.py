@@ -16,12 +16,12 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from gomme_istemci import vektor_al
 from sunucu_yonet import baslat, durdur, hazir_bekle
 from ortak import log
-from ortak.ayar import GOMME_EN_YAKIN_K
+from ortak.ayar import GOMME_EN_YAKIN_K, GOMME_PORT
 from yuvalar import defter_sqlite, uyku
 from yuvalar import uyku_secim as secim
 
 ANI_DOSYASI = Path(__file__).parent / "f4b-anilar.json"
-PORT = 8093
+PORT = GOMME_PORT
 BAGLAM = "512"  # e5-small en cok 512 token; tek cumle icin fazlasiyla yeter, acikca sinirli
 GUN_SAYISI = 30
 GUNLUK_ANI = 3  # 90 ani / 30 gun
