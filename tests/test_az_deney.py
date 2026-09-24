@@ -13,6 +13,9 @@ import torch
 KOK = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(KOK))
 
+sys.path.insert(0, str(KOK / "araclar"))
+
+import az_analiz
 from cocuk import az_egit, az_olc, egit_araclari as ea
 from cocuk.guc_olcer import GucOlcer, enerji_wh
 from cocuk.sade_veri import sade_mi
@@ -91,6 +94,15 @@ class TestAzDeney(unittest.TestCase):
                                       {"yil", "okula", "gitti"})
         self.assertEqual((o["rakamli"], o["cumle_bitti"]), (1, 1))
         self.assertAlmostEqual(o["gercek_kelime_orani"], 0.5)
+
+    def test_welch_bilinen_deger(self):
+        # t = 3,674, serbestlik 4 -> iki yonlu p = 0,0213 (t tablosu)
+        self.assertAlmostEqual(az_analiz.welch_p([1, 2, 3], [4, 5, 6]), 0.0213, places=3)
+        self.assertGreater(az_analiz.welch_p([1, 2, 3], [1, 2, 3.1]), 0.9)
+
+    def test_holm_tekduze(self):
+        d = az_analiz.holm({"x": 0.01, "y": 0.04, "z": 0.03})
+        self.assertEqual((round(d["x"], 3), round(d["z"], 3), round(d["y"], 3)), (0.03, 0.06, 0.06))
 
 
 if __name__ == "__main__":
