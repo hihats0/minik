@@ -6,6 +6,7 @@ Cagiran: araclar/az_deney_kosu.py ya da `python -m cocuk.az_olc --ad <ad>`; sonu
 import argparse
 import collections
 import json
+import math
 import re
 
 import sentencepiece as spm
@@ -14,6 +15,7 @@ import torch
 from cocuk import degerlendir as dg
 from cocuk import egit_araclari as ea
 from cocuk.arsifonem import ArsifonemSP, Donusturucu
+from cocuk.hece_token import HeceTokenizer
 
 DOGRULAMA_PENCERE = 200  # cocuk/egit.py ile ayni pencereler, D4 kaybiyla dogrudan kiyas
 DOGRULAMA_BATCH = 16
@@ -21,6 +23,8 @@ SOZLUK_YOLU = ea.VERI_DIZINI / "kelime_sozlugu.json"
 SOZLUK_ESIGI = 20  # egitim metninde en az 20 kez gecen kelime "gercek kelime" sayilir
 KELIME = re.compile(r"[A-Za-zÇĞİÖŞÜçğıöşüâîû']+")
 RAKAM = re.compile(r"\d")
+BPC_PARAGRAF = 2000  # dogrulama.txt'nin ilk 2000 paragrafi; farkli tokenizerli modeller ayni metinde
+BPC_PENCERE = 512
 
 
 @torch.no_grad()
@@ -69,19 +73,41 @@ def tamamlama_olculeri(cumleler: list[str], baslangiclar: list[str], sozluk: set
             "cumle_bitti": biten, "toplam": n}
 
 
-def olc(ad: str, cihaz, arsifonem: bool = False) -> dict:
-    """arsifonem: T1 modeli; sinav metinleri arsifonem idlerine cevrilir, dogrulama ayni konumlarda."""
-    model, paket = dg.yukle(ad, cihaz)
+@torch.no_grad()
+def bpc(model, sp, cihaz) -> float:
+    """Karakter basina bit: tokenizer'dan bagimsiz, farkli sozluklu modeller ayni metinde kiyaslanir."""
+    with open(ea.VERI_DIZINI / "dogrulama.txt", encoding="utf-8") as f:
+        paragraflar = [s.strip() for _, s in zip(range(BPC_PARAGRAF), f)]
+    ids = [i for p in paragraflar for i in [sp.eos_id()] + sp.encode(p)]
+    karakter = sum(len(p) + 1 for p in paragraflar)  # +1: paragraf ayraci
+    toplam = 0.0
+    for bas in range(0, len(ids) - 1, BPC_PENCERE):
+        parca = torch.tensor([ids[bas:bas + BPC_PENCERE + 1]], device=cihaz)
+        toplam += ea.kayip_hesapla(model, parca[:, :-1], parca[:, 1:]).item() * (parca.shape[1] - 1)
+    return toplam / karakter / math.log(2)
+
+
+def sozluk_sec(tur: str):
+    """tr16k (taban), arsifonem (T1) ya da hece (fikir 1); ayni encode/decode/eos_id arayuzu."""
     sp = spm.SentencePieceProcessor(model_file=str(dg.TOKENIZER_YOLU))
-    if arsifonem:  # ayni sinif arayuzu: encode/decode/eos_id
-        sp = ArsifonemSP(sp, Donusturucu(sp))
+    if tur == "arsifonem":
+        return ArsifonemSP(sp, Donusturucu(sp)), "_ars"
+    if tur == "hece":
+        return HeceTokenizer(), "_hece"
+    return sp, ""
+
+
+def olc(ad: str, cihaz, sozluk: str = "tr16k") -> dict:
+    model, paket = dg.yukle(ad, cihaz)
+    sp, veri_eki = sozluk_sec(sozluk)
     amp = cihaz.type == "cuda"
-    kayip = ea.dogrulama_kaybi(model, ea.veri_ac("dogrulama" + ("_ars" if arsifonem else "")),
+    kayip = ea.dogrulama_kaybi(model, ea.veri_ac("dogrulama" + veri_eki),
                                model.ayar["baglam"],
                                DOGRULAMA_BATCH, DOGRULAMA_PENCERE, cihaz, amp)
     baslangiclar = json.loads((dg.SINAV_DIZINI / "dilbilgisi.json").read_text("utf-8"))["baslangiclar"]
     cumleler = [tamamla(model, sp, b, cihaz).strip() for b in baslangiclar]
     sonuc = {"ad": ad, "token": paket["token"], "dogrulama_kaybi": round(kayip, 4),
+             "bpc": round(bpc(model, sp, cihaz), 4),
              "dilbilgisi_ciftleri": dg.ciftleri_puanla(model, sp, cihaz),
              "eski_sinav": dg.eski_sinavi_puanla(model, sp, cihaz),
              "tamamlama": tamamlama_olculeri(cumleler, baslangiclar, sozluk_kur()),
@@ -95,7 +121,7 @@ if __name__ == "__main__":
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--ad", required=True)
     p.add_argument("--cihaz", default="cuda" if torch.cuda.is_available() else "cpu")
-    p.add_argument("--arsifonem", action="store_true")
+    p.add_argument("--sozluk", choices=("tr16k", "arsifonem", "hece"), default="tr16k")
     a = p.parse_args()
-    s = olc(a.ad, torch.device(a.cihaz), a.arsifonem)
+    s = olc(a.ad, torch.device(a.cihaz), a.sozluk)
     print(json.dumps({k: v for k, v in s.items() if k != "cumleler"}, ensure_ascii=False))

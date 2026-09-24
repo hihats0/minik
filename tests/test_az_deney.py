@@ -190,6 +190,36 @@ class TestAzDeney(unittest.TestCase):
         metin = "Kitaplarımızdan saatlerce okulda ders çalıştık."
         self.assertEqual(hece.birlestir(hece.metni_hecele(metin)), metin)
 
+    def test_hece_tokenizer_gidis_donus(self):
+        from cocuk.hece_token import HeceTokenizer
+        tok = HeceTokenizer(["▁", "K", "i", "t", "a", "p", "▁ki", "tap", "▁kitap", "lar", "▁ev", "ler"])
+        self.assertEqual(tok.eos_id(), 2)
+        for metin in ("kitaplar evler", "Kitap"):
+            self.assertEqual(tok.decode(tok.encode(metin)), metin)
+        self.assertEqual(len(tok.encode("kitaplar")), 2)  # en uzun eslesme: ▁kitap + lar
+
+    def test_bpc_birimi(self):
+        # Rastgele (egitilmemis) modelin BPC'si log2(sozluk) x token/karakter civarinda, pozitif ve sonlu
+        torch.manual_seed(0)
+        model = ea.model_kur("transformer", KUCUK).eval()
+        eski = az_olc.BPC_PARAGRAF
+        try:
+            az_olc.BPC_PARAGRAF = 3
+            deger = az_olc.bpc(model, _SozlukSP(), "cpu")
+        finally:
+            az_olc.BPC_PARAGRAF = eski
+        self.assertTrue(0 < deger < 20)
+
+
+class _SozlukSP:
+    """bpc testi icin: her harf bir id (500'den kucuk)."""
+
+    def eos_id(self):
+        return 0
+
+    def encode(self, metin):
+        return [1 + ord(h) % 400 for h in metin]
+
 
 if __name__ == "__main__":
     unittest.main()
