@@ -23,12 +23,13 @@ LLAMA_SERVER = (Path.home() / "AppData/Local/Microsoft/WinGet/Packages/"
                 "ggml.llamacpp_Microsoft.Winget.Source_8wekyb3d8bbwe/llama-server.exe")
 PORT = 8095  # Kafa 8080, web sohbet 8090, gomme 8093 ile cakismaz
 UC = f"http://127.0.0.1:{PORT}/v1/chat/completions"
-YUVA = 2  # paralel istek; -c 6144 iki yuvaya 3072'ser token (istem ~250 + dusunce ~400 + cevap ~900)
-BAGLAM = 6144
+YUVA = 1  # 25 Eyl 01:20: 2 yuva + 6144 baglam 8 GB'a sigmadi, sunucu istek ortasinda coktu
+BAGLAM = 4096  # Kafa'da olculen calisan ayar (zirve 6382 MiB)
 ISTEK_BASI_SOHBET = 3
 EN_COK_TOKEN = 2048
 SICAKLIK = 0.9  # cesitlilik; tekrar suzgeci ayiklar
 ZAMAN_ASIMI_SN = 300
+ARDISIK_HATA = 3
 CIKTI = ea.VERI_DIZINI / "sohbet.jsonl"
 KONUSMACI = re.compile(r"^\s*([AB])\s*:\s*(.+)$")
 EN_AZ_REPLIK, EN_COK_REPLIK, EN_COK_KELIME = 4, 12, 20
@@ -94,15 +95,29 @@ def gorulen_basliklar() -> set:
     return {json.loads(s)["replikler"][0] for s in CIKTI.read_text("utf-8").splitlines() if s.strip()}
 
 
+def guvenli_istek(konu: str, kisi: str) -> str:
+    """Tek istegin ag hatasi uretimi durdurmasin: loglanir, bos metin doner."""
+    try:
+        return istek(konu, kisi)
+    except OSError as hata:
+        log.error("istek basarisiz (%s / %s): %s", konu, kisi, hata)
+        return ""
+
+
 def uret(hedef: int, tohum: int):
-    """Hedef sohbet sayisina kadar istek atar; her gecerli ve yeni sohbet hemen dosyaya yazilir."""
+    """Hedef sohbet sayisina kadar istek atar; her gecerli ve yeni sohbet hemen dosyaya yazilir.
+    Sunucu olurse yeniden acilir; ust uste ARDISIK_HATA kez olurse durur."""
     gorulen, uretec = gorulen_basliklar(), random.Random(tohum)
     ciftler = list(itertools.product(KONULAR, KISILER))
-    proc, baslangic, eklenen = sunucu_ac(), time.time(), 0
+    proc, baslangic, eklenen, hata_serisi = sunucu_ac(), time.time(), 0, 0
     try:
         with ThreadPoolExecutor(YUVA) as havuz, open(CIKTI, "a", encoding="utf-8") as f:
-            while len(gorulen) < hedef:
-                isler = [havuz.submit(istek, *uretec.choice(ciftler)) for _ in range(YUVA)]
+            while len(gorulen) < hedef and hata_serisi < ARDISIK_HATA:
+                if proc.poll() is not None:
+                    log.error("sunucu oldu (kod %s), yeniden aciliyor", proc.returncode)
+                    hata_serisi += 1
+                    proc = sunucu_ac()
+                isler = [havuz.submit(guvenli_istek, *uretec.choice(ciftler)) for _ in range(YUVA)]
                 for gorev in isler:
                     for replikler in sohbetleri_ayikla(gorev.result()):
                         if replikler[0] not in gorulen:
@@ -110,6 +125,7 @@ def uret(hedef: int, tohum: int):
                             f.write(json.dumps({"replikler": replikler}, ensure_ascii=False) + "\n")
                             eklenen += 1
                 f.flush()
+                hata_serisi = 0 if proc.poll() is None else hata_serisi
                 log.info("sohbet %d / %d, %.1f sohbet/dk", len(gorulen), hedef,
                          eklenen / max(1e-9, (time.time() - baslangic) / 60))
     finally:
