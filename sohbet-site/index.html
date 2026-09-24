@@ -79,6 +79,18 @@ function farkGoster(ad, fark) {
   setTimeout(() => f.classList.remove("goster"), FARK_GOSTERME_MS);
 }
 
+// Gemma cevapta markdown yaziyor, sayfa duz metin gosterir: isaretler silinir, yazi kalir (duygu-a).
+function duzMetin(metin) {
+  return metin
+    .replace(/```[a-z]*\n?/gi, "")
+    .replace(/^\s{0,3}#{1,6}\s+/gm, "")
+    .replace(/^\s*[-*+]\s+/gm, "")
+    .replace(/(\*\*|__)(.+?)\1/g, "$2")
+    .replace(/\*(\S.*?)\*/g, "$1")
+    .replace(/`([^`]+)`/g, "$1")
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, "$1 ($2)");
+}
+
 function balon(metin, sinif) {
   const b = document.createElement("div");
   b.className = "balon " + sinif; b.textContent = metin;
@@ -119,7 +131,7 @@ document.getElementById("form").addEventListener("submit", async (olay) => {
   const bekle = balon("Minik dusunuyor... (10-40 sn, model yukleniyorsa daha uzun)", "minik dusunuyor");
   try {
     const d = await istek("/konus", { mesaj });
-    bekle.remove(); balon(d.cevap, "minik"); hormonGoster(d.hormonlar);
+    bekle.remove(); balon(duzMetin(d.cevap), "minik"); hormonGoster(d.hormonlar);
   } catch (kod) { bekle.remove(); balon(hataMetni(kod), "hata"); }
   dugme.disabled = false; durumYokla();
 });

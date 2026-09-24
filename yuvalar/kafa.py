@@ -10,6 +10,7 @@ import urllib.error
 import urllib.request
 
 from ortak import log
+from yuvalar.duygu import duygu_cumleleri
 from yuvalar.kafa_dusunce import dusunce_ayikla
 from ortak.ayar import (
     ALT_ESIK,
@@ -65,7 +66,7 @@ def dusun(soru, baglam=None, hormon_degerleri=None):
     mesajlar.append({"role": "user", "content": soru})
     ayarlar, mod = _ornekleme_ayarlari(hormon_degerleri)
     karakter, karakter_ozeti = _karakter_oku()
-    mesajlar = _sistem_mesaji_ekle(mesajlar, karakter, mod)
+    mesajlar = _sistem_mesaji_ekle(mesajlar, karakter, mod, hormon_degerleri)
     govde = _govde_olustur(mesajlar, ayarlar)
     ayarlar = {**ayarlar, "talimat": MELATONIN_YORGUN_TALIMATI if mod == MOD_YORGUN else None,
                "karakter": karakter_ozeti}
@@ -165,13 +166,14 @@ def _karakter_oku():
     return ham.decode("utf-8").strip(), ozet
 
 
-def _sistem_mesaji_ekle(mesajlar, karakter, mod):
+def _sistem_mesaji_ekle(mesajlar, karakter, mod, hormon_degerleri=None):
     """Listenin basina TEK sistem mesaji koyar: karakter metni, yorgun modda altina tek cumlelik
     talimat (f3-g, K25=B). Iki ayri sistem mesaji yok: sohbet sablonlari sistem mesajini listenin
-    basinda tek parca bekler. Ikisi de yoksa liste degismeden doner."""
+    basinda tek parca bekler. Duygu cumleleri (yuvalar/duygu.py) de buraya. Hicbiri yoksa liste degismeden doner."""
     parcalar = [karakter] if karakter else []
     if mod == MOD_YORGUN:
         parcalar.append(MELATONIN_YORGUN_TALIMATI)
+    parcalar.extend(duygu_cumleleri(hormon_degerleri))
     if not parcalar:
         return mesajlar
     return [{"role": "system", "content": PARCA_AYIRICI.join(parcalar)}] + mesajlar
