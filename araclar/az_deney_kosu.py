@@ -21,7 +21,7 @@ SOHBET_UCU = "http://127.0.0.1:8090/durum"
 UPSCALER_SURECI = "upscal"
 SEANS_SN = 90 * 60
 SOGUMA_SN = 15 * 60
-TOPLAM_SN = 6 * 3600  # goal: toplam deney 6 saati gecmez
+TOPLAM_SN = 24 * 3600  # Yigit 25 Eyl: sure siniri yok; bu yalniz sonsuz donguye karsi emniyet
 KOSU_PAYI_SN = 35 * 60  # bir kosunun soguma duraklariyla en uzun tahmini
 TOHUMLAR = (1, 2, 3)
 KOLLAR = {  # ad: (az_egit ek bayraklari, az_olc ek bayraklari); kosulacaklar komut satirindan
@@ -93,8 +93,10 @@ def yapilmis() -> set:
 
 
 def sira(secilen: list) -> list:
-    """Secilen kollar tohum tohum dengeli sirayla (once hepsinin tohum 1'i)."""
-    return [(k, t) for t in TOHUMLAR for k in secilen]
+    """Secilen kollar tohum tohum dengeli sirayla. "hece@1" yalniz tohum 1, "hece" uc tohum."""
+    istek = [(k.split("@")[0], [int(t) for t in k.split("@")[1].split(",")] if "@" in k else TOHUMLAR)
+             for k in secilen]
+    return [(k, t) for t in TOHUMLAR for k, tohumlar in istek if t in tohumlar]
 
 
 def main(secilen: list):
