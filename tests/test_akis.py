@@ -51,8 +51,12 @@ class TestAkis(unittest.TestCase):
         self._gecici = tempfile.TemporaryDirectory()
         self._eski_klasor = minik.defter.DEFTER_KLASORU
         minik.defter.DEFTER_KLASORU = Path(self._gecici.name)
+        # Gercek loglar/ yerine gecici klasor: canli sunucunun satirlari "son satir"i bozmasin.
+        self._log_yamasi = mock.patch.object(log, "LOG_KLASORU", Path(self._gecici.name) / "loglar")
+        self._log_yamasi.start()
 
     def tearDown(self):
+        self._log_yamasi.stop()
         minik.defter.DEFTER_KLASORU = self._eski_klasor
         self._gecici.cleanup()
 

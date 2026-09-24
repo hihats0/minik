@@ -21,8 +21,16 @@ k26d = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(k26d)
 
 HAM = "<think>once dusunuyorum biraz</think>Yagmur buharin yogusmasiyla yagar."
-ISTEK_GECIKME_SN = 0.3
-SAHTE_ARALIK_SN = 0.05
+ISTEK_GECIKME_SN = 0.06  # bekci istek surerken en az birkac kez okuyabilsin
+# Yalniz ilk 4 istek (en cok kesme testinin kesebilecegi kadar, TOPLAM_KESME_SINIRI) gecikir; kalanlar
+# kesilmez, beklemeleri testi yalnizca yavaslatir.
+GECIKMELI_ISTEK = 4
+SAHTE_ARALIK_SN = 0.01
+# serve_forever yoklama araligi = shutdown'in bekledigi sure. Kesmesiz testte kisa tutulur.
+HIZLI_KAPANMA_SN = 0.01
+# Kesme testlerinde: kesilen istek cevabini alip hemen /tokenize atar; sunucu o an kapanmis olursa
+# Windows reddedilen baglantida ~2 sn bekler. Eski davranis (serve_forever varsayilani) korunur.
+KESMEDE_KAPANMA_SN = 0.5
 # Sahte okuyucu icin: kac istek geldi, su an istek suruyor mu (istek surerken "sicak" denebilsin).
 DURUM = {"istek": 0, "surer": False}
 
@@ -49,7 +57,8 @@ class Sahte(BaseHTTPRequestHandler):
         self.server.max_tokens.append(istek["max_tokens"])
         DURUM["istek"] += 1
         DURUM["surer"] = True
-        time.sleep(ISTEK_GECIKME_SN)
+        if DURUM["istek"] <= GECIKMELI_ISTEK:
+            time.sleep(ISTEK_GECIKME_SN)
         DURUM["surer"] = False
         self._json({"choices": [{"message": {"content": HAM}, "finish_reason": "stop"}],
                     "usage": {"completion_tokens": 20}})
@@ -58,12 +67,12 @@ class Sahte(BaseHTTPRequestHandler):
 class SahteSurec:
     """Popen yerine: sahte sunucuyu ayri is parcaciginda calistirir; terminate kapatir."""
 
-    def __init__(self, port=0):
+    def __init__(self, port=0, kapanma_sn=HIZLI_KAPANMA_SN):
         self.sunucu = ThreadingHTTPServer(("127.0.0.1", port), Sahte)
         self.sunucu.max_tokens = []
         self.port = self.sunucu.server_address[1]
         self.kapali = False
-        threading.Thread(target=self.sunucu.serve_forever, daemon=True).start()
+        threading.Thread(target=self.sunucu.serve_forever, args=(kapanma_sn,), daemon=True).start()
 
     def poll(self):
         return 0 if self.kapali else None
@@ -78,14 +87,14 @@ class SahteSurec:
         return 0
 
 
-def _kos(okuyucu):
+def _kos(okuyucu, kapanma_sn=HIZLI_KAPANMA_SN):
     DURUM.update(istek=0, surer=False)
-    surecler = [SahteSurec()]
+    surecler = [SahteSurec(kapanma_sn=kapanma_sn)]
     port = surecler[0].port
 
     def baslat():
         if surecler[-1].kapali:
-            surecler.append(SahteSurec(port))
+            surecler.append(SahteSurec(port, kapanma_sn))
         return surecler[-1]
 
     dosya = Path(tempfile.mkdtemp()) / "k26d.jsonl"
@@ -112,7 +121,8 @@ class TestK26dArac(unittest.TestCase):
 
     def test_kesilen_istek_soguyunca_yeni_sunucuyla_tekrar_denenir(self):
         # Yalniz ilk istek surerken 86 C; sonra hep serin.
-        sonuc, satirlar, surecler = _kos(lambda: 86 if DURUM["surer"] and DURUM["istek"] == 1 else 60)
+        sonuc, satirlar, surecler = _kos(lambda: 86 if DURUM["surer"] and DURUM["istek"] == 1 else 60,
+                                     KESMEDE_KAPANMA_SN)
         olcumler = [s for s in satirlar if "durum" in s]
         self.assertEqual(sonuc, "tamam")
         self.assertEqual(olcumler[0]["olcum"], k26d.SICAK_TEKRAR)
@@ -121,7 +131,7 @@ class TestK26dArac(unittest.TestCase):
         self.assertTrue(all(s.kapali for s in surecler))
 
     def test_ayni_istek_iki_kez_kesilirse_atlanir_toplam_4te_biter(self):
-        sonuc, satirlar, surecler = _kos(lambda: 86 if DURUM["surer"] else 60)
+        sonuc, satirlar, surecler = _kos(lambda: 86 if DURUM["surer"] else 60, KESMEDE_KAPANMA_SN)
         olcumler = [s for s in satirlar if "durum" in s]
         self.assertEqual(sonuc, k26d.SICAK_DURUM)
         self.assertEqual([s["olcum"] for s in olcumler],

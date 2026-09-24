@@ -5,6 +5,7 @@ import json
 import sys
 import tempfile
 import unittest
+from unittest import mock
 from datetime import datetime
 from pathlib import Path
 
@@ -31,8 +32,12 @@ class TestKalp(unittest.TestCase):
         self._gecici = tempfile.TemporaryDirectory()
         self._eski = kalp.defter.DEFTER_KLASORU
         kalp.defter.DEFTER_KLASORU = Path(self._gecici.name)
+        # Gercek loglar/ yerine gecici klasor: canli sunucunun yarim satiri ve 30 MB okuma teste girmesin.
+        self._log_yamasi = mock.patch.object(log, "LOG_KLASORU", Path(self._gecici.name) / "loglar")
+        self._log_yamasi.start()
 
     def tearDown(self):
+        self._log_yamasi.stop()
         kalp.defter.DEFTER_KLASORU = self._eski
         self._gecici.cleanup()
 

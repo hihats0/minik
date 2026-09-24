@@ -17,6 +17,7 @@ from agiz.web_sohbet_kafa import HAZIR, KAPALI, KafaYonetici  # noqa: E402
 from yuvalar import defter, hormonlar  # noqa: E402
 
 ANAHTAR = "gizli-test"
+YOKLAMA_SN = 0.01  # serve_forever varsayilani 0.5: her tearDown shutdown icin yarim saniye bekliyordu
 
 
 class TestWebSohbet(unittest.TestCase):
@@ -27,7 +28,7 @@ class TestWebSohbet(unittest.TestCase):
         self.sunucu = web_sohbet.sunucu_kur(
             ANAHTAR, lambda s, b, h=None: ("merhaba " + s, 1.0), lambda: "hazir",
             hormonlar.Hormonlar(), ton_oku=lambda m: ("ovgu", "sahte"), port=0)
-        threading.Thread(target=self.sunucu.serve_forever, daemon=True).start()
+        threading.Thread(target=self.sunucu.serve_forever, args=(YOKLAMA_SN,), daemon=True).start()
         self.kok = f"http://127.0.0.1:{self.sunucu.server_address[1]}"
 
     def tearDown(self):

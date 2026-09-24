@@ -18,11 +18,15 @@ sys.path.insert(0, str(KOK))
 
 from cocuk import ders_dogrula as dd  # noqa: E402
 from cocuk import ders_uret, gece, ogretmen, tamamlama_puanla, yedi_gece  # noqa: E402
+from cocuk import degerlendir as dg  # noqa: E402
 from cocuk import egit_araclari as ea  # noqa: E402
 
 KUCUK = {"transformer": {"katman": 2, "boyut": 64, "kafa": 4, "ara_boyut": 128},
          "ssm": {"katman": 2, "boyut": 64, "durum": 8, "kafa_boyutu": 16, "parca": 16}}
 SAHTE_VIKI_TOKEN = 20_000
+# Test hizi: gercek sinav dosyalarinin ilk N maddesi kopyalanir; akis ayni, ileri gecis sayisi az.
+KUCUK_SINAV = {"eski_sinav": ("sorular", 5), "dilbilgisi_ciftleri": ("ciftler", 10),
+               "dilbilgisi": ("baslangiclar", 4)}
 KARNE_ALANLARI = {"gece", "zaman", "dun", "onceki_geceler", "eski_sinav", "dilbilgisi_ciftleri",
                   "tamamlama_dosyasi"}
 
@@ -114,6 +118,15 @@ class TestSizinti(unittest.TestCase):
         self.assertFalse(dd.sizinti_var([sahte_ders(1), sahte_ders(2)]))
 
 
+def kucuk_sinav_yaz(dizin: Path) -> None:
+    """Gercek sinav dosyalarinin kisaltilmis kopyasi; bicim ayni kalir."""
+    dizin.mkdir()
+    for ad, (alan, adet) in KUCUK_SINAV.items():
+        veri = json.loads((dg.SINAV_DIZINI / f"{ad}.json").read_text("utf-8"))
+        veri[alan] = veri[alan][:adet]
+        (dizin / f"{ad}.json").write_text(json.dumps(veri, ensure_ascii=False), encoding="utf-8")
+
+
 class TestYediGeceUctanUca(unittest.TestCase):
     """Sahte ogretmenin dersleriyle, CPU'da 2 katmanli modelle 2 gece + 3 sabah sinavi."""
 
@@ -132,8 +145,11 @@ class TestYediGeceUctanUca(unittest.TestCase):
             # ignore_cleanup_errors: Windows acik memmap dosyasini silmeye izin vermez.
             with self.subTest(tur), tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as t:
                 tmp = Path(t)
+                kucuk_sinav_yaz(tmp / "sinav")
                 with mock.patch.multiple(ea, AGIRLIK_DIZINI=tmp / "agirlik", VERI_DIZINI=tmp / "veri"), \
                         mock.patch.object(ders_uret, "DERS_DIZINI", tmp / "dersler"), \
+                        mock.patch.object(dg, "SINAV_DIZINI", tmp / "sinav"), \
+                        mock.patch.object(tamamlama_puanla, "SINAV_DIZINI", tmp / "sinav"), \
                         mock.patch.multiple(gece, GECE_ADIM=3, RUYA_ORNEK=6, GECE_BAGLAM=32, LOG_ARALIGI=1):
                     self.kur(tmp, tur)
                     yedi_gece.calistir(tur, tur, 2, torch.device("cpu"))
@@ -152,7 +168,7 @@ class TestYediGeceUctanUca(unittest.TestCase):
         self.assertIsNone(satirlar[1]["onceki_geceler"])
         self.assertEqual(satirlar[2]["dun"]["soru"], dd.BILGI_SAYISI)
         self.assertEqual(list(satirlar[2]["onceki_geceler"]["gece_bazinda"]), ["1"])
-        self.assertEqual(satirlar[2]["eski_sinav"]["soru"], 50)
+        self.assertEqual(satirlar[2]["eski_sinav"]["soru"], KUCUK_SINAV["eski_sinav"][1])
         for n in (1, 2):
             self.assertEqual(torch.load(dizin / f"gece_{n}" / "son.pt")["gece"], n)
 
@@ -160,7 +176,7 @@ class TestYediGeceUctanUca(unittest.TestCase):
         ozet = tamamlama_puanla.puanla([tur], lambda m, s: '{"puan": 1, "gerekce": "sahte"}', 0)
         self.assertEqual(sorted(ozet[tur]), ["0", "1", "2"])
         for hucre in ozet[tur].values():
-            self.assertEqual(hucre["toplam"], 40)
+            self.assertEqual(hucre["toplam"], KUCUK_SINAV["dilbilgisi"][1])
             self.assertEqual(hucre["puan"], hucre["kelime_uygun"])  # ogretmen hep 1 dese de sinir kodda
         anonim = (agirlik / "kor_puanlama" / "anonim.json").read_text("utf-8")
         self.assertNotIn(tur, anonim)

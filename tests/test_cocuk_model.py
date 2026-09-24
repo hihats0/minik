@@ -31,7 +31,8 @@ class TestModeller(unittest.TestCase):
 
     def test_parametre_sayisi_butcede(self):
         for tur in ea.MODELLER:
-            sayi = ea.parametre_sayisi(ea.model_kur(tur))
+            with torch.device("meta"):  # agirlik bellegi ayrilmaz, sayim ayni; 30M rastgele baslatma yok
+                sayi = ea.parametre_sayisi(ea.model_kur(tur))
             self.assertTrue(PARAMETRE_ALT <= sayi <= PARAMETRE_UST, f"{tur}: {sayi}")
 
     def test_gomme_ve_cikis_bagli(self):

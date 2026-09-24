@@ -2,8 +2,10 @@
 Cagiran: `python -m unittest discover -s tests` (pytest kurulu degil, stdlib kullaniliyor)."""
 
 import sys
+import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
@@ -18,6 +20,12 @@ DAVRANIS_USTUNLUGU = 5  # davranisin indirdigi, on adim beklemenin indirdiginin 
 class TestHormonlar(unittest.TestCase):
 
     def setUp(self):
+        # Her guncelle log satiri yazar: binlercesi gercek loglar/ yerine gecici klasore gitsin.
+        gecici = tempfile.TemporaryDirectory()
+        self.addCleanup(gecici.cleanup)
+        yama = mock.patch.object(log, "LOG_KLASORU", Path(gecici.name))
+        yama.start()
+        self.addCleanup(yama.stop)
         self.h = Hormonlar()
 
     def test_ceza_kortizolu_yukseltir(self):
@@ -82,19 +90,21 @@ class TestHormonlar(unittest.TestCase):
 
     def test_sinir_disina_tasmaz(self):
         """Her olay en yuksek siddette yuzlerce kez gelse de hicbir sayi araligi asmaz."""
-        for olay in sorted(OLAYLAR):
-            for _ in range(200):
-                degerler = self.h.guncelle(olay, siddet=1.0)
-                for ad, deger in degerler.items():
-                    self.assertGreaterEqual(deger, EN_AZ, f"{ad} alt siniri asti")
-                    self.assertLessEqual(deger, EN_COK, f"{ad} ust siniri asti")
+        with mock.patch.object(log, "yaz"):  # binlerce log satiri hiz icin yazilmaz; log ayri testte
+            for olay in sorted(OLAYLAR):
+                for _ in range(200):
+                    degerler = self.h.guncelle(olay, siddet=1.0)
+                    for ad, deger in degerler.items():
+                        self.assertGreaterEqual(deger, EN_AZ, f"{ad} alt siniri asti")
+                        self.assertLessEqual(deger, EN_COK, f"{ad} ust siniri asti")
 
     def test_dinlenme_degerine_doner(self):
         """Olay gelmeyi kesince yedi hormon da kendi dinlenme degerine doner."""
         for olay in ("ceza", "odul", "ogrenilebilir_sasirma", "calisma", "belirsizlik"):
             self.h.guncelle(olay)
-        for _ in range(SONUM_ICIN_ADIM):
-            self.h.guncelle()
+        with mock.patch.object(log, "yaz"):  # 1500 log satiri hiz icin yazilmaz; log ayri testte
+            for _ in range(SONUM_ICIN_ADIM):
+                self.h.guncelle()
         for ad, deger in self.h.oku().items():
             self.assertAlmostEqual(deger, HORMONLAR[ad].dinlenme, delta=DINLENMEYE_YAKIN,
                                    msg=f"{ad} dinlenme degerine donmedi")
