@@ -33,10 +33,10 @@ def yaz(kayit):
             f.write(json.dumps(satir, ensure_ascii=False) + "\n")
         _sayac_yaz(dosya, onceki + 1)
     except OSError as hata:
-        log.yaz(YUVA_ADI, "yaz", _gecen_ms(basladi), "hata", {"hata": str(hata)})
+        log.yaz(YUVA_ADI, "yaz", log.gecen_ms(basladi), "hata", {"hata": str(hata)})
         raise
     kayit_no = onceki + 1
-    log.yaz(YUVA_ADI, "yaz", _gecen_ms(basladi), "ok", {"kayit_no": kayit_no})
+    log.yaz(YUVA_ADI, "yaz", log.gecen_ms(basladi), "ok", {"kayit_no": kayit_no})
     return kayit_no
 
 
@@ -56,7 +56,7 @@ def oku(kac_tane=DEFTER_SON_N):
         if len(kayitlar) >= kac_tane:
             break
     sonuc = kayitlar[-kac_tane:]
-    log.yaz(YUVA_ADI, "oku", _gecen_ms(basladi), "ok",
+    log.yaz(YUVA_ADI, "oku", log.gecen_ms(basladi), "ok",
             {"istenen": kac_tane, "bulunan": len(sonuc), "dosya_sayisi": dosya_sayisi})
     return sonuc
 
@@ -69,9 +69,9 @@ def isle(baglanti, tarih, yeni_anilar, guncellemeler):
     try:
         budanan = defter_sqlite.islem(baglanti, tarih, yeni_anilar, guncellemeler, zaman)
     except Exception as hata:
-        log.yaz(YUVA_ADI, "isle", _gecen_ms(basladi), "hata", {"tarih": tarih, "hata": str(hata)})
+        log.yaz(YUVA_ADI, "isle", log.gecen_ms(basladi), "hata", {"tarih": tarih, "hata": str(hata)})
         raise
-    log.yaz(YUVA_ADI, "isle", _gecen_ms(basladi), "ok",
+    log.yaz(YUVA_ADI, "isle", log.gecen_ms(basladi), "ok",
             {"tarih": tarih, "yeni": len(yeni_anilar), "guncellenen": len(guncellemeler),
              "budanan": budanan})
     return budanan
@@ -125,11 +125,6 @@ def _satirlari_ayristir(dosya, basladi):
             try:
                 kayitlar.append(json.loads(satir))
             except json.JSONDecodeError as hata:
-                log.yaz(YUVA_ADI, "satir_atla", _gecen_ms(basladi), "hata",
+                log.yaz(YUVA_ADI, "satir_atla", log.gecen_ms(basladi), "hata",
                         {"hata": str(hata), "satir_no": i})
     return kayitlar
-
-
-def _gecen_ms(basladi):
-    """Olcum baslangicindan bu yana gecen sureyi tam sayi milisaniye verir."""
-    return int((time.perf_counter() - basladi) * 1000)

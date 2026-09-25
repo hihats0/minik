@@ -1,6 +1,6 @@
 """Merak akisi (f10-b): merak edilen sorgu -> web.ara -> iddia esleme -> Bekci giris kapisi -> Defter.
 Uc agiz dolmayan iddia Defter'e girmez, loglanir; K34 revize: yalniz Wikimedia "vikipedi_okudum"
-etiketiyle girer, Wikimedia + bir bagimsiz agiz tam kabul. Cagiran: araclar/f10b-merak-dene.py, testler."""
+etiketiyle girer, Wikimedia + bir bagimsiz agiz tam kabul. Cagiran: deneyler/f10b-merak-dene.py, testler."""
 
 import time
 
@@ -25,7 +25,7 @@ def ogren(baglanti, sorgu, tarih, ara=web.ara, ayni_mi=iddia_esle.basit_ayni_mi,
     for g in kabul:
         yaz({"guven": g["guven"], "soru": g["iddia"], "cevap": g["kayitlar"][0]["cevap"], "kaynak": ",".join(g["alanlar"]),
              "platform": PLATFORM, "sorgu": sorgu, "adresler": [k["adres"] for k in g["kayitlar"]]})
-    log.yaz(YUVA_ADI, "ogren", _gecen_ms(basladi), "ok",
+    log.yaz(YUVA_ADI, "ogren", log.gecen_ms(basladi), "ok",
             {"sorgu": sorgu, "grup": len(gruplar), "kabul": len(kabul),
              "en_cok_alan": max((len(g["alanlar"]) for g in gruplar), default=0),
              "en_cok_agiz": max((len(g["agizlar"]) for g in gruplar), default=0)})
@@ -56,8 +56,3 @@ def _bekci_gecirir_mi(baglanti, grup, tarih):
         log.yaz(YUVA_ADI, "defter_disi", 0, "ok", {"iddia": grup["iddia"][:120], "agizlar": grup["agizlar"],
                                                    "gerekce": gerekce})
     return karar
-
-
-def _gecen_ms(basladi):
-    """Baslangictan bu yana gecen milisaniye."""
-    return int((time.perf_counter() - basladi) * 1000)

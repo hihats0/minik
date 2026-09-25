@@ -1,5 +1,5 @@
 """Web agzi (f10): merak edilen sorguyu DuckDuckGo HTML, Turkce Vikipedi ve web_ek kaynaklarindan okur, sonuclari Bekci giris
-kaydina cevirir (kaynak = alan adi, iddia = kisa cumle). Oturum acmaz, engel gorurse durur. Cagiran: yuvalar/merak.py, araclar/."""
+kaydina cevirir (kaynak = alan adi, iddia = kisa cumle). Oturum acmaz, engel gorurse durur. Cagiran: yuvalar/merak.py, deneyler/."""
 
 import json
 import time

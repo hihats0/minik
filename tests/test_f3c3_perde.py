@@ -6,7 +6,7 @@ import sys
 import unittest
 from pathlib import Path
 
-ARACLAR = Path(__file__).resolve().parent.parent / "araclar"
+ARACLAR = Path(__file__).resolve().parent.parent / "deneyler"
 sys.path.insert(0, str(ARACLAR))
 import f3c3_istatistik as ist  # noqa: E402
 

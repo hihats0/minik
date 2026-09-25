@@ -85,9 +85,9 @@ class TestGirisKapisi(unittest.TestCase):
     def test_gecen_x_kaydi_s7_ile_loraya_girmez(self):
         from yuvalar import buyume
         for k in ("@a", "@b", "@c"):
-            evet, _ = giris.gecsin_mi(self.b, "iddia", k, TARIH, giris.X_KAYNAK_TURU)
+            evet, _ = giris.gecsin_mi(self.b, "iddia", k, TARIH, "x")
         self.assertTrue(evet)
-        kayit = {"soru": "s", "cevap": "c", "platform": giris.X_KAYNAK_TURU}
+        kayit = {"soru": "s", "cevap": "c", "platform": "x"}
         self.assertTrue(buyume.x_kaynakli_mi(kayit))
         self.assertEqual(buyume.cift_adaylari([kayit], TARIH, lambda m: (True, "")), [])
 

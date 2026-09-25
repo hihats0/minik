@@ -52,11 +52,11 @@ def dusun(soru, baglam=None, hormon_degerleri=None):
     try:
         cevap, token_sayisi, timings = _sunucuya_sor(govde)
     except (urllib.error.URLError, OSError) as hata:
-        log.yaz(YUVA_ADI, "dusun", _gecen_ms(basladi), "hata",
+        log.yaz(YUVA_ADI, "dusun", log.gecen_ms(basladi), "hata",
                 {"hata": _hata_metni(hata), "model": KAFA_MODEL_YOLU, "mod": mod, "ayarlar": ayarlar})
         raise
     is_sn = _is_saniyesi(timings, time.perf_counter() - basladi)
-    log.yaz(YUVA_ADI, "dusun", _gecen_ms(basladi), "ok",
+    log.yaz(YUVA_ADI, "dusun", log.gecen_ms(basladi), "ok",
             {"token": token_sayisi, "is_sn": round(is_sn, 3), "baglam": KAFA_BAGLAM,
              "model": KAFA_MODEL_YOLU, "mod": mod, "ayarlar": ayarlar})
     return cevap, is_sn
@@ -178,8 +178,3 @@ def _sunucuya_sor(govde):
     cevap = dusunce_ayikla(yanit_json["choices"][0]["message"]["content"])
     token_sayisi = yanit_json.get("usage", {}).get("completion_tokens", 0)
     return cevap, token_sayisi, yanit_json.get("timings")
-
-
-def _gecen_ms(basladi):
-    """Olcum baslangicindan bu yana gecen sureyi tam sayi milisaniye verir."""
-    return int((time.perf_counter() - basladi) * 1000)

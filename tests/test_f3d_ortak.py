@@ -6,7 +6,7 @@ import sys
 import unittest
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "araclar"))
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "deneyler"))
 from f3d_ortak import p95, sicaklik_durumu  # noqa: E402
 
 

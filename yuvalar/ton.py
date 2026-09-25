@@ -7,13 +7,13 @@ import time
 import urllib.error
 import urllib.request
 
-from araclar.odul_kural import sinifla
 from ortak import log
 from ortak.ayar import KAFA_UC, KAFA_ZAMAN_ASIMI_SN
 from yuvalar.kafa_dusunce import dusunce_ayikla
+from yuvalar.ton_kural import sinifla
 
 YUVA_ADI = "ton"
-# Etiket kumesi olculen siniflandiricilarla ayni (araclar/odul_ortak.py TONLAR).
+# Etiket kumesi olculen siniflandiricilarla ayni (yuvalar/ton_kural.py).
 TON_ETIKETLERI = ("ovgu", "notr", "sert", "hakaret")
 # Gemma-T1 once <think> yazar; 512'de kesilme riski olmasin diye genis pay (k27-a'da olculdu, rapor).
 TON_MAX_TOKEN = 1024
@@ -43,7 +43,7 @@ def ton_oku(metin):
     ton = etiketi_ayikla(ham)
     if ton is None:
         return _yedege_don(metin, basladi, f"etiket kume disi: {ham[:80]!r}")
-    log.yaz(YUVA_ADI, "ton_oku", _gecen_ms(basladi), "ok", {"ton": ton, "kaynak": KAYNAK_KAFA})
+    log.yaz(YUVA_ADI, "ton_oku", log.gecen_ms(basladi), "ok", {"ton": ton, "kaynak": KAYNAK_KAFA})
     return ton, KAYNAK_KAFA
 
 
@@ -67,11 +67,6 @@ def _kafaya_sor(metin):
 def _yedege_don(metin, basladi, neden):
     """Kural siniflandiricisina doner; neden loglanir, yutulmaz."""
     ton, _ = sinifla(metin)
-    log.yaz(YUVA_ADI, "ton_oku", _gecen_ms(basladi), "hata",
+    log.yaz(YUVA_ADI, "ton_oku", log.gecen_ms(basladi), "hata",
             {"hata": neden, "ton": ton, "kaynak": KAYNAK_KURAL})
     return ton, KAYNAK_KURAL
-
-
-def _gecen_ms(basladi):
-    """Olcum baslangicindan bu yana gecen sureyi tam sayi milisaniye verir."""
-    return int((time.perf_counter() - basladi) * 1000)

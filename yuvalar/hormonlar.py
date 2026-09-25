@@ -1,6 +1,6 @@
 """Yedi hormonu tutar ve olaylara gore gunceller. Bu sayilar Minik'in her karar noktasini surer.
 Dosya verilirse (defter/hormon.json) baslarken okunur, her olayda yazilir; "uyku" olayi yasi 1 artirir.
-Cagiran: minik.py akisi, yuvalar/uyku.py, araclar/hormon-gunu.py, araclar/hormon-yoksunluk-gunu.py.
+Cagiran: minik.py akisi, yuvalar/uyku.py, deneyler/hormon-gunu.py, deneyler/hormon-yoksunluk-gunu.py.
 Hicbir yuva bunu dogrudan cagirmaz (K1)."""
 
 import json
@@ -39,7 +39,7 @@ class Tanim:
 # gerekmedi. Diger ikisi asagida dusuren olarak eklendi. serotonin dusme=15 (yukselmeyle simetrik,
 # TAHMIN) 30 gunluk kosuda ic tarafta bir dengeye oturuyor (~27,8), tavana/tabana degmiyor.
 # oksitosin ILK denemede dusme=12 (simetrik) ile 5. gunde 0,0'a (taban) yapisti, gun 10 ile gun 30
-# ayirt edilemez oldu (olculdu: araclar/hormon-yoksunluk-gunu.py). Melatoninin 45. adimda 100'e
+# ayirt edilemez oldu (olculdu: deneyler/hormon-yoksunluk-gunu.py). Melatoninin 45. adimda 100'e
 # yapismasiyla ayni sinif kusur: TAHMIN yanlisti, dusuruldu. dusme=4.0 ile ic dengeye oturuyor
 # (~18,4), taban 0'a degmiyor (bkz. reports/2026-09-21-f3a-hormon-revizyonu.md).
 #
@@ -49,7 +49,7 @@ class Tanim:
 # "calisma" olay adi ve yukselme (1,5) DEGISMEDI: tek bicimlilik
 # korunuyor (hormonlar.py hala sadece olay+siddet aliyor), degisen siddetin NEREDEN geldigi -
 # cagiran taraf artik siddeti gercek is suresinden hesaplayip veriyor, elle 1,0 vermiyor.
-# araclar/hormon-gunu.py ile olculdu: gercekci karisik is yukunde (hafif/orta/agir) gun sonu
+# deneyler/hormon-gunu.py ile olculdu: gercekci karisik is yukunde (hafif/orta/agir) gun sonu
 # tepe 48,5, ne tavana (100) ne tabana yapisiyor; 1,5 katsayisi bu rejimde de gecerli kaldi,
 # degistirilmedi (bkz. reports/2026-09-21-f3a-hormon-revizyonu.md).
 HORMONLAR = {
@@ -74,7 +74,7 @@ class Hormonlar:
     "bu sayi neden boyle cikti" sorusunun cevabi kalmaz."""
 
     def __init__(self, dosya=None):
-        """dosya None ise kalicilik yok (testler, araclar). Dosya yoksa ya da bozuksa dinlenme
+        """dosya None ise kalicilik yok (testler, deneyler). Dosya yoksa ya da bozuksa dinlenme
         degerleriyle ve yas 0 ile baslanir; bozuk dosya loglanir, yutulmaz."""
         self._dosya = dosya
         self._deger = {ad: t.dinlenme for ad, t in HORMONLAR.items()}
@@ -113,7 +113,7 @@ class Hormonlar:
         try:
             _dogrula(olay, siddet)
         except ValueError as hata:
-            log.yaz(YUVA_ADI, "guncelle", _gecen_ms(basladi), "hata",
+            log.yaz(YUVA_ADI, "guncelle", log.gecen_ms(basladi), "hata",
                     {"hata": str(hata), "olay": olay, "siddet": siddet})
             raise
         self._sondur()
@@ -122,7 +122,7 @@ class Hormonlar:
         if olay == GECE_OLAYI:
             self.yas += 1
         self._dosyaya_yaz()
-        log.yaz(YUVA_ADI, "guncelle", _gecen_ms(basladi), "ok",
+        log.yaz(YUVA_ADI, "guncelle", log.gecen_ms(basladi), "ok",
                 {"olay": olay, "siddet": siddet, "deger": self.oku(), "yas": self.yas})
         return self.oku()
 
@@ -152,8 +152,3 @@ def _dogrula(olay, siddet):
 def _sinirla(deger):
     """Hormonu tanimli araliga hapseder."""
     return max(EN_AZ, min(EN_COK, deger))
-
-
-def _gecen_ms(basladi):
-    """Olcum baslangicindan bu yana gecen sureyi tam sayi milisaniye verir."""
-    return int((time.perf_counter() - basladi) * 1000)

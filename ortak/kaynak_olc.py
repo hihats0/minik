@@ -1,5 +1,5 @@
 """Kafa'nin bir turda harcadigi gercek is saniyesini (llama-server timings) 0-1 siddete cevirir
-(K10, f3-e). Cagiran: minik.py akisi, araclar/hormon-gunu.py."""
+(K10, f3-e). Cagiran: minik.py akisi, deneyler/hormon-gunu.py."""
 
 EN_AZ_SIDDET = 0.0
 EN_COK_SIDDET = 1.0

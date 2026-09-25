@@ -15,7 +15,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import test_k26d_arac as sahte  # noqa: E402
 from ortak.ayar import MELATONIN_YORGUN_TALIMATI, MOD_UYANIK, MOD_YORGUN  # noqa: E402
 
-_spec = importlib.util.spec_from_file_location("f3g", KOK / "araclar" / "f3g-kor-uretim.py")
+_spec = importlib.util.spec_from_file_location("f3g", KOK / "deneyler" / "f3g-kor-uretim.py")
 f3g = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(f3g)
 

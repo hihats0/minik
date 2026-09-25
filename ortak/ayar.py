@@ -1,18 +1,20 @@
 """Kafa, Defter, Bekci, Hormonlar ve akisin kullandigi adli sabitler: sunucu adresi, model yolu,
 zaman asimi, ornekleme, baglam, dosya yollari, sozluk. Cagiran: yuvalar/kafa.py, yuvalar/defter.py,
-yuvalar/bekci.py, minik.py, araclar/."""
+yuvalar/bekci.py, minik.py, deneyler/."""
 
+import os
 from pathlib import Path
 
 KAFA_HOST = "127.0.0.1"
 KAFA_PORT = 8080
 KAFA_UC = f"http://{KAFA_HOST}:{KAFA_PORT}/v1/chat/completions"
 
+# Model agirliklari repoya girmez; baska makinede MINIK_MODEL_KLASORU ile yeri verilir.
+MODEL_KLASORU = Path(os.environ.get("MINIK_MODEL_KLASORU", r"C:\Projelerim\modeller"))
 # K26=A: Kafa Gemma. k26-b'de GPU'da olculdu: zirve VRAM 6382 MiB (<= 6656), think 15/15 temiz,
-# 10 tur dusmedi (reports/2026-09-23-k26b-gemma-olcumu.md). Onceki Qwen (f0-a) yedek profil.
-GEMMA_MODEL_YOLU = r"C:\Projelerim\modeller\Turkish-Gemma-9b-T1.Q4_K_M.gguf"
+# 10 tur dusmedi (reports/2026-09-23-k26b-gemma-olcumu.md). K43=C: ana yol Gemma, Qwen profili kaldirildi.
+GEMMA_MODEL_YOLU = str(MODEL_KLASORU / "Turkish-Gemma-9b-T1.Q4_K_M.gguf")
 GEMMA_BAGLAM = 4096
-QWEN_MODEL_YOLU = r"C:\Projelerim\modeller\Qwen3.5-4B-Q4_K_M.gguf"
 KAFA_MODEL_YOLU = GEMMA_MODEL_YOLU
 KAFA_BAGLAM = GEMMA_BAGLAM
 GEMMA_SUNUCU_ARGUMANLARI = ["-m", GEMMA_MODEL_YOLU, "-c", str(GEMMA_BAGLAM),
@@ -26,9 +28,8 @@ KAFA_ZAMAN_ASIMI_SN = 60
 KAFA_SICAKLIK = 0.7
 KAFA_TOP_P = 0.9
 # k26-c (reports/2026-09-23-k26c-gemma-uzunluk.md): Gemma think yazdigi icin 512'de 10 sorunun 9'u
-# kesildi (finish_reason=length); 1024'te olculen 4/4 bitti (661-986 token, 18-28 sn). Qwen f0'da 512 idi.
+# kesildi (finish_reason=length); 1024'te olculen 4/4 bitti (661-986 token, 18-28 sn).
 GEMMA_MAX_TOKEN = 1024
-QWEN_MAX_TOKEN = 512
 KAFA_MAX_TOKEN = GEMMA_MAX_TOKEN
 # k26-d: hormonlu yolda Gemma'nin max_tokens'i = dusunce payi + hormonun ayarladigi cevap butcesi
 # (hormon cevabi yonetir, think'i degil). Pay OLCUMDEN turetildi: k26-c'de max 512'de kesilen bir
@@ -39,7 +40,6 @@ KAFA_MAX_TOKEN = GEMMA_MAX_TOKEN
 # 768 pay + 768 cevap = 1536, baglam butcesi 4096 - 1536 - 512 = 2048 token. VRAM degismez: KV cache
 # -c 4096 icin bastan ayrilir, k26-b zirvesi 6382 MiB (<= 6656) ayni baglamda olculdu.
 GEMMA_DUSUNCE_PAYI_TOKEN = 768
-QWEN_DUSUNCE_PAYI_TOKEN = 0  # Qwen think'siz calisiyor (f0), hormon yolu eskisi gibi kalir
 KAFA_DUSUNCE_PAYI_TOKEN = GEMMA_DUSUNCE_PAYI_TOKEN
 
 # Spec 4.2: gunluk jsonl defter/ altinda tutulur, .gitignore'da (Minik'in defteri repoya girmez).
@@ -55,8 +55,7 @@ DEFTER_GERI_GUN_SINIRI = 7
 
 # K23=C, K20=a: Bekci'nin cikisi iki kapi. KARAKTER kapisi (Minik'in uslubu) siradan kufuru
 # GECIRIR ama loglar; EMNIYET kapisi (esigi sabit, hormona bagli degil) asagidaki listeleri ENGELLER.
-# Karakter kapisinin sozlugu: araclar/odul_kural.py'deki KUFUR_KALIPLARI'ndan
-# aynen tasindi (yeniden yazilmadi). Olculmus: 0,03 ms/cumle, bagimsiz 200 tweette dogruluk
+# Karakter kapisinin sozlugu, tek kaynak (yuvalar/ton_kural.py de bunu kullanir). Olculmus: 0,03 ms/cumle, bagimsiz 200 tweette dogruluk
 # %80,5 (duyarlilik %63). Token'in TAMAMI bir kaliple eslesir (boks, gotur, sikinti gibi
 # yanlis eslesmeler olmasin diye).
 BEKCI_KARAKTER_KALIPLARI = [
@@ -115,7 +114,7 @@ KORTIZOL_REPEAT_PENALTY_ARALIK = 0.3  # repeat_penalty 1,0 - 1,3 arasinda gezer
 
 # Melatonin tek basina AC/KAPA (surekli degil) bir karar surer: "yorgun mu". Spec 3.6.2 (M1)
 # kurali: bu turden bir karar ALT_ESIK/UST_ESIK adli iki sabitle (cift esik/Schmitt tetikleyici)
-# yapilir. 42/58 OLCULDU (araclar/histerezis-olc.py, 8 tohum x 4 olay yogunlugu x 300 adim, gercek
+# yapilir. 42/58 OLCULDU (deneyler/histerezis-olc.py, 8 tohum x 4 olay yogunlugu x 300 adim, gercek
 # hormonlar.py ile): tek esige gore 1,5-2,9 kat az mod titremesi. Minik'in gercek olay
 # yogunlugunda YENIDEN OLCULMEDI (V6, spec'in kendi notu); bu kosuda ayni olculen sayilar kullanildi.
 ALT_ESIK = 42.0
@@ -168,7 +167,7 @@ UYKU_SABAH_OZET_KALIBI = "sabah-ozet-{tarih}.md"
 UYKU_VARSAYILAN_YAKINLIK = 1.0  # TAHMIN: yakinlik henuz kayda yazilmiyor
 UYKU_YUKSEK_ONCELIK_ESIGI = 10.0  # TAHMIN: dopamin puani, olculmedi (f4 tur 2'de ayarlanacak)
 UYKU_YAKALAMA_PENCERESI_DK = 30  # TAHMIN: Frey-Morris cizgisi saat duzeyi, dakika sayisi olculmedi
-# SM-2 (araclar/aralikli-tekrar-olc.py'deki olcumle ayni sayilar, super-memory.com sm2).
+# SM-2 (deneyler/aralikli-tekrar-olc.py'deki olcumle ayni sayilar, super-memory.com sm2).
 SM2_BASLANGIC_EF = 2.5
 SM2_EN_KUCUK_EF = 1.3
 SM2_ILK_ARALIK_GUN = 1
@@ -182,7 +181,7 @@ UYKU_BUDAMA_SINIRI = 3
 UYKU_HATIRLAMA_ORTUSME = 0.3
 UYKU_PROVA_KALIBI = "Daha once sana su soruldu, ne cevap vermistin? Soru: {soru}"
 # Gomme: yalniz CPU (llama-server --device none -ngl 0 --embedding -c 512), e5-small.
-# Port: araclar/f4b-unutma-olc.py gommeyi 8093te baslatir; 8080 Kafa, 8090 web sohbet.
+# Port: deneyler/f4b-unutma-olc.py gommeyi 8093te baslatir; 8080 Kafa, 8090 web sohbet.
 GOMME_PORT = 8093
 GOMME_UC = f"http://127.0.0.1:{GOMME_PORT}/v1/embeddings"
 GOMME_EN_YAKIN_K = 3

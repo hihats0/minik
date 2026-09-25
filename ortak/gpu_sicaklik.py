@@ -1,6 +1,6 @@
 """GPU sicaklik sarmalayicisi: ayri is parcaciginda nvidia-smi ile sicaklik okur ve loglar; 80 C gorulunce
 sonraki istekten once 70'e kadar bekletir, istek SURERKEN 84 C'de durdurma fonksiyonunu cagirir (sicak-a).
-Cagiran: araclar/k26d-hormon-uzunluk.py; GPU'ya uzun istek atan her olcum araci."""
+Cagiran: deneyler/k26d-hormon-uzunluk.py; GPU'ya uzun istek atan her olcum araci."""
 
 import subprocess
 import threading

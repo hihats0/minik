@@ -5,7 +5,7 @@ import importlib.util
 import unittest
 from pathlib import Path
 
-_YOL = Path(__file__).resolve().parent.parent / "araclar" / "f3g-perde-kaldir.py"
+_YOL = Path(__file__).resolve().parent.parent / "deneyler" / "f3g-perde-kaldir.py"
 _OZ = importlib.util.spec_from_file_location("f3g_perde", _YOL)
 perde = importlib.util.module_from_spec(_OZ)
 _OZ.loader.exec_module(perde)

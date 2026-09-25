@@ -104,17 +104,17 @@ def _tur_isle(soru, baglam, dusun, hormon_durumu):
         cevap, is_sn = dusun(soru, _kafa_baglami(soru, baglam, hormon_durumu), hormon_degerleri)
     except Exception as hata:
         hormon_durumu.guncelle("ceza", KORTIZOL_CEZA_SIDDETI)
-        log.yaz(YUVA_ADI, "tur", _gecen_ms(basladi), "hata", {"hata": str(hata)})
+        log.yaz(YUVA_ADI, "tur", log.gecen_ms(basladi), "hata", {"hata": str(hata)})
         return DUSUNEMIYORUM_METNI, False
     hormon_durumu.guncelle("calisma", kaynak_olc.siddet(is_sn, MELATONIN_IS_TAVAN_SN))
     cevap = duz_metin.temizle(cevap)  # guvenlik agi; asil sebep gecmisti (emoji-a)
     gecebilir, gerekce = bekci.cikabilir_mi(cevap)
     if not gecebilir:
-        log.yaz(YUVA_ADI, "tur", _gecen_ms(basladi), "ok", {"bekci": "engellendi", "gerekce": gerekce})
+        log.yaz(YUVA_ADI, "tur", log.gecen_ms(basladi), "ok", {"bekci": "engellendi", "gerekce": gerekce})
         return ENGELLENDI_METNI, False
     baglam.append({"role": "user", "content": soru})
     baglam.append({"role": "assistant", "content": cevap})
-    log.yaz(YUVA_ADI, "tur", _gecen_ms(basladi), "ok", {"soru_uzunlugu": len(soru)})
+    log.yaz(YUVA_ADI, "tur", log.gecen_ms(basladi), "ok", {"soru_uzunlugu": len(soru)})
     return cevap, True
 
 
@@ -123,11 +123,6 @@ def _kafa_baglami(soru, baglam, hormon_durumu):
     baglama girmez. Hesap sonucu Kafa'nin metninden okunmaz, hep Calgici'dan gelir (spec 3.3)."""
     ek = calgici_tani.baglam_mesaji(soru, hormon_durumu)
     return baglam if ek is None else baglam + [ek]
-
-
-def _gecen_ms(basladi):
-    """Olcum baslangicindan bu yana gecen sureyi tam sayi milisaniye verir."""
-    return int((time.perf_counter() - basladi) * 1000)
 
 
 if __name__ == "__main__":

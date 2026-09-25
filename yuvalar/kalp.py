@@ -1,5 +1,5 @@
 """Kalp yuvasi (spec 3.2, f6): refleks onerir ama golge modda, oneri yalniz loglanir, uygulanmaz.
-Cagiran: minik.py (her turda refleks_ara ve tur_sonu), araclar/f6-ayrisma-olc.py, tests/test_kalp.py."""
+Cagiran: minik.py (her turda refleks_ara ve tur_sonu), deneyler/f6-ayrisma-olc.py, tests/test_kalp.py."""
 
 import json
 import re

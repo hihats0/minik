@@ -4,7 +4,7 @@ import sys
 import unittest
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "araclar"))
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "deneyler"))
 
 import k23_2b_sayim as sayim  # noqa: E402
 

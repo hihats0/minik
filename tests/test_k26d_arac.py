@@ -16,7 +16,7 @@ KOK = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(KOK))
 from ortak import gpu_sicaklik  # noqa: E402
 
-_spec = importlib.util.spec_from_file_location("k26d", KOK / "araclar" / "k26d-hormon-uzunluk.py")
+_spec = importlib.util.spec_from_file_location("k26d", KOK / "deneyler" / "k26d-hormon-uzunluk.py")
 k26d = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(k26d)
 

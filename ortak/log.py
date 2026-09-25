@@ -1,7 +1,8 @@
-"""Tek log bicimi: her yuva buradan yazar, satir basina bir JSON nesnesi (mimari-taslak K5).
-Cagiran: butun yuvalar; su an yalniz yuvalar/hormonlar.py."""
+"""Tek log bicimi: her yuva buradan yazar, satir basina bir JSON nesnesi (K5). Sure olcumu de burada.
+Cagiran: butun yuvalar, agizlar ve minik.py."""
 
 import json
+import time
 from datetime import datetime
 from pathlib import Path
 
@@ -26,6 +27,11 @@ def yaz(yuva, olay, sure_ms, sonuc, detay):
     # encoding acikca verilir: Windows varsayilani cp1254, Turkce disi isaret patlatiyor.
     with dosya.open("a", encoding="utf-8") as f:
         f.write(json.dumps(satir, ensure_ascii=False) + "\n")
+
+
+def gecen_ms(basladi):
+    """time.perf_counter() ile alinan baslangictan bu yana gecen sureyi tam sayi milisaniye verir."""
+    return int((time.perf_counter() - basladi) * 1000)
 
 
 def _dogrula(sonuc, detay):

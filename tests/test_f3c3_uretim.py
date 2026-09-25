@@ -5,7 +5,7 @@ import importlib.util
 import unittest
 from pathlib import Path
 
-BETIK = Path(__file__).resolve().parent.parent / "araclar" / "f3c3-kor-uretim.py"
+BETIK = Path(__file__).resolve().parent.parent / "deneyler" / "f3c3-kor-uretim.py"
 OZELLIK = importlib.util.spec_from_file_location("f3c3_kor_uretim", BETIK)
 arac = importlib.util.module_from_spec(OZELLIK)
 OZELLIK.loader.exec_module(arac)

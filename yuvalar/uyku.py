@@ -1,14 +1,14 @@
 """Uyku yuvasi (egitimsiz): kapanmis gunlerin jsonl'ini okur, etiketler, SM-2 provasi yapar, budar,
 sqlite'a tek islemle yazar, sabah ozeti birakir, melatonini indirir (spec 2.4, 3.5).
-Cagiran: minik.py akisi (uyku_tetik "uyu" deyince), araclar/f4b-unutma-olc.py, testler."""
+Cagiran: minik.py akisi (uyku_tetik "uyu" deyince), deneyler/f4b-unutma-olc.py, testler."""
 
 import json
 import time
 import urllib.error
 from datetime import date, timedelta
 
-from araclar.gomme_istemci import vektor_al
 from ortak import log
+from ortak.gomme import vektor_al
 from ortak.ayar import (
     DEFTER_KLASORU, GOMME_EN_YAKIN_K, GOMME_UC, SM2_BASARILI_KALITE, SM2_BASARISIZ_KALITE,
     UYKU_PROVA_KALIBI, UYKU_SABAH_OZET_KALIBI,
@@ -70,7 +70,7 @@ def gun_isle(tarih, gomme_al=None, prova=None, klasor=None):
     baglanti = defter_sqlite.baglan(klasor)
     try:
         if defter_sqlite.islendi_mi(baglanti, tarih):
-            log.yaz(YUVA_ADI, "gece", _gecen_ms(basladi), "ok", {"tarih": tarih, "atlandi": True})
+            log.yaz(YUVA_ADI, "gece", log.gecen_ms(basladi), "ok", {"tarih": tarih, "atlandi": True})
             return ZATEN_ISLENDI, 0, 0
         kayitlar = _gun_kayitlari(klasor, tarih)
         yeni = _yeni_anilar(_kapidan_gecenler(baglanti, kayitlar, tarih), tarih, gomme_al or _sunucudan_gomme)
@@ -83,7 +83,7 @@ def gun_isle(tarih, gomme_al=None, prova=None, klasor=None):
     etiketlenen = sum(1 for a in yeni if a["etiket"] != secim.ETIKET_SIRADAN)
     ozet = _sabah_ozeti(tarih, yeni, guncellemeler, budanan, komsular) + cift_satiri + "\n"
     (klasor / UYKU_SABAH_OZET_KALIBI.format(tarih=tarih)).write_text(ozet, encoding="utf-8")
-    log.yaz(YUVA_ADI, "gece", _gecen_ms(basladi), "ok",
+    log.yaz(YUVA_ADI, "gece", log.gecen_ms(basladi), "ok",
             {"tarih": tarih, "okunan": len(yeni), "etiketlenen": etiketlenen,
              "budanan": budanan, "ogeler": len(guncellemeler)})
     return ozet, etiketlenen, budanan
@@ -143,7 +143,7 @@ def _kafaya_sor(ani):
     try:
         cevap, _ = kafa.dusun(UYKU_PROVA_KALIBI.format(soru=ani["soru"]))
     except (urllib.error.URLError, OSError) as hata:
-        log.yaz(YUVA_ADI, "prova", _gecen_ms(basladi), "hata", {"id": ani["id"], "hata": str(hata)})
+        log.yaz(YUVA_ADI, "prova", log.gecen_ms(basladi), "hata", {"id": ani["id"], "hata": str(hata)})
         return None
     return secim.hatirladi_mi(ani["cevap"], cevap)
 
@@ -154,7 +154,7 @@ def _sunucudan_gomme(metin):
     try:
         vektor, _ = vektor_al(GOMME_UC, metin)
     except (urllib.error.URLError, OSError) as hata:
-        log.yaz(YUVA_ADI, "gomme", _gecen_ms(basladi), "hata", {"hata": str(hata)})
+        log.yaz(YUVA_ADI, "gomme", log.gecen_ms(basladi), "hata", {"hata": str(hata)})
         return None
     return vektor
 
@@ -187,8 +187,3 @@ def _sabah_ozeti(tarih, yeni, guncellemeler, budanan, komsular):
         satirlar.append(f"- '{soru}' su anilari cagristirdi: "
                         + ", ".join(f"'{s}' ({skor:.2f})" for skor, s in yakinlar))
     return "\n".join(satirlar) + "\n"
-
-
-def _gecen_ms(basladi):
-    """Olcum baslangicindan bu yana gecen sureyi tam sayi milisaniye verir."""
-    return int((time.perf_counter() - basladi) * 1000)

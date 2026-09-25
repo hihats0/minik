@@ -19,7 +19,6 @@ VARSAYILAN_KAYNAK = "konsol"  # platform alanindan onceki eski kayitlar yalniz k
 GEREKCE_YIGIT = "Yigit kaynagi (konsol), tek agiz yeter"
 # K28=B, K29=D (Yigit, 2026-09-23): X kaynagi sayilir, her X hesabi bir agiz. Kayit Defter'e platform
 # "x" isaretiyle girer; S7 (buyume.x_kaynakli_mi) bu isaretle onu LoRA disinda tutar.
-X_KAYNAK_TURU = "x"
 X_PLATFORMLARI = {"x", "twitter"}
 X_ONEKI = "x:"
 GEREKCE_BOS = "iddia bos, hafizaya aday degil"
@@ -58,9 +57,9 @@ def gecsin_mi(baglanti, bilgi, kaynak, tarih, platform=None):
             baglanti.execute("INSERT INTO giris_kararlari VALUES (?, ?, ?, ?, ?)",
                              (tarih, kaynak, kaynak in YIGIT_KAYNAKLARI, evet, gerekce))
     except Exception as hata:
-        log.yaz(YUVA_ADI, "gecsin_mi", _gecen_ms(basladi), "hata", {"kaynak": kaynak, "hata": str(hata)})
+        log.yaz(YUVA_ADI, "gecsin_mi", log.gecen_ms(basladi), "hata", {"kaynak": kaynak, "hata": str(hata)})
         return False, GEREKCE_COKTU
-    log.yaz(YUVA_ADI, "gecsin_mi", _gecen_ms(basladi), "ok",
+    log.yaz(YUVA_ADI, "gecsin_mi", log.gecen_ms(basladi), "ok",
             {"kaynak": kaynak, "karar": evet, "gerekce": gerekce, "agiz_sayisi": sayi})
     return evet, gerekce
 
@@ -132,8 +131,3 @@ def red_oranlari(baglanti):
     genel = red / toplam if toplam else None
     yigit = sayim[True][1] / sayim[True][0] if True in sayim else None
     return genel, yigit
-
-
-def _gecen_ms(basladi):
-    """Olcum baslangicindan bu yana gecen sureyi tam sayi milisaniye verir."""
-    return int((time.perf_counter() - basladi) * 1000)

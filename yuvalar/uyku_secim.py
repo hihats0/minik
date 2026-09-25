@@ -43,7 +43,7 @@ def etiketle(kayitlar):
 
 def sm2_adimi(ani, kalite, tarih):
     """Tek gozden gecirme: yeni tekrar, ef, sonraki_gun ve ust_uste_basarisiz dondurur.
-    Sayilar araclar/aralikli-tekrar-olc.py'deki olcumle ayni kural."""
+    Sayilar deneyler/aralikli-tekrar-olc.py'deki olcumle ayni kural."""
     fark = SM2_EN_IYI_KALITE - kalite
     ef = max(SM2_EN_KUCUK_EF, ani["ef"] + (0.1 - fark * (0.08 + fark * 0.02)))
     if kalite < SM2_BASARILI_KALITE:

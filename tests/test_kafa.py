@@ -156,7 +156,7 @@ class TestKafaHormonModu(unittest.TestCase):
     def test_histerezis_alt_esigin_altina_inmeden_mod_geri_donmez(self):
         """Asil test bu: iki esigin ARASINDA (UST_ESIK'in altinda ama ALT_ESIK'in ustunde)
         deger kalirsa mod yorgun kalmali. Tek esik olsaydi UST_ESIK'in hemen altina inince
-        geri donerdi (araclar/histerezis-olc.py'nin olcttugu fark tam olarak bu)."""
+        geri donerdi (deneyler/histerezis-olc.py'nin olcttugu fark tam olarak bu)."""
         mod = kafa._mod_hesapla(UST_ESIK, MOD_UYANIK)
         self.assertEqual(mod, MOD_YORGUN)
         mod = kafa._mod_hesapla((UST_ESIK + ALT_ESIK) / 2, mod)
@@ -216,11 +216,10 @@ class TestKafaHormonModu(unittest.TestCase):
                 ayar, _ = kafa._ornekleme_ayarlari(hormon)
                 self.assertGreaterEqual(ayar["max_tokens"], GEMMA_DUSUNCE_PAYI_TOKEN + asgari_cevap)
 
-    def test_qwen_profilinde_hormon_butcesi_eskisi_gibi(self):
-        """Qwen payi 0: serotonin 0 -> 128, 100 -> 768, yorgun serotonin 0 -> 64 (k26-d oncesi degerler)."""
-        from ortak.ayar import QWEN_DUSUNCE_PAYI_TOKEN
+    def test_dusunce_payi_sifirken_hormon_butcesi(self):
+        """Pay 0 (think'siz model): serotonin 0 -> 128, 100 -> 768, yorgun serotonin 0 -> 64."""
         beklenen = {(0, 10, MOD_UYANIK): 128, (100, 10, MOD_UYANIK): 768, (0, 90, MOD_YORGUN): 64}
-        with patch.object(kafa, "KAFA_DUSUNCE_PAYI_TOKEN", QWEN_DUSUNCE_PAYI_TOKEN):
+        with patch.object(kafa, "KAFA_DUSUNCE_PAYI_TOKEN", 0):
             for (s, m, onceki), deger in beklenen.items():
                 kafa.ONCEKI_MOD = onceki
                 ayar, _ = kafa._ornekleme_ayarlari({**HORMON_DINLENME, "serotonin": s, "melatonin": m})

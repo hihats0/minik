@@ -1,10 +1,10 @@
-# araclar/laya_ton_olc.py için testler; model yüklemez, sahte ajan kullanır.
+# deneyler/laya_ton_olc.py için testler; model yüklemez, sahte ajan kullanır.
 # python -m unittest tests.test_laya_ton_olc ile koşar.
 import importlib.util
 import unittest
 from pathlib import Path
 
-YOL = Path(__file__).resolve().parent.parent / "araclar" / "laya_ton_olc.py"
+YOL = Path(__file__).resolve().parent.parent / "deneyler" / "laya_ton_olc.py"
 _spec = importlib.util.spec_from_file_location("laya_ton_olc", YOL)
 olc = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(olc)

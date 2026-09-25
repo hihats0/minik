@@ -6,7 +6,7 @@ import unittest
 from fractions import Fraction
 from pathlib import Path
 
-BETIK = Path(__file__).resolve().parent.parent / "araclar" / "f3c2-perde-kaldir.py"
+BETIK = Path(__file__).resolve().parent.parent / "deneyler" / "f3c2-perde-kaldir.py"
 OZELLIK = importlib.util.spec_from_file_location("f3c2_perde_kaldir", BETIK)
 analiz = importlib.util.module_from_spec(OZELLIK)
 OZELLIK.loader.exec_module(analiz)

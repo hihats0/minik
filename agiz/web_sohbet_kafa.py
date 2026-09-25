@@ -2,18 +2,15 @@
 kesilirse sonraki turda yeniden acar, uzun sessizlikte kapatip VRAM'i bosaltir. Cagiran: agiz/web_sohbet.py."""
 
 import subprocess
-import sys
 import threading
 import time
 from pathlib import Path
 
 from ortak import log
+from ortak import sunucu as sunucu_yonet
 from ortak.ayar import GEMMA_SUNUCU_ARGUMANLARI, KAFA_PORT
 from ortak.gpu_sicaklik import SicaklikBekcisi
 from yuvalar import kafa
-
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "araclar"))
-import sunucu_yonet  # noqa: E402
 
 YUVA_ADI = "web_sohbet_kafa"
 BOSTA_KAPAT_SN = 60 * 60  # 60 dk mesaj gelmezse llama-server kapanir, VRAM bosalir

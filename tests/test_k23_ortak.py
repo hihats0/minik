@@ -6,7 +6,7 @@ import unittest
 from pathlib import Path
 
 KOK = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(KOK / "araclar"))
+sys.path.insert(0, str(KOK / "deneyler"))
 
 import k23_ortak as ortak  # noqa: E402
 
