@@ -20,7 +20,8 @@ KUCUK = {"transformer": {"katman": 2, "boyut": 64, "kafa": 4, "ara_boyut": 128, 
                  "sozluk": 500},
          "minik": {"katman": 4, "boyut": 64, "kafa": 4, "ara_boyut": 128, "sozluk": 500},
          "seyrek": {"boyut": 32, "bloom": 64, "derinlik": 3, "yaprak_ara": 8, "sozluk": 500,
-                    "baglam": 64}}
+                    "baglam": 64},
+         "uzman": {"katman": 2, "boyut": 64, "kafa": 4, "ara_boyut": 128, "sozluk": 500, "uzman": 4}}
 PARAMETRE_ALT, PARAMETRE_UST = 25_000_000, 35_000_000
 TOLERANS = 1e-4
 
@@ -33,7 +34,7 @@ class TestModeller(unittest.TestCase):
             self.assertEqual(tuple(logit.shape), (2, 40, 500), tur)
 
     def test_parametre_sayisi_butcede(self):
-        for tur in ea.MODELLER:
+        for tur in ea.MODELLER.keys() - {"uzman"}:  # uzman: parametre E ile buyur, butce disi (K42-B)
             with torch.device("meta"):  # agirlik bellegi ayrilmaz, sayim ayni; 30M rastgele baslatma yok
                 sayi = ea.parametre_sayisi(ea.model_kur(tur))
             self.assertTrue(PARAMETRE_ALT <= sayi <= PARAMETRE_UST, f"{tur}: {sayi}")

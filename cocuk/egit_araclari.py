@@ -16,9 +16,10 @@ from cocuk.model_minik import MinikCocuk
 from cocuk.model_seyrek import SeyrekCocuk
 from cocuk.model_ssm import SSMCocuk
 from cocuk.model_transformer import TransformerCocuk
+from cocuk.model_uzman import UzmanCocuk
 
 MODELLER = {"transformer": TransformerCocuk, "ssm": SSMCocuk, "minik": MinikCocuk,
-            "seyrek": SeyrekCocuk}
+            "seyrek": SeyrekCocuk, "uzman": UzmanCocuk}
 COCUK_DIZINI = Path(__file__).resolve().parent
 VERI_DIZINI = COCUK_DIZINI / "veri"
 AGIRLIK_DIZINI = COCUK_DIZINI / "agirlik"

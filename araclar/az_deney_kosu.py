@@ -43,6 +43,10 @@ KOLLAR = {  # ad: (az_egit ek bayraklari, az_olc ek bayraklari); kosulacaklar ko
              '{"yonlendirici": "yogun", "boyut": 112, "bloom": 8192, "yaprak_ara": 8}'], []),
     "a15m": (["--tur", "seyrek", "--ayar",
               '{"yonlendirici": "yogun", "boyut": 192, "bloom": 12288, "yaprak_ara": 32}'], []),
+    "u1": (["--tur", "uzman", "--ayar", '{"uzman": 1}'], []),
+    "u4": (["--tur", "uzman", "--ayar", '{"uzman": 4}'], []),
+    "u16": (["--tur", "uzman", "--ayar", '{"uzman": 16}'], []),
+    "u24": (["--tur", "uzman", "--ayar", '{"uzman": 24}'], []),  # 48 ve 32 VRAM'e sigmadi (duman, K42-B)
 }
 TOKEN_MILYON = "50"
 
