@@ -23,7 +23,7 @@ MODELLER = {"transformer": TransformerCocuk, "ssm": SSMCocuk, "minik": MinikCocu
 COCUK_DIZINI = Path(__file__).resolve().parent
 VERI_DIZINI = COCUK_DIZINI / "veri"
 AGIRLIK_DIZINI = COCUK_DIZINI / "agirlik"
-SICAK_DUR = 80  # Proje kurali: 80 C'de durakla,
+SICAK_DUR = 90  # Yigit 25 Eyl 22:45: 90 C'de durakla (bekci 93'te keser),
 SICAK_DEVAM = 70  # 70 C'ye inince devam et.
 SOGUMA_BEKLEME_SN = 30
 NVIDIA_SMI_SORGU = ["nvidia-smi", "--query-gpu=temperature.gpu,memory.used",
