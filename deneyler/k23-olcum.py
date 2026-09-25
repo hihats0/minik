@@ -16,7 +16,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))  # kok: ortak/, 
 from ortak.sunucu import LLAMA_SERVER, LOG_KLASORU, hazir_bekle  # noqa: E402
 
 KOK = Path(__file__).resolve().parent.parent
-SINAV_DOSYASI = KOK / "notes/turkce-testi.md"
+SINAV_DOSYASI = KOK / "deneyler/turkce-testi.md"
 HAM_KLASOR = KOK / "reports/k23-ham-cevaplar"
 PORT = 8090
 UC = f"http://127.0.0.1:{PORT}/v1/chat/completions"

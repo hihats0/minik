@@ -13,7 +13,6 @@ Her şey tek bir laptopta (RTX 4070 Laptop, 8 GB VRAM) yerel çalışır, bulut 
   Defter (günlük jsonl + sqlite); Uyku (SM-2 provası, budama, sabah özeti); Bekçi'nin çıkış ve
   giriş kapıları; webden merakla araştırma.
 - **Sırada:** eski anıların konuşmaya gelmesi, gece LoRA eğitimi, X'te yaşama.
-- Açık iş listesi: [`notes/devam.md`](notes/devam.md) bölüm 3. Kararlar: [`notes/kararlar.md`](notes/kararlar.md).
 
 ## Mimari
 
@@ -43,8 +42,6 @@ flowchart LR
 | Kalp | Refleks önerir (şimdilik gölge modda, yalnız loglanır) | `yuvalar/kalp.py` |
 | Çalgıcılar | Hesabı Python yapar, iki yoldan doğrular | `yuvalar/calgicilar.py`, `calgici_tani.py` |
 
-Ayrıntılı tasarım ve gerekçeler: [`docs/superpowers/specs/2026-09-21-minik-mimari-design.md`](docs/superpowers/specs/2026-09-21-minik-mimari-design.md).
-
 ## Klasörler
 
 | Klasör | İçerik |
@@ -54,10 +51,8 @@ Ayrıntılı tasarım ve gerekçeler: [`docs/superpowers/specs/2026-09-21-minik-
 | `agiz/` | Platform bağımsız ağızlar (konsol, dosya, site, web sohbet, web arama, X) |
 | `ortak/` | Ayarlar, log, bağlam bütçesi, sunucu ve GPU sıcaklık yardımcıları |
 | `araclar/` | İşletme araçları: GPU bekçisi, karne, X girişi, model indirme |
-| `deneyler/` | Tek seferlik ölçüm betikleri ve sonuç verileri (sonuçlar `reports/` içinde) |
+| `deneyler/` | Tek seferlik ölçüm betikleri, sonuç verileri ve Türkçe sınav |
 | `tests/` | Birim testleri |
-| `notes/` | Canlı notlar: iş kuyruğu, kararlar, kurallar, öğrenilenler |
-| `reports/` | Ölçüm ve araştırma raporları |
 | `site/`, `karne-site/`, `sohbet-site/` | Karar masası, karne ve sohbet sayfaları (Vercel) |
 
 ## Çalıştırma
@@ -85,4 +80,4 @@ python -m pytest -q
 
 - Minik'in defteri, loglar ve model ağırlıkları repoya girmez (`.gitignore`).
 - X içeriği hafızaya girer ama eğitim verisine girmez; telifli içerik eğitim verisi olmaz.
-- Kod kuralları: [`notes/kod-yazma-kurallari.md`](notes/kod-yazma-kurallari.md).
+- Fonksiyon 30, dosya 200 satırı geçmez; çıplak sayı yok, adlı sabit var; hata yutulmaz, loglanır.

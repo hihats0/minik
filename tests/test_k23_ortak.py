@@ -13,7 +13,7 @@ import k23_ortak as ortak  # noqa: E402
 
 class TestK23Ortak(unittest.TestCase):
     def test_gercek_sinav_20_soru(self):
-        sorular = ortak.sorulari_oku((KOK / "notes/turkce-testi.md").read_text(encoding="utf-8"))
+        sorular = ortak.sorulari_oku((KOK / "deneyler/turkce-testi.md").read_text(encoding="utf-8"))
         self.assertEqual([no for no, _ in sorular], list(range(1, 21)))
         self.assertTrue(sorular[0][1].startswith("Bugün hava"))
         self.assertIn("sıcak", sorular[17][1])  # cok satirli soru birlesti

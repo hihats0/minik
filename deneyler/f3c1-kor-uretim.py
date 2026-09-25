@@ -73,7 +73,7 @@ def gpu_sicaklik():
 
 
 def sicaklik_kontrol():
-    """CLAUDE.md siniri: 80 C'de durakla, 70 C'ye dusunce devam et."""
+    """Proje siniri: 80 C'de durakla, 70 C'ye dusunce devam et."""
     sicaklik = gpu_sicaklik()
     if sicaklik >= SICAKLIK_DURAKLAMA:
         print(f"[durakla] GPU {sicaklik} C, 70 C bekleniyor")

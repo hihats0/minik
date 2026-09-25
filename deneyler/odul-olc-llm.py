@@ -16,7 +16,7 @@ from ortak.sunucu import baslat, durdur, gpu_bellek_mib, hazir_bekle, ram_zirve_
 PORT = 8124
 ISTEK_ZAMAN_ASIMI_SN = 120
 ISITMA_CAGRISI = 2
-# Baglam 2048 ile sinirli, tek slot: varsayilan 262144 baglam RAM'i 4 GB'a sisiriyor (CLAUDE.md: baglam acikca sinirlanir).
+# Baglam 2048 ile sinirli, tek slot: varsayilan 262144 baglam RAM'i 4 GB'a sisiriyor (proje kurali: baglam acikca sinirlanir).
 SUNUCU_ARGUMANLARI = ["-c", "2048", "-np", "1", "--reasoning", "off"]
 GRAMER = 'root ::= "ton=" ("ovgu" | "notr" | "sert" | "hakaret") " kufur=" ("0" | "1")'
 # Few-shot orneklerin referans kimlikleri; siniflar birbirine karistirilmis (son ornek kayirmasin diye).

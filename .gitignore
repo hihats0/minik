@@ -28,3 +28,11 @@ __pycache__/
 /x-agzi/
 /site-agzi/
 reports/f3g-duman/
+
+# Gelistirme calisma dosyalari (agent talimatlari, notlar, raporlar): yerelde kalir, repoya girmez.
+/CLAUDE.md
+/AGENTS.md
+/.claude/
+/docs/
+/notes/
+/reports/

@@ -1,5 +1,5 @@
 # GPU bekcisi: GPU sicakligini 15 sn'de bir okur, 85 °C'de Minik'in GPU islerini durdurur.
-# Cagiran: ana oturum ya da minik-devam rutini, ayri surec olarak (Start-Process pwsh -File ... -WindowStyle Hidden).
+# Cagiran: elle ya da zamanlanmis gorev, ayri surec olarak (Start-Process pwsh -File ... -WindowStyle Hidden).
 
 $SINIR_DURDUR_C = 93        # Yigit 25 Eyl 22:45: egitim durag 90, bekci onun ustunde son fren (esit olursa yarisir)
 $ARALIK_SN = 15

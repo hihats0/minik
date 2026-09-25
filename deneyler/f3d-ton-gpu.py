@@ -16,7 +16,7 @@ from ortak.sunucu import LLAMA_SERVER, LOG_KLASORU, durdur, hazir_bekle, ram_zir
 
 PORT = 8125
 OLCUM_ARALIGI_SN = 5
-# Baglam acikca sinirli; tum katmanlar GPU'da, Vulkan1 = RTX 4070 (CLAUDE.md).
+# Baglam acikca sinirli; tum katmanlar GPU'da, Vulkan1 = RTX 4070.
 SUNUCU_ARGUMANLARI = ["--device", "Vulkan1", "-ngl", "999", "-c", "4096", "-np", "1", "--reasoning", "off", "--no-webui"]
 GPU_SORGUSU = ["nvidia-smi", "--query-gpu=temperature.gpu,memory.used", "--format=csv,noheader,nounits"]
 

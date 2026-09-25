@@ -10,7 +10,7 @@ from ortak import log
 
 YUVA_ADI = "gpu_sicaklik"
 SICAKLIK_SORGUSU = ["nvidia-smi", "--query-gpu=temperature.gpu", "--format=csv,noheader,nounits"]
-# Proje kurali (CLAUDE.md, Yigit 25 Eyl 22:45): 90'da durakla, 70'e inince devam. Projedeki tek kaynak bu iki sabit (sicak-a).
+# Proje kurali (Yigit 25 Eyl 22:45): 90'da durakla, 70'e inince devam. Projedeki tek kaynak bu iki sabit (sicak-a).
 DURAK_ESIGI_C = 90
 DEVAM_ESIGI_C = 70
 # Kural: sicaklik is suresince en az 30 sn'de bir okunur; kurucu daha seyrek araligi reddeder.

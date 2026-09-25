@@ -29,7 +29,7 @@ class Tanim:
     sonum: float  # her adimda dinlenmeye dogru kapanan oran
 
 
-# Kaynak: reports/2026-09-20-hormon-mimarisi.md bolum 7 (tablo vault'ta yoktu, turetildi).
+# Kaynak: reports/2026-09-20-hormon-mimarisi.md bolum 7 (tablo turetildi).
 # Davranisa bagli ucunde (kortizol, melatonin, merak) sonum bilerek cok kucuk, dusme cok buyuk:
 # beklemek hormonu indirmesin, indiren sey davranis olsun (Yigit'in karari).
 #
