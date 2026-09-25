@@ -1,0 +1,6 @@
+# Cekirdek (minik.py, yuvalar/, agiz/, ortak/) yalniz standart kutuphaneyle calisir.
+# Asagidakiler istege bagli:
+pytest        # testler (tests/conftest.py)
+playwright    # web aramasi gercek Chrome ile (agiz/web_chrome.py), X girisi (araclar/x-giris.py)
+psutil        # olcumlerde RAM zirvesi (ortak/sunucu.py ram_zirve_mb, deneyler/)
+numpy         # bazi olcumler (deneyler/)

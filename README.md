@@ -1,40 +1,88 @@
 # Minik
 
-Büyüyen bir yapay zekâ denemesi: makale ezberleyerek değil, konuşarak öğrenen; gün içinde bir
-deftere yazıp gece uykuda pekiştiren; hormon benzeri birkaç sayıyla merakını ve sabrını ayarlayan
-küçük bir sistem.
+Büyüyen bir yapay zekâ denemesi. Minik konuşarak öğrenir, gün içinde konuştuklarını bir deftere
+yazar, gece uyuyup bunları pekiştirir. Davranışını yedi "hormon" sayısı ayarlar: merakı, sabrı,
+yorgunluğu. Dil modeli Minik'in ağzıdır ve değiştirilebilir; projenin kendine ait kısmı hormon
+motoru, hafıza ve uyku.
 
-Tasarımın tamamı ve gerekçeleri vault'ta: `🏰 300-Projects/Yazilim/hayal-buyuyen-ai.md`.
-Projenin canlı hafızası: `🏰 300-Projects/Yazilim/projeler/minik.md`.
-
-## Yürüyen iskelet
-
-Yedi yuva ilk günden var, her biri en aptal hâliyle. Bir yuvanın arayüzü ancak gerçek bir
-uygulaması varken yazılır. Her yuva log tutar, çünkü çalıştığı ölçülmeden iş bitmiş sayılmaz.
-
-| Yuva | İlk hâli | Sonra takılacak |
-| --- | --- | --- |
-| Kafa | yerel Türkçe LLM, tek arayüz: soru al, metin ver | daha iyi model |
-| Kalp | refleks listesi, tek kural | küçük sınıflandırıcılar |
-| Çalgıcılar | Python | hesap motoru, Lean |
-| Defter | jsonl dosyası | vektör hafıza |
-| Uyku | gece çalışan özet script'i | adaptör eğitimi, refleks yazımı |
-| Hormonlar | json içinde dört sayı | öğrenilen ayarlar |
-| Bekçi | üç ağız kuralı | denetim modeli |
+Her şey tek bir laptopta (RTX 4070 Laptop, 8 GB VRAM) yerel çalışır, bulut harcaması yoktur.
 
 ## Durum
 
-Kod öncesi dökümantasyon aşaması. Henüz kod yok, henüz model indirilmedi.
+- **Çalışıyor:** konsol, dosya ve web sohbet ağızları; Türkçe Gemma 9B ile Kafa; yedi hormon;
+  Defter (günlük jsonl + sqlite); Uyku (SM-2 provası, budama, sabah özeti); Bekçi'nin çıkış ve
+  giriş kapıları; webden merakla araştırma.
+- **Sırada:** eski anıların konuşmaya gelmesi, gece LoRA eğitimi, X'te yaşama.
+- Açık iş listesi: [`notes/devam.md`](notes/devam.md) bölüm 3. Kararlar: [`notes/kararlar.md`](notes/kararlar.md).
 
-Çıkan belgeler:
+## Mimari
 
-- `reports/2026-09-20-kafa-modeli-adaylari.md`: 12 yerel Türkçe LLM adayı, her biri için
-  Q4_K_M boyutu, 8 GB VRAM'de güvenli bağlam hesabı (FP16 ve 8 bit KV ayrı), lisans metninden
-  okunmuş ticari kullanım ve türev ağırlık izni. Elenenler gerekçesiyle.
-- `reports/2026-09-20-arac-yigini.md`: llama.cpp / Ollama / LM Studio kıyası, Windows 11 +
-  RTX 4070 Laptop 8 GB için. Seçim: llama.cpp, Python'dan standart kütüphaneyle.
-- `notes/malzeme-listesi.md`: indirilecekler tablosu, 13,7 GB zorunlu.
-- `notes/mimari-taslak.md`: yedi yuvanın klasör ağacı, giriş noktası sözleşmeleri, ortak log
-  biçimi, Defter kayıt biçimi ve altı karar önerisi (Yiğit onayı bekliyor).
+Yedi yuva ilk günden var, her biri en sade hâliyle. Akış (`minik.py`) sırayı tutar, karar vermez;
+kararı ilgili yuva verir.
 
-Sıradaki adım: üç aday modelin indirilmesi ve f0 ölçümü (token/sn, tepe VRAM, sıcaklık).
+```mermaid
+flowchart LR
+    A[Ağız<br/>konsol, dosya, site, web sohbet, X] --> F[Akış<br/>minik.py]
+    F --> K[Kafa<br/>Gemma 9B, llama-server]
+    H[Hormonlar] -. ayarlar .-> K
+    K --> B[Bekçi<br/>çıkış kapısı]
+    B --> A
+    F --> D[Defter<br/>günlük jsonl]
+    D --> U[Uyku<br/>gece]
+    U --> S[(sqlite anılar)]
+    U -. melatonin iner .-> H
+```
+
+| Yuva | Ne yapar | Dosya |
+| --- | --- | --- |
+| Kafa | Soruyu yerel dil modeline sorar; hormonları örnekleme ayarına çevirir | `yuvalar/kafa.py` |
+| Hormonlar | Yedi sayıyı olaylara göre günceller, kalıcı tutar | `yuvalar/hormonlar.py`, `duygu.py`, `ton*.py` |
+| Bekçi | Çıkışta emniyet ve karakter kapısı; girişte "üç bağımsız kaynak" kuralı | `yuvalar/bekci.py`, `bekci_giris.py` |
+| Defter | Ham konuşmayı günlük jsonl'e yazar, son kayıtları bağlama verir | `yuvalar/defter.py`, `defter_sqlite.py` |
+| Uyku | Yorulunca günü işler: etiket, prova, budama, sabah özeti | `yuvalar/uyku.py`, `uyku_secim.py`, `uyku_tetik.py` |
+| Kalp | Refleks önerir (şimdilik gölge modda, yalnız loglanır) | `yuvalar/kalp.py` |
+| Çalgıcılar | Hesabı Python yapar, iki yoldan doğrular | `yuvalar/calgicilar.py`, `calgici_tani.py` |
+
+Ayrıntılı tasarım ve gerekçeler: [`docs/superpowers/specs/2026-09-21-minik-mimari-design.md`](docs/superpowers/specs/2026-09-21-minik-mimari-design.md).
+
+## Klasörler
+
+| Klasör | İçerik |
+| --- | --- |
+| `minik.py` | Giriş noktası, sohbet döngüsü |
+| `yuvalar/` | Yedi yuva |
+| `agiz/` | Platform bağımsız ağızlar (konsol, dosya, site, web sohbet, web arama, X) |
+| `ortak/` | Ayarlar, log, bağlam bütçesi, sunucu ve GPU sıcaklık yardımcıları |
+| `araclar/` | İşletme araçları: GPU bekçisi, karne, X girişi, model indirme |
+| `deneyler/` | Tek seferlik ölçüm betikleri ve sonuç verileri (sonuçlar `reports/` içinde) |
+| `tests/` | Birim testleri |
+| `notes/` | Canlı notlar: iş kuyruğu, kararlar, kurallar, öğrenilenler |
+| `reports/` | Ölçüm ve araştırma raporları |
+| `site/`, `karne-site/`, `sohbet-site/` | Karar masası, karne ve sohbet sayfaları (Vercel) |
+
+## Çalıştırma
+
+Çekirdek yalnız Python standart kütüphanesiyle çalışır (Python 3.13). Kafa için
+[llama.cpp](https://github.com/ggml-org/llama.cpp) `llama-server` ve bir GGUF model gerekir.
+
+```powershell
+# Modeller varsayılan olarak C:\Projelerim\modeller altında aranır; başka yerdeyse:
+$env:MINIK_MODEL_KLASORU = "D:\modeller"
+
+# Konsoldan konuş (llama-server 127.0.0.1:8080'de açık olmalı)
+python minik.py
+
+# Web sohbet: Kafa'yı GPU'da kendisi açar, 60 dk sessizlikte kapatır
+python -m agiz.web_sohbet
+
+# Testler
+python -m pytest -q
+```
+
+İsteğe bağlı paketler `requirements.txt` içinde (testler, web arama, ölçümler için).
+
+## Kurallar
+
+- Minik'in defteri, loglar ve model ağırlıkları repoya girmez (`.gitignore`).
+- X içeriği hafızaya girer ama eğitim verisine girmez; telifli içerik eğitim verisi olmaz.
+- Kod kuralları: [`notes/kod-yazma-kurallari.md`](notes/kod-yazma-kurallari.md).

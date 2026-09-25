@@ -33,7 +33,7 @@ class Tanim:
 # Davranisa bagli ucunde (kortizol, melatonin, merak) sonum bilerek cok kucuk, dusme cok buyuk:
 # beklemek hormonu indirmesin, indiren sey davranis olsun (Yigit'in karari).
 #
-# K19 (2026-09-21, notes/kararlar-anlatimli.md Soru 4): "hicbir sey yapmamanin bedeli" var olan
+# K19 (2026-09-21, notes/kararlar-arsiv.md Soru 4): "hicbir sey yapmamanin bedeli" var olan
 # hormonlara baglandi, sekizinci satir acilmadi. Uc yoksunluktan biri (hicbir sey ogrenilmeyen
 # gun) zaten var olan davranisin sonucu: "ogrendi" gelmezse merak zaten inmez, birikir, yeni kod
 # gerekmedi. Diger ikisi asagida dusuren olarak eklendi. serotonin dusme=15 (yukselmeyle simetrik,
