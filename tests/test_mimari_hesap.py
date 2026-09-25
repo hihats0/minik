@@ -62,6 +62,7 @@ class TopluTest(unittest.TestCase):
     def test_ayni_ad_sayilir(self):
         fikirler = [fikir(1, 1, 1, 16, "Kum"), fikir(2, 1, 1, 16, "kum "), fikir(3, 1, 1, 16, "Tas")]
         self.assertIn("ayni ad tekrari 1", mh.ozet(fikirler))
+        self.assertIn("ayni mekanizma 2", mh.ozet(fikirler))  # uc satirin mekanizmasi da "m"
 
 
 if __name__ == "__main__":

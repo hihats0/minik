@@ -34,6 +34,7 @@ OLCEK_PARAMETRE = 9e13  # hedef: beyin kadar sinaps
 KONUSMA_TOKEN_SN = 10  # sohbet hizi hedefi (tahmin: ~5 kelime/sn, ~2 token/kelime)
 ALANLAR = ("id", "aile", "ad", "mekanizma", "aktif_oran", "okunan_oran", "bit", "ilke", "curutme")
 EN_AZ_BIT, EN_COK_BIT = 1.0, 32.0
+MEKANIZMA_KELIME = 8  # tekrar kontrolu: mekanizmanin bu kadar ilk kelimesi ayniysa ayni fikir sayilir
 
 
 def hesapla(parametre: float, aktif_oran: float, token: float, bit: float) -> dict:
@@ -132,10 +133,17 @@ def md_tablo(sirali: list, ilk: int) -> str:
     return "\n".join(satirlar)
 
 
+def tekrar_sayisi(anahtarlar) -> int:
+    sayac = Counter(anahtarlar)
+    return sum(sayi - 1 for sayi in sayac.values() if sayi > 1)
+
+
 def ozet(fikirler: list) -> str:
-    adlar = Counter(f["ad"].strip().lower() for f in fikirler)
-    tekrar = sum(sayi - 1 for sayi in adlar.values() if sayi > 1)
-    return f"gecerli fikir {len(fikirler)}, ayni ad tekrari {tekrar} (%{100 * tekrar / max(len(fikirler), 1):.1f})"
+    """Ad tekrari ve mekanizma tekrari: ilk ajan ayni fikri ad ekiyle 5 kez yazdi, ad testi yakalamadi."""
+    ad = tekrar_sayisi(f["ad"].strip().lower() for f in fikirler)
+    govde = tekrar_sayisi(" ".join(f["mekanizma"].lower().split()[:MEKANIZMA_KELIME]) for f in fikirler)
+    return (f"gecerli fikir {len(fikirler)}, ayni ad tekrari {ad} (%{100 * ad / max(len(fikirler), 1):.1f}), "
+            f"ilk {MEKANIZMA_KELIME} kelimesi ayni mekanizma {govde}")
 
 
 def yaz(baslik: str, tablo: dict):
