@@ -10,19 +10,21 @@ from ortak import log
 
 YUVA_ADI = "gpu_sicaklik"
 SICAKLIK_SORGUSU = ["nvidia-smi", "--query-gpu=temperature.gpu", "--format=csv,noheader,nounits"]
-# Proje kurali (CLAUDE.md): 80'de durakla, 70'e inince devam. Projedeki tek kaynak bu iki sabit (sicak-a).
-DURAK_ESIGI_C = 80
+# Proje kurali (CLAUDE.md, Yigit 25 Eyl 22:45): 90'da durakla, 70'e inince devam. Projedeki tek kaynak bu iki sabit (sicak-a).
+DURAK_ESIGI_C = 90
 DEVAM_ESIGI_C = 70
 # Kural: sicaklik is suresince en az 30 sn'de bir okunur; kurucu daha seyrek araligi reddeder.
 EN_UZUN_OKUMA_ARALIGI_SN = 30
 # Bilerek daha siki: istekten once bu sicakligin ustundeyse DEVAM_ESIGI_C'ye inene kadar beklenir: laptop tek istekte ~12 C isiniyor
 # (f3-g 23 Eyl olcumu), 76-82 C'de baslayan istekler 83'u gecti. Kart 80 -> 70'e 10-15 sn'de iniyor.
 # 24 Eyl: istekler 68-78'de baslayip 81-83'e cikiyordu, bekci aracin 10 sn okuma arasinda 85'i gordu; 65'e indi.
-ISTEK_ONCESI_ESIK_C = 65
-# Koşan istek durdurulamaz; 80'i gecerse bekci durak bayragini kaldirir, 84'te sunucuyu keser.
+# 26 Eyl: kesme 91'e cikinca 91 - 12 = 79, 2 derece payla 77 (istek oncesi bekleme kisalir).
+ISTEK_ONCESI_ESIK_C = 77
+# Koşan istek durdurulamaz; 90'i gecerse bekci durak bayragini kaldirir, 91'de sunucuyu keser.
 # Kesme guvenlik agidir: araclar/gpu-bekci.ps1 85'te oldurur, arac bir derece once temiz kessin; 84'e kadar kisa asim Yigit onayli (22 Eyl).
 # 85 denendi: 24 Eyl 00:15'te bekci aractan once davrandi (aracin son okumasi 83'tu).
-KES_C = 84
+# 26 Eyl: bekci 93'e cikti (Yigit); okumalar arasi 2 derece sicrama goruldu, 91 pay birakir.
+KES_C = 91
 # Gorev: en az 10 sn'de bir okuma. k26-c'de tek istek ~28 sn, 30 sn aralik istegi kacirabiliyordu.
 # 24 Eyl: 10 -> 5 sn, nvidia-smi ucuz, bekciden once gorsun.
 OKUMA_ARALIGI_SN = 5

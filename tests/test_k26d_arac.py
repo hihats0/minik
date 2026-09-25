@@ -120,8 +120,8 @@ class TestK26dArac(unittest.TestCase):
         self.assertTrue(surecler[0].kapali)
 
     def test_kesilen_istek_soguyunca_yeni_sunucuyla_tekrar_denenir(self):
-        # Yalniz ilk istek surerken 86 C; sonra hep serin.
-        sonuc, satirlar, surecler = _kos(lambda: 86 if DURUM["surer"] and DURUM["istek"] == 1 else 60,
+        # Yalniz ilk istek surerken 92 C; sonra hep serin.
+        sonuc, satirlar, surecler = _kos(lambda: 92 if DURUM["surer"] and DURUM["istek"] == 1 else 60,
                                      KESMEDE_KAPANMA_SN)
         olcumler = [s for s in satirlar if "durum" in s]
         self.assertEqual(sonuc, "tamam")
@@ -131,14 +131,14 @@ class TestK26dArac(unittest.TestCase):
         self.assertTrue(all(s.kapali for s in surecler))
 
     def test_ayni_istek_iki_kez_kesilirse_atlanir_toplam_4te_biter(self):
-        sonuc, satirlar, surecler = _kos(lambda: 86 if DURUM["surer"] else 60, KESMEDE_KAPANMA_SN)
+        sonuc, satirlar, surecler = _kos(lambda: 92 if DURUM["surer"] else 60, KESMEDE_KAPANMA_SN)
         olcumler = [s for s in satirlar if "durum" in s]
         self.assertEqual(sonuc, k26d.SICAK_DURUM)
         self.assertEqual([s["olcum"] for s in olcumler],
                          [k26d.SICAK_TEKRAR, k26d.SICAK_ATLANDI] * 2)
         self.assertEqual(olcumler[0]["soru"], olcumler[1]["soru"])
         self.assertNotEqual(olcumler[1]["soru"], olcumler[2]["soru"])
-        self.assertEqual(satirlar[-1]["en_yuksek_c"], 86)
+        self.assertEqual(satirlar[-1]["en_yuksek_c"], 92)
         self.assertEqual(len(surecler), 4)
         self.assertTrue(all(s.kapali for s in surecler))
 
@@ -156,8 +156,8 @@ class TestSerinle(unittest.TestCase):
         self.assertEqual(bekci.en_yuksek_c, 81)
         self.assertFalse(bekci.kesildi)
 
-    def test_75te_de_70e_inene_kadar_bekler(self):
-        okumalar = iter([75, 73] + [69] * 1000)
+    def test_79da_da_70e_inene_kadar_bekler(self):
+        okumalar = iter([79, 78] + [69] * 1000)
         bekci = gpu_sicaklik.SicaklikBekcisi(kes=lambda: None, okuyucu=lambda: next(okumalar),
                                              aralik_sn=SAHTE_ARALIK_SN)
         with mock.patch.object(gpu_sicaklik, "SOGUMA_YOKLAMA_SN", SAHTE_ARALIK_SN):
@@ -166,8 +166,8 @@ class TestSerinle(unittest.TestCase):
             bekci.bitir()
         self.assertLessEqual(bekci.son_c, gpu_sicaklik.DEVAM_ESIGI_C)
 
-    def test_83te_kesmez_84te_keser(self):
-        for derece, kesilir in ((83, False), (84, True)):
+    def test_90da_kesmez_91de_keser(self):
+        for derece, kesilir in ((90, False), (91, True)):
             kesilen = []
             bekci = gpu_sicaklik.SicaklikBekcisi(kes=lambda: kesilen.append(1), okuyucu=lambda: derece,
                                                  aralik_sn=SAHTE_ARALIK_SN).baslat()

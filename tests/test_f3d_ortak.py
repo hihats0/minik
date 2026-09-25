@@ -16,7 +16,7 @@ class F3dOrtakTest(unittest.TestCase):
         self.assertEqual(p95([5]), 5)
 
     def test_histerezis(self):
-        self.assertTrue(sicaklik_durumu(80, False))
+        self.assertTrue(sicaklik_durumu(90, False))
         self.assertTrue(sicaklik_durumu(75, True))
         self.assertFalse(sicaklik_durumu(75, False))
         self.assertFalse(sicaklik_durumu(70, True))

@@ -1,4 +1,4 @@
-"""sicak-a testi: SicaklikBekcisi 80 C'de duraklar, 70 altina inince devam eder, beklerken loglar.
+"""sicak-a testi: SicaklikBekcisi 90 C'de duraklar, 70 altina inince devam eder, beklerken loglar.
 Cagiran: python -m unittest / pytest. Gercek bekleme yok, uyku sahte."""
 
 import unittest
@@ -6,7 +6,7 @@ from unittest import mock
 
 from ortak import gpu_sicaklik
 
-SAHTE_DIZI = [75, 81, 78, 72, 69]
+SAHTE_DIZI = [75, 90, 78, 72, 69]
 
 
 def bekci_kur(dizi):
@@ -19,10 +19,10 @@ def bekci_kur(dizi):
 
 
 class TestDurakDevam(unittest.TestCase):
-    def test_80de_duraklar_70_altinda_devam_eder(self):
+    def test_90da_duraklar_70_altinda_devam_eder(self):
         with mock.patch.object(gpu_sicaklik.log, "yaz") as yaz:
             bekci, uykular = bekci_kur(SAHTE_DIZI)
-            bekci._adim()  # istek surerken arka plan 81 gorur
+            bekci._adim()  # istek surerken arka plan 90 gorur
             self.assertTrue(bekci.durak_gerek)
             bekci.serinle()
         self.assertEqual(bekci.son_c, 69)
@@ -43,7 +43,7 @@ class TestDurakDevam(unittest.TestCase):
         with self.assertRaises(ValueError):
             gpu_sicaklik.SicaklikBekcisi(kes=lambda: None, okuyucu=lambda: 50, aralik_sn=31)
 
-    def test_80_gorulmediyse_ve_serinse_beklemez(self):
+    def test_90_gorulmediyse_ve_serinse_beklemez(self):
         bekci, uykular = bekci_kur([60, 64])
         with mock.patch.object(gpu_sicaklik.log, "yaz"):
             bekci._adim()
@@ -51,7 +51,7 @@ class TestDurakDevam(unittest.TestCase):
         self.assertEqual(uykular, [])
 
     def test_esikler(self):
-        self.assertEqual((gpu_sicaklik.DURAK_ESIGI_C, gpu_sicaklik.DEVAM_ESIGI_C), (80, 70))
+        self.assertEqual((gpu_sicaklik.DURAK_ESIGI_C, gpu_sicaklik.DEVAM_ESIGI_C), (90, 70))
 
 
 if __name__ == "__main__":

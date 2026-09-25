@@ -19,9 +19,6 @@ __pycache__/
 /araclar/sunucu-loglari/
 
 /notes/karar-cevaplari.json
-# D4 cocuk deneyi: veri ve agirliklar repoya girmez.
-/cocuk/veri/
-/cocuk/agirlik/
 
 # Oturum kilidi: canli oturum varken zamanlanmis kosu baslamasin.
 /.kilit
