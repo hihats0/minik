@@ -37,6 +37,12 @@ KOLLAR = {  # ad: (az_egit ek bayraklari, az_olc ek bayraklari); kosulacaklar ko
     "a-agac": (["--tur", "seyrek", "--ayar", '{"yonlendirici": "agac"}'], []),
     "a-hash": (["--tur", "seyrek", "--ayar", '{"yonlendirici": "hash"}'], []),
     "a-yogun": (["--tur", "seyrek", "--ayar", '{"yonlendirici": "yogun"}'], []),
+    "t5m": (["--ayar", '{"boyut": 192, "katman": 4, "kafa": 4, "ara_boyut": 512}'], []),
+    "t15m": (["--ayar", '{"boyut": 384, "katman": 6, "kafa": 6, "ara_boyut": 1024}'], []),
+    "a5m": (["--tur", "seyrek", "--ayar",
+             '{"yonlendirici": "yogun", "boyut": 112, "bloom": 8192, "yaprak_ara": 8}'], []),
+    "a15m": (["--tur", "seyrek", "--ayar",
+              '{"yonlendirici": "yogun", "boyut": 192, "bloom": 12288, "yaprak_ara": 32}'], []),
 }
 TOKEN_MILYON = "50"
 
