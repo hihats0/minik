@@ -23,6 +23,7 @@ VIKIPEDI_PAYI = 0.25  # unutmaya karsi capa (D4 gece dersi karisimindaki Vikiped
 LR = 3e-4
 URETIM_TOKEN = 40
 SICAKLIK, TOHUM = 0.8, 1
+SICAKLIK_ARALIGI = 25  # adim; durak olmadan GPU 91 C'ye cikti (25 Eyl)
 SAHNE_NOTU = re.compile(r"\s*\([^)]*\)")  # Gemma bazen "(Gulerek)" gibi sahne notu yaziyor
 ACILISLAR = ["A: Merhaba, adın ne?", "A: Bugün ne yaptın?", "A: En sevdiğin hayvan hangisi?",
              "A: Karnım acıktı.", "A: Yağmur yağıyor, dışarı çıkalım mı?", "A: Okulda ne öğrendin?",
@@ -58,6 +59,8 @@ def ince_ayar(model, sohbet, cihaz) -> dict:
         torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
         opt.step()
         opt.zero_grad(set_to_none=True)
+        if cihaz.type == "cuda" and adim % SICAKLIK_ARALIGI == 0:
+            ea.soguyana_kadar_bekle(lambda satir: None)  # 80 C'de durakla, 70'te devam
     return {"adim": ADIM, "son_kayip": round(kayip.item(), 4), "sure_sn": round(time.time() - baslangic)}
 
 

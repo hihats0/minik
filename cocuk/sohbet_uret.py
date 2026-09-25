@@ -30,6 +30,8 @@ EN_COK_TOKEN = 2048
 SICAKLIK = 0.9  # cesitlilik; tekrar suzgeci ayiklar
 ZAMAN_ASIMI_SN = 300
 ARDISIK_HATA = 3
+ISTEK_ONCESI_C = 65  # 25 Eyl 02:28: durak yokken 91 C, bekci kesti; f3-g'de 65 C istek oncesi esikle 480 istek kesilmedi
+SOGUMA_ARALIK_SN = 5
 CIKTI = ea.VERI_DIZINI / "sohbet.jsonl"
 KONUSMACI = re.compile(r"^\s*([AB])\s*:\s*(.+)$")
 EN_AZ_REPLIK, EN_COK_REPLIK, EN_COK_KELIME = 4, 12, 20
@@ -95,8 +97,15 @@ def gorulen_basliklar() -> set:
     return {json.loads(s)["replikler"][0] for s in CIKTI.read_text("utf-8").splitlines() if s.strip()}
 
 
+def serinle():
+    """Her istekten once GPU ISTEK_ONCESI_C'ye inene kadar bekler (tek istek ~12 C isitiyor)."""
+    while (sicaklik := ea.gpu_olc()[0]) is not None and sicaklik > ISTEK_ONCESI_C:
+        time.sleep(SOGUMA_ARALIK_SN)
+
+
 def guvenli_istek(konu: str, kisi: str) -> str:
     """Tek istegin ag hatasi uretimi durdurmasin: loglanir, bos metin doner."""
+    serinle()
     try:
         return istek(konu, kisi)
     except OSError as hata:
