@@ -92,7 +92,10 @@ def kayip_hesapla(model, x, y):
 
 @torch.no_grad()
 def dogrulama_kaybi(model, veri, baglam: int, batch: int, pencere_sayisi: int, cihaz, amp: bool):
-    """Dogrulama verisinde esit aralikli sabit pencereler; her cagrida ayni pencereler."""
+    """Dogrulama verisinde esit aralikli sabit pencereler; her cagrida ayni pencereler.
+    Onceki kipe doner: hep train()'e donmek az_olc'un sonraki olcumlerini egitim kipinde yaptiriyordu
+    (K41-B: agac yumusak olculdu, BPC 1,606 yerine sert 2,3)."""
+    onceki_kip = model.training
     model.eval()
     adim = (len(veri) - baglam - 1) // pencere_sayisi
     baslar = [i * adim for i in range(pencere_sayisi)]
@@ -102,5 +105,5 @@ def dogrulama_kaybi(model, veri, baglam: int, batch: int, pencere_sayisi: int, c
         parca = torch.from_numpy(parca).to(cihaz)
         with torch.autocast(cihaz.type, dtype=torch.bfloat16, enabled=amp):
             toplam += kayip_hesapla(model, parca[:, :-1], parca[:, 1:]).item() * len(parca)
-    model.train()
+    model.train(onceki_kip)
     return toplam / pencere_sayisi
