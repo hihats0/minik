@@ -229,6 +229,15 @@ class TestAzDeney(unittest.TestCase):
         merakli.backward()
         self.assertIsNotNone(model.gomme.weight.grad)
 
+    def test_mimari_hesap(self):
+        import mimari_hesap
+        h = mimari_hesap.hesapla(30.68e6, 1.0, 200e6, 16)
+        self.assertAlmostEqual(h["egitim FLOP (6 x aktif x token)"], 6 * 30.68e6 * 200e6)
+        self.assertAlmostEqual(h["laptop egitim saati (aktif hiz)"], 0.82, places=2)  # D4: 50 dk aktif
+        seyrek = mimari_hesap.hesapla(30.68e6, 0.1, 200e6, 16)
+        self.assertAlmostEqual(seyrek["token basina islem (cikarim)"], h["token basina islem (cikarim)"] / 10)
+        self.assertEqual(seyrek["calisma bellegi GB (agirlik)"], h["calisma bellegi GB (agirlik)"])
+
 
 class _SozlukSP:
     """bpc testi icin: her harf bir id (500'den kucuk)."""
