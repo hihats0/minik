@@ -25,7 +25,7 @@ def bayraklari_oku(argv=None):
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--ad", required=True)
     p.add_argument("--tohum", type=int, required=True)
-    p.add_argument("--tur", choices=("transformer", "minik"), default="transformer")
+    p.add_argument("--tur", choices=("transformer", "minik", "seyrek"), default="transformer")
     p.add_argument("--optimizer", choices=("adamw", "muon"), default="adamw")
     p.add_argument("--sade-oran", type=float, default=0.0, help="batch'in sade.bin'den gelen payi")
     p.add_argument("--token-milyon", type=float, default=50.0)

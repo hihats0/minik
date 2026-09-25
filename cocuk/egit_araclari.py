@@ -13,10 +13,12 @@ import torch
 import torch.nn.functional as F
 
 from cocuk.model_minik import MinikCocuk
+from cocuk.model_seyrek import SeyrekCocuk
 from cocuk.model_ssm import SSMCocuk
 from cocuk.model_transformer import TransformerCocuk
 
-MODELLER = {"transformer": TransformerCocuk, "ssm": SSMCocuk, "minik": MinikCocuk}
+MODELLER = {"transformer": TransformerCocuk, "ssm": SSMCocuk, "minik": MinikCocuk,
+            "seyrek": SeyrekCocuk}
 COCUK_DIZINI = Path(__file__).resolve().parent
 VERI_DIZINI = COCUK_DIZINI / "veri"
 AGIRLIK_DIZINI = COCUK_DIZINI / "agirlik"
