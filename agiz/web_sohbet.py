@@ -1,6 +1,7 @@
 """Web sohbet agzi: telefondaki siteden gelen mesaji minik.calistir'a verir, cevabi ve hormonlari JSON dondurur.
 Cagiran: elle `python -m agiz.web_sohbet` (127.0.0.1:8090); testler sunucu_kur ile port 0'da."""
 
+import argparse
 import json
 import os
 import queue
@@ -150,12 +151,15 @@ def _bosta_izle(yonetici):
 
 def main():
     from agiz.web_sohbet_kafa import KafaYonetici
+    ayristirici = argparse.ArgumentParser()
+    ayristirici.add_argument("--port", type=int, default=PORT)  # sabah demosu 8095'te ikinci kopya acar
+    port = ayristirici.parse_args().port
     yonetici = KafaYonetici()
     hormon = hormonlar.Hormonlar(defter.DEFTER_KLASORU / HORMON_DOSYA_ADI)
-    sunucu = sunucu_kur(anahtar_oku(), yonetici.dusun, lambda: yonetici.durum, hormon)
+    sunucu = sunucu_kur(anahtar_oku(), yonetici.dusun, lambda: yonetici.durum, hormon, port=port)
     threading.Thread(target=_bosta_izle, args=(yonetici,), daemon=True).start()
-    log.yaz(YUVA_ADI, "basla", 0, "ok", {"adres": f"{HOST}:{PORT}"})
-    print(f"Web sohbet {HOST}:{PORT} dinliyor. Anahtar dosyasi: {ANAHTAR_YOLU}")
+    log.yaz(YUVA_ADI, "basla", 0, "ok", {"adres": f"{HOST}:{port}"})
+    print(f"Web sohbet {HOST}:{port} dinliyor. Anahtar dosyasi: {ANAHTAR_YOLU}")
     try:
         sunucu.serve_forever()
     finally:

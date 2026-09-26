@@ -6,7 +6,7 @@ import os
 from pathlib import Path
 
 KAFA_HOST = "127.0.0.1"
-KAFA_PORT = 8080
+KAFA_PORT = int(os.environ.get("MINIK_KAFA_PORT", "8080"))  # sabah demosu 8081 verir
 KAFA_UC = f"http://{KAFA_HOST}:{KAFA_PORT}/v1/chat/completions"
 
 # Model agirliklari repoya girmez; baska makinede MINIK_MODEL_KLASORU ile yeri verilir.
@@ -43,14 +43,13 @@ GEMMA_DUSUNCE_PAYI_TOKEN = 768
 KAFA_DUSUNCE_PAYI_TOKEN = GEMMA_DUSUNCE_PAYI_TOKEN
 
 # Spec 4.2: gunluk jsonl defter/ altinda tutulur, .gitignore'da (Minik'in defteri repoya girmez).
-DEFTER_KLASORU = Path(__file__).resolve().parent.parent / "defter"
+DEFTER_KLASORU = Path(os.environ.get("MINIK_DEFTER_KLASORU", Path(__file__).resolve().parent.parent / "defter"))
 # Baglama giren son kayit sayisi: olculmedi (f2 kapattigi varsayim V14 "ilk sayim"), 10 tur
 # (~20 mesaj) hem "dunku konuyu hatirlamaya" yeter hem KAFA_BAGLAM'i (4096) zorlamaz.
 DEFTER_SON_N = 10
 
-# oku() DEFTER_SON_N'i bugunku dosya karsilamazsa gun dosyalarinda geriye gider; en cok kac
-# gun dosyasi acilacagini sinirlar (180 gun sonra her cagriyi 180 dosya acar hale getirmemek
-# icin). Tahmin: bir hafta, "dunku konu" olcutunu rahatca kapsar, gunde birkac kayit varsayimiyla.
+# oku() son N'i bulamazsa gun dosyalarinda en cok bu kadar geriye gider (180 gunde her cagri 180 dosya
+# acmasin). Tahmin: bir hafta, "dunku konu" olcutunu rahatca kapsar, gunde birkac kayit varsayimiyla.
 DEFTER_GERI_GUN_SINIRI = 7
 
 # K23=C, K20=a: Bekci'nin cikisi iki kapi. KARAKTER kapisi (Minik'in uslubu) siradan kufuru
@@ -182,7 +181,7 @@ UYKU_HATIRLAMA_ORTUSME = 0.3
 UYKU_PROVA_KALIBI = "Daha once sana su soruldu, ne cevap vermistin? Soru: {soru}"
 # Gomme: yalniz CPU (llama-server --device none -ngl 0 --embedding -c 512), e5-small.
 # Port: deneyler/f4b-unutma-olc.py gommeyi 8093te baslatir; 8080 Kafa, 8090 web sohbet.
-GOMME_PORT = 8093
+GOMME_PORT = int(os.environ.get("MINIK_GOMME_PORT", "8093"))  # sahte demo ayri port verir
 GOMME_UC = f"http://127.0.0.1:{GOMME_PORT}/v1/embeddings"
 GOMME_EN_YAKIN_K = 3
 GOMME_MODEL_YOLU = MODEL_KLASORU / "e5-small-alt-q8_0.gguf"  # ilk e5 donusumu bozuktu (hafiza-malzemesi)
@@ -199,4 +198,3 @@ UYKU_UST_ESIK = 75.0
 UYKU_ALT_ESIK = 60.0
 # Kalici hormon durumu ve gece sayaci (yas): defter/hormon.json (spec 2.4 gunduz, adim 7).
 HORMON_DOSYA_ADI = "hormon.json"
-
