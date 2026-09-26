@@ -68,9 +68,12 @@ def _uyku_gerekirse(tetik, hormon_durumu, gece, an):
 def _gecmisten_baglam_yukle():
     """Defter'deki son kayitlari Kafa'nin baglamina cevirir: f1'deki 'baglam sinirsiz
     buyuyor' acigini kapatir (f2, V14). Her kayit bir soru + bir cevap mesaji olur. Eski cevaplar
-    duz metne indirilir: emojili gecmis Kafa'ya ornek olup yeni cevaba emoji tasiyordu (emoji-a)."""
+    duz metne indirilir: emojili gecmis Kafa'ya ornek olup yeni cevaba emoji tasiyordu (emoji-a).
+    Bos cevapli kayit atlanir: Gemma'yi <think>'i kapatmamaya itiyordu (26 Eyl)."""
     baglam = []
     for kayit in defter.oku():
+        if not kayit.get("cevap", "").strip():
+            continue
         baglam.append({"role": "user", "content": kayit.get("soru", "")})
         baglam.append({"role": "assistant", "content": duz_metin.temizle(kayit.get("cevap", ""))})
     return baglam

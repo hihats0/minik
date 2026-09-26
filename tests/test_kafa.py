@@ -63,6 +63,14 @@ def _sahte_urlopen_kur(yakalanan, cevap_json=SAHTE_CEVAP):
 
 class TestKafa(unittest.TestCase):
 
+    def test_bos_cevapta_bir_kez_daha_sorar(self):
+        """Dusunce ayiklaninca cevap bos kalirsa (kapanmamis <think>) Kafa bir kez daha dener."""
+        bos = {**SAHTE_CEVAP, "choices": [{"message": {"content": "<think>kapanmadi"}}]}
+        yanitlar = [SahteYanit(bos), SahteYanit(SAHTE_CEVAP)]
+        with patch("yuvalar.kafa.urllib.request.urlopen", side_effect=lambda *a, **k: yanitlar.pop(0)):
+            cevap, _ = kafa.dusun("selam", [])
+        self.assertEqual(cevap, "merhaba")
+
     def test_istek_alaninda_soru_var(self):
         """Giden istegin son mesaji sorulan soru olmali."""
         yakalanan = {}

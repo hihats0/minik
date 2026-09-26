@@ -168,6 +168,16 @@ class TestAkis(unittest.TestCase):
             {"role": "assistant", "content": "dunku cevap"},
         ])
 
+    def test_bos_cevapli_kayit_baglama_girmez(self):
+        """26 Eyl: bos cevapli turlar gecmiste kalinca Gemma <think>'i kapatmayi birakiyordu
+        (temiz gecmiste 5/6 kapandi, bos cevaplida 1/5)."""
+        minik.defter.yaz({"soru": "bos kalan", "cevap": "", "platform": minik.DIS_ID})
+        minik.defter.yaz({"soru": "dunku soru", "cevap": "dunku cevap", "platform": minik.DIS_ID})
+        self.assertEqual(minik._gecmisten_baglam_yukle(), [
+            {"role": "user", "content": "dunku soru"},
+            {"role": "assistant", "content": "dunku cevap"},
+        ])
+
 
 if __name__ == "__main__":
     unittest.main()

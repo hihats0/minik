@@ -32,6 +32,8 @@ PARCA_AYIRICI = "\n\n"
 # Onceki turun modu: cift esik hafiza ister; tek surecli akis tek Kafa kullandigi icin modulde tutulur.
 ONCEKI_MOD = MOD_UYANIK
 # emoji-a: kural yalniz en bastaydi; duygu cumlesi ve uzun gecmisten sonra model unutuyordu, sonda bir daha.
+# 26 Eyl: Gemma bazen <think>'i kapatmadan bitiriyor, cevap bos kaliyor; ikinci ornek cogu kez temiz.
+BOS_CEVAP_DENEME_SAYISI = 2
 BICIM_HATIRLATMA = "Duz metin yaz: emoji, yildiz, madde isareti ve uzun tire kullanma."
 
 
@@ -50,7 +52,7 @@ def dusun(soru, baglam=None, hormon_degerleri=None):
     ayarlar = {**ayarlar, "talimat": MELATONIN_YORGUN_TALIMATI if mod == MOD_YORGUN else None,
                "karakter": karakter_ozeti}
     try:
-        cevap, token_sayisi, timings = _sunucuya_sor(govde)
+        cevap, token_sayisi, timings = _bos_ise_tekrar_sor(govde)
     except (urllib.error.URLError, OSError) as hata:
         log.yaz(YUVA_ADI, "dusun", log.gecen_ms(basladi), "hata",
                 {"hata": _hata_metni(hata), "model": KAFA_MODEL_YOLU, "mod": mod, "ayarlar": ayarlar})
@@ -60,6 +62,16 @@ def dusun(soru, baglam=None, hormon_degerleri=None):
             {"token": token_sayisi, "is_sn": round(is_sn, 3), "baglam": KAFA_BAGLAM,
              "model": KAFA_MODEL_YOLU, "mod": mod, "ayarlar": ayarlar})
     return cevap, is_sn
+
+
+def _bos_ise_tekrar_sor(govde):
+    """Cevap bos gelirse (dusunce ayiklaninca hicbir sey kalmadiysa) ayni istegi bir kez daha yollar.
+    Son denemenin sonucunu dondurur; bos kalan deneme dusunce_ayikla'da zaten 'hata' diye loglandi."""
+    for _ in range(BOS_CEVAP_DENEME_SAYISI):
+        cevap, token_sayisi, timings = _sunucuya_sor(govde)
+        if cevap:
+            break
+    return cevap, token_sayisi, timings
 
 
 def _hata_metni(hata):
@@ -175,7 +187,6 @@ def _sunucuya_sor(govde):
     )
     with urllib.request.urlopen(istek, timeout=KAFA_ZAMAN_ASIMI_SN) as yanit:
         yanit_json = json.loads(yanit.read().decode("utf-8"))
-    secim = yanit_json["choices"][0]
-    cevap = dusunce_ayikla(secim["message"]["content"], dogal_bitti=secim.get("finish_reason") == "stop")
+    cevap = dusunce_ayikla(yanit_json["choices"][0]["message"]["content"])
     token_sayisi = yanit_json.get("usage", {}).get("completion_tokens", 0)
     return cevap, token_sayisi, yanit_json.get("timings")
