@@ -185,6 +185,7 @@ UYKU_PROVA_KALIBI = "Daha once sana su soruldu, ne cevap vermistin? Soru: {soru}
 GOMME_PORT = 8093
 GOMME_UC = f"http://127.0.0.1:{GOMME_PORT}/v1/embeddings"
 GOMME_EN_YAKIN_K = 3
+GOMME_MODEL_YOLU = MODEL_KLASORU / "e5-small-alt-q8_0.gguf"  # ilk e5 donusumu bozuktu (hafiza-malzemesi)
 
 # f4-c Uyku tetigi (spec 2.4, 3.6.1 Degisiklik 1, A7): uyku_basinci = melatonin + saat_egilimi,
 # saat_egilimi = C_GENLIK * cos(2*pi*(saat - C_TEPE_SAAT)/24) (Borbely surec C). Karar

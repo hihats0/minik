@@ -14,7 +14,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from agiz import web_sohbet  # noqa: E402
 from agiz.web_sohbet_kafa import HAZIR, KAPALI, KafaYonetici  # noqa: E402
-from yuvalar import defter, hormonlar  # noqa: E402
+from unittest import mock  # noqa: E402
+
+from yuvalar import defter, hatirlama, hormonlar  # noqa: E402
 
 ANAHTAR = "gizli-test"
 YOKLAMA_SN = 0.01  # serve_forever varsayilani 0.5: her tearDown shutdown icin yarim saniye bekliyordu
@@ -25,6 +27,10 @@ class TestWebSohbet(unittest.TestCase):
         self._gecici = tempfile.TemporaryDirectory()
         self._eski = defter.DEFTER_KLASORU
         defter.DEFTER_KLASORU = Path(self._gecici.name)
+        # Akis is parcacigi cevaptan sonra hatirlama.sqlite'a yazarken tearDown klasoru silmeye
+        # calisiyordu (Windows kilidi); bu testler hatirlamayi olcmez, test_hatirlama olcer.
+        self._hatirla_yamasi = mock.patch.object(hatirlama, "kaydet", lambda *a, **k: False)
+        self._hatirla_yamasi.start()
         self.sunucu = web_sohbet.sunucu_kur(
             ANAHTAR, lambda s, b, h=None: ("merhaba " + s, 1.0), lambda: "hazir",
             hormonlar.Hormonlar(), ton_oku=lambda m: ("ovgu", "sahte"), port=0)
@@ -35,6 +41,7 @@ class TestWebSohbet(unittest.TestCase):
         self.sunucu.shutdown()
         self.sunucu.server_close()
         defter.DEFTER_KLASORU = self._eski
+        self._hatirla_yamasi.stop()
         self._gecici.cleanup()
 
     def _istek(self, yol, govde=None, anahtar=ANAHTAR):
