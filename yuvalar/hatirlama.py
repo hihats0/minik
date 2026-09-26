@@ -18,7 +18,7 @@ SEMA = """CREATE TABLE IF NOT EXISTS gunduz_gomme (dosya TEXT, sira INTEGER, zam
 BELGE_ONEKI = "passage: "  # e5 belge ve sorguyu oneklerle ayirir
 SORGU_ONEKI = "query: "
 HATIRLAMA_TOKEN_BUTCESI = 300
-MESAJ_BASLIGI = "Yigit'in sana daha once soyledikleri (hatirladiklarin):"
+MESAJ_BASLIGI = "Yiğit'in daha önce söylediklerinden hatırladıkların:"
 TARIH_UZUNLUGU = 10  # "YYYY-MM-DD"
 
 

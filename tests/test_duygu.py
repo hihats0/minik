@@ -20,7 +20,8 @@ DINLENME = {"dopamin": 20, "noradrenalin": 20, "serotonin": 50, "kortizol": 10,
             "oksitosin": 30, "melatonin": 10, "merak": 40}
 SITE = KOK / "sohbet-site" / "index.html"
 GEREKLI_KALIPLAR = ["nasıl yardımcı olabilirim", "peki ya sen", "emoji", "markdown", "hafızan var",
-                  "Yiğit", "site_yigit", "konsol"]
+                  "Yiğit", "site_yigit", "konsol", "bilmiyorum", "sahne yönergesi", "kendi günün yok",
+                  "daha önce söylediklerinden hatırladıkların"]
 
 
 def _cumle(ad, yon):

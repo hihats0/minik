@@ -19,6 +19,7 @@ CIKIS_KELIMESI = "cik"
 DUSUNEMIYORUM_METNI = "Su an dusunemiyorum."
 DEFTER_HATASI_METNI = "Defter yazilamadi, Minik duruyor."
 ENGELLENDI_METNI = "Bunu boyle soyleyemem."
+BOS_CEVAP_METNI = "Şu an cevabımı toparlayamadım, bir daha yazar mısın?"
 DAKIKA_SAAT = 60
 
 
@@ -76,10 +77,11 @@ def _gecmisten_baglam_yukle():
     """Defter'deki son kayitlari Kafa'nin baglamina cevirir: f1'deki 'baglam sinirsiz
     buyuyor' acigini kapatir (f2, V14). Her kayit bir soru + bir cevap mesaji olur. Eski cevaplar
     duz metne indirilir: emojili gecmis Kafa'ya ornek olup yeni cevaba emoji tasiyordu (emoji-a).
-    Bos cevapli kayit atlanir: Gemma'yi <think>'i kapatmamaya itiyordu (26 Eyl)."""
+    Bos cevapli kayit atlanir: Gemma'yi <think>'i kapatmamaya itiyordu (26 Eyl). Rol yapan kayit
+    (sahne yonergesi, "peki ya sen") hic girmez: icindeki uydurma da ornek olmasin (cevap-b)."""
     baglam = []
     for kayit in defter.oku():
-        if not kayit.get("cevap", "").strip():
+        if not kayit.get("cevap", "").strip() or duz_metin.rol_var_mi(kayit.get("cevap", "")):
             continue
         baglam.append({"role": "user", "content": kayit.get("soru", "")})
         baglam.append({"role": "assistant", "content": duz_metin.temizle(kayit.get("cevap", ""))})
@@ -118,6 +120,9 @@ def _tur_isle(soru, baglam, dusun, hormon_durumu, hatirla=None):
         return DUSUNEMIYORUM_METNI, False
     hormon_durumu.guncelle("calisma", kaynak_olc.siddet(is_sn, MELATONIN_IS_TAVAN_SN))
     cevap = duz_metin.temizle(cevap)  # guvenlik agi; asil sebep gecmisti (emoji-a)
+    if not cevap:  # Gemma <think>'i kapatmadan bitirdi (26 Eyl log): bos metin gitmez, Defter'e girmez
+        log.yaz(YUVA_ADI, "tur", log.gecen_ms(basladi), "hata", {"hata": "bos cevap"})
+        return BOS_CEVAP_METNI, False
     gecebilir, gerekce = bekci.cikabilir_mi(cevap)
     if not gecebilir:
         log.yaz(YUVA_ADI, "tur", log.gecen_ms(basladi), "ok", {"bekci": "engellendi", "gerekce": gerekce})
