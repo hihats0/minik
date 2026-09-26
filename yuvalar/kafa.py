@@ -175,6 +175,7 @@ def _sunucuya_sor(govde):
     )
     with urllib.request.urlopen(istek, timeout=KAFA_ZAMAN_ASIMI_SN) as yanit:
         yanit_json = json.loads(yanit.read().decode("utf-8"))
-    cevap = dusunce_ayikla(yanit_json["choices"][0]["message"]["content"])
+    secim = yanit_json["choices"][0]
+    cevap = dusunce_ayikla(secim["message"]["content"], dogal_bitti=secim.get("finish_reason") == "stop")
     token_sayisi = yanit_json.get("usage", {}).get("completion_tokens", 0)
     return cevap, token_sayisi, yanit_json.get("timings")

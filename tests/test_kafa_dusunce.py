@@ -28,6 +28,14 @@ class DusunceAyiklaTesti(unittest.TestCase):
         self.assertEqual(dusunce_ayikla("Selam. <think>yarim kal"), "Selam.")
         self.assertTrue(yaz.call_args.args[4]["kesik"])
 
+    def test_kapanmamis_ama_dogal_biten_cevap_sayilir(self, yaz):
+        # 26 Eyl: Gemma cevabi kapanmamis <think> icine yazip kendisi durdu; site bos cevap aldi.
+        self.assertEqual(dusunce_ayikla("<think>Ah, selam Yigit.", dogal_bitti=True), "Ah, selam Yigit.")
+        self.assertEqual(yaz.call_args.args[3], "ok")
+
+    def test_kapanmamis_dogal_ama_once_cevap_varsa_dusunce_atilir(self, yaz):
+        self.assertEqual(dusunce_ayikla("Selam. <think>yarim kal", dogal_bitti=True), "Selam.")
+
     def test_think_yok(self, yaz):
         self.assertEqual(dusunce_ayikla("Duz cevap"), "Duz cevap")
         yaz.assert_not_called()
