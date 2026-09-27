@@ -2,6 +2,7 @@
 en yakin eski sozleri Kafa'ya tek sistem mesaji olarak verir. Cagiran: minik.py akisi (doldur, kaydet, baglam_mesaji)."""
 
 import json
+import re
 import sqlite3
 from contextlib import contextmanager
 from datetime import datetime
@@ -20,6 +21,14 @@ SORGU_ONEKI = "query: "
 HATIRLAMA_TOKEN_BUTCESI = 300
 MESAJ_BASLIGI = "Yiğit'in daha önce söylediklerinden hatırladıkların:"
 TARIH_UZUNLUGU = 10  # "YYYY-MM-DD"
+# Soru bilgi tasimaz: gercek defterde eski sorular gelince model "mor lale" uydurdu (2026-09-27).
+SORU_EKI = re.compile(r"(^|\s)m[iıuü](s[iıuü]n|y[iıuü]m|y[iıuü]z|s[iıuü]n[iıuü]z)?$", re.IGNORECASE)
+
+
+def soru_mu(metin):
+    """Soru isaretiyle ya da mi/mı/mu/mü soru ekiyle biten soz soru sayilir."""
+    temiz = metin.strip().rstrip(".!")
+    return temiz.endswith("?") or bool(SORU_EKI.search(temiz))
 
 
 def varsayilan_gomme_al(metin):
@@ -108,8 +117,9 @@ def baglam_mesaji(soru, haric_sorular, gomme_al=None):
     except (OSError, sqlite3.Error, KeyError, ValueError) as hata:
         log.yaz(YUVA_ADI, "baglam_mesaji", 0, "hata", {"hata": str(hata)})
         return None
-    adaylar = [(zaman, eski, blobdan_vektor(b)) for zaman, eski, b in satirlar
-               if eski not in haric_sorular and eski != soru]
+    tekil = {eski: (zaman, b) for zaman, eski, b in satirlar
+             if eski not in haric_sorular and eski != soru and not soru_mu(eski)}
+    adaylar = [(zaman, eski, blobdan_vektor(b)) for eski, (zaman, b) in tekil.items()]
     secilen = uyku_secim.en_yakin(sorgu, adaylar, GOMME_EN_YAKIN_K)
     zamanlar = {eski: zaman for zaman, eski, _ in adaylar}
     return _butceli_mesaj([(zamanlar[eski], eski) for _, eski in secilen])

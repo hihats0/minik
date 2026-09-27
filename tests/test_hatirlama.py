@@ -114,3 +114,21 @@ def test_vektor_al_sahte_http_sunucusuyla():
         sunucu.shutdown()
         sunucu.server_close()
     assert vektor == [0.5, 0.25]
+
+
+def test_soru_bicimli_soz_hatirlanmaz_ayni_metin_bir_kez():
+    """Gercek defter: eski sorular bilgi tasimaz, model onlardan 'mor lale' uydurdu."""
+    for soru in ["En sevdiğin renk ne?", "En sevdiğin renk ne?", "En sevdigim renk neydi, hatirliyor musun?",
+                 "Benim en sevdiğim çiçek lale.", "Benim en sevdiğim çiçek lale."]:
+        defter.yaz({"soru": soru, "cevap": "x", "platform": "t"})
+    hatirlama.doldur(kelime_torbasi)
+    mesaj = hatirlama.baglam_mesaji("En sevdiğim çiçek neydi?", set(), kelime_torbasi)
+    assert mesaj["content"].splitlines()[1:] and all("lale." in s for s in mesaj["content"].splitlines()[1:])
+    assert mesaj["content"].count("lale.") == 1
+
+
+def test_yalniz_sorular_varsa_none():
+    for soru in ["En sevdiğin renk ne?", "Hatırlıyor musun"]:
+        defter.yaz({"soru": soru, "cevap": "x", "platform": "t"})
+    hatirlama.doldur(kelime_torbasi)
+    assert hatirlama.baglam_mesaji("En sevdiğim çiçek neydi?", set(), kelime_torbasi) is None

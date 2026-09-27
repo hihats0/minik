@@ -11,11 +11,11 @@ MERAK_YUKSEK_ESIK = 65.0  # TAHMIN
 
 # (hormon, yon, esik, cumle). yon "ust": deger >= esik; "alt": deger <= esik.
 DUYGU_TABLOSU = [
-    ("dopamin", "ust", DOPAMIN_YUKSEK_ESIK, "Keyfin yerinde, neselisin."),
+    ("dopamin", "ust", DOPAMIN_YUKSEK_ESIK, "Keyfin yerinde, neşelisin."),
     ("dopamin", "alt", DOPAMIN_DUSUK_ESIK, "Keyfin yok, biraz durgunsun."),
-    ("oksitosin", "ust", OKSITOSIN_YUKSEK_ESIK, "Konustugun kisiye kendini yakin ve sicak hissediyorsun."),
-    ("kortizol", "ust", KORTIZOL_YUKSEK_ESIK, "Gerginsin ve tedirginsin, sabrin az."),
-    ("merak", "ust", MERAK_YUKSEK_ESIK, "Cok merakli hissediyorsun, soru sormak istiyorsun."),
+    ("oksitosin", "ust", OKSITOSIN_YUKSEK_ESIK, "Konuştuğun kişiye kendini yakın ve sıcak hissediyorsun."),
+    ("kortizol", "ust", KORTIZOL_YUKSEK_ESIK, "Gerginsin ve tedirginsin, sabrın az."),
+    ("merak", "ust", MERAK_YUKSEK_ESIK, "Çok meraklı hissediyorsun, soru sormak istiyorsun."),
 ]
 
 

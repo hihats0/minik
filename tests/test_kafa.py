@@ -190,6 +190,7 @@ class TestKafaHormonModu(unittest.TestCase):
         ayar_yuksek, _ = kafa._ornekleme_ayarlari(yuksek)
         self.assertLess(ayar_dusuk["max_tokens"], ayar_yuksek["max_tokens"])
         self.assertLess(ayar_dusuk["repeat_penalty"], ayar_yuksek["repeat_penalty"])
+        self.assertLessEqual(ayar_yuksek["repeat_penalty"], 1.1)  # 1,28'de cevap kucuk harf, noktalamasiz
 
     def test_yorgun_modda_sicaklik_ve_max_token_dusurulur(self):
         """Rapor: 'melatonin -> n_predict asagi + sicaklik asagi (yorgun Minik kisa ve

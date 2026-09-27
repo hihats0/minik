@@ -29,6 +29,9 @@ def _cumle(ad, yon):
 
 
 class DuyguTablosu(unittest.TestCase):
+    def test_cumleler_turkce_harfli(self):
+        self.assertIn("Gerginsin ve tedirginsin, sabrın az.", [c for *_, c in DUYGU_TABLOSU])
+
     def test_dinlenmede_cumle_yok(self):
         self.assertEqual(duygu_cumleleri(DINLENME), [])
         self.assertEqual(duygu_cumleleri(None), [])

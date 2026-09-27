@@ -109,7 +109,7 @@ NORADRENALIN_TOP_P_ARALIK = 0.18  # top_p 0,80 - 0,98 arasinda gezer
 SEROTONIN_MAX_TOKEN_MIN = 128
 SEROTONIN_MAX_TOKEN_ARALIK = 640  # max_token 128 - 768 arasinda gezer
 KORTIZOL_REPEAT_PENALTY_MIN = 1.0
-KORTIZOL_REPEAT_PENALTY_ARALIK = 0.3  # repeat_penalty 1,0 - 1,3 arasinda gezer
+KORTIZOL_REPEAT_PENALTY_ARALIK = 0.1  # 1,0-1,1; 1,28 (kortizol 93,9) cevabi kucuk harf, noktalamasiz yapti (2026-09-27)
 
 # Melatonin tek basina AC/KAPA (surekli degil) bir karar surer: "yorgun mu". Spec 3.6.2 (M1)
 # kurali: bu turden bir karar ALT_ESIK/UST_ESIK adli iki sabitle (cift esik/Schmitt tetikleyici)
