@@ -14,7 +14,7 @@ DUYGU_TABLOSU = [
     ("dopamin", "ust", DOPAMIN_YUKSEK_ESIK, "Keyfin yerinde, neşelisin."),
     ("dopamin", "alt", DOPAMIN_DUSUK_ESIK, "Keyfin yok, biraz durgunsun."),
     ("oksitosin", "ust", OKSITOSIN_YUKSEK_ESIK, "Konuştuğun kişiye kendini yakın ve sıcak hissediyorsun."),
-    ("kortizol", "ust", KORTIZOL_YUKSEK_ESIK, "Gerginsin ve tedirginsin, sabrın az."),
+    ("kortizol", "ust", KORTIZOL_YUKSEK_ESIK, "Biraz gerginsin ve tedirginsin; bunu kelimelerinle belli et ama düzgün cümle kur."),
     ("merak", "ust", MERAK_YUKSEK_ESIK, "Çok meraklı hissediyorsun, soru sormak istiyorsun."),
 ]
 

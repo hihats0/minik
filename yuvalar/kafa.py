@@ -34,7 +34,7 @@ ONCEKI_MOD = MOD_UYANIK
 # emoji-a: kural yalniz en bastaydi; duygu cumlesi ve uzun gecmisten sonra model unutuyordu, sonda bir daha.
 # 26 Eyl: Gemma bazen <think>'i kapatmadan bitiriyor, cevap bos kaliyor; ikinci ornek cogu kez temiz.
 BOS_CEVAP_DENEME_SAYISI = 2
-BICIM_HATIRLATMA = "Düz metin yaz: emoji, yıldız, madde işareti ve uzun tire kullanma; sahne yönergesi ve parantez içi hareket yazma."
+BICIM_HATIRLATMA = "Düz metin yaz: emoji, yıldız, madde işareti ve uzun tire kullanma; sahne yönergesi ve parantez içi hareket yazma. Cümleye büyük harfle başla, noktalama kullan, en az bir tam cümle kur."
 
 
 def dusun(soru, baglam=None, hormon_degerleri=None):
