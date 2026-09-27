@@ -11,6 +11,8 @@ UZUN_TIRE_YERINE = ", "
 FAZLA_BOSLUK = re.compile(r"[ \t]+")
 FAZLA_BOS_SATIR = re.compile(r"\n{3,}")
 PARANTEZ = re.compile(r"[ \t]*\(([^()\n]*)\)")
+# 27 Eyl: satir basindaki her parantez, kucuk harfli olsa da ("(tatli bir gulumsemeyle)"), yonergedir.
+SATIR_BASI_PARANTEZ = re.compile(r"^[ \t]*\([^()\n]*\)[ \t]*", re.MULTILINE)
 # cevap-b: "(omuz silker)", "(gulumseyerek)", "(bakiyormus gibi)": hareket anlatimi fiille biter.
 HAREKET_EKI = re.compile(r"(arak|erek|[ıiuüae]r|yor|[mıiuü]ş gibi)$")
 PEKI_YA_SEN = re.compile(r"peki ya sen\s*\?\s*", re.IGNORECASE)
@@ -21,6 +23,7 @@ def temizle(metin):
     metin = EMOJI.sub("", metin)
     metin = KALIN_EGIK.sub(r"\1", metin)
     metin = UZUN_TIRE.sub(UZUN_TIRE_YERINE, metin)
+    metin = SATIR_BASI_PARANTEZ.sub("", metin)
     metin = PARANTEZ.sub(lambda es: "" if _yonerge_mi(es.group(1)) else es.group(0), metin)
     metin = PEKI_YA_SEN.sub("", metin)
     satirlar = [FAZLA_BOSLUK.sub(" ", satir).strip() for satir in metin.split("\n")]
@@ -36,6 +39,6 @@ def _yonerge_mi(icerik):
 
 def rol_var_mi(metin):
     """Ham cevapta sahne yonergesi ya da "peki ya sen" varsa True: boyle kayit Kafa'ya ornek olmaz."""
-    if PEKI_YA_SEN.search(metin):
+    if PEKI_YA_SEN.search(metin) or SATIR_BASI_PARANTEZ.search(metin):
         return True
     return any(_yonerge_mi(icerik) for icerik in PARANTEZ.findall(metin))

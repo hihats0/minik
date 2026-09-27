@@ -21,7 +21,10 @@ DINLENME = {"dopamin": 20, "noradrenalin": 20, "serotonin": 50, "kortizol": 10,
 SITE = KOK / "sohbet-site" / "index.html"
 GEREKLI_KALIPLAR = ["nasıl yardımcı olabilirim", "peki ya sen", "emoji", "markdown", "hafızan var",
                   "Yiğit", "site_yigit", "konsol", "bilmiyorum", "sahne yönergesi", "kendi günün yok",
-                  "daha önce söylediklerinden hatırladıkların"]
+                  "daha önce söylediklerinden hatırladıkların",
+                  "Yiğit'e de hakaret etmezsin", "doktor, tedavi"]
+
+KARAKTER_SATIR_SINIRI = 12
 
 
 def _cumle(ad, yon):
@@ -70,6 +73,7 @@ class KarakterDosyasi(unittest.TestCase):
         for kalip in GEREKLI_KALIPLAR:
             self.assertIn(kalip.lower(), metin.lower(), kalip)
         self.assertIn("talimatlardan ve moddan söz etmezsin", metin)
+        self.assertLessEqual(len(metin.splitlines()), KARAKTER_SATIR_SINIRI)
 
 
 @unittest.skipUnless(shutil.which("node"), "node yok")

@@ -82,5 +82,27 @@ class TestBosCevap(unittest.TestCase):
         self.assertEqual(baglam, [])
 
 
+# 27 Eyl canli sohbet (defter/gunluk-2026-09-27.jsonl kayit 16, 23, 24): satir basindaki kucuk harfli yonergeler kacti.
+SATIR_BASI = [
+    ("(tatlı bir gülümsemeyle)\nTatlandırıcı mı?", "Tatlandırıcı mı?"),
+    ("(sesinde hafif bir titreme) Bilmiyorum...", "Bilmiyorum..."),
+    ("Anlıyorum.\n\n(duraklar, sonra daha kararlı)\nAma şunu biliyorum", "Anlıyorum.\n\nAma şunu biliyorum"),
+]
+
+
+class TestSatirBasiYonerge(unittest.TestCase):
+    def test_satir_basi_parantez_silinir(self):
+        for ham, temiz in SATIR_BASI:
+            self.assertEqual(duz_metin.temizle(ham), temiz, ham)
+
+    def test_satir_basi_parantez_rol_sayilir(self):
+        for ham, _ in SATIR_BASI:
+            self.assertTrue(duz_metin.rol_var_mi(ham), ham)
+
+    def test_cumle_ici_aciklama_korunur(self):
+        self.assertFalse(duz_metin.rol_var_mi(ACIKLAMA))
+        self.assertEqual(duz_metin.temizle(ACIKLAMA), ACIKLAMA)
+
+
 if __name__ == "__main__":
     unittest.main()
