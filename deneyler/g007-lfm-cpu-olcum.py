@@ -110,8 +110,9 @@ def ram_kontrolu(dosya):
     return round(bos, ONDALIK), round(gereken, ONDALIK)
 
 
-def adayi_kos(dosya, sorular, max_tokens):
-    """Sunucuyu CPU'da acar, sinavi sorar, sunucuyu her durumda kapatir; kayit dondurur."""
+def adayi_kos(dosya, sorular, max_tokens, sinav=sinavi_sor):
+    """Sunucuyu CPU'da acar, sinavi `sinav(sorular, max_tokens)` ile sorar, sunucuyu her durumda kapatir.
+    Baska olcum betigi kendi soru bicimini `sinav` ile verir; kayit dondurur."""
     basla = time.perf_counter()
     proc = baslat(dosya, PORT, ek_arguman=["-c", str(BAGLAM), "-lv", str(GUNLUK_AYRINTISI),
                                           *DUSUNCE_KAPALI])
@@ -126,7 +127,7 @@ def adayi_kos(dosya, sorular, max_tokens):
         izleyici = RamIzleyici(proc.pid)
         izleyici.start()
         try:
-            kayit["sinav"] = sinavi_sor(sorular, max_tokens)
+            kayit["sinav"] = sinav(sorular, max_tokens)
         finally:
             izleyici.dur = True
             kayit["zirve_ram_mb"] = round(izleyici.zirve_mb, 1)
