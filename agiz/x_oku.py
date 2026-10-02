@@ -1,5 +1,5 @@
 """X'te tek sayfayi Yigit'in giris yaptigi Chrome profiliyle okur, sonucu okundu ya da engel diye siniflar; engel asilmaz.
-Cagiran: python -m agiz.x_oku [adres] (G-004 a2 gercek denemesi) ve tests/test_x_oku.py."""
+Cagiran: python -m agiz.x_oku [adres] ve tests/test_x_oku.py."""
 
 import os
 import sys
@@ -16,7 +16,7 @@ TWEET_SECICI = '[data-testid="tweetText"]'
 VARSAYILAN_ADRES = "https://x.com/home"
 ISTEK_ARALIGI_SN = 1.0
 
-# Asagidaki isaretler tahmin (G-004 a1 karti); gercek denemede (a2) gorulenle guncellenir.
+# Asagidaki isaretler tahmin; gercek engel ekrani gorulunce guncellenir.
 GIRIS_URL_PARCALARI = ["/i/flow/login", "/login"]
 CAPTCHA_URL_PARCALARI = ["/account/access"]
 CAPTCHA_METINLERI = ["arkose", "authenticate"]
