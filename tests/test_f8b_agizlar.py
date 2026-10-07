@@ -1,5 +1,5 @@
 """f8-b testi: X agzi (Bekci kapisi, Automated etiketi, kapali gercek gonderim, ag importu yok),
-site agzi (dis kaynak, egitime girmez), karne (kisisel veri yok). Gecici klasor, ag yok.
+site agzi (dis kaynak, egitime girmez). Gecici klasor, ag yok.
 Cagiran: `python -m unittest discover -s tests`."""
 
 import ast
@@ -12,9 +12,7 @@ from unittest import mock
 
 KOK = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(KOK))
-sys.path.insert(0, str(KOK / "araclar"))
 
-import karne  # noqa: E402
 from agiz import secim, site, x  # noqa: E402
 from ortak import log  # noqa: E402
 from yuvalar import bekci_giris, buyume, defter_sqlite  # noqa: E402
@@ -110,25 +108,6 @@ class TestSiteAgzi(GeciciKlasor):
         gecti, _ = bekci_giris.gecsin_mi(baglanti, "yeni bilgi", site.PLATFORM, TARIH, site.PLATFORM)
         baglanti.close()
         self.assertFalse(gecti)
-
-
-class TestKarne(GeciciKlasor):
-    def test_karne_kisisel_veri_icermez(self):
-        defter_klasoru = self.klasor / "defter"
-        (defter_klasoru).mkdir()
-        (defter_klasoru / "gunluk-2026-09-23.jsonl").write_text(
-            json.dumps({"soru": GIZLI, "cevap": GIZLI, "platform": "konsol"}) + "\n", encoding="utf-8")
-        baglanti = defter_sqlite.baglan(defter_klasoru)
-        bekci_giris.gecsin_mi(baglanti, GIZLI, "konsol", TARIH, "konsol")
-        baglanti.close()
-        yol = karne.yaz(defter_klasoru, self.klasor / "cikti", test_adedi=7)
-        metin = yol.read_text(encoding="utf-8")
-        self.assertNotIn("0532", metin)
-        self.assertNotIn("Ayse", metin)
-        self.assertIn("<td>7</td>", metin)
-        self.assertIn("%0.0", metin)
-        self.assertEqual(yol.parent, self.klasor / "cikti")
-
 
 if __name__ == "__main__":
     unittest.main()

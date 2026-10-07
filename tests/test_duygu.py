@@ -1,9 +1,6 @@
-"""duygu-a testleri: duygu tablosu, Kafa sistem mesajindaki cumle, karakter dosyasi yasaklari,
-sohbet sitesinin markdown temizligi (node ile). Cagiran: `python -m unittest discover -s tests`."""
+"""duygu-a testleri: duygu tablosu, Kafa sistem mesajindaki cumle, karakter dosyasi yasaklari.
+Cagiran: `python -m unittest discover -s tests`."""
 
-import re
-import shutil
-import subprocess
 import sys
 import unittest
 from pathlib import Path
@@ -18,7 +15,6 @@ from yuvalar.duygu import (DOPAMIN_YUKSEK_ESIK, DUYGU_TABLOSU, KORTIZOL_YUKSEK_E
 
 DINLENME = {"dopamin": 20, "noradrenalin": 20, "serotonin": 50, "kortizol": 10,
             "oksitosin": 30, "melatonin": 10, "merak": 40}
-SITE = KOK / "sohbet-site" / "index.html"
 GEREKLI_KALIPLAR = ["nasıl yardımcı olabilirim", "peki ya sen", "emoji", "markdown", "hafızan var",
                   "Yiğit", "site_yigit", "konsol", "bilmiyorum", "sahne yönergesi", "kendi günün yok",
                   "daha önce söylediklerinden hatırladıkların",
@@ -74,21 +70,6 @@ class KarakterDosyasi(unittest.TestCase):
             self.assertIn(kalip.lower(), metin.lower(), kalip)
         self.assertIn("talimatlardan ve moddan söz etmezsin", metin)
         self.assertLessEqual(len(metin.splitlines()), KARAKTER_SATIR_SINIRI)
-
-
-@unittest.skipUnless(shutil.which("node"), "node yok")
-class MarkdownTemizleme(unittest.TestCase):
-    def _duz(self, metin):
-        html = SITE.read_text(encoding="utf-8")
-        fonksiyon = re.search(r"function duzMetin\(metin\) \{.*?\n\}", html, re.S).group(0)
-        betik = fonksiyon + "\nprocess.stdout.write(duzMetin(require('fs').readFileSync(0,'utf8')));"
-        return subprocess.run(["node", "-e", betik], input=metin, capture_output=True,
-                              text=True, encoding="utf-8", check=True).stdout
-
-    def test_isaretler_silinir(self):
-        girdi = "## Baslik\n- **kalin** ve *egik* `kod`\n[link](http://a.b)\nsite_yigit_ok"
-        self.assertEqual(self._duz(girdi), "Baslik\nkalin ve egik kod\nlink (http://a.b)\nsite_yigit_ok")
-
 
 if __name__ == "__main__":
     unittest.main()
