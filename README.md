@@ -50,10 +50,9 @@ flowchart LR
 | `yuvalar/` | Yedi yuva |
 | `agiz/` | Platform bağımsız ağızlar (konsol, dosya, site, web sohbet, web arama, X) |
 | `ortak/` | Ayarlar, log, bağlam bütçesi, sunucu ve GPU sıcaklık yardımcıları |
-| `araclar/` | İşletme araçları: GPU bekçisi, karne, X girişi, model indirme |
-| `deneyler/` | Tek seferlik ölçüm betikleri, sonuç verileri ve Türkçe sınav |
+| `araclar/` | İşletme araçları: GPU bekçisi, X girişi, model indirme |
+| `deneyler/` | Tek seferlik ölçüm betikleri (Türkçe küçük model sınavları) |
 | `tests/` | Birim testleri |
-| `site/`, `karne-site/`, `sohbet-site/` | Karar masası, karne ve sohbet sayfaları (Vercel) |
 
 ## Çalıştırma
 
